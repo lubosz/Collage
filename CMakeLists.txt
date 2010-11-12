@@ -19,9 +19,13 @@ set(SOURCES
 	${SRC_DIR}/main.cpp
 )
 
+if (UNIX)
 find_package(PkgConfig)
 pkg_check_modules(OGRE REQUIRED OGRE>=1.7 OIS)
 link_directories(${OGRE_LIBRARY_DIRS})
+elseif(APPLE)
+elseif (WIN32)
+endif()
 
 add_executable(collage ${SOURCES})
 #target_link_libraries(collage Ogre)
