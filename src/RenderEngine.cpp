@@ -24,7 +24,10 @@ RenderEngine::RenderEngine() {
 }
 
 RenderEngine::~RenderEngine() {
-	// TODO Auto-generated destructor stub
+    OgreFramework::getSingletonPtr()->m_pLog->logMessage("Shutdown OGRE...");
+
+    if(m_pRoot)			delete m_pRoot;
+
 }
 
 void RenderEngine::updateOgre(double timeSinceLastFrame)

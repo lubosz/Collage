@@ -19,7 +19,8 @@ Input::Input() {
 }
 
 Input::~Input() {
-	// TODO Auto-generated destructor stub
+
+    if(m_pInputMgr)		OIS::InputManager::destroyInputSystem(m_pInputMgr);
 }
 
 void Input::initOis(OIS::KeyListener *pKeyListener, OIS::MouseListener *pMouseListener){

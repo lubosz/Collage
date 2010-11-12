@@ -15,9 +15,10 @@ UserInterface::UserInterface() {
 }
 
 UserInterface::~UserInterface() {
-	// TODO Auto-generated destructor stub
+	if (m_pTrayMgr)
+		delete m_pTrayMgr;
 }
 
-void UserInterface::initOgreBites(Ogre::RenderWindow* window, OIS::Mouse* mouse){
-    m_pTrayMgr = new OgreBites::SdkTrayManager("AOFTrayMgr", window, mouse, 0);
+void UserInterface::initOgreBites(Ogre::RenderWindow* window, OIS::Mouse* mouse) {
+	m_pTrayMgr = new OgreBites::SdkTrayManager("AOFTrayMgr", window, mouse, 0);
 }
