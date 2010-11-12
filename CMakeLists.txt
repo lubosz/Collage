@@ -20,13 +20,14 @@ set(SOURCES
 )
 
 if (UNIX)
-find_package(PkgConfig)
-pkg_check_modules(OGRE REQUIRED OGRE>=1.7 OIS)
-link_directories(${OGRE_LIBRARY_DIRS})
+	find_package(PkgConfig)
+	pkg_check_modules(OGRE REQUIRED OGRE>=1.7 OIS)
+	message("Found Ogre" ${OGRE_LIBRARY_DIRS}) #/usr/local/lib
+	link_directories(${OGRE_LIBRARY_DIRS})
 elseif(APPLE)
 elseif (WIN32)
 endif()
 
 add_executable(collage ${SOURCES})
 #target_link_libraries(collage Ogre)
-target_link_libraries(collage ${OGRE_LIBRARIES})
+target_link_libraries(collage OgreMain pthread OIS)
