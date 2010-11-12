@@ -6,8 +6,8 @@ set(SRC_DIR ${CMAKE_SOURCE_DIR}/src)
 include_directories(
 	include
 	include/common
-	/usr/include/OIS
-	/usr/include/OGRE
+	#/usr/include/OIS
+	#/usr/include/OGRE
 )
 
 set(SOURCES

@@ -9,7 +9,7 @@
 
 #include "common.h"
 #include "Singleton.h"
-#include <SdkTrays.h>
+#include <OGRE/SdkTrays.h>
 
 class UserInterface : public Singleton<UserInterface> {
 public:
