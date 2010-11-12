@@ -20,15 +20,10 @@ public:
 	Ogre::Root* m_pRoot;
 	Ogre::RenderWindow* m_pRenderWnd;
 	Ogre::Viewport* m_pViewport;
-	Ogre::Log* m_pLog;
-	Ogre::Timer* m_pTimer;
+
 
 	RenderEngine();
 	virtual ~RenderEngine();
-
-private:
-	RenderEngine(const RenderEngine&);
-	RenderEngine& operator=(const RenderEngine&);
 
 };
 

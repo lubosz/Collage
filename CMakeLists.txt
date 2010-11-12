@@ -12,6 +12,7 @@ include_directories(
 
 set(SOURCES
     ${SRC_DIR}/Input.cpp
+    ${SRC_DIR}/System.cpp
     ${SRC_DIR}/RenderEngine.cpp
     ${SRC_DIR}/CollageApplication.cpp
     ${SRC_DIR}/UserInterface.cpp
