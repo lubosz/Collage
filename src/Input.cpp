@@ -27,7 +27,7 @@ Input::~Input() {
 void Input::initOis(OIS::KeyListener *pKeyListener, OIS::MouseListener *pMouseListener){
 	unsigned long hWnd = 0;
 
-    RenderEngine::getSingleton().m_pRenderWnd->getCustomAttribute("WINDOW", &hWnd);
+    RenderEngine::Instance().m_pRenderWnd->getCustomAttribute("WINDOW", &hWnd);
 
     OIS::ParamList paramList;
 
@@ -38,8 +38,8 @@ void Input::initOis(OIS::KeyListener *pKeyListener, OIS::MouseListener *pMouseLi
     m_pKeyboard = static_cast<OIS::Keyboard*>(m_pInputMgr->createInputObject(OIS::OISKeyboard, true));
     m_pMouse = static_cast<OIS::Mouse*>(m_pInputMgr->createInputObject(OIS::OISMouse, true));
 
-    m_pMouse->getMouseState().height = RenderEngine::getSingleton().m_pRenderWnd->getHeight();
-    m_pMouse->getMouseState().width  = RenderEngine::getSingleton().m_pRenderWnd->getWidth();
+    m_pMouse->getMouseState().height = RenderEngine::Instance().m_pRenderWnd->getHeight();
+    m_pMouse->getMouseState().width  = RenderEngine::Instance().m_pRenderWnd->getWidth();
 
     m_pKeyboard->setEventCallback(pKeyListener);
     m_pMouse->setEventCallback(pMouseListener);
@@ -50,21 +50,21 @@ bool Input::keyPressed(const OIS::KeyEvent &keyEventRef)
 {
     if(m_pKeyboard->isKeyDown(OIS::KC_SYSRQ))
     {
-        RenderEngine::getSingleton().m_pRenderWnd->writeContentsToTimestampedFile("AOF_Screenshot_", ".jpg");
+        RenderEngine::Instance().m_pRenderWnd->writeContentsToTimestampedFile("AOF_Screenshot_", ".jpg");
         return true;
     }
 
     if(m_pKeyboard->isKeyDown(OIS::KC_O))
     {
-        if(UserInterface::getSingleton().m_pTrayMgr->isLogoVisible())
+        if(UserInterface::Instance().m_pTrayMgr->isLogoVisible())
         {
-        	UserInterface::getSingleton().m_pTrayMgr->hideFrameStats();
-        	UserInterface::getSingleton().m_pTrayMgr->hideLogo();
+        	UserInterface::Instance().m_pTrayMgr->hideFrameStats();
+        	UserInterface::Instance().m_pTrayMgr->hideLogo();
         }
         else
         {
-        	UserInterface::getSingleton().m_pTrayMgr->showFrameStats(OgreBites::TL_BOTTOMLEFT);
-        	UserInterface::getSingleton().m_pTrayMgr->showLogo(OgreBites::TL_BOTTOMRIGHT);
+        	UserInterface::Instance().m_pTrayMgr->showFrameStats(OgreBites::TL_BOTTOMLEFT);
+        	UserInterface::Instance().m_pTrayMgr->showLogo(OgreBites::TL_BOTTOMRIGHT);
         }
     }
 

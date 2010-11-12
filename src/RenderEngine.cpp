@@ -6,10 +6,8 @@
  */
 
 #include "RenderEngine.h"
-#include "OgreColourValue.h"
 
 template<> RenderEngine* Ogre::Singleton<RenderEngine>::ms_Singleton = 0;
-
 
 RenderEngine::RenderEngine() {
     m_pRoot = 0;
@@ -17,14 +15,10 @@ RenderEngine::RenderEngine() {
 	m_pViewport = 0;
 	m_pLog = 0;
 	m_pTimer = 0;
-
-
-
-
 }
 
 RenderEngine::~RenderEngine() {
-    m_pLog->logMessage("Shutdown OGRE...");
+    m_pLog->logMessage("Shutdown Render Engine...");
 
 	if (m_pRoot)
 		delete m_pRoot;
@@ -53,10 +47,6 @@ bool RenderEngine::initOgre(Ogre::String wndTitle)
 
     m_pViewport->setCamera(0);
 
-
-
-
-
     Ogre::String secName, typeName, archName;
     Ogre::ConfigFile cf;
     cf.load("resources.cfg");
@@ -76,8 +66,6 @@ bool RenderEngine::initOgre(Ogre::String wndTitle)
     }
     Ogre::TextureManager::getSingleton().setDefaultNumMipmaps(5);
     Ogre::ResourceGroupManager::getSingleton().initialiseAllResourceGroups();
-
-
 
     m_pTimer = new Ogre::Timer();
     m_pTimer->reset();

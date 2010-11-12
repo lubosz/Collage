@@ -8,9 +8,10 @@
 #pragma once
 
 #include "common.h"
+#include "Singleton.h"
 
 
-class RenderEngine : public Ogre::Singleton<RenderEngine> {
+class RenderEngine : public Singleton<RenderEngine> {
 public:
 
 	bool initOgre(Ogre::String wndTitle);

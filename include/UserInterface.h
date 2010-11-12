@@ -8,9 +8,10 @@
 #pragma once
 
 #include "common.h"
+#include "Singleton.h"
 #include <SdkTrays.h>
 
-class UserInterface : public Ogre::Singleton<UserInterface> {
+class UserInterface : public Singleton<UserInterface> {
 public:
 
 	OgreBites::SdkTrayManager* m_pTrayMgr;

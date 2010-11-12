@@ -7,12 +7,10 @@
 
 #pragma once
 
-#include <OISEvents.h>
-#include <OISInputManager.h>
-#include <OISKeyboard.h>
-#include <OISMouse.h>
+#include "common.h"
+#include "Singleton.h"
 
-class Input {
+class Input: public Singleton<Input> {
 public:
 
 	OIS::InputManager* m_pInputMgr;
