@@ -24,9 +24,10 @@ RenderEngine::RenderEngine() {
 }
 
 RenderEngine::~RenderEngine() {
-    OgreFramework::getSingletonPtr()->m_pLog->logMessage("Shutdown OGRE...");
+    m_pLog->logMessage("Shutdown OGRE...");
 
-    if(m_pRoot)			delete m_pRoot;
+	if (m_pRoot)
+		delete m_pRoot;
 
 }
 

@@ -20,7 +20,8 @@ Input::Input() {
 
 Input::~Input() {
 
-    if(m_pInputMgr)		OIS::InputManager::destroyInputSystem(m_pInputMgr);
+	if (m_pInputMgr)
+		OIS::InputManager::destroyInputSystem(m_pInputMgr);
 }
 
 void Input::initOis(OIS::KeyListener *pKeyListener, OIS::MouseListener *pMouseListener){

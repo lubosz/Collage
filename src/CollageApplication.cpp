@@ -6,6 +6,7 @@
  */
 
 #include "CollageApplication.h"
+#include "Input.h"
 
 CollageApplication::CollageApplication() {
 	// TODO Auto-generated constructor stub
@@ -17,5 +18,7 @@ CollageApplication::~CollageApplication() {
 }
 
 void CollageApplication::start(){
-
+	RenderEngine::getSingleton().initOgre("Collage");
+	Input::getSingleton().initOis();
+    UserInterface::getSingleton().initOgreBites(m_pRenderWnd, m_pMouse);
 }

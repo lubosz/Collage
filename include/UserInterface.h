@@ -8,6 +8,7 @@
 #pragma once
 
 #include "common.h"
+#include <SdkTrays.h>
 
 class UserInterface : public Ogre::Singleton<UserInterface> {
 public:

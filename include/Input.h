@@ -7,7 +7,10 @@
 
 #pragma once
 
-#include "common.h"
+#include <OISEvents.h>
+#include <OISInputManager.h>
+#include <OISKeyboard.h>
+#include <OISMouse.h>
 
 class Input {
 public:
