@@ -5,9 +5,15 @@ set(SRC_DIR ${CMAKE_SOURCE_DIR}/src)
 
 include_directories(
 	include
+	/usr/include/OIS
+	/usr/include/OGRE
 )
 
 set(SOURCES
+    ${SRC_DIR}/Input.cpp
+    ${SRC_DIR}/RenderEngine.cpp
+    ${SRC_DIR}/CollageApplication.cpp
+    ${SRC_DIR}/UserInterface.cpp
 	${SRC_DIR}/main.cpp
 )
 
