@@ -17,7 +17,7 @@ System::System() {
 	//Load recources
     Ogre::String secName, typeName, archName;
     Ogre::ConfigFile cf;
-    cf.load("config/resources.cfg");
+    cf.load("resources.cfg");
 
     Ogre::ConfigFile::SectionIterator seci = cf.getSectionIterator();
     while (seci.hasMoreElements())
