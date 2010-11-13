@@ -60,7 +60,7 @@ elseif(UNIX)
 	)
 
 elseif (WIN32)
-	#set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -L$ENV{OGRE_HOME}/lib/release -L$ENV{OGRE_HOME}/bin/Release")
+	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -L$ENV{OGRE_HOME}/lib/release -L$ENV{OGRE_HOME}/bin/Release -Wl,--enable-auto-import")
 	include_directories(
 		$ENV{OGRE_HOME}/include
 		$ENV{OGRE_HOME}/boost_1_44
@@ -69,7 +69,7 @@ elseif (WIN32)
 	link_directories(
 		$ENV{OGRE_HOME}/boost_1_42/lib
 		$ENV{OGRE_HOME}/lib/release
-		#$ENV{OGRE_HOME}/bin/Release
+		$ENV{OGRE_HOME}/bin/Release
 	)
 	
 	target_link_libraries(collage 
@@ -79,13 +79,16 @@ elseif (WIN32)
 		#pthread 
 		#$ENV{OGRE_HOME}/bin/release/OIS.dll
 		)
+	
+	STRING(REGEX REPLACE "\\\\" "/" OGREFOLDER "$ENV{OGRE_HOME}")
+		message("Ogre FOlder" ${OGREFOLDER})
 		
 	add_custom_command(
 	  TARGET collage POST_BUILD
 	  COMMAND ${CMAKE_COMMAND}
 	  ARGS -E echo "copying plugins.cfg"
 	  COMMAND ${CMAKE_COMMAND}
-	  ARGS -E copy_if_different $ENV{OGRE_HOME}/bin/plugins.cfg ${CMAKE_CFG_INTDIR}/bin/plugins.cfg
+	  ARGS -E copy_if_different ${OGREFOLDER}/bin/Release/plugins.cfg ${CMAKE_CFG_INTDIR}/bin/plugins.cfg
 	)
 
 	SET(OGRE_DDLS
@@ -105,7 +108,7 @@ elseif (WIN32)
 		  COMMAND ${CMAKE_COMMAND}
 		  ARGS -E echo "copying ${dll}"
 		  COMMAND ${CMAKE_COMMAND}
-		  ARGS -E copy_if_different $ENV{OGRE_HOME}/bin/${dll} ${CMAKE_CFG_INTDIR}/bin/${dll}
+		  ARGS -E copy_if_different ${OGREFOLDER}/bin/Release/${dll} ${CMAKE_CFG_INTDIR}/bin/${dll}
 		)
 	endforeach(dll)
 endif()
