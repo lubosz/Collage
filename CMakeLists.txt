@@ -33,7 +33,7 @@ if (APPLE)
 	set(CMAKE_CXX_FLAGS "-m32")
 	# Also link all the other libs that Ogre apparently needs, see:
 	# http://www.ogre3d.org/forums/viewtopic.php?f=2&t=57997
-	set(CMAKE_EXE_LINKER_FLAGS "-m32 -framework Ogre -framework CoreFoundation	-framework IOKit -framework ApplicationServices -framework Carbon -framework AppKit")
+	set(CMAKE_EXE_LINKER_FLAGS "-m32 -framework Ogre -framework CoreFoundation -framework IOKit -framework ApplicationServices -framework Carbon -framework AppKit")
 	target_link_libraries(collage $ENV{OGRE_HOME}/lib/release/libOIS.a)
 
 elseif(UNIX)
