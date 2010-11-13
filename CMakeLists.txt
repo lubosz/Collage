@@ -8,6 +8,13 @@ include_directories(
 	include
 	include/common
 )
+OPTION(RELEASE "Release" OFF)
+#Optimization / Debug
+IF(RELEASE)
+    set(CMAKE_CXX_FLAGS "-O3 -msse4 -mssse3") #Optimized
+ELSE()
+    set(CMAKE_CXX_FLAGS "-O0 -g3") #Debug
+ENDIF()
 
 file(GLOB_RECURSE SOURCES src/*.cpp)
 file(GLOB_RECURSE INCLUDES include/*.h)
@@ -54,7 +61,12 @@ elseif(UNIX)
 	#)
 
 elseif (WIN32)
-	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -L$ENV{OGRE_HOME}/lib/release -L$ENV{OGRE_HOME}/bin/Release -Wl,--enable-auto-import")
+IF(RELEASE)
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -L$ENV{OGRE_HOME}/lib/release -L$ENV{OGRE_HOME}/bin/Release -Wl,--enable-auto-import")
+ELSE()
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -L$ENV{OGRE_HOME}/lib/debug -L$ENV{OGRE_HOME}/bin/Debug -Wl,--enable-auto-import")
+ENDIF()
+	
 	include_directories(
 		$ENV{OGRE_HOME}/include
 		$ENV{OGRE_HOME}/boost_1_44
@@ -62,16 +74,23 @@ elseif (WIN32)
 	
 	link_directories(
 		$ENV{OGRE_HOME}/boost_1_42/lib
+IF(RELEASE)
 		$ENV{OGRE_HOME}/lib/release
 		$ENV{OGRE_HOME}/bin/Release
+ELSE()
+		$ENV{OGRE_HOME}/lib/debug
+		$ENV{OGRE_HOME}/bin/Debug
+ENDIF()
 	)
 	
 	target_link_libraries(collage 
-		#optimized 
+IF(RELEASE)
 		OgreMain
 		OIS
-		#pthread 
-		#$ENV{OGRE_HOME}/bin/release/OIS.dll
+ELSE()
+		OgreMain_d
+		OIS_d
+ENDIF()
 		)
 	
 	STRING(REGEX REPLACE "\\\\" "/" OGREFOLDER "$ENV{OGRE_HOME}")
