@@ -24,3 +24,17 @@ void CollageApplication::start(){
 	Input::Instance().initOis();
     UserInterface::Instance().initOgreBites(RenderEngine::Instance().m_pRenderWnd, Input::Instance().m_pMouse);
 }
+
+int main(int argc, char *argv[])
+{
+	CollageApplication collage;
+	try
+	{
+		collage.start();
+	}
+	catch(std::exception& e)
+    {
+        fprintf(stderr, "An exception has occurred: %s\n", e.what());
+    }
+
+}
