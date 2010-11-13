@@ -74,24 +74,33 @@ ENDIF()
 	
 	link_directories(
 		$ENV{OGRE_HOME}/boost_1_42/lib
+	)
 IF(RELEASE)
+link_directories(
 		$ENV{OGRE_HOME}/lib/release
 		$ENV{OGRE_HOME}/bin/Release
+)
 ELSE()
+link_directories(
 		$ENV{OGRE_HOME}/lib/debug
 		$ENV{OGRE_HOME}/bin/Debug
+)
 ENDIF()
-	)
+
 	
-	target_link_libraries(collage 
+
 IF(RELEASE)
+	target_link_libraries(collage 
 		OgreMain
 		OIS
+	)
 ELSE()
+	target_link_libraries(collage 
 		OgreMain_d
 		OIS_d
+	)
 ENDIF()
-		)
+
 	
 	STRING(REGEX REPLACE "\\\\" "/" OGREFOLDER "$ENV{OGRE_HOME}")
 		message("Ogre FOlder" ${OGREFOLDER})
