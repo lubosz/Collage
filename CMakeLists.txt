@@ -4,22 +4,16 @@ project(collage)
 set(LIBRARY_OUTPUT_PATH ${CMAKE_SOURCE_DIR}/bin)
 set(EXECUTABLE_OUTPUT_PATH ${CMAKE_SOURCE_DIR}/bin)
 
-set(SRC_DIR ${CMAKE_SOURCE_DIR}/src)
 include_directories(
 	include
 	include/common
 )
 
-set(SOURCES
-    ${SRC_DIR}/Input.cpp
-    ${SRC_DIR}/System.cpp
-    ${SRC_DIR}/RenderEngine.cpp
-    ${SRC_DIR}/CollageApplication.cpp
-    ${SRC_DIR}/UserInterface.cpp
-	${SRC_DIR}/main.cpp
-)
+file(GLOB_RECURSE SOURCES src/*.cpp)
+file(GLOB_RECURSE INCLUDES include/*.h)
+#MESSAGE("C++ Classes" ${SOURCES})
 
-add_executable(collage ${SOURCES})
+add_executable(collage ${SOURCES} ${INCLUDES})
 
 if (APPLE)
 	include_directories(
@@ -51,13 +45,13 @@ elseif(UNIX)
 	link_directories(${OGRE_LIBRARY_DIRS})
 	target_link_libraries(collage OgreMain pthread OIS)
 	
-	add_custom_command(
-	  TARGET collage POST_BUILD
-	  COMMAND ${CMAKE_COMMAND}
-	  ARGS -E echo "copying plugins.cfg"
-	  COMMAND ${CMAKE_COMMAND}
-	  ARGS -E copy_if_different ${CMAKE_CFG_INTDIR}/config/plugins-unix.cfg ${CMAKE_CFG_INTDIR}/bin/plugins.cfg
-	)
+	#add_custom_command(
+	#  TARGET collage POST_BUILD
+	#  COMMAND ${CMAKE_COMMAND}
+	#  ARGS -E echo "copying plugins.cfg"
+	#  COMMAND ${CMAKE_COMMAND}
+	#  ARGS -E copy_if_different ${CMAKE_CFG_INTDIR}/config/plugins-unix.cfg ${CMAKE_CFG_INTDIR}/bin/plugins.cfg
+	#)
 
 elseif (WIN32)
 	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -L$ENV{OGRE_HOME}/lib/release -L$ENV{OGRE_HOME}/bin/Release -Wl,--enable-auto-import")
