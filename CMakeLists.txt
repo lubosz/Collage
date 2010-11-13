@@ -53,6 +53,9 @@ elseif(UNIX)
 	pkg_check_modules(OGRE REQUIRED OGRE>=1.7 OIS)
 	target_link_libraries(collage OgreMain OIS)
 	
+	execute_process(COMMAND uname -a OUTPUT_VARIABLE _output OUTPUT_STRIP_TRAILING_WHITESPACE)
+	message(${_output})
+	
 	#add_custom_command(
 	#  TARGET collage POST_BUILD
 	#  COMMAND ${CMAKE_COMMAND}
