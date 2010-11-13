@@ -44,16 +44,16 @@ elseif(UNIX)
 
 elseif (WIN32)
 	#set(OGRE_FOLDER /cygdrive/c/Users/lochmann/SDK/Collage)
-	#set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -L$ENV{OGRE_HOME}\\lib\\release -L$ENV{OGRE_HOME}\\bin\\release")
+	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -L$ENV{OGRE_HOME}/lib/release -L$ENV{OGRE_HOME}/bin/Release")
 	include_directories(
 		$ENV{OGRE_HOME}/include
-		$ENV{OGRE_HOME}/boost_1_42
+		$ENV{OGRE_HOME}/boost_1_44
 	)
 	
 	link_directories(
 		$ENV{OGRE_HOME}/boost_1_42/lib
-		#$ENV{OGRE_HOME}/lib/release
-		$ENV{OGRE_HOME}/bin/release
+		$ENV{OGRE_HOME}/lib/release
+		$ENV{OGRE_HOME}/bin/Release
 	)
 	#set(LINK_DIRECTORIES 
 	#	${LINK_DIRECTORIES}
@@ -62,8 +62,6 @@ elseif (WIN32)
 	#)
 
 	
-	add_executable(collage ${SOURCES})
-
 	target_link_libraries(collage 
 		#optimized 
 		OgreMain
