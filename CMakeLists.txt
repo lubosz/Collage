@@ -8,7 +8,9 @@ include_directories(
 	include
 	include/common
 )
+
 OPTION(RELEASE "Release" OFF)
+
 #Optimization / Debug
 IF(RELEASE)
     set(CMAKE_CXX_FLAGS "-O3 -msse4 -mssse3") #Optimized
@@ -16,9 +18,9 @@ ELSE()
     set(CMAKE_CXX_FLAGS "-O0 -g3") #Debug
 ENDIF()
 
+#Find headers and cpps
 file(GLOB_RECURSE SOURCES src/*.cpp)
 file(GLOB_RECURSE INCLUDES include/*.h)
-#MESSAGE("C++ Classes" ${SOURCES})
 
 add_executable(collage ${SOURCES} ${INCLUDES})
 
@@ -49,8 +51,7 @@ if (APPLE)
 elseif(UNIX)
 	find_package(PkgConfig)
 	pkg_check_modules(OGRE REQUIRED OGRE>=1.7 OIS)
-	link_directories(${OGRE_LIBRARY_DIRS})
-	target_link_libraries(collage OgreMain pthread OIS)
+	target_link_libraries(collage OgreMain OIS)
 	
 	#add_custom_command(
 	#  TARGET collage POST_BUILD
@@ -61,11 +62,14 @@ elseif(UNIX)
 	#)
 
 elseif (WIN32)
-IF(RELEASE)
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -L$ENV{OGRE_HOME}/lib/release -L$ENV{OGRE_HOME}/bin/Release -Wl,--enable-auto-import")
-ELSE()
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -L$ENV{OGRE_HOME}/lib/debug -L$ENV{OGRE_HOME}/bin/Debug -Wl,--enable-auto-import")
-ENDIF()
+	#disable some warnings
+	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wl,--enable-auto-import")
+	
+	IF(RELEASE)
+		set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -L$ENV{OGRE_HOME}/lib/release -L$ENV{OGRE_HOME}/bin/Release")
+	ELSE()
+		set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -L$ENV{OGRE_HOME}/lib/debug -L$ENV{OGRE_HOME}/bin/Debug")
+	ENDIF()
 	
 	include_directories(
 		$ENV{OGRE_HOME}/include
@@ -75,35 +79,30 @@ ENDIF()
 	link_directories(
 		$ENV{OGRE_HOME}/boost_1_42/lib
 	)
-IF(RELEASE)
-link_directories(
-		$ENV{OGRE_HOME}/lib/release
-		$ENV{OGRE_HOME}/bin/Release
-)
-ELSE()
-link_directories(
-		$ENV{OGRE_HOME}/lib/debug
-		$ENV{OGRE_HOME}/bin/Debug
-)
-ENDIF()
-
 	
+	IF(RELEASE)
+		link_directories(
+			$ENV{OGRE_HOME}/lib/release
+			$ENV{OGRE_HOME}/bin/Release
+		)
+		target_link_libraries(collage 
+			OgreMain
+			OIS
+		)
+	ELSE()
+		link_directories(
+			$ENV{OGRE_HOME}/lib/debug
+			$ENV{OGRE_HOME}/bin/Debug
+		)
+		target_link_libraries(collage 
+			OgreMain_d
+			OIS_d
+		)
+	ENDIF()
 
-IF(RELEASE)
-	target_link_libraries(collage 
-		OgreMain
-		OIS
-	)
-ELSE()
-	target_link_libraries(collage 
-		OgreMain_d
-		OIS_d
-	)
-ENDIF()
-
-	
+	#replace backslashes with slashes	
 	STRING(REGEX REPLACE "\\\\" "/" OGREFOLDER "$ENV{OGRE_HOME}")
-		message("Ogre FOlder" ${OGREFOLDER})
+		message("Ogre Folder: " ${OGREFOLDER})
 		
 	add_custom_command(
 	  TARGET collage POST_BUILD
