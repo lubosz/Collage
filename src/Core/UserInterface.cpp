@@ -8,8 +8,6 @@
 
 #include "UserInterface.h"
 
-template<> UserInterface* Ogre::Singleton<UserInterface>::ms_Singleton = 0;
-
 UserInterface::UserInterface() {
 }
 

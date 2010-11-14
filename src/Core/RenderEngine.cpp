@@ -9,8 +9,6 @@
 #include "RenderEngine.h"
 #include "System.h"
 
-template<> RenderEngine* Ogre::Singleton<RenderEngine>::ms_Singleton = 0;
-
 RenderEngine::RenderEngine() {
     m_pRoot = 0;
 	m_pRenderWnd = 0;

@@ -10,8 +10,6 @@
 #include "UserInterface.h"
 #include "RenderEngine.h"
 
-template<> Input* Ogre::Singleton<Input>::ms_Singleton = 0;
-
 Input::Input() {
 	m_pInputMgr = 0;
 	m_pKeyboard = 0;
