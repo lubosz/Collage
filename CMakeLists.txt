@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 2.6)
+cmake_minimum_required(VERSION 2.8)
 project(collage)
 
 set(LIBRARY_OUTPUT_PATH ${CMAKE_SOURCE_DIR}/bin)
@@ -43,12 +43,15 @@ ELSE()
 	SET(PYTHON_VER "python")
 ENDIF()
 
+#check code stlye
 if(CHECKSTYLE)
-	foreach(SOURCE_FILE ${SOURCES})
-		execute_process(
-	  		COMMAND ${PYTHON_VER} scripts/cpplint.py --filter=-whitespace/tab,-build/header_guard ${SOURCE_FILE}
-		)
-	endforeach(SOURCE_FILE)
+	add_custom_target(CHECK_STYLE ALL
+    	COMMAND ${PYTHON_VER} scripts/cpplint.py --filter=-whitespace/tab,-build/header_guard ${SOURCES} ${INCLUDES}
+		#[DEPENDS depend depend depend ... ]
+        #[WORKING_DIRECTORY dir]
+        #[COMMENT comment] [VERBATIM]
+        #[SOURCES src1 [src2...]]
+    )
 endif()
 
 if (APPLE)
