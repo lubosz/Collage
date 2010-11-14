@@ -104,6 +104,7 @@ elseif (WIN32)
 		)
 		target_link_libraries(collage 
 			OgreMain
+			OgreTerrain
 			OIS
 		)
 	ELSE()
@@ -113,6 +114,7 @@ elseif (WIN32)
 		)
 		target_link_libraries(collage 
 			OgreMain_d
+			OgreTerrain_d
 			OIS_d
 		)
 	ENDIF()
