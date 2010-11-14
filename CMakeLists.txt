@@ -75,7 +75,7 @@ if (APPLE)
 elseif(UNIX)
 	find_package(PkgConfig)
 	pkg_check_modules(OGRE REQUIRED OGRE>=1.7 OIS)
-	target_link_libraries(collage OgreMain OgreTerrain OgreProperty OIS)
+	target_link_libraries(collage OgreMain OgreTerrain OIS)
 	copy_plugins_config(${CMAKE_CFG_INTDIR}/bin/plugins-unix.cfg)
 
 elseif (WIN32)
