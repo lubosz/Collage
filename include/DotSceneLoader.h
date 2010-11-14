@@ -9,10 +9,10 @@
 #pragma once
 
 // Includes
-#include <OgreString.h>
-#include <OgreVector3.h>
-#include <OgreQuaternion.h>
-#include <OgreResourceGroupManager.h>
+#include <OGRE/OgreString.h>
+#include <OGRE/OgreVector3.h>
+#include <OGRE/OgreQuaternion.h>
+#include <OGRE/OgreResourceGroupManager.h>
 #include <vector>
 
 #include "rapidxml.hpp"

@@ -7,6 +7,7 @@ set(EXECUTABLE_OUTPUT_PATH ${CMAKE_SOURCE_DIR}/bin)
 include_directories(
 	include
 	include/common
+	/usr/include/OGRE
 )
 
 OPTION(RELEASE "Release" OFF)
@@ -74,7 +75,7 @@ if (APPLE)
 elseif(UNIX)
 	find_package(PkgConfig)
 	pkg_check_modules(OGRE REQUIRED OGRE>=1.7 OIS)
-	target_link_libraries(collage OgreMain OIS)
+	target_link_libraries(collage OgreMain OgreTerrain OgreProperty OIS)
 	copy_plugins_config(${CMAKE_CFG_INTDIR}/bin/plugins-unix.cfg)
 
 elseif (WIN32)

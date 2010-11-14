@@ -15,6 +15,17 @@
 
 #include "AppStateListener.h"
 
+#include "RenderEngine.h"
+#include "System.h"
+#include "UserInterface.h"
+#include "Input.h"
+
+using Ogre::Vector3;
+using Ogre::Real;
+using Ogre::Degree;
+
+//class AppStateListener;
+
 class AppState
 :
 	public OIS::KeyListener,
@@ -32,7 +43,7 @@ class AppState
 	virtual void update(double timeSinceLastFrame) = 0;
 
  protected:
-	AppState();
+	AppState() {};
 
 	AppState* findByName(Ogre::String stateName) {
 		return m_pParent->findByName(stateName);

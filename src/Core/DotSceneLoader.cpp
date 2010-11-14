@@ -7,11 +7,12 @@
  */
 
 #include "DotSceneLoader.h"
-#include <Ogre.h>
-#include <Terrain/OgreTerrain.h>
-#include <Terrain/OgreTerrainGroup.h>
-#include <Terrain/OgreTerrainMaterialGeneratorA.h>
+#include <OGRE/Ogre.h>
+#include <OGRE/Terrain/OgreTerrain.h>
+#include <OGRE/Terrain/OgreTerrainGroup.h>
+#include <OGRE/Terrain/OgreTerrainMaterialGeneratorA.h>
 
+/*
 #include "PAGEDGEOMETRY/PagedGeometry.h"
 #include "PAGEDGEOMETRY/BatchPage.h"
 #include "PAGEDGEOMETRY/ImpostorPage.h"
@@ -19,7 +20,7 @@
 
 #pragma warning(disable:4390)
 #pragma warning(disable:4305)
-
+*/
 // using namespace Forests;
 
 DotSceneLoader::DotSceneLoader()
@@ -40,6 +41,7 @@ void ParseStringVector(
 		const Ogre::String &str,
 		const Ogre::StringVector &list
 	) {
+	/*
 	list.clear();
 	Ogre::StringUtil::trim(str, true, true);
 	if (str == "")
@@ -54,6 +56,7 @@ void ParseStringVector(
 
 	if (str != "")
 		list.push_back(str);
+		*/
 }
 
 void DotSceneLoader::parseDotScene(const Ogre::String &SceneName,
@@ -787,6 +790,7 @@ void DotSceneLoader::processPagedGeometry(rapidxml::xml_node<>* XMLNode,
 	Ogre::Vector4 bounds = Ogre::StringConverter::parseVector4(getAttrib(
 			XMLNode, "bounds"));
 
+	/*
 	PagedGeometry *mPGHandle = new PagedGeometry();
 	mPGHandle->setCamera(mSceneMgr->getCameraIterator().begin()->second);
 	mPGHandle->setPageSize(pagesize);
@@ -801,7 +805,7 @@ void DotSceneLoader::processPagedGeometry(rapidxml::xml_node<>* XMLNode,
 
 	mPGHandles.push_back(mPGHandle);
 	mTreeHandles.push_back(mHandle);
-
+*/
 	std::ifstream stream(filename.c_str());
 
 	if (!stream.is_open())
@@ -842,7 +846,7 @@ void DotSceneLoader::processPagedGeometry(rapidxml::xml_node<>* XMLNode,
 
 	if (model != "") {
 		Ogre::Entity *mEntityHandle = mSceneMgr->createEntity(model + ".mesh");
-
+/*
 		PGInstanceList::iterator it = mInstanceList.begin();
 
 		while (it != mInstanceList.end()) {
@@ -851,7 +855,9 @@ void DotSceneLoader::processPagedGeometry(rapidxml::xml_node<>* XMLNode,
 
 			it++;
 		}
+			*/
 	}
+
 }
 
 void DotSceneLoader::processFog(rapidxml::xml_node<>* XMLNode) {

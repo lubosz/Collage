@@ -31,7 +31,7 @@ class AppStateManager : public AppStateListener {
 	void popAppState(void);
 	void pauseAppState(AppState* state);
 	void shutdown(void);
-        void popAllAndPushAppState(AppState* state);
+	void popAllAndPushAppState(AppState* state);
 
  protected:
 	void init(AppState *state);
