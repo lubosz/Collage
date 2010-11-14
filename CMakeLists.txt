@@ -35,10 +35,16 @@ file(GLOB_RECURSE INCLUDES include/*.h)
 
 add_executable(collage ${SOURCES} ${INCLUDES})
 
+IF(EXISTS "/usr/bin/python2")
+	SET(PYTHON_VER "python2")
+ELSE()
+	SET(PYTHON_VER "python")
+ENDIF()
+
 if(CHECKSTYLE)
 	foreach(SOURCE_FILE ${SOURCES})
 		execute_process(
-	  		COMMAND python2 scripts/cpplint.py --filter=-whitespace/tab,-build/header_guard ${SOURCE_FILE}
+	  		COMMAND ${PYTHON_VER} scripts/cpplint.py --filter=-whitespace/tab,-build/header_guard ${SOURCE_FILE}
 		)
 	endforeach(SOURCE_FILE)
 endif()
