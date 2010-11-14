@@ -10,7 +10,7 @@ include_directories(
 )
 
 OPTION(RELEASE "Release" OFF)
-OPTION(CHECKSTYLE "Check Style" OFF)
+OPTION(CHECKSTYLE "Check Style" ON)
 
 IF(UNIX)
 	execute_process(COMMAND uname -a OUTPUT_VARIABLE _output OUTPUT_STRIP_TRAILING_WHITESPACE)
