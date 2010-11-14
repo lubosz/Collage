@@ -25,8 +25,7 @@ void Input::initOis(
 		OIS::KeyListener *pKeyListener,
 		OIS::MouseListener *pMouseListener
 	) {
-	// unsigned long hWnd = 0;
-	unsigned int hWnd = 0;
+	unsigned long hWnd = 0;
 
     RenderEngine::Instance().m_pRenderWnd->getCustomAttribute("WINDOW", &hWnd);
 
