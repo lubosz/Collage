@@ -12,8 +12,10 @@ include_directories(
 OPTION(RELEASE "Release" OFF)
 OPTION(CHECKSTYLE "Check Style" OFF)
 
-execute_process(COMMAND uname -a OUTPUT_VARIABLE _output OUTPUT_STRIP_TRAILING_WHITESPACE)
-message(${_output})
+IF(UNIX)
+	execute_process(COMMAND uname -a OUTPUT_VARIABLE _output OUTPUT_STRIP_TRAILING_WHITESPACE)
+	message(${_output})
+ENDIF()
 
 #Optimization / Debug
 IF(RELEASE)
