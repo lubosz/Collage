@@ -8,11 +8,16 @@
 
 #pragma once
 
+#include "AppStateManager.h"
+
 class CollageApplication {
  public:
 	CollageApplication();
 	virtual ~CollageApplication();
 
 	void start();
+
+ private:
+	AppStateManager* m_pAppStateManager;
 };
 
