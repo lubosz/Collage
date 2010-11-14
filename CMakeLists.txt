@@ -46,7 +46,7 @@ ENDIF()
 #check code stlye
 if(CHECKSTYLE)
 	add_custom_target(CHECK_STYLE ALL
-    	COMMAND ${PYTHON_VER} scripts/cpplint.py --filter=-whitespace/tab,-build/header_guard ${SOURCES} ${INCLUDES}
+    	COMMAND ${PYTHON_VER} scripts/cpplint.py --filter=-whitespace/tab,-build/header_guard,-build/include ${SOURCES} ${INCLUDES}
 		#[DEPENDS depend depend depend ... ]
         #[WORKING_DIRECTORY dir]
         #[COMMENT comment] [VERBATIM]

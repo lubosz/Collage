@@ -2,7 +2,8 @@
  * RenderEngine.h
  *
  *  Created on: Nov 12, 2010
- *      Author: bmonkey
+ *  Author: bmonkey
+ *  Copyright 2010 The Collage Project
  */
 
 #pragma once
@@ -12,7 +13,7 @@
 
 
 class RenderEngine : public Singleton<RenderEngine> {
-public:
+ public:
 
 	bool initOgre(Ogre::String wndTitle);
 	void updateOgre(double timeSinceLastFrame);
@@ -24,6 +25,5 @@ public:
 
 	RenderEngine();
 	virtual ~RenderEngine();
-
 };
 

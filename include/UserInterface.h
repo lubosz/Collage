@@ -2,7 +2,8 @@
  * UserInterface.h
  *
  *  Created on: Nov 12, 2010
- *      Author: bmonkey
+ *  Author: bmonkey
+ *  Copyright 2010 The Collage Project
  */
 
 #pragma once
@@ -12,7 +13,7 @@
 #include <OGRE/SdkTrays.h>
 
 class UserInterface : public Singleton<UserInterface> {
-public:
+ public:
 
 	OgreBites::SdkTrayManager* m_pTrayMgr;
 

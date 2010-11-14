@@ -2,7 +2,8 @@
  * InputManager.h
  *
  *  Created on: Nov 12, 2010
- *      Author: bmonkey
+ *  Author: bmonkey
+ *  Copyright 2010 The Collage Project
  */
 
 #pragma once
@@ -11,7 +12,7 @@
 #include "Singleton.h"
 
 class Input: public Singleton<Input> {
-public:
+ public:
 
 	OIS::InputManager* m_pInputMgr;
 	OIS::Keyboard* m_pKeyboard;
