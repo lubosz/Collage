@@ -1,0 +1,14 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$classrapidxml_1_1xml__node.html#a2dedeb4e04bb35e06a9a7bddf6ba652d" title="rapidxml::xml_node::first_node" alt="" coords="895,79,1113,109"/>
+<area shape="rect" id="node11" href="$classDotSceneLoader.html#a1a3437b6e166ae938db91ef780671e0d" title="DotSceneLoader::getAttrib" alt="" coords="628,235,820,265"/>
+<area shape="rect" id="node17" href="$classDotSceneLoader.html#af74c81daf6a798db68f73481b4d5507a" title="DotSceneLoader::getAttribBool" alt="" coords="613,302,835,331"/>
+<area shape="rect" id="node20" href="$classDotSceneLoader.html#a113629751b9dc54f7ea6688f8f4bbd7b" title="DotSceneLoader::parseColour" alt="" coords="617,54,831,83"/>
+<area shape="rect" id="node23" href="$classDotSceneLoader.html#a8c5c2effeeca217dc5a36c1756f33f28" title="DotSceneLoader::parseVector3" alt="" coords="308,105,529,134"/>
+<area shape="rect" id="node26" href="$classDotSceneLoader.html#ad69fec1b12cd1aebf6455df276148ac4" title="DotSceneLoader::processLightAttenuation" alt="" coords="272,211,565,241"/>
+<area shape="rect" id="node31" href="$classDotSceneLoader.html#a63af61100dad390604107cd32973ae79" title="DotSceneLoader::processLightRange" alt="" coords="289,158,548,187"/>
+<area shape="rect" id="node5" href="$classrapidxml_1_1xml__base.html#a9a09739310469995db078ebd0da3ed45" title="rapidxml::xml_base::name" alt="" coords="1191,79,1380,109"/>
+<area shape="rect" id="node9" href="$classrapidxml_1_1xml__base.html#a7e7f98b3d01e1eab8dc1ca69aad9af84" title="rapidxml::xml_base::name_size" alt="" coords="1175,133,1396,162"/>
+<area shape="rect" id="node7" href="$classrapidxml_1_1xml__base.html#ad96ff6b1e41dab3ff60b9bc4df769a75" title="rapidxml::xml_base::nullstr" alt="" coords="1447,79,1639,109"/>
+<area shape="rect" id="node13" href="$classrapidxml_1_1xml__node.html#ae426802be58114ffc41bf30ac6b8c37d" title="rapidxml::xml_node::first_attribute" alt="" coords="884,133,1124,162"/>
+<area shape="rect" id="node28" href="$classDotSceneLoader.html#a52668f1e4c81acd5a4be7805fc16e172" title="DotSceneLoader::getAttribReal" alt="" coords="615,158,833,187"/>
+</map>

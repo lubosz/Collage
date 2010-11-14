@@ -1,0 +1,8 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$classAppState.html#a9c18cb8ce2e689305fc417fc59c304dc" title="AppState::create" alt="" coords="279,5,409,35"/>
+<area shape="rect" id="node5" href="$classAppStateManager.html#a357316ae104ed314a8d51ca122532d32" title="AppStateManager::findByName" alt="" coords="232,59,456,88"/>
+<area shape="rect" id="node7" href="$classSingleton.html#a23ab9ee0e00a373dcf63f66ab13de114" title="Singleton\&lt; System \&gt;::Instance" alt="" coords="1020,257,1241,287"/>
+<area shape="rect" id="node12" href="$classAppStateManager.html#a61560524c1ddf50ab1508e3135035919" title="AppStateManager::start" alt="" coords="256,257,432,287"/>
+<area shape="rect" id="node14" href="$classAppStateManager.html#ad2e841b3e33e67bda0ee535839a83cd1" title="AppStateManager::changeAppState" alt="" coords="504,333,757,363"/>
+<area shape="rect" id="node16" href="$classAppStateManager.html#a7b9c9b1cbcc7c32a7542fd1204bc9592" title="AppStateManager::init" alt="" coords="805,333,971,363"/>
+</map>
