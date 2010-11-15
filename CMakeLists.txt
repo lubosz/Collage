@@ -40,8 +40,11 @@ endfunction(copy_plugins_config)
 #Find headers and cpps
 file(GLOB_RECURSE SOURCES src/*.cpp)
 file(GLOB_RECURSE INCLUDES include/*.h)
+file(GLOB_RECURSE TESTS test/*.cpp)
+file(GLOB_RECURSE CORE src/Core/*.cpp)
 
 add_executable(collage ${SOURCES} ${INCLUDES})
+add_executable(ogreTest ${TESTS} ${CORE} ${INCLUDES})
 
 IF(EXISTS "/usr/bin/python2")
 	SET(PYTHON_VER "python2")
@@ -91,6 +94,10 @@ elseif(UNIX)
 	target_link_libraries(collage OgreMain OIS)
 	if(OGRE_TERRAIN)
 	    target_link_libraries(collage OgreTerrain)
+    endif()
+    target_link_libraries(ogreTest OgreMain OIS)
+	if(OGRE_TERRAIN)
+	    target_link_libraries(ogreTest OgreTerrain)
     endif()
 	copy_plugins_config(${CMAKE_CFG_INTDIR}/bin/plugins-unix.cfg)
 
