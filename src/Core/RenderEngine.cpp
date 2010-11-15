@@ -18,8 +18,9 @@ RenderEngine::RenderEngine() {
 RenderEngine::~RenderEngine() {
     System::Instance().logMessage("Shutdown Render Engine...");
 
-	if (m_pRoot)
-		delete m_pRoot;
+    // Causes segfault
+	// if (m_pRoot)
+	//	delete m_pRoot;
 }
 
 void RenderEngine::updateOgre(double timeSinceLastFrame) {

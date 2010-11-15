@@ -68,7 +68,8 @@ void AppStateManager::start(AppState* state) {
 #if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
 		Ogre::WindowEventUtilities::messagePump();
 #endif
-		if (RenderEngine::Instance().m_pRenderWnd->isActive()) {
+		else {
+		//if (RenderEngine::Instance().m_pRenderWnd->isActive()) {
 			startTime
 					= System::Instance().m_pTimer->getMillisecondsCPU();
 
@@ -83,7 +84,7 @@ void AppStateManager::start(AppState* state) {
 			timeSinceLastFrame
 					= System::Instance().m_pTimer->getMillisecondsCPU()
 							- startTime;
-		} else {
+	//	} else {
 			// Sleep(1000);
 		}
 	}
