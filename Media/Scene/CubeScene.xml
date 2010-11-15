@@ -4,19 +4,19 @@
       <position x="-15.000000" y="0.000000" z="-0.000000"/>
       <quaternion x="0.000000" y="0.000000" z="-0.000000" w="1.000000"/>
       <scale x="1.000000" y="1.000000" z="1.000000"/>
-      <entity name="Cube01" meshFile="Cube01.mesh"/>
+      <entity name="Cube01" meshFile="Cube.mesh"/>
     </node>
     <node name="Cube03">
       <position x="15.000000" y="0.000000" z="-0.000000"/>
       <quaternion x="0.000000" y="0.000000" z="-0.000000" w="1.000000"/>
       <scale x="1.000000" y="1.000000" z="1.000000"/>
-      <entity name="Cube03" meshFile="Cube03.mesh"/>
+      <entity name="Cube03" meshFile="Cube.mesh"/>
     </node>
     <node name="Cube02">
       <position x="0.000000" y="0.000000" z="-0.000000"/>
       <quaternion x="0.000000" y="0.000000" z="-0.000000" w="1.000000"/>
       <scale x="1.000000" y="1.000000" z="1.000000"/>
-      <entity name="Cube02" meshFile="Cube02.mesh"/>
+      <entity name="Cube02" meshFile="Cube.mesh"/>
     </node>
   </nodes>
   <externals>
