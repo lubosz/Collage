@@ -133,6 +133,10 @@ elseif (WIN32)
 		if(OGRE_TERRAIN)
 	        target_link_libraries(collage OgreTerrain)
         endif()
+        target_link_libraries(ogreTest 
+			OgreMain
+			OIS
+		)
 	ELSE()
 		link_directories(
 			$ENV{OGRE_HOME}/lib/debug
@@ -145,6 +149,10 @@ elseif (WIN32)
 		if(OGRE_TERRAIN)
 	        target_link_libraries(collage OgreTerrain_d)
         endif()
+        target_link_libraries(ogreTest 
+			OgreMain_d
+			OIS_d
+		)
 	ENDIF()
 
 	#replace backslashes with slashes	
