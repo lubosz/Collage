@@ -27,7 +27,7 @@ ENDIF()
 IF(RELEASE)
     set(CMAKE_CXX_FLAGS "-O3 -msse4 -mssse3") #Optimized
 ELSE()
-    set(CMAKE_CXX_FLAGS "-O0 -g3") #Debug
+    set(CMAKE_CXX_FLAGS "-O0 -g3 -ggdb") #Debug
 ENDIF()
 
 function(copy_plugins_config FROM_PLUGINS_CFG)
@@ -74,7 +74,8 @@ if (APPLE)
 		$ENV{OGRE_HOME}/lib/release
 	)
 	# Build 32 cause Ogre 1.7 doesn't support 64bit on OSX
-	set(CMAKE_CXX_FLAGS "-m32")
+	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -m32")
+
 	# Also link all the other libs that Ogre apparently needs, see:
 	# http://www.ogre3d.org/forums/viewtopic.php?f=2&t=57997
 	set(CMAKE_EXE_LINKER_FLAGS "-m32 -framework Ogre -framework CoreFoundation -framework IOKit -framework ApplicationServices -framework Carbon -framework AppKit")
