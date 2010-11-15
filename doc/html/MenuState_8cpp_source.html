@@ -89,88 +89,88 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00037"></a>00037         <a class="code" href="classSingleton.html#a23ab9ee0e00a373dcf63f66ab13de114">RenderEngine::Instance</a>().m_pViewport-&gt;setCamera(<a class="code" href="classAppState.html#a27b6d7e4fa6492fc35666ba82390b04d">m_pCamera</a>);
 <a name="l00038"></a>00038 
 <a name="l00039"></a>00039         <a class="code" href="classSingleton.html#a23ab9ee0e00a373dcf63f66ab13de114">UserInterface::Instance</a>().m_pTrayMgr-&gt;destroyAllWidgets();
-<a name="l00040"></a>00040         <a class="code" href="classSingleton.html#a23ab9ee0e00a373dcf63f66ab13de114">UserInterface::Instance</a>().m_pTrayMgr-&gt;showFrameStats(
-<a name="l00041"></a>00041                         OgreBites::TL_BOTTOMLEFT);
-<a name="l00042"></a>00042         <a class="code" href="classSingleton.html#a23ab9ee0e00a373dcf63f66ab13de114">UserInterface::Instance</a>().m_pTrayMgr-&gt;showLogo(
-<a name="l00043"></a>00043                         OgreBites::TL_BOTTOMRIGHT);
-<a name="l00044"></a>00044         <a class="code" href="classSingleton.html#a23ab9ee0e00a373dcf63f66ab13de114">UserInterface::Instance</a>().m_pTrayMgr-&gt;showCursor();
-<a name="l00045"></a>00045         <a class="code" href="classSingleton.html#a23ab9ee0e00a373dcf63f66ab13de114">UserInterface::Instance</a>().m_pTrayMgr-&gt;createButton(
-<a name="l00046"></a>00046                         OgreBites::TL_CENTER, <span class="stringliteral">&quot;EnterBtn&quot;</span>, <span class="stringliteral">&quot;Enter GameState&quot;</span>, 250);
-<a name="l00047"></a>00047         <a class="code" href="classSingleton.html#a23ab9ee0e00a373dcf63f66ab13de114">UserInterface::Instance</a>().m_pTrayMgr-&gt;createButton(
-<a name="l00048"></a>00048                         OgreBites::TL_CENTER, <span class="stringliteral">&quot;ExitBtn&quot;</span>, <span class="stringliteral">&quot;Exit AdvancedOgreFramework&quot;</span>, 250);
-<a name="l00049"></a>00049         <a class="code" href="classSingleton.html#a23ab9ee0e00a373dcf63f66ab13de114">UserInterface::Instance</a>().m_pTrayMgr-&gt;createLabel(
-<a name="l00050"></a>00050                         OgreBites::TL_TOP, <span class="stringliteral">&quot;MenuLbl&quot;</span>, <span class="stringliteral">&quot;Menu mode&quot;</span>, 250);
-<a name="l00051"></a>00051 
-<a name="l00052"></a>00052         <a class="code" href="classMenuState.html#a3288bd1fec27e3429883835124e10a4d">createScene</a>();
-<a name="l00053"></a>00053 }
-<a name="l00054"></a>00054 
-<a name="l00055"></a><a class="code" href="classMenuState.html#a3288bd1fec27e3429883835124e10a4d">00055</a> <span class="keywordtype">void</span> <a class="code" href="classMenuState.html#a3288bd1fec27e3429883835124e10a4d">MenuState::createScene</a>() {
-<a name="l00056"></a>00056 }
-<a name="l00057"></a>00057 
-<a name="l00058"></a><a class="code" href="classMenuState.html#ae466e9867b76389be8d69d723cb08897">00058</a> <span class="keywordtype">void</span> <a class="code" href="classMenuState.html#ae466e9867b76389be8d69d723cb08897">MenuState::exit</a>() {
-<a name="l00059"></a>00059         <a class="code" href="classSingleton.html#a23ab9ee0e00a373dcf63f66ab13de114">System::Instance</a>().logMessage(<span class="stringliteral">&quot;Leaving MenuState...&quot;</span>);
-<a name="l00060"></a>00060 
-<a name="l00061"></a>00061         <a class="code" href="classAppState.html#ae40987afbcc22a87253f46fff692e31f">m_pSceneMgr</a>-&gt;destroyCamera(<a class="code" href="classAppState.html#a27b6d7e4fa6492fc35666ba82390b04d">m_pCamera</a>);
-<a name="l00062"></a>00062         <span class="keywordflow">if</span> (<a class="code" href="classAppState.html#ae40987afbcc22a87253f46fff692e31f">m_pSceneMgr</a>)
-<a name="l00063"></a>00063                 <a class="code" href="classSingleton.html#a23ab9ee0e00a373dcf63f66ab13de114">RenderEngine::Instance</a>().m_pRoot-&gt;destroySceneManager(
-<a name="l00064"></a>00064                                 <a class="code" href="classAppState.html#ae40987afbcc22a87253f46fff692e31f">m_pSceneMgr</a>);
-<a name="l00065"></a>00065 
-<a name="l00066"></a>00066         <a class="code" href="classSingleton.html#a23ab9ee0e00a373dcf63f66ab13de114">UserInterface::Instance</a>().m_pTrayMgr-&gt;clearAllTrays();
-<a name="l00067"></a>00067         <a class="code" href="classSingleton.html#a23ab9ee0e00a373dcf63f66ab13de114">UserInterface::Instance</a>().m_pTrayMgr-&gt;destroyAllWidgets();
-<a name="l00068"></a>00068         <a class="code" href="classSingleton.html#a23ab9ee0e00a373dcf63f66ab13de114">UserInterface::Instance</a>().m_pTrayMgr-&gt;setListener(0);
-<a name="l00069"></a>00069 }
-<a name="l00070"></a>00070 
-<a name="l00071"></a><a class="code" href="classMenuState.html#acf79a5cea338bfe9de4428ab66f3cb58">00071</a> <span class="keywordtype">bool</span> <a class="code" href="classMenuState.html#acf79a5cea338bfe9de4428ab66f3cb58">MenuState::keyPressed</a>(<span class="keyword">const</span> OIS::KeyEvent &amp;keyEventRef) {
-<a name="l00072"></a>00072         <span class="keywordflow">if</span> (<a class="code" href="classSingleton.html#a23ab9ee0e00a373dcf63f66ab13de114">Input::Instance</a>().m_pKeyboard-&gt;isKeyDown(OIS::KC_ESCAPE)) {
-<a name="l00073"></a>00073                 <a class="code" href="classMenuState.html#a12464a858056f2029b9e2610b30d1ed9">m_bQuit</a> = <span class="keyword">true</span>;
-<a name="l00074"></a>00074                 <span class="keywordflow">return</span> <span class="keyword">true</span>;
-<a name="l00075"></a>00075         }
+<a name="l00040"></a>00040         <a class="code" href="classSingleton.html#a23ab9ee0e00a373dcf63f66ab13de114">UserInterface::Instance</a>().m_pTrayMgr-&gt;showCursor();
+<a name="l00041"></a>00041         <a class="code" href="classSingleton.html#a23ab9ee0e00a373dcf63f66ab13de114">UserInterface::Instance</a>().m_pTrayMgr-&gt;createLabel(OgreBites::TL_TOP, <span class="stringliteral">&quot;MenuLbl&quot;</span>, <span class="stringliteral">&quot;Menu mode&quot;</span>, 250);
+<a name="l00042"></a>00042         <a class="code" href="classSingleton.html#a23ab9ee0e00a373dcf63f66ab13de114">UserInterface::Instance</a>().m_pTrayMgr-&gt;createDecorWidget(OgreBites::TL_CENTER,<span class="stringliteral">&quot;splashImage&quot;</span>, <span class="stringliteral">&quot;SdkTrays/Splash&quot;</span>);
+<a name="l00043"></a>00043         <a class="code" href="classSingleton.html#a23ab9ee0e00a373dcf63f66ab13de114">UserInterface::Instance</a>().m_pTrayMgr-&gt;createButton(OgreBites::TL_CENTER, <span class="stringliteral">&quot;EnterBtn&quot;</span>, <span class="stringliteral">&quot;Start Game&quot;</span>, 250);
+<a name="l00044"></a>00044         <a class="code" href="classSingleton.html#a23ab9ee0e00a373dcf63f66ab13de114">UserInterface::Instance</a>().m_pTrayMgr-&gt;createButton(OgreBites::TL_CENTER, <span class="stringliteral">&quot;DeleteC&quot;</span>, <span class="stringliteral">&quot;Delete C:\\&quot;</span>, 250);
+<a name="l00045"></a>00045         <a class="code" href="classSingleton.html#a23ab9ee0e00a373dcf63f66ab13de114">UserInterface::Instance</a>().m_pTrayMgr-&gt;createButton(OgreBites::TL_CENTER, <span class="stringliteral">&quot;Settings&quot;</span>, <span class="stringliteral">&quot;Settings&quot;</span>, 250);
+<a name="l00046"></a>00046         <a class="code" href="classSingleton.html#a23ab9ee0e00a373dcf63f66ab13de114">UserInterface::Instance</a>().m_pTrayMgr-&gt;createButton(OgreBites::TL_CENTER, <span class="stringliteral">&quot;ExitBtn&quot;</span>, <span class="stringliteral">&quot;Exit Collage&quot;</span>, 250);
+<a name="l00047"></a>00047 
+<a name="l00048"></a>00048         <a class="code" href="classMenuState.html#a3288bd1fec27e3429883835124e10a4d">createScene</a>();
+<a name="l00049"></a>00049 }
+<a name="l00050"></a>00050 
+<a name="l00051"></a><a class="code" href="classMenuState.html#a3288bd1fec27e3429883835124e10a4d">00051</a> <span class="keywordtype">void</span> <a class="code" href="classMenuState.html#a3288bd1fec27e3429883835124e10a4d">MenuState::createScene</a>() {
+<a name="l00052"></a>00052 }
+<a name="l00053"></a>00053 
+<a name="l00054"></a><a class="code" href="classMenuState.html#ae466e9867b76389be8d69d723cb08897">00054</a> <span class="keywordtype">void</span> <a class="code" href="classMenuState.html#ae466e9867b76389be8d69d723cb08897">MenuState::exit</a>() {
+<a name="l00055"></a>00055         <a class="code" href="classSingleton.html#a23ab9ee0e00a373dcf63f66ab13de114">System::Instance</a>().logMessage(<span class="stringliteral">&quot;Leaving MenuState...&quot;</span>);
+<a name="l00056"></a>00056 
+<a name="l00057"></a>00057         <a class="code" href="classAppState.html#ae40987afbcc22a87253f46fff692e31f">m_pSceneMgr</a>-&gt;destroyCamera(<a class="code" href="classAppState.html#a27b6d7e4fa6492fc35666ba82390b04d">m_pCamera</a>);
+<a name="l00058"></a>00058         <span class="keywordflow">if</span> (<a class="code" href="classAppState.html#ae40987afbcc22a87253f46fff692e31f">m_pSceneMgr</a>)
+<a name="l00059"></a>00059                 <a class="code" href="classSingleton.html#a23ab9ee0e00a373dcf63f66ab13de114">RenderEngine::Instance</a>().m_pRoot-&gt;destroySceneManager(
+<a name="l00060"></a>00060                                 <a class="code" href="classAppState.html#ae40987afbcc22a87253f46fff692e31f">m_pSceneMgr</a>);
+<a name="l00061"></a>00061 
+<a name="l00062"></a>00062         <a class="code" href="classSingleton.html#a23ab9ee0e00a373dcf63f66ab13de114">UserInterface::Instance</a>().m_pTrayMgr-&gt;clearAllTrays();
+<a name="l00063"></a>00063         <a class="code" href="classSingleton.html#a23ab9ee0e00a373dcf63f66ab13de114">UserInterface::Instance</a>().m_pTrayMgr-&gt;destroyAllWidgets();
+<a name="l00064"></a>00064         <a class="code" href="classSingleton.html#a23ab9ee0e00a373dcf63f66ab13de114">UserInterface::Instance</a>().m_pTrayMgr-&gt;setListener(0);
+<a name="l00065"></a>00065 }
+<a name="l00066"></a>00066 
+<a name="l00067"></a><a class="code" href="classMenuState.html#acf79a5cea338bfe9de4428ab66f3cb58">00067</a> <span class="keywordtype">bool</span> <a class="code" href="classMenuState.html#acf79a5cea338bfe9de4428ab66f3cb58">MenuState::keyPressed</a>(<span class="keyword">const</span> OIS::KeyEvent &amp;keyEventRef) {
+<a name="l00068"></a>00068         <span class="keywordflow">if</span> (<a class="code" href="classSingleton.html#a23ab9ee0e00a373dcf63f66ab13de114">Input::Instance</a>().m_pKeyboard-&gt;isKeyDown(OIS::KC_ESCAPE)) {
+<a name="l00069"></a>00069                 <a class="code" href="classMenuState.html#a12464a858056f2029b9e2610b30d1ed9">m_bQuit</a> = <span class="keyword">true</span>;
+<a name="l00070"></a>00070                 <span class="keywordflow">return</span> <span class="keyword">true</span>;
+<a name="l00071"></a>00071         }
+<a name="l00072"></a>00072 
+<a name="l00073"></a>00073         <a class="code" href="classSingleton.html#a23ab9ee0e00a373dcf63f66ab13de114">Input::Instance</a>().keyPressed(keyEventRef);
+<a name="l00074"></a>00074         <span class="keywordflow">return</span> <span class="keyword">true</span>;
+<a name="l00075"></a>00075 }
 <a name="l00076"></a>00076 
-<a name="l00077"></a>00077         <a class="code" href="classSingleton.html#a23ab9ee0e00a373dcf63f66ab13de114">Input::Instance</a>().keyPressed(keyEventRef);
-<a name="l00078"></a>00078         <span class="keywordflow">return</span> <span class="keyword">true</span>;
-<a name="l00079"></a>00079 }
-<a name="l00080"></a>00080 
-<a name="l00081"></a><a class="code" href="classMenuState.html#aa8f84aee12ca2018bd17bdff7e4495f2">00081</a> <span class="keywordtype">bool</span> <a class="code" href="classMenuState.html#aa8f84aee12ca2018bd17bdff7e4495f2">MenuState::keyReleased</a>(<span class="keyword">const</span> OIS::KeyEvent &amp;keyEventRef) {
-<a name="l00082"></a>00082         <a class="code" href="classSingleton.html#a23ab9ee0e00a373dcf63f66ab13de114">Input::Instance</a>().keyReleased(keyEventRef);
-<a name="l00083"></a>00083         <span class="keywordflow">return</span> <span class="keyword">true</span>;
-<a name="l00084"></a>00084 }
-<a name="l00085"></a>00085 
-<a name="l00086"></a><a class="code" href="classMenuState.html#afb3111b347a60e3f7a787cff113514de">00086</a> <span class="keywordtype">bool</span> <a class="code" href="classMenuState.html#afb3111b347a60e3f7a787cff113514de">MenuState::mouseMoved</a>(<span class="keyword">const</span> OIS::MouseEvent &amp;evt) {
-<a name="l00087"></a>00087         <span class="keywordflow">if</span> (<a class="code" href="classSingleton.html#a23ab9ee0e00a373dcf63f66ab13de114">UserInterface::Instance</a>().m_pTrayMgr-&gt;injectMouseMove(evt))
-<a name="l00088"></a>00088                 <span class="keywordflow">return</span> <span class="keyword">true</span>;
-<a name="l00089"></a>00089         <span class="keywordflow">return</span> <span class="keyword">true</span>;
-<a name="l00090"></a>00090 }
-<a name="l00091"></a>00091 
-<a name="l00092"></a><a class="code" href="classMenuState.html#a671481f67719c6d7dcd96206ae9a53f4">00092</a> <span class="keywordtype">bool</span> <a class="code" href="classMenuState.html#a671481f67719c6d7dcd96206ae9a53f4">MenuState::mousePressed</a>(
-<a name="l00093"></a>00093                 <span class="keyword">const</span> OIS::MouseEvent &amp;evt,
-<a name="l00094"></a>00094                 OIS::MouseButtonID <span class="keywordtype">id</span>
-<a name="l00095"></a>00095         ) {
-<a name="l00096"></a>00096         <span class="keywordflow">if</span> (<a class="code" href="classSingleton.html#a23ab9ee0e00a373dcf63f66ab13de114">UserInterface::Instance</a>().m_pTrayMgr-&gt;injectMouseDown(evt, <span class="keywordtype">id</span>))
-<a name="l00097"></a>00097                 <span class="keywordflow">return</span> <span class="keyword">true</span>;
-<a name="l00098"></a>00098         <span class="keywordflow">return</span> <span class="keyword">true</span>;
-<a name="l00099"></a>00099 }
-<a name="l00100"></a>00100 
-<a name="l00101"></a><a class="code" href="classMenuState.html#a358aaaf8ad0c7c7cfed8d5b625c220be">00101</a> <span class="keywordtype">bool</span> <a class="code" href="classMenuState.html#a358aaaf8ad0c7c7cfed8d5b625c220be">MenuState::mouseReleased</a>(
-<a name="l00102"></a>00102                 <span class="keyword">const</span> OIS::MouseEvent &amp;evt,
-<a name="l00103"></a>00103                 OIS::MouseButtonID <span class="keywordtype">id</span>
-<a name="l00104"></a>00104         ) {
-<a name="l00105"></a>00105         <span class="keywordflow">if</span> (<a class="code" href="classSingleton.html#a23ab9ee0e00a373dcf63f66ab13de114">UserInterface::Instance</a>().m_pTrayMgr-&gt;injectMouseUp(evt, <span class="keywordtype">id</span>))
-<a name="l00106"></a>00106                 <span class="keywordflow">return</span> <span class="keyword">true</span>;
-<a name="l00107"></a>00107         <span class="keywordflow">return</span> <span class="keyword">true</span>;
-<a name="l00108"></a>00108 }
-<a name="l00109"></a>00109 
-<a name="l00110"></a><a class="code" href="classMenuState.html#a231f882380c5aa3001df73c33a8030ed">00110</a> <span class="keywordtype">void</span> <a class="code" href="classMenuState.html#a231f882380c5aa3001df73c33a8030ed">MenuState::update</a>(<span class="keywordtype">double</span> timeSinceLastFrame) {
-<a name="l00111"></a>00111         <a class="code" href="classAppState.html#a5b421b0be5f867f11c90dacc7f7abbf6">m_FrameEvent</a>.timeSinceLastFrame = timeSinceLastFrame;
-<a name="l00112"></a>00112         <a class="code" href="classSingleton.html#a23ab9ee0e00a373dcf63f66ab13de114">UserInterface::Instance</a>().m_pTrayMgr-&gt;frameRenderingQueued(
-<a name="l00113"></a>00113                         <a class="code" href="classAppState.html#a5b421b0be5f867f11c90dacc7f7abbf6">m_FrameEvent</a>);
-<a name="l00114"></a>00114 
-<a name="l00115"></a>00115         <span class="keywordflow">if</span> (<a class="code" href="classMenuState.html#a12464a858056f2029b9e2610b30d1ed9">m_bQuit</a> == <span class="keyword">true</span>) {
-<a name="l00116"></a>00116                 <a class="code" href="classAppState.html#a61a9b968c9bcb42135018ff310a57d7b">shutdown</a>();
-<a name="l00117"></a>00117                 <span class="keywordflow">return</span>;
-<a name="l00118"></a>00118         }
-<a name="l00119"></a>00119 }
-<a name="l00120"></a>00120 
-<a name="l00121"></a><a class="code" href="classMenuState.html#a8c0e2200d1248f0803164b03441417ac">00121</a> <span class="keywordtype">void</span> <a class="code" href="classMenuState.html#a8c0e2200d1248f0803164b03441417ac">MenuState::buttonHit</a>(OgreBites::Button* button) {
+<a name="l00077"></a><a class="code" href="classMenuState.html#aa8f84aee12ca2018bd17bdff7e4495f2">00077</a> <span class="keywordtype">bool</span> <a class="code" href="classMenuState.html#aa8f84aee12ca2018bd17bdff7e4495f2">MenuState::keyReleased</a>(<span class="keyword">const</span> OIS::KeyEvent &amp;keyEventRef) {
+<a name="l00078"></a>00078         <a class="code" href="classSingleton.html#a23ab9ee0e00a373dcf63f66ab13de114">Input::Instance</a>().keyReleased(keyEventRef);
+<a name="l00079"></a>00079         <span class="keywordflow">return</span> <span class="keyword">true</span>;
+<a name="l00080"></a>00080 }
+<a name="l00081"></a>00081 
+<a name="l00082"></a><a class="code" href="classMenuState.html#afb3111b347a60e3f7a787cff113514de">00082</a> <span class="keywordtype">bool</span> <a class="code" href="classMenuState.html#afb3111b347a60e3f7a787cff113514de">MenuState::mouseMoved</a>(<span class="keyword">const</span> OIS::MouseEvent &amp;evt) {
+<a name="l00083"></a>00083         <span class="keywordflow">if</span> (<a class="code" href="classSingleton.html#a23ab9ee0e00a373dcf63f66ab13de114">UserInterface::Instance</a>().m_pTrayMgr-&gt;injectMouseMove(evt))
+<a name="l00084"></a>00084                 <span class="keywordflow">return</span> <span class="keyword">true</span>;
+<a name="l00085"></a>00085         <span class="keywordflow">return</span> <span class="keyword">true</span>;
+<a name="l00086"></a>00086 }
+<a name="l00087"></a>00087 
+<a name="l00088"></a><a class="code" href="classMenuState.html#a671481f67719c6d7dcd96206ae9a53f4">00088</a> <span class="keywordtype">bool</span> <a class="code" href="classMenuState.html#a671481f67719c6d7dcd96206ae9a53f4">MenuState::mousePressed</a>(
+<a name="l00089"></a>00089                 <span class="keyword">const</span> OIS::MouseEvent &amp;evt,
+<a name="l00090"></a>00090                 OIS::MouseButtonID <span class="keywordtype">id</span>
+<a name="l00091"></a>00091         ) {
+<a name="l00092"></a>00092         <span class="keywordflow">if</span> (<a class="code" href="classSingleton.html#a23ab9ee0e00a373dcf63f66ab13de114">UserInterface::Instance</a>().m_pTrayMgr-&gt;injectMouseDown(evt, <span class="keywordtype">id</span>))
+<a name="l00093"></a>00093                 <span class="keywordflow">return</span> <span class="keyword">true</span>;
+<a name="l00094"></a>00094         <span class="keywordflow">return</span> <span class="keyword">true</span>;
+<a name="l00095"></a>00095 }
+<a name="l00096"></a>00096 
+<a name="l00097"></a><a class="code" href="classMenuState.html#a358aaaf8ad0c7c7cfed8d5b625c220be">00097</a> <span class="keywordtype">bool</span> <a class="code" href="classMenuState.html#a358aaaf8ad0c7c7cfed8d5b625c220be">MenuState::mouseReleased</a>(
+<a name="l00098"></a>00098                 <span class="keyword">const</span> OIS::MouseEvent &amp;evt,
+<a name="l00099"></a>00099                 OIS::MouseButtonID <span class="keywordtype">id</span>
+<a name="l00100"></a>00100         ) {
+<a name="l00101"></a>00101         <span class="keywordflow">if</span> (<a class="code" href="classSingleton.html#a23ab9ee0e00a373dcf63f66ab13de114">UserInterface::Instance</a>().m_pTrayMgr-&gt;injectMouseUp(evt, <span class="keywordtype">id</span>))
+<a name="l00102"></a>00102                 <span class="keywordflow">return</span> <span class="keyword">true</span>;
+<a name="l00103"></a>00103         <span class="keywordflow">return</span> <span class="keyword">true</span>;
+<a name="l00104"></a>00104 }
+<a name="l00105"></a>00105 
+<a name="l00106"></a><a class="code" href="classMenuState.html#a231f882380c5aa3001df73c33a8030ed">00106</a> <span class="keywordtype">void</span> <a class="code" href="classMenuState.html#a231f882380c5aa3001df73c33a8030ed">MenuState::update</a>(<span class="keywordtype">double</span> timeSinceLastFrame) {
+<a name="l00107"></a>00107         <a class="code" href="classAppState.html#a5b421b0be5f867f11c90dacc7f7abbf6">m_FrameEvent</a>.timeSinceLastFrame = timeSinceLastFrame;
+<a name="l00108"></a>00108         <a class="code" href="classSingleton.html#a23ab9ee0e00a373dcf63f66ab13de114">UserInterface::Instance</a>().m_pTrayMgr-&gt;frameRenderingQueued(
+<a name="l00109"></a>00109                         <a class="code" href="classAppState.html#a5b421b0be5f867f11c90dacc7f7abbf6">m_FrameEvent</a>);
+<a name="l00110"></a>00110 
+<a name="l00111"></a>00111         <span class="keywordflow">if</span> (<a class="code" href="classMenuState.html#a12464a858056f2029b9e2610b30d1ed9">m_bQuit</a> == <span class="keyword">true</span>) {
+<a name="l00112"></a>00112                 <a class="code" href="classAppState.html#a61a9b968c9bcb42135018ff310a57d7b">shutdown</a>();
+<a name="l00113"></a>00113                 <span class="keywordflow">return</span>;
+<a name="l00114"></a>00114         }
+<a name="l00115"></a>00115 }
+<a name="l00116"></a>00116 
+<a name="l00117"></a><a class="code" href="classMenuState.html#a8c0e2200d1248f0803164b03441417ac">00117</a> <span class="keywordtype">void</span> <a class="code" href="classMenuState.html#a8c0e2200d1248f0803164b03441417ac">MenuState::buttonHit</a>(OgreBites::Button* button) {
+<a name="l00118"></a>00118         <span class="keywordflow">if</span> (button-&gt;getName() == <span class="stringliteral">&quot;ExitBtn&quot;</span>)
+<a name="l00119"></a>00119                 <a class="code" href="classMenuState.html#a12464a858056f2029b9e2610b30d1ed9">m_bQuit</a> = <span class="keyword">true</span>;
+<a name="l00120"></a>00120         <span class="keywordflow">else</span> <span class="keywordflow">if</span> (button-&gt;getName() == <span class="stringliteral">&quot;EnterBtn&quot;</span>)
+<a name="l00121"></a>00121                 <a class="code" href="classAppState.html#a7d194ba8ead3639016646ce0ff08eb96">popAllAndPushAppState</a>(<a class="code" href="classAppState.html#ac59effc37303d010752afc83c6c615d7">findByName</a>(<span class="stringliteral">&quot;GameState&quot;</span>));
 <a name="l00122"></a>00122 }
 </pre></div></div>
 </div>
@@ -188,7 +188,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Mon Nov 15 2010 00:13:07 for Collage by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Mon Nov 15 2010 07:00:45 for Collage by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.2 </small></address>
 </body>

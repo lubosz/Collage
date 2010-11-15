@@ -80,6 +80,9 @@ Public Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSystem.html#ae317936c9bcf1374d61745572e0f2f8a">System</a> ()</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSystem.html#a3be70bb338e3f062f821173fd15680d0">~System</a> ()</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSystem.html#addf4e11b40aece349941a7670ffdbb45">logMessage</a> (Ogre::String message)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSystem.html#aa7a169b1cab264facc6c2d3b88edf6ad">initTimer</a> ()</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSystem.html#a8b10b660b9bcff9aafba56eb7310254a">initLogging</a> ()</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSystem.html#ad97d94654c8b9483dcc8422c34444f58">initResources</a> ()</td></tr>
 <tr><td colspan="2"><h2><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">Ogre::Log *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSystem.html#ae308320811d1b771fe52220ef48e8312">m_pLog</a></td></tr>
@@ -103,9 +106,18 @@ Public Attributes</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="System_8cpp_source.html#l00011">11</a> of file <a class="el" href="System_8cpp_source.html">System.cpp</a>.</p>
+<p>Definition at line <a class="el" href="System_8cpp_source.html#l00015">15</a> of file <a class="el" href="System_8cpp_source.html">System.cpp</a>.</p>
 
-<p>References <a class="el" href="System_8h_source.html#l00019">m_pLog</a>, and <a class="el" href="System_8h_source.html#l00020">m_pTimer</a>.</p>
+<p>References <a class="el" href="classSystem.html#addf4e11b40aece349941a7670ffdbb45">logMessage()</a>.</p>
+
+<p><!-- startSectionHeader --><div class="dynheader">
+Here is the call graph for this function:<!-- endSectionHeader --></div>
+<!-- startSectionSummary --><!-- endSectionSummary --><!-- startSectionContent --><div class="dyncontent">
+<div class="center"><img src="classSystem_ae317936c9bcf1374d61745572e0f2f8a_cgraph.png" border="0" usemap="#classSystem_ae317936c9bcf1374d61745572e0f2f8a_cgraph" alt=""/></div>
+<map name="classSystem_ae317936c9bcf1374d61745572e0f2f8a_cgraph" id="classSystem_ae317936c9bcf1374d61745572e0f2f8a_cgraph">
+<area shape="rect" id="node3" href="classSystem.html#addf4e11b40aece349941a7670ffdbb45" title="System::logMessage" alt="" coords="181,5,336,35"/></map>
+<!-- endSectionContent --></div>
+</p>
 
 </div>
 </div>
@@ -123,11 +135,69 @@ Public Attributes</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="System_8cpp_source.html#l00044">44</a> of file <a class="el" href="System_8cpp_source.html">System.cpp</a>.</p>
+<p>Definition at line <a class="el" href="System_8cpp_source.html#l00024">24</a> of file <a class="el" href="System_8cpp_source.html">System.cpp</a>.</p>
 
 </div>
 </div>
 <hr/><h2>Member Function Documentation</h2>
+<a class="anchor" id="a8b10b660b9bcff9aafba56eb7310254a"></a><!-- doxytag: member="System::initLogging" ref="a8b10b660b9bcff9aafba56eb7310254a" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void System::initLogging </td>
+          <td>(</td>
+          <td class="paramname">&#160;)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Definition at line <a class="el" href="System_8cpp_source.html#l00032">32</a> of file <a class="el" href="System_8cpp_source.html">System.cpp</a>.</p>
+
+<p>References <a class="el" href="System_8h_source.html#l00019">m_pLog</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ad97d94654c8b9483dcc8422c34444f58"></a><!-- doxytag: member="System::initResources" ref="ad97d94654c8b9483dcc8422c34444f58" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void System::initResources </td>
+          <td>(</td>
+          <td class="paramname">&#160;)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Definition at line <a class="el" href="System_8cpp_source.html#l00041">41</a> of file <a class="el" href="System_8cpp_source.html">System.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="aa7a169b1cab264facc6c2d3b88edf6ad"></a><!-- doxytag: member="System::initTimer" ref="aa7a169b1cab264facc6c2d3b88edf6ad" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void System::initTimer </td>
+          <td>(</td>
+          <td class="paramname">&#160;)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Definition at line <a class="el" href="System_8cpp_source.html#l00026">26</a> of file <a class="el" href="System_8cpp_source.html">System.cpp</a>.</p>
+
+<p>References <a class="el" href="System_8h_source.html#l00020">m_pTimer</a>.</p>
+
+</div>
+</div>
 <a class="anchor" id="addf4e11b40aece349941a7670ffdbb45"></a><!-- doxytag: member="System::logMessage" ref="addf4e11b40aece349941a7670ffdbb45" args="(Ogre::String message)" -->
 <div class="memitem">
 <div class="memproto">
@@ -143,9 +213,16 @@ Public Attributes</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="System_8cpp_source.html#l00047">47</a> of file <a class="el" href="System_8cpp_source.html">System.cpp</a>.</p>
+<p>Referenced by <a class="el" href="System_8cpp_source.html#l00015">System()</a>.</p>
 
-<p>References <a class="el" href="System_8h_source.html#l00019">m_pLog</a>.</p>
+<p><!-- startSectionHeader --><div class="dynheader">
+Here is the caller graph for this function:<!-- endSectionHeader --></div>
+<!-- startSectionSummary --><!-- endSectionSummary --><!-- startSectionContent --><div class="dyncontent">
+<div class="center"><img src="classSystem_addf4e11b40aece349941a7670ffdbb45_icgraph.png" border="0" usemap="#classSystem_addf4e11b40aece349941a7670ffdbb45_icgraph" alt=""/></div>
+<map name="classSystem_addf4e11b40aece349941a7670ffdbb45_icgraph" id="classSystem_addf4e11b40aece349941a7670ffdbb45_icgraph">
+<area shape="rect" id="node3" href="classSystem.html#ae317936c9bcf1374d61745572e0f2f8a" title="System::System" alt="" coords="208,5,336,35"/></map>
+<!-- endSectionContent --></div>
+</p>
 
 </div>
 </div>
@@ -163,7 +240,7 @@ Public Attributes</h2></td></tr>
 
 <p>Definition at line <a class="el" href="System_8h_source.html#l00019">19</a> of file <a class="el" href="System_8h_source.html">System.h</a>.</p>
 
-<p>Referenced by <a class="el" href="System_8cpp_source.html#l00047">logMessage()</a>, and <a class="el" href="System_8cpp_source.html#l00011">System()</a>.</p>
+<p>Referenced by <a class="el" href="System_8cpp_source.html#l00032">initLogging()</a>.</p>
 
 </div>
 </div>
@@ -180,7 +257,7 @@ Public Attributes</h2></td></tr>
 
 <p>Definition at line <a class="el" href="System_8h_source.html#l00020">20</a> of file <a class="el" href="System_8h_source.html">System.h</a>.</p>
 
-<p>Referenced by <a class="el" href="System_8cpp_source.html#l00011">System()</a>.</p>
+<p>Referenced by <a class="el" href="System_8cpp_source.html#l00026">initTimer()</a>.</p>
 
 </div>
 </div>
@@ -203,7 +280,7 @@ Public Attributes</h2></td></tr>
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Mon Nov 15 2010 00:13:07 for Collage by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Mon Nov 15 2010 07:00:45 for Collage by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.2 </small></address>
 </body>

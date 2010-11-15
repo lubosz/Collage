@@ -2,12 +2,13 @@
 <area shape="rect" id="node3" href="$CollageApplication_8cpp.html" title="/home/bmonkey/workspace/Ogre/Collage/src/CollageApplication.cpp" alt="" coords="480,237,933,267"/>
 <area shape="rect" id="node5" href="$RenderEngine_8cpp.html" title="/home/bmonkey/workspace/Ogre/Collage/src/Core/RenderEngine.cpp" alt="" coords="1651,83,2109,112"/>
 <area shape="rect" id="node7" href="$System_8cpp.html" title="/home/bmonkey/workspace/Ogre/Collage/src/Core/System.cpp" alt="" coords="2133,83,2552,112"/>
-<area shape="rect" id="node9" href="$AppStateManager_8cpp.html" title="/home/bmonkey/workspace/Ogre/Collage/src/State/AppStateManager.cpp" alt="" coords="1829,160,2320,189"/>
-<area shape="rect" id="node11" href="$AppState_8h.html" title="/home/bmonkey/workspace/Ogre/Collage/include/AppState.h" alt="" coords="1168,83,1576,112"/>
-<area shape="rect" id="node14" href="$GameState_8h.html" title="/home/bmonkey/workspace/Ogre/Collage/include/GameState.h" alt="" coords="496,160,917,189"/>
-<area shape="rect" id="node19" href="$MenuState_8h.html" title="/home/bmonkey/workspace/Ogre/Collage/include/MenuState.h" alt="" coords="941,160,1360,189"/>
-<area shape="rect" id="node24" href="$PauseState_8h.html" title="/home/bmonkey/workspace/Ogre/Collage/include/PauseState.h" alt="" coords="1384,160,1805,189"/>
-<area shape="rect" id="node17" href="$GameState_8cpp.html" title="/home/bmonkey/workspace/Ogre/Collage/src/State/GameState.cpp" alt="" coords="5,237,456,267"/>
-<area shape="rect" id="node22" href="$MenuState_8cpp.html" title="/home/bmonkey/workspace/Ogre/Collage/src/State/MenuState.cpp" alt="" coords="957,237,1403,267"/>
-<area shape="rect" id="node27" href="$PauseState_8cpp.html" title="/home/bmonkey/workspace/Ogre/Collage/src/State/PauseState.cpp" alt="" coords="1427,237,1875,267"/>
+<area shape="rect" id="node9" href="$UserInterface_8cpp.html" title="/home/bmonkey/workspace/Ogre/Collage/src/Core/UserInterface.cpp" alt="" coords="2576,83,3032,112"/>
+<area shape="rect" id="node11" href="$AppStateManager_8cpp.html" title="/home/bmonkey/workspace/Ogre/Collage/src/State/AppStateManager.cpp" alt="" coords="1829,160,2320,189"/>
+<area shape="rect" id="node13" href="$AppState_8h.html" title="/home/bmonkey/workspace/Ogre/Collage/include/AppState.h" alt="" coords="1168,83,1576,112"/>
+<area shape="rect" id="node16" href="$GameState_8h.html" title="/home/bmonkey/workspace/Ogre/Collage/include/GameState.h" alt="" coords="496,160,917,189"/>
+<area shape="rect" id="node21" href="$MenuState_8h.html" title="/home/bmonkey/workspace/Ogre/Collage/include/MenuState.h" alt="" coords="941,160,1360,189"/>
+<area shape="rect" id="node26" href="$PauseState_8h.html" title="/home/bmonkey/workspace/Ogre/Collage/include/PauseState.h" alt="" coords="1384,160,1805,189"/>
+<area shape="rect" id="node19" href="$GameState_8cpp.html" title="/home/bmonkey/workspace/Ogre/Collage/src/State/GameState.cpp" alt="" coords="5,237,456,267"/>
+<area shape="rect" id="node24" href="$MenuState_8cpp.html" title="/home/bmonkey/workspace/Ogre/Collage/src/State/MenuState.cpp" alt="" coords="957,237,1403,267"/>
+<area shape="rect" id="node29" href="$PauseState_8cpp.html" title="/home/bmonkey/workspace/Ogre/Collage/src/State/PauseState.cpp" alt="" coords="1427,237,1875,267"/>
 </map>

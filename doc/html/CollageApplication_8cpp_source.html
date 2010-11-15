@@ -74,34 +74,37 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00022"></a>00022 }
 <a name="l00023"></a>00023 
 <a name="l00024"></a><a class="code" href="classCollageApplication.html#a11010127af14f53602777d23630b9bc4">00024</a> <span class="keywordtype">void</span> <a class="code" href="classCollageApplication.html#a11010127af14f53602777d23630b9bc4">CollageApplication::start</a>() {
-<a name="l00025"></a>00025         <a class="code" href="classSingleton.html#a23ab9ee0e00a373dcf63f66ab13de114">RenderEngine::Instance</a>().initOgre(<span class="stringliteral">&quot;Collage&quot;</span>);
-<a name="l00026"></a>00026         <a class="code" href="classSingleton.html#a23ab9ee0e00a373dcf63f66ab13de114">Input::Instance</a>().initOis();
-<a name="l00027"></a>00027     <a class="code" href="classSingleton.html#a23ab9ee0e00a373dcf63f66ab13de114">UserInterface::Instance</a>().initOgreBites(
-<a name="l00028"></a>00028                 <a class="code" href="classSingleton.html#a23ab9ee0e00a373dcf63f66ab13de114">RenderEngine::Instance</a>().
-<a name="l00029"></a>00029                 m_pRenderWnd,
-<a name="l00030"></a>00030                 <a class="code" href="classSingleton.html#a23ab9ee0e00a373dcf63f66ab13de114">Input::Instance</a>().m_pMouse
-<a name="l00031"></a>00031         );
-<a name="l00032"></a>00032 
-<a name="l00033"></a>00033     <a class="code" href="classSingleton.html#a23ab9ee0e00a373dcf63f66ab13de114">System::Instance</a>().logMessage(<span class="stringliteral">&quot;Collage initialized&quot;</span>);
+<a name="l00025"></a>00025 
+<a name="l00026"></a>00026         <a class="code" href="classSingleton.html#a23ab9ee0e00a373dcf63f66ab13de114">RenderEngine::Instance</a>().initOgre(<span class="stringliteral">&quot;Collage&quot;</span>);
+<a name="l00027"></a>00027 
+<a name="l00028"></a>00028         <a class="code" href="classSingleton.html#a23ab9ee0e00a373dcf63f66ab13de114">Input::Instance</a>().initOis();
+<a name="l00029"></a>00029     <a class="code" href="classSingleton.html#a23ab9ee0e00a373dcf63f66ab13de114">UserInterface::Instance</a>().initOgreBites(
+<a name="l00030"></a>00030                 <a class="code" href="classSingleton.html#a23ab9ee0e00a373dcf63f66ab13de114">RenderEngine::Instance</a>().
+<a name="l00031"></a>00031                 m_pRenderWnd,
+<a name="l00032"></a>00032                 <a class="code" href="classSingleton.html#a23ab9ee0e00a373dcf63f66ab13de114">Input::Instance</a>().m_pMouse
+<a name="l00033"></a>00033         );
 <a name="l00034"></a>00034 
-<a name="l00035"></a>00035         <a class="code" href="classCollageApplication.html#a1db1fb508d2517d408458e83a229f09a">m_pAppStateManager</a> = <span class="keyword">new</span> <a class="code" href="classAppStateManager.html">AppStateManager</a>();
-<a name="l00036"></a>00036 
-<a name="l00037"></a>00037         <a class="code" href="classAppState.html#a9c18cb8ce2e689305fc417fc59c304dc">MenuState::create</a>(<a class="code" href="classCollageApplication.html#a1db1fb508d2517d408458e83a229f09a">m_pAppStateManager</a>, <span class="stringliteral">&quot;MenuState&quot;</span>);
-<a name="l00038"></a>00038         <a class="code" href="classAppState.html#a9c18cb8ce2e689305fc417fc59c304dc">GameState::create</a>(<a class="code" href="classCollageApplication.html#a1db1fb508d2517d408458e83a229f09a">m_pAppStateManager</a>, <span class="stringliteral">&quot;GameState&quot;</span>);
-<a name="l00039"></a>00039     <a class="code" href="classAppState.html#a9c18cb8ce2e689305fc417fc59c304dc">PauseState::create</a>(<a class="code" href="classCollageApplication.html#a1db1fb508d2517d408458e83a229f09a">m_pAppStateManager</a>, <span class="stringliteral">&quot;PauseState&quot;</span>);
-<a name="l00040"></a>00040 
-<a name="l00041"></a>00041         <a class="code" href="classCollageApplication.html#a1db1fb508d2517d408458e83a229f09a">m_pAppStateManager</a>-&gt;<a class="code" href="classAppStateManager.html#a61560524c1ddf50ab1508e3135035919">start</a>(<a class="code" href="classCollageApplication.html#a1db1fb508d2517d408458e83a229f09a">m_pAppStateManager</a>-&gt;<a class="code" href="classAppStateManager.html#a357316ae104ed314a8d51ca122532d32">findByName</a>(<span class="stringliteral">&quot;MenuState&quot;</span>));
-<a name="l00042"></a>00042 }
+<a name="l00035"></a>00035 
+<a name="l00036"></a>00036     <a class="code" href="classSingleton.html#a23ab9ee0e00a373dcf63f66ab13de114">System::Instance</a>().logMessage(<span class="stringliteral">&quot;Collage initialized&quot;</span>);
+<a name="l00037"></a>00037 
+<a name="l00038"></a>00038         <a class="code" href="classCollageApplication.html#a1db1fb508d2517d408458e83a229f09a">m_pAppStateManager</a> = <span class="keyword">new</span> <a class="code" href="classAppStateManager.html">AppStateManager</a>();
+<a name="l00039"></a>00039 
+<a name="l00040"></a>00040         <a class="code" href="classAppState.html#a9c18cb8ce2e689305fc417fc59c304dc">MenuState::create</a>(<a class="code" href="classCollageApplication.html#a1db1fb508d2517d408458e83a229f09a">m_pAppStateManager</a>, <span class="stringliteral">&quot;MenuState&quot;</span>);
+<a name="l00041"></a>00041         <a class="code" href="classAppState.html#a9c18cb8ce2e689305fc417fc59c304dc">GameState::create</a>(<a class="code" href="classCollageApplication.html#a1db1fb508d2517d408458e83a229f09a">m_pAppStateManager</a>, <span class="stringliteral">&quot;GameState&quot;</span>);
+<a name="l00042"></a>00042     <a class="code" href="classAppState.html#a9c18cb8ce2e689305fc417fc59c304dc">PauseState::create</a>(<a class="code" href="classCollageApplication.html#a1db1fb508d2517d408458e83a229f09a">m_pAppStateManager</a>, <span class="stringliteral">&quot;PauseState&quot;</span>);
 <a name="l00043"></a>00043 
-<a name="l00044"></a><a class="code" href="CollageApplication_8cpp.html#a0ddf1224851353fc92bfbff6f499fa97">00044</a> <span class="keywordtype">int</span> <a class="code" href="CollageApplication_8cpp.html#a0ddf1224851353fc92bfbff6f499fa97">main</a>(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span> *argv[]) {
-<a name="l00045"></a>00045         <a class="code" href="classCollageApplication.html">CollageApplication</a> collage;
-<a name="l00046"></a>00046         <span class="keywordflow">try</span> {
-<a name="l00047"></a>00047                 collage.<a class="code" href="classCollageApplication.html#a11010127af14f53602777d23630b9bc4">start</a>();
-<a name="l00048"></a>00048         }
-<a name="l00049"></a>00049         <span class="keywordflow">catch</span>(<span class="keyword">const</span> std::exception&amp; e) {
-<a name="l00050"></a>00050         fprintf(stderr, <span class="stringliteral">&quot;An exception has occurred: %s\n&quot;</span>, e.what());
-<a name="l00051"></a>00051     }
-<a name="l00052"></a>00052 }
+<a name="l00044"></a>00044         <a class="code" href="classCollageApplication.html#a1db1fb508d2517d408458e83a229f09a">m_pAppStateManager</a>-&gt;<a class="code" href="classAppStateManager.html#a61560524c1ddf50ab1508e3135035919">start</a>(<a class="code" href="classCollageApplication.html#a1db1fb508d2517d408458e83a229f09a">m_pAppStateManager</a>-&gt;<a class="code" href="classAppStateManager.html#a357316ae104ed314a8d51ca122532d32">findByName</a>(<span class="stringliteral">&quot;MenuState&quot;</span>));
+<a name="l00045"></a>00045 }
+<a name="l00046"></a>00046 
+<a name="l00047"></a><a class="code" href="CollageApplication_8cpp.html#a0ddf1224851353fc92bfbff6f499fa97">00047</a> <span class="keywordtype">int</span> <a class="code" href="CollageApplication_8cpp.html#a0ddf1224851353fc92bfbff6f499fa97">main</a>(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span> *argv[]) {
+<a name="l00048"></a>00048         <a class="code" href="classCollageApplication.html">CollageApplication</a> collage;
+<a name="l00049"></a>00049         <span class="keywordflow">try</span> {
+<a name="l00050"></a>00050                 collage.<a class="code" href="classCollageApplication.html#a11010127af14f53602777d23630b9bc4">start</a>();
+<a name="l00051"></a>00051         }
+<a name="l00052"></a>00052         <span class="keywordflow">catch</span>(<span class="keyword">const</span> std::exception&amp; e) {
+<a name="l00053"></a>00053         fprintf(stderr, <span class="stringliteral">&quot;An exception has occurred: %s\n&quot;</span>, e.what());
+<a name="l00054"></a>00054     }
+<a name="l00055"></a>00055 }
 </pre></div></div>
 </div>
 <!--- window showing the filter options -->
@@ -118,7 +121,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Mon Nov 15 2010 00:13:06 for Collage by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Mon Nov 15 2010 07:00:45 for Collage by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.2 </small></address>
 </body>
