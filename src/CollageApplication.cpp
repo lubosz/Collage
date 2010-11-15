@@ -39,7 +39,7 @@ void CollageApplication::start() {
 	GameState::create(m_pAppStateManager, "GameState");
     PauseState::create(m_pAppStateManager, "PauseState");
 
-	m_pAppStateManager->start(m_pAppStateManager->findByName("MenuState"));
+	m_pAppStateManager->start(m_pAppStateManager->findByName("GameState"));
 }
 
 int main(int argc, char *argv[]) {

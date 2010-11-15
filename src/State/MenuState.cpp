@@ -36,7 +36,7 @@ void MenuState::enter() {
 
 	RenderEngine::Instance().m_pViewport->setCamera(m_pCamera);
 
-	UserInterface::Instance().m_pTrayMgr->destroyAllWidgets();
+	//UserInterface::Instance().m_pTrayMgr->destroyAllWidgets();
 	UserInterface::Instance().m_pTrayMgr->showFrameStats(OgreBites::TL_BOTTOMLEFT);
 	UserInterface::Instance().m_pTrayMgr->showLogo(OgreBites::TL_BOTTOMRIGHT);
 	UserInterface::Instance().m_pTrayMgr->showCursor();

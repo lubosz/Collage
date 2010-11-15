@@ -84,8 +84,8 @@ void AppStateManager::start(AppState* state) {
 			timeSinceLastFrame
 					= System::Instance().m_pTimer->getMillisecondsCPU()
 							- startTime;
-	//	} else {
-			// Sleep(1000);
+		//} else {
+		//	 sleep(1000);
 		}
 	}
 
