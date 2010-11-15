@@ -25,16 +25,22 @@
 
 DotSceneLoader::DotSceneLoader()
 :
+#ifdef USE_OGRE_TERRAIN
 	mSceneMgr(0), mTerrainGroup(0) {
 	mTerrainGlobalOptions = OGRE_NEW Ogre::TerrainGlobalOptions();
+#else
+	mSceneMgr(0) {
+#endif
 }
 
 DotSceneLoader::~DotSceneLoader() {
+#ifdef USE_OGRE_TERRAIN
 	if (mTerrainGroup) {
 		OGRE_DELETE mTerrainGroup;
 	}
 
 	OGRE_DELETE mTerrainGlobalOptions;
+#endif
 }
 
 void ParseStringVector(
@@ -159,11 +165,12 @@ void DotSceneLoader::processScene(rapidxml::xml_node<>* XMLRoot) {
 	pElement = XMLRoot->first_node("camera");
 	if (pElement)
 		processCamera(pElement);
-
+#ifdef USE_OGRE_TERRAIN
 	// Process terrain (?)
 	pElement = XMLRoot->first_node("terrain");
 	if (pElement)
 		processTerrain(pElement);
+#endif
 }
 
 void DotSceneLoader::processNodes(rapidxml::xml_node<>* XMLNode) {
@@ -250,7 +257,7 @@ void DotSceneLoader::processEnvironment(rapidxml::xml_node<>* XMLNode) {
 	if (pElement)
 		processUserDataReference(pElement);
 }
-
+#ifdef USE_OGRE_TERRAIN
 void DotSceneLoader::processTerrain(rapidxml::xml_node<>* XMLNode) {
 	Ogre::Real worldSize = getAttribReal(XMLNode, "worldSize");
 	int mapSize = Ogre::StringConverter::parseInt(XMLNode->first_attribute(
@@ -271,6 +278,7 @@ void DotSceneLoader::processTerrain(rapidxml::xml_node<>* XMLNode) {
 	l->setDiffuseColour(Ogre::ColourValue(1.0, 1.0, 1.0));
 	l->setSpecularColour(Ogre::ColourValue(0.4, 0.4, 0.4));
 	mSceneMgr->setAmbientLight(Ogre::ColourValue(0.6, 0.6, 0.6));
+
 
 	mTerrainGlobalOptions->setMaxPixelError((Ogre::Real) maxPixelError);
 	mTerrainGlobalOptions->setCompositeMapDistance(
@@ -303,6 +311,7 @@ void DotSceneLoader::processTerrain(rapidxml::xml_node<>* XMLNode) {
 	// mTerrain->setPosition(mTerrainPosition);
 }
 
+
 void DotSceneLoader::processTerrainPage(rapidxml::xml_node<>* XMLNode) {
 	Ogre::String name = getAttrib(XMLNode, "name");
 	int pageX = Ogre::StringConverter::parseInt(XMLNode->first_attribute(
@@ -314,8 +323,9 @@ void DotSceneLoader::processTerrainPage(rapidxml::xml_node<>* XMLNode) {
 			mTerrainGroup->getResourceGroup(), name)) {
 		mTerrainGroup->defineTerrain(pageX, pageY, name);
 	}
-}
 
+}
+#endif
 void DotSceneLoader::processUserDataReference(rapidxml::xml_node<>* XMLNode,
 		Ogre::SceneNode *pParent) {
 }

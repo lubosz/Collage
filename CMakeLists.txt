@@ -12,6 +12,11 @@ include_directories(
 
 OPTION(RELEASE "Release" OFF)
 OPTION(CHECKSTYLE "Check Style" ON)
+OPTION(OGRE_TERRAIN "Ogre Terrain" OFF)
+
+IF(OGRE_TERRAIN)
+    ADD_DEFINITIONS(-DUSE_OGRE_TERRAIN)
+ENDIF()
 
 IF(UNIX)
 	execute_process(COMMAND uname -a OUTPUT_VARIABLE _output OUTPUT_STRIP_TRAILING_WHITESPACE)
@@ -75,7 +80,10 @@ if (APPLE)
 elseif(UNIX)
 	find_package(PkgConfig)
 	pkg_check_modules(OGRE REQUIRED OGRE>=1.7 OIS)
-	target_link_libraries(collage OgreMain OgreTerrain OIS)
+	target_link_libraries(collage OgreMain OIS)
+	if(OGRE_TERRAIN)
+	    target_link_libraries(collage OgreTerrain)
+    endif()
 	copy_plugins_config(${CMAKE_CFG_INTDIR}/bin/plugins-unix.cfg)
 
 elseif (WIN32)
@@ -104,9 +112,11 @@ elseif (WIN32)
 		)
 		target_link_libraries(collage 
 			OgreMain
-			OgreTerrain
 			OIS
 		)
+		if(OGRE_TERRAIN)
+	        target_link_libraries(collage OgreTerrain)
+        endif()
 	ELSE()
 		link_directories(
 			$ENV{OGRE_HOME}/lib/debug
@@ -114,9 +124,11 @@ elseif (WIN32)
 		)
 		target_link_libraries(collage 
 			OgreMain_d
-			OgreTerrain_d
 			OIS_d
 		)
+		if(OGRE_TERRAIN)
+	        target_link_libraries(collage OgreTerrain_d)
+        endif()
 	ENDIF()
 
 	#replace backslashes with slashes	
