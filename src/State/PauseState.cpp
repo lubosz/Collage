@@ -42,7 +42,7 @@ void PauseState::enter() {
 	UserInterface::Instance().m_pTrayMgr->createButton(
 			OgreBites::TL_CENTER, "BackToMenuBtn", "Return to Menu", 250);
 	UserInterface::Instance().m_pTrayMgr->createButton(
-			OgreBites::TL_CENTER, "ExitBtn", "Exit AdvancedOgreFramework", 250);
+			OgreBites::TL_CENTER, "ExitBtn", "Exit Collage", 250);
 	UserInterface::Instance().m_pTrayMgr->createLabel(
 			OgreBites::TL_TOP, "PauseLbl", "Pause mode", 250);
 
