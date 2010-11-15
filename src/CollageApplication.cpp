@@ -9,6 +9,7 @@
 #include "Input.h"
 #include "RenderEngine.h"
 #include "UserInterface.h"
+#include <vector>
 
 CollageApplication::CollageApplication() {
 	// TODO Auto-generated constructor stub
