@@ -26,18 +26,23 @@ void RenderEngine::updateOgre(double timeSinceLastFrame) {
 }
 
 bool RenderEngine::initOgre(Ogre::String wndTitle) {
+
+
     m_pRoot = new Ogre::Root();
 
     if (!m_pRoot->showConfigDialog())
         return false;
-    m_pRenderWnd = m_pRoot->initialise(true, wndTitle);
 
+    m_pRenderWnd = m_pRoot->initialise(true, wndTitle);
+    System::Instance().logMessage("Starting Render Engine");
     m_pViewport = m_pRenderWnd->addViewport(0);
     // m_pViewport->setBackgroundColour(ColourValue(0.5f, 0.5f, 0.5f, 1.0f));
 
     m_pViewport->setCamera(0);
 
     m_pRenderWnd->setActive(true);
+
+
 
     return true;
 }

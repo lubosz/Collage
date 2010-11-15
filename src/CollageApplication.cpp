@@ -22,6 +22,7 @@ CollageApplication::~CollageApplication() {
 }
 
 void CollageApplication::start() {
+
 	RenderEngine::Instance().initOgre("Collage");
 	Input::Instance().initOis();
     UserInterface::Instance().initOgreBites(

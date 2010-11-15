@@ -32,10 +32,13 @@ void Input::initOis(
     OIS::ParamList paramList;
 
     paramList.insert(
-    		OIS::ParamList::value_type(
-    				"WINDOW",
-    				Ogre::StringConverter::toString(hWnd)
-    		)
+    		OIS::ParamList::value_type("WINDOW",Ogre::StringConverter::toString(hWnd))
+    );
+	paramList.insert(
+			OIS::ParamList::value_type("x11_keyboard_grab", "false")
+	);
+	paramList.insert(
+			OIS::ParamList::value_type("x11_keyboard_grab", "false")
 	);
 
     m_pInputMgr = OIS::InputManager::createInputSystem(paramList);

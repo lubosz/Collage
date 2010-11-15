@@ -7,13 +7,18 @@
  */
 
 #include "System.h"
+#include <stdio.h>
+#include <string>
+
+using std::string;
 
 System::System() {
+    logMessage("Starting System");
 	// Init log
     Ogre::LogManager* logMgr = new Ogre::LogManager();
 
     m_pLog = Ogre::LogManager::getSingleton().
-    		createLog("OgreLogfile.log", true, true, false);
+    		createLog("Collage.log", true, true, false);
     m_pLog->setDebugOutputEnabled(true);
 
 	// Load recources
@@ -44,6 +49,8 @@ System::System() {
 System::~System() {
 }
 
-void System::logMessage(Ogre::String message) {
-	m_pLog->logMessage(message);
+void System::logMessage(string message) {
+	//TODO: Segfault
+	//m_pLog->logMessage(message);
+	printf("\x1b[1;31m%s\e[m\n", message.c_str()); // red
 }

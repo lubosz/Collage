@@ -7,6 +7,7 @@
  */
 
 #include "UserInterface.h"
+#include "System.h"
 
 UserInterface::UserInterface() {
 }
@@ -20,5 +21,6 @@ void UserInterface::initOgreBites(
 		Ogre::RenderWindow* window,
 		OIS::Mouse* mouse
 	) {
+	System::Instance().logMessage("Starting Ogre Bites");
 	m_pTrayMgr = new OgreBites::SdkTrayManager("AOFTrayMgr", window, mouse, 0);
 }
