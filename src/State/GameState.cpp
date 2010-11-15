@@ -31,10 +31,10 @@ void GameState::enter() {
 			= RenderEngine::Instance().m_pRoot->createSceneManager(
 					Ogre::ST_GENERIC, "GameSceneMgr");
 	m_pSceneMgr->setAmbientLight(Ogre::ColourValue(0.7f, 0.7f, 0.7f));
-/*
+
 	m_pRSQ = m_pSceneMgr->createRayQuery(Ogre::Ray());
 	m_pRSQ->setQueryMask(OGRE_HEAD_MASK);
-*/
+
 	m_pCamera = m_pSceneMgr->createCamera("GameCamera");
 	m_pCamera->setPosition(Vector3(5, 60, 60));
 	m_pCamera->lookAt(Vector3(5, 20, 0));

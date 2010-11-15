@@ -42,24 +42,13 @@ bool RenderEngine::initOgre(Ogre::String wndTitle) {
     Ogre::TextureManager::getSingleton().setDefaultNumMipmaps(5);
     Ogre::ResourceGroupManager::getSingleton().initialiseAllResourceGroups();
 
-
     m_pViewport = m_pRenderWnd->addViewport(0);
     m_pViewport->setBackgroundColour(Ogre::ColourValue(0.5f, 0.5f, 0.5f, 1.0f));
 
     m_pViewport->setCamera(0);
 
     m_pRenderWnd->setActive(true);
-    /*
-while(!m_pRenderWnd->isActive()){
-    m_pRenderWnd->setActive(true);
-    if(m_pRenderWnd->isActive()){
-    	 System::Instance().logMessage("Render Window is active");
-    }else{
-    	 System::Instance().logMessage("Render Window is not active");
-    }
 
-}
-    */
     System::Instance().initTimer();
 
 
