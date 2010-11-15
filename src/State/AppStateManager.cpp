@@ -65,10 +65,10 @@ void AppStateManager::start(AppState* state) {
 		if (RenderEngine::Instance().m_pRenderWnd->isClosed())
 			m_bShutdown = true;
 
+		else {
 #if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
 		Ogre::WindowEventUtilities::messagePump();
 #endif
-		else {
 		//if (RenderEngine::Instance().m_pRenderWnd->isActive()) {
 			startTime
 					= System::Instance().m_pTimer->getMillisecondsCPU();
