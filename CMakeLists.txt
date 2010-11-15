@@ -7,11 +7,10 @@ set(EXECUTABLE_OUTPUT_PATH ${CMAKE_SOURCE_DIR}/bin)
 include_directories(
 	include
 	include/common
-	/usr/include/OGRE
 )
 
 OPTION(RELEASE "Release" OFF)
-OPTION(CHECKSTYLE "Check Style" ON)
+OPTION(CHECKSTYLE "Check Style" OFF)
 
 IF(UNIX)
 	execute_process(COMMAND uname -a OUTPUT_VARIABLE _output OUTPUT_STRIP_TRAILING_WHITESPACE)
@@ -58,6 +57,7 @@ endif()
 if (APPLE)
 	include_directories(
 		$ENV{OGRE_HOME}/include
+		$ENV{OGRE_HOME}/include/OGRE
 		$ENV{OGRE_HOME}/boost_1_42
 	)
 	link_directories(
@@ -73,6 +73,10 @@ if (APPLE)
 	copy_plugins_config($ENV{OGRE_HOME}/bin/plugins.cfg)
 
 elseif(UNIX)
+	include_directories(
+		/usr/include/OGRE
+		/usr/local/include/OGRE
+	)
 	find_package(PkgConfig)
 	pkg_check_modules(OGRE REQUIRED OGRE>=1.7 OIS)
 	target_link_libraries(collage OgreMain OgreTerrain OIS)
@@ -90,6 +94,7 @@ elseif (WIN32)
 	
 	include_directories(
 		$ENV{OGRE_HOME}/include
+		$ENV{OGRE_HOME}/include/OGRE
 		$ENV{OGRE_HOME}/boost_1_44
 	)
 	
