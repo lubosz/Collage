@@ -526,6 +526,15 @@ template container Panel(SdkTrays/Logo)
 	height 53
 }
 
+template container Panel(SdkTrays/Splash)
+{
+	metrics_mode pixels
+	material SdkTrays/Splash
+	horz_align center
+	width 288
+	height 352
+}
+
 template container Panel(SdkTrays/Picture)
 {
 	metrics_mode pixels

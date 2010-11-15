@@ -37,14 +37,15 @@ void MenuState::enter() {
 	RenderEngine::Instance().m_pViewport->setCamera(m_pCamera);
 
 	UserInterface::Instance().m_pTrayMgr->destroyAllWidgets();
-	UserInterface::Instance().m_pTrayMgr->showFrameStats(OgreBites::TL_BOTTOMLEFT);
-	UserInterface::Instance().m_pTrayMgr->showLogo(OgreBites::TL_BOTTOMRIGHT);
 	UserInterface::Instance().m_pTrayMgr->showCursor();
+	UserInterface::Instance().m_pTrayMgr->createLabel(OgreBites::TL_TOP, "MenuLbl", "Menu mode", 250);
+	UserInterface::Instance().m_pTrayMgr->createDecorWidget(OgreBites::TL_CENTER,"splashImage", "SdkTrays/Splash");
 	UserInterface::Instance().m_pTrayMgr->createButton(OgreBites::TL_CENTER, "EnterBtn", "Start Game", 250);
 	UserInterface::Instance().m_pTrayMgr->createButton(OgreBites::TL_CENTER, "DeleteC", "Delete C:\\", 250);
-	UserInterface::Instance().m_pTrayMgr->createButton(OgreBites::TL_CENTER, "Settings", "Delete C:\\", 250);
+	UserInterface::Instance().m_pTrayMgr->createButton(OgreBites::TL_CENTER, "Settings", "Settings", 250);
 	UserInterface::Instance().m_pTrayMgr->createButton(OgreBites::TL_CENTER, "ExitBtn", "Exit Collage", 250);
-	UserInterface::Instance().m_pTrayMgr->createLabel(OgreBites::TL_TOP, "MenuLbl", "Menu mode", 250);
+
+
 
 	createScene();
 }

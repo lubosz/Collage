@@ -290,6 +290,20 @@ material SdkTrays/Logo : SdkTrays/Base
     }
 }
 
+material SdkTrays/Splash : SdkTrays/Base
+{
+    technique
+    {
+        pass
+        {
+            texture_unit
+            {
+                texture trollmato.jpg
+            }
+        }
+    }
+}
+
 material SdkTrays/Frame : SdkTrays/Base
 {
     technique
