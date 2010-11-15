@@ -14,13 +14,31 @@ using std::string;
 
 System::System() {
     logMessage("Starting System");
+    /*
+    initTimer();
+    initLogging();
+    initResources();
+    */
+}
+
+System::~System() {
+}
+void System::initTimer(){
+    // Set timer
+    m_pTimer = new Ogre::Timer();
+    m_pTimer->reset();
+}
+
+void System::initLogging(){
 	// Init log
     Ogre::LogManager* logMgr = new Ogre::LogManager();
 
     m_pLog = Ogre::LogManager::getSingleton().
     		createLog("Collage.log", true, true, false);
     m_pLog->setDebugOutputEnabled(true);
+}
 
+void System::initResources(){
 	// Load recources
     Ogre::String secName, typeName, archName;
     Ogre::ConfigFile cf;
@@ -38,15 +56,7 @@ System::System() {
             		addResourceLocation(archName, typeName, secName);
         }
     }
-    Ogre::TextureManager::getSingleton().setDefaultNumMipmaps(5);
-    Ogre::ResourceGroupManager::getSingleton().initialiseAllResourceGroups();
 
-    // Set timer
-    m_pTimer = new Ogre::Timer();
-    m_pTimer->reset();
-}
-
-System::~System() {
 }
 
 void System::logMessage(string message) {

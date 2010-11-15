@@ -31,10 +31,10 @@ void GameState::enter() {
 			= RenderEngine::Instance().m_pRoot->createSceneManager(
 					Ogre::ST_GENERIC, "GameSceneMgr");
 	m_pSceneMgr->setAmbientLight(Ogre::ColourValue(0.7f, 0.7f, 0.7f));
-
+/*
 	m_pRSQ = m_pSceneMgr->createRayQuery(Ogre::Ray());
 	m_pRSQ->setQueryMask(OGRE_HEAD_MASK);
-
+*/
 	m_pCamera = m_pSceneMgr->createCamera("GameCamera");
 	m_pCamera->setPosition(Vector3(5, 60, 60));
 	m_pCamera->lookAt(Vector3(5, 20, 0));
@@ -81,7 +81,7 @@ void GameState::exit() {
 
 void GameState::createScene() {
 	m_pSceneMgr->createLight("Light")->setPosition(75, 75, 75);
-
+/*
 	DotSceneLoader* pDotSceneLoader = new DotSceneLoader();
 	pDotSceneLoader->parseDotScene("CubeScene.xml", "General", m_pSceneMgr,
 			m_pSceneMgr->getRootSceneNode());
@@ -90,7 +90,7 @@ void GameState::createScene() {
 	m_pSceneMgr->getEntity("Cube01")->setQueryFlags(CUBE_MASK);
 	m_pSceneMgr->getEntity("Cube02")->setQueryFlags(CUBE_MASK);
 	m_pSceneMgr->getEntity("Cube03")->setQueryFlags(CUBE_MASK);
-
+*/
 	m_pOgreHeadEntity = m_pSceneMgr->createEntity("Cube", "ogrehead.mesh");
 	m_pOgreHeadEntity->setQueryFlags(OGRE_HEAD_MASK);
 	m_pOgreHeadNode = m_pSceneMgr->getRootSceneNode()->createChildSceneNode(

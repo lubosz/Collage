@@ -20,4 +20,7 @@ class System : public Singleton<System> {
 	Ogre::Timer* m_pTimer;
 
 	void logMessage(Ogre::String message);
+	void initTimer();
+	void initLogging();
+	void initResources();
 };

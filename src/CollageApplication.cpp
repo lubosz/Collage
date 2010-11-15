@@ -24,12 +24,14 @@ CollageApplication::~CollageApplication() {
 void CollageApplication::start() {
 
 	RenderEngine::Instance().initOgre("Collage");
+
 	Input::Instance().initOis();
     UserInterface::Instance().initOgreBites(
     		RenderEngine::Instance().
     		m_pRenderWnd,
     		Input::Instance().m_pMouse
 	);
+
 
     System::Instance().logMessage("Collage initialized");
 
