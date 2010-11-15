@@ -37,17 +37,12 @@ void MenuState::enter() {
 	RenderEngine::Instance().m_pViewport->setCamera(m_pCamera);
 
 	UserInterface::Instance().m_pTrayMgr->destroyAllWidgets();
-	UserInterface::Instance().m_pTrayMgr->showFrameStats(
-			OgreBites::TL_BOTTOMLEFT);
-	UserInterface::Instance().m_pTrayMgr->showLogo(
-			OgreBites::TL_BOTTOMRIGHT);
+	UserInterface::Instance().m_pTrayMgr->showFrameStats(OgreBites::TL_BOTTOMLEFT);
+	UserInterface::Instance().m_pTrayMgr->showLogo(OgreBites::TL_BOTTOMRIGHT);
 	UserInterface::Instance().m_pTrayMgr->showCursor();
-	UserInterface::Instance().m_pTrayMgr->createButton(
-			OgreBites::TL_CENTER, "EnterBtn", "Enter GameState", 250);
-	UserInterface::Instance().m_pTrayMgr->createButton(
-			OgreBites::TL_CENTER, "ExitBtn", "Exit AdvancedOgreFramework", 250);
-	UserInterface::Instance().m_pTrayMgr->createLabel(
-			OgreBites::TL_TOP, "MenuLbl", "Menu mode", 250);
+	UserInterface::Instance().m_pTrayMgr->createButton(OgreBites::TL_CENTER, "EnterBtn", "Enter GameState", 250);
+	UserInterface::Instance().m_pTrayMgr->createButton(OgreBites::TL_CENTER, "ExitBtn", "Exit AdvancedOgreFramework", 250);
+	UserInterface::Instance().m_pTrayMgr->createLabel(OgreBites::TL_TOP, "MenuLbl", "Menu mode", 250);
 
 	createScene();
 }
