@@ -45,8 +45,6 @@ void MenuState::enter() {
 	UserInterface::Instance().m_pTrayMgr->createButton(OgreBites::TL_CENTER, "Settings", "Settings", 250);
 	UserInterface::Instance().m_pTrayMgr->createButton(OgreBites::TL_CENTER, "ExitBtn", "Exit Collage", 250);
 
-
-
 	createScene();
 }
 

@@ -81,7 +81,7 @@ void GameState::exit() {
 
 void GameState::createScene() {
 	m_pSceneMgr->createLight("Light")->setPosition(75, 75, 75);
-/*
+
 	DotSceneLoader* pDotSceneLoader = new DotSceneLoader();
 	pDotSceneLoader->parseDotScene("CubeScene.xml", "General", m_pSceneMgr,
 			m_pSceneMgr->getRootSceneNode());
@@ -90,7 +90,7 @@ void GameState::createScene() {
 	m_pSceneMgr->getEntity("Cube01")->setQueryFlags(CUBE_MASK);
 	m_pSceneMgr->getEntity("Cube02")->setQueryFlags(CUBE_MASK);
 	m_pSceneMgr->getEntity("Cube03")->setQueryFlags(CUBE_MASK);
-*/
+
 	m_pOgreHeadEntity = m_pSceneMgr->createEntity("Cube", "ogrehead.mesh");
 	m_pOgreHeadEntity->setQueryFlags(OGRE_HEAD_MASK);
 	m_pOgreHeadNode = m_pSceneMgr->getRootSceneNode()->createChildSceneNode(
