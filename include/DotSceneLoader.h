@@ -46,7 +46,9 @@ public:
 
 class DotSceneLoader {
 public:
+#ifdef USE_OGRE_TERRAIN
 	Ogre::TerrainGlobalOptions *mTerrainGlobalOptions;
+#endif
 
 	DotSceneLoader();
 	virtual ~DotSceneLoader();
@@ -58,9 +60,11 @@ public:
 	Ogre::String
 			getProperty(const Ogre::String &ndNm, const Ogre::String &prop);
 
+#ifdef USE_OGRE_TERRAIN
 	Ogre::TerrainGroup* getTerrainGroup() {
 		return mTerrainGroup;
 	}
+#endif
 
 	std::vector<nodeProperty> nodeProperties;
 	std::vector<Ogre::String> staticObjects;
@@ -128,7 +132,9 @@ protected:
 	Ogre::SceneNode *mAttachNode;
 	Ogre::String m_sGroupName;
 	Ogre::String m_sPrependNode;
+#ifdef USE_OGRE_TERRAIN
 	Ogre::TerrainGroup* mTerrainGroup;
 	Ogre::Vector3 mTerrainPosition;
+#endif
 	Ogre::Vector3 mLightDirection;
 };

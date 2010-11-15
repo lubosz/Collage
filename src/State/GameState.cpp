@@ -84,6 +84,7 @@ void GameState::createScene() {
 
 	DotSceneLoader* pDotSceneLoader = new DotSceneLoader();
 	pDotSceneLoader->parseDotScene("CubeScene.xml", "General", m_pSceneMgr,
+	//pDotSceneLoader->parseDotScene("Bulldozer.scene", "General", m_pSceneMgr,
 			m_pSceneMgr->getRootSceneNode());
 	delete pDotSceneLoader;
 

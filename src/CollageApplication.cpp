@@ -26,12 +26,10 @@ void CollageApplication::start() {
 	RenderEngine::Instance().initOgre("Collage");
 
 	Input::Instance().initOis();
-    UserInterface::Instance().initOgreBites(
-    		RenderEngine::Instance().
-    		m_pRenderWnd,
-    		Input::Instance().m_pMouse
+	UserInterface::Instance().initOgreBites(
+		RenderEngine::Instance(). m_pRenderWnd,
+		Input::Instance().m_pMouse
 	);
-
 
     System::Instance().logMessage("Collage initialized");
 
@@ -42,6 +40,7 @@ void CollageApplication::start() {
     PauseState::create(m_pAppStateManager, "PauseState");
 
 	m_pAppStateManager->start(m_pAppStateManager->findByName("MenuState"));
+
 }
 
 int main(int argc, char *argv[]) {

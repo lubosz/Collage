@@ -11,6 +11,12 @@ include_directories(
 
 OPTION(RELEASE "Release" OFF)
 OPTION(CHECKSTYLE "Check Style" OFF)
+OPTION(OGRE_TERRAIN "Ogre Terrain" OFF)
+
+IF(OGRE_TERRAIN)
+    ADD_DEFINITIONS(-DUSE_OGRE_TERRAIN)
+ENDIF()
+
 
 IF(UNIX)
 	execute_process(COMMAND uname -a OUTPUT_VARIABLE _output OUTPUT_STRIP_TRAILING_WHITESPACE)
@@ -34,8 +40,11 @@ endfunction(copy_plugins_config)
 #Find headers and cpps
 file(GLOB_RECURSE SOURCES src/*.cpp)
 file(GLOB_RECURSE INCLUDES include/*.h)
+file(GLOB_RECURSE TESTS test/*.cpp)
+file(GLOB_RECURSE CORE src/Core/*.cpp)
 
 add_executable(collage ${SOURCES} ${INCLUDES})
+add_executable(ogreTest test/BasicOgre.cpp src/Core/RenderEngine.cpp src/Core/System.cpp)
 
 IF(EXISTS "/usr/bin/python2")
 	SET(PYTHON_VER "python2")
@@ -70,6 +79,9 @@ if (APPLE)
 	# http://www.ogre3d.org/forums/viewtopic.php?f=2&t=57997
 	set(CMAKE_EXE_LINKER_FLAGS "-m32 -framework Ogre -framework CoreFoundation -framework IOKit -framework ApplicationServices -framework Carbon -framework AppKit")
 	target_link_libraries(collage $ENV{OGRE_HOME}/lib/release/libOIS.a)
+	if(OGRE_TERRAIN)
+	    target_link_libraries(collage OgreTerrain)
+    endif()
 	copy_plugins_config($ENV{OGRE_HOME}/bin/plugins.cfg)
 
 elseif(UNIX)
@@ -79,7 +91,14 @@ elseif(UNIX)
 	)
 	find_package(PkgConfig)
 	pkg_check_modules(OGRE REQUIRED OGRE>=1.7 OIS)
-	target_link_libraries(collage OgreMain OgreTerrain OIS)
+	target_link_libraries(collage OgreMain OIS)
+	if(OGRE_TERRAIN)
+	    target_link_libraries(collage OgreTerrain)
+    endif()
+    target_link_libraries(ogreTest OgreMain OIS)
+	if(OGRE_TERRAIN)
+	    target_link_libraries(ogreTest OgreTerrain)
+    endif()
 	copy_plugins_config(${CMAKE_CFG_INTDIR}/bin/plugins-unix.cfg)
 
 elseif (WIN32)
@@ -109,9 +128,11 @@ elseif (WIN32)
 		)
 		target_link_libraries(collage 
 			OgreMain
-			OgreTerrain
 			OIS
 		)
+		if(OGRE_TERRAIN)
+	        target_link_libraries(collage OgreTerrain)
+        endif()
 	ELSE()
 		link_directories(
 			$ENV{OGRE_HOME}/lib/debug
@@ -119,9 +140,11 @@ elseif (WIN32)
 		)
 		target_link_libraries(collage 
 			OgreMain_d
-			OgreTerrain_d
 			OIS_d
 		)
+		if(OGRE_TERRAIN)
+	        target_link_libraries(collage OgreTerrain_d)
+        endif()
 	ENDIF()
 
 	#replace backslashes with slashes	
