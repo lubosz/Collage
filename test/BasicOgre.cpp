@@ -20,12 +20,6 @@ void basicOgre() {
 
 	RenderEngine::Instance().initOgre("Collage");
 
-	Input::Instance().initOis();
-	UserInterface::Instance().initOgreBites(
-		RenderEngine::Instance(). m_pRenderWnd,
-		Input::Instance().m_pMouse
-	);
-
 	Ogre::SceneManager* m_pSceneMgr;
 	Ogre::Camera* m_pCamera;
 	m_pSceneMgr = RenderEngine::Instance().m_pRoot->createSceneManager(
@@ -67,9 +61,6 @@ void basicOgre() {
 
 	while (true) {
 		startTime = System::Instance().m_pTimer->getMillisecondsCPU();
-
-		Input::Instance().m_pKeyboard->capture();
-		Input::Instance().m_pMouse->capture();
 
 		m_pOgreHeadNode->rotate(Ogre::Vector3(0,1,0), Ogre::Radian(rotation));
 

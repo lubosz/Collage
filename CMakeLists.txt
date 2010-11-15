@@ -44,7 +44,7 @@ file(GLOB_RECURSE TESTS test/*.cpp)
 file(GLOB_RECURSE CORE src/Core/*.cpp)
 
 add_executable(collage ${SOURCES} ${INCLUDES})
-add_executable(ogreTest ${TESTS} ${CORE} ${INCLUDES})
+add_executable(ogreTest test/BasicOgre.cpp src/Core/RenderEngine.cpp src/Core/System.cpp)
 
 IF(EXISTS "/usr/bin/python2")
 	SET(PYTHON_VER "python2")
