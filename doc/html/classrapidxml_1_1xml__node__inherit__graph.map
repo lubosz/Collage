@@ -1,0 +1,4 @@
+<map id="G" name="G">
+<area shape="rect" id="node5" href="$classrapidxml_1_1xml__document.html" title="{rapidxml::xml_document\&lt; Ch \&gt;\n||+ xml_document()\l+ parse()\l+ clear()\l&#45; parse_bom()\l&#45; parse_xml_declaration()\l&#45; parse_comment()\l&#45; parse_doctype()\l&#45; parse_pi()\l&#45; parse_and_append_data()\l&#45; parse_cdata()\l&#45; parse_element()\l&#45; parse_node()\l&#45; parse_node_contents()\l&#45; parse_node_attributes()\l&#45; insert_coded_character()\l&#45; skip()\l&#45; skip_and_expand_character_refs()\l}" alt="" coords="5,1053,256,1416"/>
+<area shape="rect" id="node2" href="$classrapidxml_1_1xml__base.html" title="{rapidxml::xml_base\&lt; Ch \&gt;\n|# m_name\l# m_value\l# m_name_size\l# m_value_size\l# m_parent\l|+ xml_base()\l+ name()\l+ name_size()\l+ value()\l+ value_size()\l+ name()\l+ name()\l+ value()\l+ value()\l+ parent()\l# nullstr()\l}" alt="" coords="35,5,227,333"/>
+</map>

@@ -1,0 +1,44 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$classDotSceneLoader.html#a4e5e51eec0482d7dc91da98f7ec30ea6" title="DotSceneLoader::parseDotScene" alt="" coords="241,1586,476,1615"/>
+<area shape="rect" id="node5" href="$classrapidxml_1_1xml__node.html#a2dedeb4e04bb35e06a9a7bddf6ba652d" title="rapidxml::xml_node::first_node" alt="" coords="1799,1389,2017,1418"/>
+<area shape="rect" id="node13" href="$classDotSceneLoader.html#a1a3437b6e166ae938db91ef780671e0d" title="DotSceneLoader::getAttrib" alt="" coords="1812,717,2004,746"/>
+<area shape="rect" id="node19" href="$classrapidxml_1_1xml__document.html#ad510b0c5fd8bf0180a55ffb2476e59e4" title="rapidxml::xml_document::parse" alt="" coords="1119,1998,1343,2027"/>
+<area shape="rect" id="node34" href="$classDotSceneLoader.html#afe7449004d98aaac7cfba2f085f4d634" title="DotSceneLoader::processScene" alt="" coords="525,1317,752,1346"/>
+<area shape="rect" id="node7" href="$classrapidxml_1_1xml__base.html#a9a09739310469995db078ebd0da3ed45" title="rapidxml::xml_base::name" alt="" coords="2420,947,2609,977"/>
+<area shape="rect" id="node11" href="$classrapidxml_1_1xml__base.html#a7e7f98b3d01e1eab8dc1ca69aad9af84" title="rapidxml::xml_base::name_size" alt="" coords="2404,1001,2625,1030"/>
+<area shape="rect" id="node9" href="$classrapidxml_1_1xml__base.html#ad96ff6b1e41dab3ff60b9bc4df769a75" title="rapidxml::xml_base::nullstr" alt="" coords="2676,947,2868,977"/>
+<area shape="rect" id="node15" href="$classrapidxml_1_1xml__node.html#ae426802be58114ffc41bf30ac6b8c37d" title="rapidxml::xml_node::first_attribute" alt="" coords="2113,974,2353,1003"/>
+<area shape="rect" id="node21" href="$classrapidxml_1_1xml__node.html#a8696d098ecc9c4d2a646b43e91d58e31" title="rapidxml::xml_node::append_node" alt="" coords="1437,2011,1680,2041"/>
+<area shape="rect" id="node28" href="$classrapidxml_1_1xml__node.html#aa8d5d9484aa1eb5ff1841a073c84c1aa" title="Removes all attributes of node." alt="" coords="1761,2063,2055,2093"/>
+<area shape="rect" id="node31" href="$classrapidxml_1_1xml__node.html#a95735358b079ae0adcfbbac69aa1fbc3" title="Removes all child nodes (but not attributes)." alt="" coords="1424,1907,1693,1937"/>
+<area shape="rect" id="node24" href="$classrapidxml_1_1xml__base.html#a7f31ae930f93852830234db1ae59c4c4" title="rapidxml::xml_base::parent" alt="" coords="1811,1957,2005,1986"/>
+<area shape="rect" id="node26" href="$classrapidxml_1_1xml__node.html#a2c6a4315b98bcfa2e04fed3fa1b22c36" title="rapidxml::xml_node::type" alt="" coords="1817,2010,1999,2039"/>
+<area shape="rect" id="node39" href="$classDotSceneLoader.html#a562a0e63077fd53df85b32ffd0100a7c" title="DotSceneLoader::processCamera" alt="" coords="1440,1185,1677,1214"/>
+<area shape="rect" id="node52" href="$classDotSceneLoader.html#ace9911dcb7cee7ccce0612d95d57f9f8" title="DotSceneLoader::processEnvironment" alt="" coords="1097,1421,1364,1450"/>
+<area shape="rect" id="node89" href="$classDotSceneLoader.html#a3bcd82df1a673ff3a004c4e7877c7a87" title="DotSceneLoader::processUserDataReference" alt="" coords="1753,1779,2063,1809"/>
+<area shape="rect" id="node91" href="$classDotSceneLoader.html#a06200c15d7acc5b62c4e8a140d52b941" title="DotSceneLoader::processExternals" alt="" coords="801,1210,1047,1239"/>
+<area shape="rect" id="node93" href="$classDotSceneLoader.html#aff673cad20a7eae2f743efea687f825e" title="DotSceneLoader::processNodes" alt="" coords="811,1317,1037,1346"/>
+<area shape="rect" id="node147" href="$classDotSceneLoader.html#a551aa1c8ae88c845dd757c8d83f9dbc2" title="DotSceneLoader::processOctree" alt="" coords="809,1263,1039,1293"/>
+<area shape="rect" id="node149" href="$classDotSceneLoader.html#adbcb5d6d248fcfa07f3e38c83e353807" title="DotSceneLoader::processTerrain" alt="" coords="1116,350,1345,379"/>
+<area shape="rect" id="node43" href="$classDotSceneLoader.html#a52668f1e4c81acd5a4be7805fc16e172" title="DotSceneLoader::getAttribReal" alt="" coords="1799,1145,2017,1174"/>
+<area shape="rect" id="node46" href="$classDotSceneLoader.html#aceca9795e6d7181152f04e01f3fc521e" title="DotSceneLoader::parseQuaternion" alt="" coords="1787,1225,2029,1254"/>
+<area shape="rect" id="node49" href="$classDotSceneLoader.html#a8c5c2effeeca217dc5a36c1756f33f28" title="DotSceneLoader::parseVector3" alt="" coords="1797,585,2019,614"/>
+<area shape="rect" id="node55" href="$classDotSceneLoader.html#a113629751b9dc54f7ea6688f8f4bbd7b" title="DotSceneLoader::parseColour" alt="" coords="1801,1449,2015,1478"/>
+<area shape="rect" id="node59" href="$classDotSceneLoader.html#afd0ebe221623a389749998acb077a70b" title="DotSceneLoader::processClipping" alt="" coords="1440,1291,1677,1321"/>
+<area shape="rect" id="node62" href="$classDotSceneLoader.html#ab1806b8712b94711db9d9c1f069bf334" title="DotSceneLoader::processFog" alt="" coords="1453,1449,1664,1478"/>
+<area shape="rect" id="node68" href="$classDotSceneLoader.html#a9083c3b65cb7b20a52cf833a06d5cdfb" title="DotSceneLoader::processSkyBox" alt="" coords="1441,1238,1676,1267"/>
+<area shape="rect" id="node77" href="$classDotSceneLoader.html#ade3619ec3d8b388d479104eaf471c187" title="DotSceneLoader::processSkyDome" alt="" coords="1435,1395,1683,1425"/>
+<area shape="rect" id="node84" href="$classDotSceneLoader.html#adf559c9639c9251cedd55ea8a287716e" title="DotSceneLoader::processSkyPlane" alt="" coords="1436,1131,1681,1161"/>
+<area shape="rect" id="node72" href="$classDotSceneLoader.html#af74c81daf6a798db68f73481b4d5507a" title="DotSceneLoader::getAttribBool" alt="" coords="1797,974,2019,1003"/>
+<area shape="rect" id="node96" href="$classrapidxml_1_1xml__node.html#ac59af4dd5f0ec715753e42467dff6aed" title="rapidxml::xml_node::next_sibling" alt="" coords="1444,145,1673,174"/>
+<area shape="rect" id="node102" href="$classDotSceneLoader.html#a92dd78af655eaee1cbcd0ba7885fd1e1" title="DotSceneLoader::processNode" alt="" coords="1120,794,1341,823"/>
+<area shape="rect" id="node110" href="$classDotSceneLoader.html#a52e4087fc6477ffbd3ff88ac1373dbaa" title="DotSceneLoader::processBillboardSet" alt="" coords="1427,1078,1691,1107"/>
+<area shape="rect" id="node113" href="$classDotSceneLoader.html#aba6952eeaafa73128497c26e361bc46a" title="DotSceneLoader::processEntity" alt="" coords="1448,974,1669,1003"/>
+<area shape="rect" id="node119" href="$classDotSceneLoader.html#a16900594200599d02bb08b5ec0a34266" title="DotSceneLoader::processLookTarget" alt="" coords="1431,611,1687,641"/>
+<area shape="rect" id="node124" href="$classDotSceneLoader.html#a96c640fe0201b3effc68022bf19ab34b" title="DotSceneLoader::processPagedGeometry" alt="" coords="1413,454,1704,483"/>
+<area shape="rect" id="node131" href="$classDotSceneLoader.html#aba2aec7d4d169d896e857a3e4c58af24" title="DotSceneLoader::processParticleSystem" alt="" coords="1417,665,1700,694"/>
+<area shape="rect" id="node134" href="$classDotSceneLoader.html#acf743da08d8b41dcb2f7842fe7a5bc6e" title="DotSceneLoader::processPlane" alt="" coords="1448,819,1669,849"/>
+<area shape="rect" id="node141" href="$classDotSceneLoader.html#a45fb0eb38492ea4a46f78ec3f57411ae" title="DotSceneLoader::processTrackTarget" alt="" coords="1429,558,1688,587"/>
+<area shape="rect" id="node128" href="$DotSceneLoader_8cpp.html#a7eac30fc2a77ade2e51a46a81b9f5730" title="ParseStringVector" alt="" coords="1840,454,1976,483"/>
+<area shape="rect" id="node156" href="$classDotSceneLoader.html#a4d2ad2e57d5309983d8d136cf6a9c12f" title="DotSceneLoader::processTerrainPage" alt="" coords="1429,249,1688,278"/>
+</map>

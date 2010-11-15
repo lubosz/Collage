@@ -1,0 +1,15 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$classrapidxml_1_1memory__pool.html#a3de2a66c983336e006ea3844e244ed30" title="rapidxml::memory_pool::allocate_attribute" alt="" coords="309,49,603,78"/>
+<area shape="rect" id="node11" href="$classrapidxml_1_1xml__base.html#a9a09739310469995db078ebd0da3ed45" title="rapidxml::xml_base::name" alt="" coords="699,156,888,185"/>
+<area shape="rect" id="node15" href="$classrapidxml_1_1xml__base.html#adcdaccff61c665f039d9344e447b7445" title="rapidxml::xml_base::value" alt="" coords="700,49,887,78"/>
+<area shape="rect" id="node18" href="$classrapidxml_1_1memory__pool.html#a4118581c29ee9a2f6b55ebf7dac185f8" title="rapidxml::memory_pool::allocate_node" alt="" coords="321,102,591,132"/>
+<area shape="rect" id="node23" href="$classrapidxml_1_1xml__node.html#ae426802be58114ffc41bf30ac6b8c37d" title="rapidxml::xml_node::first_attribute" alt="" coords="336,260,576,289"/>
+<area shape="rect" id="node26" href="$classrapidxml_1_1xml__base.html#a7e7f98b3d01e1eab8dc1ca69aad9af84" title="rapidxml::xml_base::name_size" alt="" coords="683,260,904,289"/>
+<area shape="rect" id="node28" href="$classrapidxml_1_1xml__node.html#a2dedeb4e04bb35e06a9a7bddf6ba652d" title="rapidxml::xml_node::first_node" alt="" coords="347,206,565,236"/>
+<area shape="rect" id="node34" href="$classrapidxml_1_1xml__node.html#a2c6a4315b98bcfa2e04fed3fa1b22c36" title="rapidxml::xml_node::type" alt="" coords="365,364,547,393"/>
+<area shape="rect" id="node37" href="$classrapidxml_1_1xml__base.html#a9fcf201ed0915ac18dd43b0b5dcfaf32" title="rapidxml::xml_base::value_size" alt="" coords="347,417,565,446"/>
+<area shape="rect" id="node5" href="$classrapidxml_1_1memory__pool.html#a4e9cf53fa5f9da3a8f31b754bd94b4ec" title="rapidxml::memory_pool::allocate_aligned" alt="" coords="652,102,935,132"/>
+<area shape="rect" id="node7" href="$classrapidxml_1_1memory__pool.html#a317396afc1812f08b64a1dd9cde4039b" title="rapidxml::memory_pool::align" alt="" coords="1009,156,1220,185"/>
+<area shape="rect" id="node9" href="$classrapidxml_1_1memory__pool.html#a1aed504a747303352e05f61c6ccbbebb" title="rapidxml::memory_pool::allocate_raw" alt="" coords="985,102,1244,132"/>
+<area shape="rect" id="node13" href="$classrapidxml_1_1xml__base.html#ad96ff6b1e41dab3ff60b9bc4df769a75" title="rapidxml::xml_base::nullstr" alt="" coords="1019,49,1211,78"/>
+</map>

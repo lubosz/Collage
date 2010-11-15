@@ -2,7 +2,8 @@
  * System.h
  *
  *  Created on: Nov 12, 2010
- *      Author: bmonkey
+ *  Author: bmonkey
+ *  Copyright 2010 The Collage Project
  */
 
 #pragma once
@@ -10,8 +11,8 @@
 #include "Singleton.h"
 
 
-class System : public Singleton<System>{
-public:
+class System : public Singleton<System> {
+ public:
 	System();
 	virtual ~System();
 
@@ -19,4 +20,7 @@ public:
 	Ogre::Timer* m_pTimer;
 
 	void logMessage(Ogre::String message);
+	void initTimer();
+	void initLogging();
+	void initResources();
 };

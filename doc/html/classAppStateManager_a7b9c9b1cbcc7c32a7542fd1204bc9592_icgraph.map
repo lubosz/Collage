@@ -1,0 +1,9 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$classAppStateManager.html#ad2e841b3e33e67bda0ee535839a83cd1" title="AppStateManager::changeAppState" alt="" coords="219,5,472,35"/>
+<area shape="rect" id="node11" href="$classAppStateManager.html#af8912614fb100b1fa704f67ee9621d3b" title="AppStateManager::popAppState" alt="" coords="231,59,460,88"/>
+<area shape="rect" id="node13" href="$classAppStateManager.html#ab9a159d519472de953686ce420a0c850" title="AppStateManager::pushAppState" alt="" coords="227,112,464,141"/>
+<area shape="rect" id="node5" href="$classAppStateManager.html#a61560524c1ddf50ab1508e3135035919" title="AppStateManager::start" alt="" coords="583,5,759,35"/>
+<area shape="rect" id="node7" href="$classCollageApplication.html#a11010127af14f53602777d23630b9bc4" title="CollageApplication::start" alt="" coords="871,5,1047,35"/>
+<area shape="rect" id="node9" href="$CollageApplication_8cpp.html#a0ddf1224851353fc92bfbff6f499fa97" title="main" alt="" coords="1097,5,1151,35"/>
+<area shape="rect" id="node15" href="$classAppStateManager.html#acf2ce05522db7748e315933fa543d771" title="AppStateManager::popAllAndPushAppState" alt="" coords="520,112,821,141"/>
+</map>

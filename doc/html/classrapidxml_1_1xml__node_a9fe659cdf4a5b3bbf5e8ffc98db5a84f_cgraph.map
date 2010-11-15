@@ -1,0 +1,9 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$classrapidxml_1_1xml__node.html#a33ce3386f8c42dd4db658b75cbb6e6c4" title="rapidxml::xml_node::append_attribute" alt="" coords="311,85,575,115"/>
+<area shape="rect" id="node13" href="$classrapidxml_1_1xml__base.html#a7f31ae930f93852830234db1ae59c4c4" title="rapidxml::xml_base::parent" alt="" coords="651,85,845,115"/>
+<area shape="rect" id="node16" href="$classrapidxml_1_1xml__node.html#a8b62ee76489faf8e2d1210869d547684" title="rapidxml::xml_node::prepend_attribute" alt="" coords="308,32,577,61"/>
+<area shape="rect" id="node5" href="$classrapidxml_1_1xml__node.html#ae426802be58114ffc41bf30ac6b8c37d" title="rapidxml::xml_node::first_attribute" alt="" coords="628,32,868,61"/>
+<area shape="rect" id="node7" href="$classrapidxml_1_1xml__base.html#a9a09739310469995db078ebd0da3ed45" title="rapidxml::xml_base::name" alt="" coords="935,5,1124,35"/>
+<area shape="rect" id="node11" href="$classrapidxml_1_1xml__base.html#a7e7f98b3d01e1eab8dc1ca69aad9af84" title="rapidxml::xml_base::name_size" alt="" coords="919,59,1140,88"/>
+<area shape="rect" id="node9" href="$classrapidxml_1_1xml__base.html#ad96ff6b1e41dab3ff60b9bc4df769a75" title="rapidxml::xml_base::nullstr" alt="" coords="1191,5,1383,35"/>
+</map>

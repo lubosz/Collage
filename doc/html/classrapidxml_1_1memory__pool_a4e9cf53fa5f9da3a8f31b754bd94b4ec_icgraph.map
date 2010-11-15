@@ -1,0 +1,14 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$classrapidxml_1_1memory__pool.html#a3de2a66c983336e006ea3844e244ed30" title="rapidxml::memory_pool::allocate_attribute" alt="" coords="339,59,632,88"/>
+<area shape="rect" id="node9" href="$classrapidxml_1_1memory__pool.html#a4118581c29ee9a2f6b55ebf7dac185f8" title="rapidxml::memory_pool::allocate_node" alt="" coords="351,219,620,248"/>
+<area shape="rect" id="node26" href="$classrapidxml_1_1memory__pool.html#a171941b39d55b868358da97462185f58" title="rapidxml::memory_pool::allocate_string" alt="" coords="348,272,623,301"/>
+<area shape="rect" id="node5" href="$classrapidxml_1_1memory__pool.html#a0a10679fc17597d339a0dc107f8a94ac" title="rapidxml::memory_pool::clone_node" alt="" coords="727,59,980,88"/>
+<area shape="rect" id="node7" href="$classrapidxml_1_1xml__document.html#a3603ae7fde6ee0b06b6b83f7288beee4" title="rapidxml::xml_document::parse_node_attributes" alt="" coords="688,5,1019,35"/>
+<area shape="rect" id="node12" href="$classrapidxml_1_1xml__document.html#ab7e58e0f017c77a8059d0708379b1835" title="rapidxml::xml_document::parse_and_append_data" alt="" coords="680,112,1027,141"/>
+<area shape="rect" id="node14" href="$classrapidxml_1_1xml__document.html#ab3350e6bb22ddba52a6450c388c6a98a" title="rapidxml::xml_document::parse_cdata" alt="" coords="720,165,987,195"/>
+<area shape="rect" id="node16" href="$classrapidxml_1_1xml__document.html#a5e00ec2a99cdf148437bd7a945bc4095" title="rapidxml::xml_document::parse_comment" alt="" coords="707,219,1000,248"/>
+<area shape="rect" id="node18" href="$classrapidxml_1_1xml__document.html#a337e73a47254f937e822ae8c0ef5a5fe" title="rapidxml::xml_document::parse_doctype" alt="" coords="712,272,995,301"/>
+<area shape="rect" id="node20" href="$classrapidxml_1_1xml__document.html#aee02c451bdc89de07963c3fe83aff081" title="rapidxml::xml_document::parse_element" alt="" coords="712,325,995,355"/>
+<area shape="rect" id="node22" href="$classrapidxml_1_1xml__document.html#a33ae5f87769f86ba48bb97089f09a1a2" title="rapidxml::xml_document::parse_pi" alt="" coords="732,379,975,408"/>
+<area shape="rect" id="node24" href="$classrapidxml_1_1xml__document.html#a4a1718c92a8ce16b879401f36abbe481" title="rapidxml::xml_document::parse_xml_declaration" alt="" coords="688,432,1019,461"/>
+</map>

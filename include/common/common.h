@@ -1,3 +1,11 @@
+/*
+ * common.h
+ *
+ *  Created on: Nov 12, 2010
+ *  Author: bmonkey
+ *  Copyright 2010 The Collage Project
+ */
+
 #pragma once
 
 #include <OGRE/OgreCamera.h>

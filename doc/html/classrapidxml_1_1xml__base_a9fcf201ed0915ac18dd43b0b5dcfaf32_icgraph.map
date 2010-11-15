@@ -1,0 +1,5 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$classrapidxml_1_1memory__pool.html#a0a10679fc17597d339a0dc107f8a94ac" title="rapidxml::memory_pool::clone_node" alt="" coords="315,5,568,35"/>
+<area shape="rect" id="node5" href="$classrapidxml_1_1xml__document.html#a3603ae7fde6ee0b06b6b83f7288beee4" title="rapidxml::xml_document::parse_node_attributes" alt="" coords="276,59,607,88"/>
+<area shape="rect" id="node7" href="$classrapidxml_1_1xml__document.html#a33ae5f87769f86ba48bb97089f09a1a2" title="rapidxml::xml_document::parse_pi" alt="" coords="320,112,563,141"/>
+</map>

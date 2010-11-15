@@ -1,0 +1,5 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$classSingleton.html#a23ab9ee0e00a373dcf63f66ab13de114" title="Singleton\&lt; UserInterface \&gt;::Instance" alt="" coords="201,5,460,35"/>
+<area shape="rect" id="node5" href="$classAppState.html#a61a9b968c9bcb42135018ff310a57d7b" title="AppState::shutdown" alt="" coords="256,59,405,88"/>
+<area shape="rect" id="node7" href="$classAppStateListener.html#a83346e360b154835ddbe5ba592a8e714" title="AppStateListener::shutdown" alt="" coords="509,59,712,88"/>
+</map>
