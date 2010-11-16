@@ -8,7 +8,6 @@
 
 #include "UserInterface.h"
 #include "System.h"
-#include "Input.h"
 #include "RenderEngine.h"
 
 UserInterface::UserInterface() {

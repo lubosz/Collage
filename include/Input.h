@@ -8,7 +8,11 @@
 
 #pragma once
 
-#include "common.h"
+#include <OIS/OISEvents.h>
+#include <OIS/OISInputManager.h>
+#include <OIS/OISKeyboard.h>
+#include <OIS/OISMouse.h>
+
 #include "Singleton.h"
 
 class Input: public Singleton<Input> {

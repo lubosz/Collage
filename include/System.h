@@ -7,8 +7,8 @@
  */
 
 #pragma once
-#include "common.h"
 #include "Singleton.h"
+#include <OGRE/Ogre.h>
 
 class System : public Singleton<System> {
  public:

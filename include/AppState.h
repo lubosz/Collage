@@ -8,17 +8,12 @@
 
 #pragma once
 
-#include <OIS/OISKeyboard.h>
-#include <OIS/OISMouse.h>
-
-#include <OGRE/SdkTrays.h>
-
 #include "AppStateListener.h"
 
 #include "RenderEngine.h"
 #include "System.h"
 #include "UserInterface.h"
-#include "Input.h"
+
 
 using Ogre::Vector3;
 using Ogre::Real;

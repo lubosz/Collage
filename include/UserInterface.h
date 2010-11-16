@@ -8,7 +8,7 @@
 
 #pragma once
 
-#include "common.h"
+#include "Input.h"
 #include "Singleton.h"
 #include <OGRE/SdkTrays.h>
 
