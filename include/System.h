@@ -10,17 +10,21 @@
 #include "common.h"
 #include "Singleton.h"
 
-
 class System : public Singleton<System> {
  public:
 	System();
 	virtual ~System();
 
-	Ogre::Log* m_pLog;
+	void logMessage(Ogre::String message);
+	void init();
+
 	Ogre::Timer* m_pTimer;
 
-	void logMessage(Ogre::String message);
+private:
+	Ogre::Log* m_pLog;
+
 	void initTimer();
 	void initLogging();
 	void initResources();
+
 };
