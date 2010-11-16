@@ -14,31 +14,23 @@ using std::string;
 
 System::System() {
     logMessage("Starting System");
-    /*
-    initTimer();
-    initLogging();
-    initResources();
-    */
 }
 
 System::~System() {
 }
-void System::initTimer(){
+void System::initTimer() {
     // Set timer
     m_pTimer = new Ogre::Timer();
     m_pTimer->reset();
 }
 
-void System::initLogging(){
-	// Init log
-    Ogre::LogManager* logMgr = new Ogre::LogManager();
-
-    m_pLog = Ogre::LogManager::getSingleton().
-    		createLog("Collage.log", true, true, false);
-    m_pLog->setDebugOutputEnabled(true);
+void System::init() {
+	initResources();
+	initTimer();
+    Ogre::LogManager::getSingleton().createLog("Collage.log", true, true, false);
 }
 
-void System::initResources(){
+void System::initResources() {
 	// Load recources
     Ogre::String secName, typeName, archName;
     Ogre::ConfigFile cf;
@@ -56,11 +48,11 @@ void System::initResources(){
             		addResourceLocation(archName, typeName, secName);
         }
     }
-
 }
 
 void System::logMessage(string message) {
 	//TODO: Segfault
 	//m_pLog->logMessage(message);
-	printf("\x1b[1;31m%s\e[m\n", message.c_str()); // red
+	Ogre::LogManager::getSingleton().logMessage(message);
+	printf("[\x1b[1;31mCollage\e[m]: %s\n", message.c_str()); // red
 }
