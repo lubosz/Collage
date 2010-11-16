@@ -37,13 +37,23 @@ function(copy_plugins_config FROM_PLUGINS_CFG)
     )
 endfunction(copy_plugins_config)
 
+    FIND_PACKAGE(Qt4 REQUIRED)
+    set(QT_USE_QTWEBKIT true)
+    
+    INCLUDE(${QT_USE_FILE})
+
+QT4_WRAP_CPP(src/Generator/moc_FrameCapture.cpp src/Generator/FrameCapture.cpp)
+
 #Find headers and cpps
 file(GLOB_RECURSE SOURCES src/*.cpp)
 file(GLOB_RECURSE INCLUDES include/*.h)
 file(GLOB_RECURSE TESTS test/*.cpp)
 file(GLOB_RECURSE CORE src/Core/*.cpp)
 
-add_executable(collage ${SOURCES} ${INCLUDES})
+qt4_wrap_cpp (MOC_OUTFILES ${INCLUDES})
+
+
+add_executable(collage ${SOURCES} ${INCLUDES} ${MOC_OUTFILES})
 add_executable(ogreTest test/BasicOgre.cpp src/Core/RenderEngine.cpp src/Core/System.cpp)
 
 IF(EXISTS "/usr/bin/python2")
@@ -89,17 +99,16 @@ elseif(UNIX)
     include_directories(
         /usr/include/OGRE
         /usr/local/include/OGRE
+	    /usr/include/QtWebkit
     )
     find_package(PkgConfig)
+
     pkg_check_modules(OGRE REQUIRED OGRE>=1.7 OIS)
-    target_link_libraries(collage OgreMain OIS)
+    target_link_libraries(collage OgreMain OIS QtWebKit)
     if(OGRE_TERRAIN)
         target_link_libraries(collage OgreTerrain)
     endif()
-    target_link_libraries(ogreTest OgreMain OIS)
-    if(OGRE_TERRAIN)
-        target_link_libraries(ogreTest OgreTerrain)
-    endif()
+    target_link_libraries(ogreTest OgreMain)
     copy_plugins_config(${CMAKE_CFG_INTDIR}/bin/plugins-unix.cfg)
 
 elseif (WIN32)
