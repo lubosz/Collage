@@ -27,26 +27,20 @@ void RenderEngine::updateOgre(double timeSinceLastFrame) {
 }
 
 bool RenderEngine::initOgre(Ogre::String wndTitle) {
-
     m_pRoot = new Ogre::Root();
-
     System::Instance().init();
-
     if (!m_pRoot->showConfigDialog())
         return false;
 
+    System::Instance().logMessage("Setting up window");
     m_pRenderWnd = m_pRoot->initialise(true, wndTitle);
-    //System::Instance().logMessage("Starting Render Engine");
-
-    Ogre::TextureManager::getSingleton().setDefaultNumMipmaps(5);
-    Ogre::ResourceGroupManager::getSingleton().initialiseAllResourceGroups();
-
+    m_pRenderWnd->setActive(true);
     m_pViewport = m_pRenderWnd->addViewport(0);
     m_pViewport->setBackgroundColour(Ogre::ColourValue(0.5f, 0.5f, 0.5f, 1.0f));
-
     m_pViewport->setCamera(0);
 
-    m_pRenderWnd->setActive(true);
+
+
 
 
     return true;

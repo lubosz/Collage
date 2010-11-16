@@ -17,6 +17,7 @@ class System : public Singleton<System> {
 
 	void logMessage(Ogre::String message);
 	void init();
+	void loadRecources();
 
 	Ogre::Timer* m_pTimer;
 
@@ -26,5 +27,6 @@ private:
 	void initTimer();
 	void initLogging();
 	void initResources();
+
 
 };

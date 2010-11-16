@@ -27,7 +27,7 @@ void Input::initOis(
 	) {
 	unsigned long hWnd = 0;
 
-    RenderEngine::Instance().m_pRenderWnd->getCustomAttribute("WINDOW", &hWnd);
+	RenderEngine::Instance().m_pRenderWnd->getCustomAttribute("WINDOW", &hWnd);
 
     OIS::ParamList paramList;
 

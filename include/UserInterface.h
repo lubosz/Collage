@@ -19,7 +19,6 @@ class UserInterface : public Singleton<UserInterface> {
 
 	UserInterface();
 	virtual ~UserInterface();
-
-	void initOgreBites(Ogre::RenderWindow* window, OIS::Mouse* mouse);
+	void initOgreBites();
 };
 
