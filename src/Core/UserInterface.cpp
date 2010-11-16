@@ -21,4 +21,5 @@ UserInterface::~UserInterface() {
 void UserInterface::initOgreBites() {
 	System::Instance().logMessage("Starting Ogre Bites");
 	m_pTrayMgr = new OgreBites::SdkTrayManager("AOFTrayMgr", RenderEngine::Instance(). m_pRenderWnd, Input::Instance().m_pMouse, 0);
+	m_pTrayMgr->getTrayContainer(OgreBites::TL_NONE)->hide();
 }
