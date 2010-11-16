@@ -14,6 +14,7 @@
 #include "MenuState.h"
 #include "GameState.h"
 #include "PauseState.h"
+#include "Wallpaper.h"
 
 CollageApplication::CollageApplication() {
 }
@@ -22,6 +23,7 @@ CollageApplication::~CollageApplication() {
 }
 
 void CollageApplication::start() {
+	Wallpaper myWallPaperGenerator = Wallpaper();
 	RenderEngine::Instance().initOgre("Collage");
 	System::Instance().loadRecources();
 	Input::Instance().initOis();

@@ -55,7 +55,8 @@ void System::loadRecources() {
 }
 
 void System::logMessage(string message) {
-	printf("[\x1b[1;31mCollage\e[m]: ", message.c_str()); // red
+
+	printf("[\e[%sCollage\e[m]: ", bashGreen.c_str()); // red
 	Ogre::LogManager::getSingleton().logMessage(message);
 
 }
