@@ -29,8 +29,6 @@ void PauseState::enter() {
 
 }
 
-
-
 void PauseState::exit() {
 	System::Instance().logMessage("Leaving PauseState...");
 

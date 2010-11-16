@@ -19,23 +19,17 @@ System::System() {
 System::~System() {
 }
 void System::initTimer() {
-    // Set timer
     m_pTimer = new Ogre::Timer();
     m_pTimer->reset();
 }
 
 void System::init() {
-
-
 	initResources();
 	initTimer();
     Ogre::LogManager::getSingleton().createLog("Collage.log", true, true, false);
-
-
 }
 
 void System::initResources() {
-	// Load recources
     Ogre::String secName, typeName, archName;
     Ogre::ConfigFile cf;
     cf.load("resources.cfg");
@@ -61,8 +55,6 @@ void System::loadRecources() {
 }
 
 void System::logMessage(string message) {
-	//TODO: Segfault
-	//m_pLog->logMessage(message);
 	printf("[\x1b[1;31mCollage\e[m]: ", message.c_str()); // red
 	Ogre::LogManager::getSingleton().logMessage(message);
 

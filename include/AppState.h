@@ -19,8 +19,6 @@ using Ogre::Vector3;
 using Ogre::Real;
 using Ogre::Degree;
 
-//class AppStateListener;
-
 class AppState
 :
 	public OIS::KeyListener,

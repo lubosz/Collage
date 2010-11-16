@@ -40,7 +40,7 @@ void MenuState::enter() {
 	trayManager->destroyAllWidgets();
 
 //	trayManager->showCursor();
-//	trayManager->createLabel(OgreBites::TL_TOP, "MenuLbl", "Menu", 250);
+	trayManager->createLabel(OgreBites::TL_TOP, "MenuLbl", "Menu", 250);
 //	trayManager->createDecorWidget(OgreBites::TL_CENTER,"splashImage", "SdkTrays/Splash");
 	trayManager->createButton(OgreBites::TL_CENTER, "EnterBtn", "Start Game", 250);
 	trayManager->createButton(OgreBites::TL_CENTER, "Settings", "Settings", 250);
@@ -86,10 +86,11 @@ void MenuState::exit() {
 		RenderEngine::Instance().m_pRoot->destroySceneManager(
 				m_pSceneMgr);
 
+	UserInterface::Instance().m_pTrayMgr->hideBackdrop();
 	UserInterface::Instance().m_pTrayMgr->clearAllTrays();
 	UserInterface::Instance().m_pTrayMgr->destroyAllWidgets();
 	UserInterface::Instance().m_pTrayMgr->setListener(0);
-	UserInterface::Instance().m_pTrayMgr->hideBackdrop();
+
 }
 
 bool MenuState::keyPressed(const OIS::KeyEvent &keyEventRef) {
