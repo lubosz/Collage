@@ -63,6 +63,7 @@ void System::loadRecources() {
 void System::logMessage(string message) {
 	//TODO: Segfault
 	//m_pLog->logMessage(message);
+	printf("[\x1b[1;31mCollage\e[m]: ", message.c_str()); // red
 	Ogre::LogManager::getSingleton().logMessage(message);
-	printf("[\x1b[1;31mCollage\e[m]: %s\n", message.c_str()); // red
+
 }
