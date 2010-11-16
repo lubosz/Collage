@@ -17,7 +17,6 @@ class PauseState : public AppState {
     DECLARE_APPSTATE_CLASS(PauseState)
 
     void enter();
-    void createScene();
     void exit();
 
     bool keyPressed(const OIS::KeyEvent &keyEventRef);

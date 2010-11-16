@@ -17,55 +17,28 @@ PauseState::PauseState() {
 void PauseState::enter() {
 	System::Instance().logMessage("Entering PauseState...");
 
-	m_pSceneMgr
-			= RenderEngine::Instance().m_pRoot->createSceneManager(
-					Ogre::ST_GENERIC, "PauseSceneMgr");
-	m_pSceneMgr->setAmbientLight(Ogre::ColourValue(0.7f, 0.7f, 0.7f));
-
-	m_pCamera = m_pSceneMgr->createCamera("PauseCam");
-	m_pCamera->setPosition(Vector3(0, 25, -50));
-	m_pCamera->lookAt(Vector3(0, 0, 0));
-	m_pCamera->setNearClipDistance(1);
-
-	m_pCamera->setAspectRatio(
-			Real(
-					RenderEngine::Instance().m_pViewport->getActualWidth())
-					/ Real(
-							RenderEngine::Instance().m_pViewport->getActualHeight()));
-
-	RenderEngine::Instance().m_pViewport->setCamera(m_pCamera);
-
-	UserInterface::Instance().m_pTrayMgr->destroyAllWidgets();
-	UserInterface::Instance().m_pTrayMgr->showCursor();
-	UserInterface::Instance().m_pTrayMgr->createButton(
-			OgreBites::TL_CENTER, "BackToGameBtn", "Return to GameState", 250);
-	UserInterface::Instance().m_pTrayMgr->createButton(
-			OgreBites::TL_CENTER, "BackToMenuBtn", "Return to Menu", 250);
-	UserInterface::Instance().m_pTrayMgr->createButton(
-			OgreBites::TL_CENTER, "ExitBtn", "Exit Collage", 250);
-	UserInterface::Instance().m_pTrayMgr->createLabel(
-			OgreBites::TL_TOP, "PauseLbl", "Pause mode", 250);
-
+	OgreBites::SdkTrayManager* trayManager = UserInterface::Instance().m_pTrayMgr;
+	trayManager->destroyAllWidgets();
+	trayManager->showCursor();
+	trayManager->createButton(OgreBites::TL_CENTER, "BackToGameBtn", "Return to Game", 250);
+	trayManager->createButton(OgreBites::TL_CENTER, "BackToMenuBtn", "Return to Menu", 250);
+	trayManager->createButton(OgreBites::TL_CENTER, "ExitBtn", "Exit Collage", 250);
+	trayManager->createLabel(OgreBites::TL_TOP, "PauseLbl", "Pause", 250);
+	trayManager->showBackdrop("SdkTrays/Shade");
 	m_bQuit = false;
 
-	createScene();
 }
 
-void PauseState::createScene() {
-}
 
 
 void PauseState::exit() {
 	System::Instance().logMessage("Leaving PauseState...");
 
-	m_pSceneMgr->destroyCamera(m_pCamera);
-	if (m_pSceneMgr)
-		RenderEngine::Instance().m_pRoot->destroySceneManager(
-				m_pSceneMgr);
-
+	UserInterface::Instance().m_pTrayMgr->hideBackdrop();
 	UserInterface::Instance().m_pTrayMgr->clearAllTrays();
 	UserInterface::Instance().m_pTrayMgr->destroyAllWidgets();
 	UserInterface::Instance().m_pTrayMgr->setListener(0);
+
 }
 
 bool PauseState::keyPressed(const OIS::KeyEvent &keyEventRef) {
