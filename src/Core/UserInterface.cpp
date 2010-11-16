@@ -8,6 +8,8 @@
 
 #include "UserInterface.h"
 #include "System.h"
+#include "Input.h"
+#include "RenderEngine.h"
 
 UserInterface::UserInterface() {
 }
@@ -17,10 +19,7 @@ UserInterface::~UserInterface() {
 		delete m_pTrayMgr;
 }
 
-void UserInterface::initOgreBites(
-		Ogre::RenderWindow* window,
-		OIS::Mouse* mouse
-	) {
+void UserInterface::initOgreBites() {
 	System::Instance().logMessage("Starting Ogre Bites");
-	m_pTrayMgr = new OgreBites::SdkTrayManager("AOFTrayMgr", window, mouse, 0);
+	m_pTrayMgr = new OgreBites::SdkTrayManager("AOFTrayMgr", RenderEngine::Instance(). m_pRenderWnd, Input::Instance().m_pMouse, 0);
 }
