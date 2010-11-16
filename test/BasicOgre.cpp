@@ -6,19 +6,52 @@
  *  Copyright 2010 The Collage Project
  */
 
-#include "System.h"
+#include <OGRE/OgreCamera.h>
+#include <OGRE/OgreEntity.h>
+#include <OGRE/OgreLogManager.h>
+#include <OGRE/OgreOverlay.h>
+#include <OGRE/OgreOverlayElement.h>
+#include <OGRE/OgreOverlayManager.h>
+#include <OGRE/OgreRoot.h>
+#include <OGRE/OgreViewport.h>
+#include <OGRE/OgreSceneManager.h>
+#include <OGRE/OgreRenderWindow.h>
+#include <OGRE/OgreConfigFile.h>
 
 using namespace Ogre;
 
+void initResources() {
+	// Load recources
+    Ogre::String secName, typeName, archName;
+    Ogre::ConfigFile cf;
+    cf.load("resources.cfg");
+
+    Ogre::ConfigFile::SectionIterator seci = cf.getSectionIterator();
+    while (seci.hasMoreElements()) {
+        secName = seci.peekNextKey();
+        Ogre::ConfigFile::SettingsMultiMap *settings = seci.getNext();
+        Ogre::ConfigFile::SettingsMultiMap::iterator i;
+        for (i = settings->begin(); i != settings->end(); ++i) {
+            typeName = i->first;
+            archName = i->second;
+            Ogre::ResourceGroupManager::getSingleton().
+            		addResourceLocation(archName, typeName, secName);
+        }
+    }
+}
 
 void basicOgre() {
 
+Ogre::Timer* m_pTimer;
 	Ogre::Viewport* m_pViewport;
 	Ogre::Root* m_pRoot;
 	Ogre::RenderWindow* m_pRenderWnd;
 
     m_pRoot = new Ogre::Root();
-    System::Instance().init();
+    initResources();
+    m_pTimer = new Ogre::Timer();
+    m_pTimer->reset();
+    Ogre::LogManager::getSingleton().createLog("Collage.log", true, true, false);
     m_pRoot->showConfigDialog();
 
     m_pRenderWnd = m_pRoot->initialise(true, "Basic Ogre");
@@ -26,7 +59,9 @@ void basicOgre() {
     m_pViewport = m_pRenderWnd->addViewport(0);
     m_pViewport->setBackgroundColour(Ogre::ColourValue(0.5f, 0.5f, 0.5f, 1.0f));
     m_pViewport->setCamera(0);
-	System::Instance().loadRecources();
+
+    Ogre::TextureManager::getSingleton().setDefaultNumMipmaps(5);
+    Ogre::ResourceGroupManager::getSingleton().initialiseAllResourceGroups();
 
 	Ogre::SceneManager* m_pSceneMgr;
 	Ogre::Camera* m_pCamera;
@@ -55,13 +90,14 @@ void basicOgre() {
 
 	int timeSinceLastFrame = 1;
 	int startTime = 0;
+	
 
 	while (true) {
-		startTime = System::Instance().m_pTimer->getMillisecondsCPU();
+		startTime = m_pTimer->getMillisecondsCPU();
 		m_pOgreHeadNode->rotate(Ogre::Vector3(0,1,0), Ogre::Radian(float(startTime%10000)/100000.0));
 		m_pRoot->renderOneFrame();
 
-		timeSinceLastFrame = System::Instance().m_pTimer->getMillisecondsCPU() - startTime;
+		timeSinceLastFrame = m_pTimer->getMillisecondsCPU() - startTime;
 
 	}
 
