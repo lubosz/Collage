@@ -31,7 +31,7 @@ bool RenderEngine::initOgre(Ogre::String wndTitle) {
 
     m_pRoot = new Ogre::Root();
     System::Instance().initResources();
-    //System::Instance().initLogging();
+    System::Instance().initLogging();
 
     if (!m_pRoot->showConfigDialog())
         return false;
