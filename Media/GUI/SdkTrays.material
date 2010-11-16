@@ -304,6 +304,21 @@ material SdkTrays/Splash : SdkTrays/Base
     }
 }
 
+material SdkTrays/Wallpaper : SdkTrays/Base
+{
+    technique
+    {
+        pass
+        {
+            texture_unit
+            {
+                texture abstract.jpg
+            }
+        }
+    }
+}
+
+
 material SdkTrays/Frame : SdkTrays/Base
 {
     technique

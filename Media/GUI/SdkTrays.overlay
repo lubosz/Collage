@@ -534,6 +534,14 @@ template container Panel(SdkTrays/Splash)
 	width 288
 	height 352
 }
+template container Panel(SdkTrays/Wallpaper)
+{
+	metrics_mode pixels
+	material SdkTrays/Wallpaper
+	horz_align center
+	width 1920
+	height 1200
+}
 
 template container Panel(SdkTrays/Picture)
 {
