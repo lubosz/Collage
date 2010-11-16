@@ -22,8 +22,6 @@ CollageApplication::~CollageApplication() {
 }
 
 void CollageApplication::start() {
-
-    System::Instance().init();
 	RenderEngine::Instance().initOgre("Collage");
 	System::Instance().loadRecources();
 	Input::Instance().initOis();
