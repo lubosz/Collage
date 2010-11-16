@@ -18,10 +18,10 @@ class RenderEngine : public Singleton<RenderEngine> {
 	bool initOgre(Ogre::String wndTitle);
 	void updateOgre(double timeSinceLastFrame);
 
+
+	Ogre::Viewport* m_pViewport;
 	Ogre::Root* m_pRoot;
 	Ogre::RenderWindow* m_pRenderWnd;
-	Ogre::Viewport* m_pViewport;
-
 
 	RenderEngine();
 	virtual ~RenderEngine();

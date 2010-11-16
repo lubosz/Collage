@@ -25,9 +25,13 @@ void System::initTimer() {
 }
 
 void System::init() {
+
+
 	initResources();
 	initTimer();
     Ogre::LogManager::getSingleton().createLog("Collage.log", true, true, false);
+
+
 }
 
 void System::initResources() {
@@ -48,6 +52,12 @@ void System::initResources() {
             		addResourceLocation(archName, typeName, secName);
         }
     }
+}
+
+void System::loadRecources() {
+    System::Instance().logMessage("Loading recources");
+    Ogre::TextureManager::getSingleton().setDefaultNumMipmaps(5);
+    Ogre::ResourceGroupManager::getSingleton().initialiseAllResourceGroups();
 }
 
 void System::logMessage(string message) {

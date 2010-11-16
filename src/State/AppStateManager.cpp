@@ -65,7 +65,6 @@ void AppStateManager::start(AppState* state) {
 		if (RenderEngine::Instance().m_pRenderWnd->isClosed())
 			m_bShutdown = true;
 
-		//else {
 #if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
 		Ogre::WindowEventUtilities::messagePump();
 #endif
