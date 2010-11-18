@@ -23,7 +23,7 @@ CollageApplication::~CollageApplication() {
 }
 
 void CollageApplication::start() {
-	Wallpaper myWallPaperGenerator = Wallpaper();
+	//Wallpaper myWallPaperGenerator = Wallpaper();
 	RenderEngine::Instance().initOgre("Collage");
 	System::Instance().loadRecources();
 	Input::Instance().initOis();
