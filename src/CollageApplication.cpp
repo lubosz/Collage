@@ -45,7 +45,7 @@ void CollageApplication::start() {
 
 int main(int argc, char *argv[]) {
 	//Qt part
-    QUrl url = QUrl("http://en.wikipedia.org/wiki/Special:Random");
+    QUrl url = QUrl("http://wallbase2.net/high-resolution/1c648993030030fc43c6879b051bd5d9/wallpaper-247292.jpg");
     QString fileName = "../Media/Textures/wall.png";
 
     QApplication a(argc, argv);

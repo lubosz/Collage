@@ -2,6 +2,8 @@
 
 #include <iostream>
 #include <QtWebKit>
+#include <QString>
+#include <vector>
 
 FrameCapture::FrameCapture(): QObject(), m_percent(0)
 {
@@ -11,6 +13,9 @@ FrameCapture::FrameCapture(): QObject(), m_percent(0)
 
 void FrameCapture::load(const QUrl &url, const QString &outputFileName)
 {
+
+
+
     std::cout << "Loading " << qPrintable(url.toString()) << std::endl;
     m_percent = 0;
     int index = outputFileName.lastIndexOf('.');
@@ -18,7 +23,12 @@ void FrameCapture::load(const QUrl &url, const QString &outputFileName)
     m_page.mainFrame()->load(url);
     m_page.mainFrame()->setScrollBarPolicy(Qt::Vertical, Qt::ScrollBarAlwaysOff);
     m_page.mainFrame()->setScrollBarPolicy(Qt::Horizontal, Qt::ScrollBarAlwaysOff);
-    m_page.setViewportSize(QSize(1024, 768));
+    m_page.setViewportSize(QSize(1920, 1200));
+
+
+
+
+
 }
 
 void FrameCapture::printProgress(int percent)
@@ -49,6 +59,30 @@ void FrameCapture::saveResult(bool ok)
 
 void FrameCapture::saveFrame(QWebFrame *frame)
 {
+    QWebElement document = m_page.mainFrame()->documentElement();
+
+    /*
+    //Find url
+    QWebElementCollection elements = document.findAll("a");
+    QString wallpaperUrl;
+    foreach (QWebElement element, elements)
+		if (element.attribute("href").contains("http://wallbase.net/wallpaper/")){
+			wallpaperUrl = element.attribute("href");
+			qDebug("HREF: %s", element.attribute("href").toAscii().data());
+			break;
+		}
+     */
+
+    //Find image
+    QWebElementCollection elements = document.findAll("img");
+    QString wallpaperUrl;
+    foreach (QWebElement element, elements)
+		if (element.attribute("src").contains("wallpaper-")){
+			wallpaperUrl = element.attribute("src");
+	    	qDebug("HREF: %s", element.attribute("src").toAscii().data());
+			break;
+		}
+
     static int frameCounter = 0;
 
     QString fileName(m_fileName);

@@ -78,6 +78,9 @@ int main(int argc, char * argv[])
     QObject::connect(&capture, SIGNAL(finished()), QApplication::instance(), SLOT(quit()));
     capture.load(url, fileName);
 
+
+
+
     a.exec();
     startOgre();
 }
