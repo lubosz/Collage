@@ -98,7 +98,7 @@ elseif(UNIX)
     find_package(PkgConfig)
 
     pkg_check_modules(OGRE REQUIRED OGRE>=1.7 OIS)
-    target_link_libraries(collage OgreMain OIS QtWebKit)
+    target_link_libraries(collage ${QT_LIBRARIES} OgreMain OIS)
     if(OGRE_TERRAIN)
         target_link_libraries(collage OgreTerrain)
     endif()
