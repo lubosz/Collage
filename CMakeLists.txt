@@ -17,12 +17,6 @@ IF(OGRE_TERRAIN)
     ADD_DEFINITIONS(-DUSE_OGRE_TERRAIN)
 ENDIF()
 
-
-IF(UNIX)
-    execute_process(COMMAND uname -a OUTPUT_VARIABLE _output OUTPUT_STRIP_TRAILING_WHITESPACE)
-    message(${_output})
-ENDIF()
-
 #Optimization / Debug
 IF(RELEASE)
     set(CMAKE_CXX_FLAGS "-O3 -msse4 -mssse3") #Optimized
