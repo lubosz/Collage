@@ -15,6 +15,8 @@
 #include "GameState.h"
 #include "PauseState.h"
 #include "Wallpaper.h"
+#include "FrameCapture.h"
+#include <QtGui>
 
 CollageApplication::CollageApplication() {
 }
@@ -42,6 +44,17 @@ void CollageApplication::start() {
 }
 
 int main(int argc, char *argv[]) {
+	//Qt part
+    QUrl url = QUrl("http://en.wikipedia.org/wiki/Special:Random");
+    QString fileName = "../Media/Textures/wall.png";
+
+    QApplication a(argc, argv);
+    FrameCapture capture;
+    QObject::connect(&capture, SIGNAL(finished()), QApplication::instance(), SLOT(quit()));
+    capture.load(url, fileName);
+
+    a.exec();
+
 	CollageApplication collage;
 	try {
 		collage.start();

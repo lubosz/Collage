@@ -1,8 +1,7 @@
 #include "FrameCapture.h"
 
 #include <iostream>
-#include <Qt/QtWebKit>
-#include <Qt/QtGui>
+#include <QtWebKit>
 
 FrameCapture::FrameCapture(): QObject(), m_percent(0)
 {
@@ -50,9 +49,13 @@ void FrameCapture::saveResult(bool ok)
 
 void FrameCapture::saveFrame(QWebFrame *frame)
 {
-
+    static int frameCounter = 0;
 
     QString fileName(m_fileName);
+    if (frameCounter) {
+        int index = m_fileName.lastIndexOf('.');
+        fileName = fileName.insert(index, "_frame" + QString::number(frameCounter));
+    }
 
     QImage image(frame->contentsSize(), QImage::Format_ARGB32_Premultiplied);
     image.fill(Qt::transparent);
@@ -65,6 +68,10 @@ void FrameCapture::saveFrame(QWebFrame *frame)
     painter.end();
 
     image.save(fileName);
-
-
+/*
+    ++frameCounter;
+    foreach(QWebFrame *childFrame, frame->childFrames())
+        saveFrame(childFrame);
+	*/
 }
+
