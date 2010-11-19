@@ -45,14 +45,19 @@ void CollageApplication::start() {
 
 int main(int argc, char *argv[]) {
 	//Qt part
-    QUrl url = QUrl("http://wallbase2.net/high-resolution/1c648993030030fc43c6879b051bd5d9/wallpaper-247292.jpg");
+
+	//QUrl url = QUrl("http://localhost/collage/");
+	//QUrl url = QUrl("http://en.wikipedia.org/wiki/Special:Random");
+	QUrl url = QUrl("http://wallbase.net/random");
+	//QUrl url = QUrl("http://wallbase2.net/high-resolution/1c648993030030fc43c6879b051bd5d9/wallpaper-247292.jpg");
     QString fileName = "../Media/Textures/wall.png";
 
+    //"http://wallbase.net/wallpaper/"
     QApplication a(argc, argv);
     FrameCapture capture;
     QObject::connect(&capture, SIGNAL(finished()), QApplication::instance(), SLOT(quit()));
     capture.load(url, fileName);
-
+    //qDebug("image: %s", capture.getFirstAttribute("a","href","http://wallbase.net/wallpaper/"));
     a.exec();
 
 	CollageApplication collage;
