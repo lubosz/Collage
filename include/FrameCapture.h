@@ -14,6 +14,8 @@ public:
     void load(const QUrl &url, const QString &outputFileName);
     QString getFirstAttribute(const QString &  tag, const QString &  attrib, const QString &  match);
     bool waitForSignal(QObject* obj, const char* signal, int timeout);
+    QNetworkReply * download(const QUrl &url);
+    bool saveToDisk(const QString &filename, QIODevice *data);
 
 signals:
     void finished();
@@ -21,11 +23,13 @@ signals:
 private slots:
     void printProgress(int percent);
     void saveResult(bool ok);
+    void downloadFinished(QNetworkReply *reply);
 
 private:
     QWebPage m_page;
     QString m_fileName;
     int m_percent;
+    QNetworkAccessManager manager;
 
     void saveFrame(QWebFrame *frame);
     void loadUrl(const QUrl &url);

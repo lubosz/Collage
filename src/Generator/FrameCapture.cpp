@@ -10,6 +10,7 @@ FrameCapture::FrameCapture(): QObject(), m_percent(0)
 {
     connect(&m_page, SIGNAL(loadProgress(int)), this, SLOT(printProgress(int)));
     //connect(&m_page, SIGNAL(loadFinished(bool)), this, SLOT(saveResult(bool)));
+    connect(&manager, SIGNAL(finished(QNetworkReply*)),this, SLOT(downloadFinished(QNetworkReply*)));
 }
 
 /**
@@ -33,6 +34,45 @@ bool FrameCapture::waitForSignal(QObject* obj, const char* signal, int timeout =
     }
     loop.exec();
     return timeoutSpy.isEmpty();
+}
+
+QNetworkReply * FrameCapture::download(const QUrl &url)
+{
+    return manager.get(QNetworkRequest(url));
+}
+
+bool FrameCapture::saveToDisk(const QString &filename, QIODevice *data)
+{
+    QFile file(filename);
+    if (!file.open(QIODevice::WriteOnly)) {
+        fprintf(stderr, "Could not open %s for writing: %s\n",
+                qPrintable(filename),
+                qPrintable(file.errorString()));
+        return false;
+    }
+
+    file.write(data->readAll());
+    file.close();
+
+    return true;
+}
+
+void FrameCapture::downloadFinished(QNetworkReply *reply)
+{
+	QString fileName = "../Media/Textures/wall.jpg";
+    QUrl url = reply->url();
+    if (reply->error()) {
+        fprintf(stderr, "Download of %s failed: %s\n",
+                url.toEncoded().constData(),
+                qPrintable(reply->errorString()));
+    } else {
+        if (saveToDisk(fileName, reply))
+            printf("Download of %s succeeded (saved to %s)\n",
+                   url.toEncoded().constData(), qPrintable(fileName));
+    }
+
+    reply->deleteLater();
+    emit finished();
 }
 
 void FrameCapture::loadUrl(const QUrl &url){
@@ -62,14 +102,19 @@ void FrameCapture::load(const QUrl &url, const QString &outputFileName)
 
     waitForSignal(m_page.mainFrame(), SIGNAL(loadFinished(bool)), timeout);
 
+    download(getFirstAttribute("img","src","wallpaper-"));
+/*
+ *Use Webkit
     connect(m_page.mainFrame(), SIGNAL(loadFinished(bool)), this, SLOT(saveResult(bool)));
 
     m_page.settings()->setAttribute(QWebSettings::AutoLoadImages,true);
+
     loadUrl(getFirstAttribute("img","src","wallpaper-"));
 
     m_page.setViewportSize(QSize(1366, 768));
     m_page.mainFrame()->setScrollBarPolicy(Qt::Vertical, Qt::ScrollBarAlwaysOff);
     m_page.mainFrame()->setScrollBarPolicy(Qt::Horizontal, Qt::ScrollBarAlwaysOff);
+*/
 }
 
 void FrameCapture::printProgress(int percent)
