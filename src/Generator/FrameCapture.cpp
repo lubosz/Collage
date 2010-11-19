@@ -47,6 +47,13 @@ void FrameCapture::load(const QUrl &url, const QString &outputFileName)
     int index = outputFileName.lastIndexOf('.');
     m_fileName = (index == -1) ? outputFileName + ".png" : outputFileName;
 
+    m_page.settings()->setAttribute(QWebSettings::AutoLoadImages,false);
+    m_page.settings()->setAttribute(QWebSettings::JavascriptEnabled,false);
+    m_page.settings()->setAttribute(QWebSettings::JavaEnabled,false);
+    m_page.settings()->setAttribute(QWebSettings::PluginsEnabled,false);
+    m_page.settings()->setAttribute(QWebSettings::PrivateBrowsingEnabled,true);
+    m_page.settings()->setAttribute(QWebSettings::JavascriptCanOpenWindows,false);
+
     loadUrl(url);
 
     waitForSignal(m_page.mainFrame(), SIGNAL(loadFinished(bool)), timeout);
@@ -57,6 +64,7 @@ void FrameCapture::load(const QUrl &url, const QString &outputFileName)
 
     connect(m_page.mainFrame(), SIGNAL(loadFinished(bool)), this, SLOT(saveResult(bool)));
 
+    m_page.settings()->setAttribute(QWebSettings::AutoLoadImages,true);
     loadUrl(getFirstAttribute("img","src","wallpaper-"));
 
     m_page.setViewportSize(QSize(1366, 768));
