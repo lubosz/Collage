@@ -33,6 +33,7 @@ endfunction(copy_plugins_config)
 
     FIND_PACKAGE(Qt4 REQUIRED)
     set(QT_USE_QTWEBKIT true)
+    set(QT_USE_QTTEST true)
     
     INCLUDE(${QT_USE_FILE})
 
