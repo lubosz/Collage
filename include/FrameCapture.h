@@ -28,4 +28,5 @@ private:
     int m_percent;
 
     void saveFrame(QWebFrame *frame);
+    void loadUrl(const QUrl &url);
 };

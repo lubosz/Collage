@@ -35,44 +35,33 @@ bool FrameCapture::waitForSignal(QObject* obj, const char* signal, int timeout =
     return timeoutSpy.isEmpty();
 }
 
+void FrameCapture::loadUrl(const QUrl &url){
+	printf("\nLoading %s\n", qPrintable(url.toString()));
+    m_percent = 0;
+    m_page.mainFrame()->load(url);
+}
+
 void FrameCapture::load(const QUrl &url, const QString &outputFileName)
 {
 	int timeout = 20000;
-    std::cout << "Loading " << qPrintable(url.toString()) << std::endl;
-    m_percent = 0;
     int index = outputFileName.lastIndexOf('.');
     m_fileName = (index == -1) ? outputFileName + ".png" : outputFileName;
-    m_page.mainFrame()->load(url);
 
-    waitForSignal(m_page.mainFrame(), SIGNAL(loadFinished(bool)), timeout);
-    //qDebug("image: %s", getFirstAttribute("a","href","").toAscii().data());
-    //QString foo = url.toString() + getFirstAttribute("a","href","http://wallbase.net/wallpaper/");
-    QString foo = getFirstAttribute("a","href","http://wallbase.net/wallpaper/");
-
-    std::cout << "Loading " << qPrintable(foo) << std::endl;
-    m_percent = 0;
-    m_page.mainFrame()->load(foo);
+    loadUrl(url);
 
     waitForSignal(m_page.mainFrame(), SIGNAL(loadFinished(bool)), timeout);
 
-    //foo = url.toString() + getFirstAttribute("img","src","wallpaper-");
-    foo = getFirstAttribute("img","src","wallpaper-");
+    loadUrl(getFirstAttribute("a","href","http://wallbase.net/wallpaper/"));
 
-    std::cout << "Loading " << qPrintable(foo) << std::endl;
-    m_percent = 0;
+    waitForSignal(m_page.mainFrame(), SIGNAL(loadFinished(bool)), timeout);
 
     connect(m_page.mainFrame(), SIGNAL(loadFinished(bool)), this, SLOT(saveResult(bool)));
-    m_page.mainFrame()->load(foo);
-    m_page.setViewportSize(QSize(1366, 768));
 
-//    waitForSignal(m_page.mainFrame(), SIGNAL(loadFinished(bool)), 200);
+    loadUrl(getFirstAttribute("img","src","wallpaper-"));
+
+    m_page.setViewportSize(QSize(1366, 768));
     m_page.mainFrame()->setScrollBarPolicy(Qt::Vertical, Qt::ScrollBarAlwaysOff);
     m_page.mainFrame()->setScrollBarPolicy(Qt::Horizontal, Qt::ScrollBarAlwaysOff);
-    std::cout << "Zoom: " << m_page.mainFrame()->zoomFactor() << "\n";
-//    m_page.setViewportSize(m_page.mainFrame()->contentsSize());
-//    m_page.setViewportSize(QSize(2560, 1600));
-  //  saveResult(true);
-
 }
 
 void FrameCapture::printProgress(int percent)
