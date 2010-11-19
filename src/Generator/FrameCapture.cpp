@@ -9,6 +9,7 @@
 FrameCapture::FrameCapture(): QObject(), m_percent(0)
 {
     connect(&m_page, SIGNAL(loadProgress(int)), this, SLOT(printProgress(int)));
+    connect(&manager, SIGNAL(loadProgress(int)), this, SLOT(printProgress(int)));
     //connect(&m_page, SIGNAL(loadFinished(bool)), this, SLOT(saveResult(bool)));
     connect(&manager, SIGNAL(finished(QNetworkReply*)),this, SLOT(downloadFinished(QNetworkReply*)));
 }
@@ -102,19 +103,25 @@ void FrameCapture::load(const QUrl &url, const QString &outputFileName)
 
     waitForSignal(m_page.mainFrame(), SIGNAL(loadFinished(bool)), timeout);
 
-    download(getFirstAttribute("img","src","wallpaper-"));
-/*
- *Use Webkit
-    connect(m_page.mainFrame(), SIGNAL(loadFinished(bool)), this, SLOT(saveResult(bool)));
+    QString imageUrl = getFirstAttribute("img", "src", "wallpaper-");
+	if (imageUrl.match(".jpg")) {
+		download(imageUrl);
+	} else {
+		//Use Webkit
+		connect(m_page.mainFrame(), SIGNAL(loadFinished(bool)), this,
+				SLOT(saveResult(bool)));
 
-    m_page.settings()->setAttribute(QWebSettings::AutoLoadImages,true);
+		m_page.settings()->setAttribute(QWebSettings::AutoLoadImages, true);
 
-    loadUrl(getFirstAttribute("img","src","wallpaper-"));
+		loadUrl(getFirstAttribute("img", "src", "wallpaper-"));
 
-    m_page.setViewportSize(QSize(1366, 768));
-    m_page.mainFrame()->setScrollBarPolicy(Qt::Vertical, Qt::ScrollBarAlwaysOff);
-    m_page.mainFrame()->setScrollBarPolicy(Qt::Horizontal, Qt::ScrollBarAlwaysOff);
-*/
+		m_page.setViewportSize(QSize(1366, 768));
+		m_page.mainFrame()->setScrollBarPolicy(Qt::Vertical,
+				Qt::ScrollBarAlwaysOff);
+		m_page.mainFrame()->setScrollBarPolicy(Qt::Horizontal,
+				Qt::ScrollBarAlwaysOff);
+
+	}
 }
 
 void FrameCapture::printProgress(int percent)

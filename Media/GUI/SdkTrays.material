@@ -312,7 +312,7 @@ material SdkTrays/Wallpaper : SdkTrays/Base
         {
             texture_unit
             {
-                texture wall.png
+                texture wall.jpg
             }
         }
     }
