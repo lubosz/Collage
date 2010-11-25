@@ -1,8 +1,9 @@
 QT      += webkit network
 
-HEADERS = framecapture.h
+HEADERS = \
+    levelconstructor.h
 SOURCES = main.cpp \
-          framecapture.cpp
+    levelconstructor.cpp
 
 # install
 target.path = $$[QT_INSTALL_EXAMPLES]/webkit/framecapture

@@ -1,67 +1,27 @@
-/****************************************************************************
-**
-** Copyright (C) 2010 Nokia Corporation and/or its subsidiary(-ies).
-** All rights reserved.
-** Contact: Nokia Corporation (qt-info@nokia.com)
-**
-** This file is part of the examples of the Qt Toolkit.
-**
-** $QT_BEGIN_LICENSE:BSD$
-** You may use this file under the terms of the BSD license as follows:
-**
-** "Redistribution and use in source and binary forms, with or without
-** modification, are permitted provided that the following conditions are
-** met:
-**   * Redistributions of source code must retain the above copyright
-**     notice, this list of conditions and the following disclaimer.
-**   * Redistributions in binary form must reproduce the above copyright
-**     notice, this list of conditions and the following disclaimer in
-**     the documentation and/or other materials provided with the
-**     distribution.
-**   * Neither the name of Nokia Corporation and its Subsidiary(-ies) nor
-**     the names of its contributors may be used to endorse or promote
-**     products derived from this software without specific prior written
-**     permission.
-**
-** THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-** "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-** LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-** A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-** OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-** SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-** LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-** DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-** THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-** (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-** OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE."
-** $QT_END_LICENSE$
-**
-****************************************************************************/
-
-#include "framecapture.h"
+#include "levelconstructor.h"
 
 #include <iostream>
 #include <QtWebKit>
 
-FrameCapture::FrameCapture(): QObject(), m_percent(0)
+LevelConstructor::LevelConstructor(): QObject(), m_percent(0)
 {
     connect(&m_page, SIGNAL(loadProgress(int)), this, SLOT(printProgress(int)));
-    connect(&m_page, SIGNAL(loadFinished(bool)), this, SLOT(saveResult(bool)));
+    connect(&m_page, SIGNAL(loadFinished(bool)), this, SLOT(doConstruction(bool)));
 }
 
-void FrameCapture::load(const QUrl &url, const QString &outputFileName)
+void LevelConstructor::construct(const QUrl &url)
 {
     std::cout << "Loading " << qPrintable(url.toString()) << std::endl;
     m_percent = 0;
-    int index = outputFileName.lastIndexOf('.');
-    m_fileName = (index == -1) ? outputFileName + ".png" : outputFileName;
+    //int index = outputFileName.lastIndexOf('.');
+    //m_fileName = (index == -1) ? outputFileName + ".png" : outputFileName;
     m_page.mainFrame()->load(url);
     m_page.mainFrame()->setScrollBarPolicy(Qt::Vertical, Qt::ScrollBarAlwaysOff);
     m_page.mainFrame()->setScrollBarPolicy(Qt::Horizontal, Qt::ScrollBarAlwaysOff);
     m_page.setViewportSize(QSize(1024, 768));
 }
 
-void FrameCapture::printProgress(int percent)
+void LevelConstructor::printProgress(int percent)
 {
     if (m_percent >= percent)
         return;
@@ -70,7 +30,7 @@ void FrameCapture::printProgress(int percent)
         std::cout << "#" << std::flush;
 }
 
-void FrameCapture::saveResult(bool ok)
+void LevelConstructor::saveResult(bool ok)
 {
     std::cout << std::endl;
     qDebug() << "bla";
@@ -83,7 +43,7 @@ void FrameCapture::saveResult(bool ok)
     }
 
     // save each frame in different image files
-    saveFrame(m_page.mainFrame());
+    doConstruction(m_page.mainFrame());
 
     emit finished();
 }
@@ -160,7 +120,7 @@ QRgb findDominantColor(const QImage &image) {
     return qRgb(r/total, g/total, b/total);
 }
 
-void FrameCapture::saveFrame(QWebFrame *frame)
+void LevelConstructor::doConstruction(QWebFrame *frame)
 {
     qint64 start = QDateTime::currentMSecsSinceEpoch();
     static int frameCounter = 0;
