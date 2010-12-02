@@ -104,7 +104,10 @@ void FrameCapture::load(const QUrl &url, const QString &outputFileName)
     waitForSignal(m_page.mainFrame(), SIGNAL(loadFinished(bool)), timeout);
 
     QString imageUrl = getFirstAttribute("img", "src", "wallpaper-");
-	if (imageUrl.match(".jpg")) {
+
+
+    if (imageUrl.contains(".jpg")){
+	//if (imageUrl.match(".jpg")) {
 		download(imageUrl);
 	} else {
 		//Use Webkit
