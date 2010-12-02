@@ -2,6 +2,7 @@
 #define LEVELCONSTRUCTOR_H
 
 #include <QtWebKit>
+#include "level.h"
 
 class LevelConstructor : public QObject
 {
@@ -9,21 +10,11 @@ class LevelConstructor : public QObject
 
 public:
     LevelConstructor();
-    void construct(const QUrl &url);
-
-signals:
-    void finished();
-
-private slots:
-    void printProgress(int percent);
-    void saveResult(bool ok);
-
-private:
-    QWebPage m_page;
-    QString m_fileName;
-    int m_percent;
-
-    void doConstruction(QWebFrame *frame);
+    // Value between 0.0 and 1.0 indicating the suitability of this
+    // constructor for a given webpage
+    //double constructionConfidence(QWebFrame *frame);
+    // Do the actual construction and return the constructed Level
+    //Level construct(QWebFrame *frame);
 };
 
-#endif
+#endif // LEVELCONSTRUCTOR_H
