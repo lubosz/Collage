@@ -11,11 +11,6 @@ include_directories(
 
 OPTION(RELEASE "Release" OFF)
 OPTION(CHECKSTYLE "Check Style" OFF)
-OPTION(OGRE_TERRAIN "Ogre Terrain" OFF)
-
-IF(OGRE_TERRAIN)
-    ADD_DEFINITIONS(-DUSE_OGRE_TERRAIN)
-ENDIF()
 
 #Optimization / Debug
 IF(RELEASE)
@@ -31,13 +26,16 @@ function(copy_plugins_config FROM_PLUGINS_CFG)
     )
 endfunction(copy_plugins_config)
 
-    FIND_PACKAGE(Qt4 REQUIRED)
-    set(QT_USE_QTWEBKIT true)
-    set(QT_USE_QTTEST true)
+set(CMAKE_MODULE_PATH /usr/lib/OGRE/cmake)
+FIND_PACKAGE(Qt4 REQUIRED)
+FIND_PACKAGE(OGRE 1.7 REQUIRED)
+FIND_PACKAGE(OIS REQUIRED)
+set(QT_USE_QTWEBKIT true)
+set(QT_USE_QTTEST true)
     
-    INCLUDE(${QT_USE_FILE})
+INCLUDE(${QT_USE_FILE})
 
-QT4_WRAP_CPP(src/Generator/moc_FrameCapture.cpp src/Generator/FrameCapture.cpp)
+#QT4_WRAP_CPP(src/Generator/moc_FrameCapture.cpp src/Generator/FrameCapture.cpp)
 
 #Find headers and cpps
 file(GLOB_RECURSE SOURCES src/*.cpp)
@@ -49,7 +47,7 @@ qt4_wrap_cpp (MOC_OUTFILES ${INCLUDES})
 
 
 add_executable(collage ${SOURCES} ${INCLUDES} ${MOC_OUTFILES})
-add_executable(ogreTest test/BasicOgre.cpp src/Core/RenderEngine.cpp src/Core/System.cpp)
+#add_executable(ogreTest test/BasicOgre.cpp src/Core/RenderEngine.cpp src/Core/System.cpp)
 
 IF(EXISTS "/usr/bin/python2")
     SET(PYTHON_VER "python2")
@@ -61,10 +59,6 @@ ENDIF()
 if(CHECKSTYLE)
     add_custom_target(CHECK_STYLE ALL
         COMMAND ${PYTHON_VER} scripts/cpplint.py --filter=-whitespace/tab,-build/header_guard,-build/include ${SOURCES} ${INCLUDES}
-        #[DEPENDS depend depend depend ... ]
-        #[WORKING_DIRECTORY dir]
-        #[COMMENT comment] [VERBATIM]
-        #[SOURCES src1 [src2...]]
     )
 endif()
 
@@ -85,28 +79,20 @@ if (APPLE)
     # http://www.ogre3d.org/forums/viewtopic.php?f=2&t=57997
     set(CMAKE_EXE_LINKER_FLAGS "-m32 -framework Ogre -framework CoreFoundation -framework IOKit -framework ApplicationServices -framework Carbon -framework AppKit")
     target_link_libraries(collage $ENV{OGRE_HOME}/lib/release/libOIS.a)
-    if(OGRE_TERRAIN)
-        target_link_libraries(collage OgreTerrain)
-    endif()
     copy_plugins_config(${CMAKE_CFG_INTDIR}/bin/plugins-apple.cfg)
 
 elseif(UNIX)
     include_directories(
-        /usr/include/OGRE
-        /usr/local/include/OGRE
-	    /usr/include/QtWebkit
+        ${OGRE_INCLUDE_DIRS}
+	    ${QT_INCLUDE_DIRS}
     )
-    find_package(PkgConfig)
-
-    pkg_check_modules(OGRE REQUIRED OGRE>=1.7 OIS)
-    target_link_libraries(collage ${QT_LIBRARIES} OgreMain OIS)
-    if(OGRE_TERRAIN)
-        target_link_libraries(collage OgreTerrain)
-    endif()
-    target_link_libraries(ogreTest OgreMain)
+    
+    target_link_libraries(collage ${QT_LIBRARIES} ${OGRE_LIBRARIES} ${OIS_LIBRARIES})
     copy_plugins_config(${CMAKE_CFG_INTDIR}/bin/plugins-unix.cfg)
 
 elseif (WIN32)
+    LINK_DIRECTORIES(${OGRE_LIBRARY_DIRS})
+
     #disable some warnings
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wl,--enable-auto-import")
 
@@ -135,9 +121,6 @@ elseif (WIN32)
             OgreMain
             OIS
         )
-        if(OGRE_TERRAIN)
-            target_link_libraries(collage OgreTerrain)
-        endif()
         target_link_libraries(ogreTest
             OgreMain
             OIS
