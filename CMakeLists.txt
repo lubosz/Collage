@@ -4,10 +4,6 @@ project(collage)
 set(LIBRARY_OUTPUT_PATH ${CMAKE_SOURCE_DIR}/bin)
 set(EXECUTABLE_OUTPUT_PATH ${CMAKE_SOURCE_DIR}/bin)
 
-include_directories(
-    include
-    include/common
-)
 
 OPTION(RELEASE "Release" OFF)
 OPTION(CHECKSTYLE "Check Style" OFF)
@@ -26,16 +22,29 @@ function(copy_plugins_config FROM_PLUGINS_CFG)
     )
 endfunction(copy_plugins_config)
 
-set(CMAKE_MODULE_PATH /usr/lib/OGRE/cmake)
+#find ogre cmake macro
+if($ENV{OGRE_HOME})
+
+else()
+    set(CMAKE_MODULE_PATH /usr/lib/OGRE/cmake)
+endif()
+
+#set cmake macro flags
 FIND_PACKAGE(Qt4 REQUIRED)
 FIND_PACKAGE(OGRE 1.7 REQUIRED)
 FIND_PACKAGE(OIS REQUIRED)
 set(QT_USE_QTWEBKIT true)
 set(QT_USE_QTTEST true)
-    
-INCLUDE(${QT_USE_FILE})
 
-#QT4_WRAP_CPP(src/Generator/moc_FrameCapture.cpp src/Generator/FrameCapture.cpp)
+#set includes    
+INCLUDE(${QT_USE_FILE})
+include_directories(
+    include
+    include/common
+    ${OGRE_INCLUDE_DIRS}
+    ${QT_INCLUDE_DIRS}
+)
+
 
 #Find headers and cpps
 file(GLOB_RECURSE SOURCES src/*.cpp)
@@ -43,19 +52,24 @@ file(GLOB_RECURSE INCLUDES include/*.h)
 file(GLOB_RECURSE TESTS test/*.cpp)
 file(GLOB_RECURSE CORE src/Core/*.cpp)
 
+#moc qt stuff
 qt4_wrap_cpp (MOC_OUTFILES ${INCLUDES})
+#QT4_WRAP_CPP(src/Generator/moc_FrameCapture.cpp src/Generator/FrameCapture.cpp)
 
-
+#compile
 add_executable(collage ${SOURCES} ${INCLUDES} ${MOC_OUTFILES})
 #add_executable(ogreTest test/BasicOgre.cpp src/Core/RenderEngine.cpp src/Core/System.cpp)
 
+#link
+target_link_libraries(collage ${QT_LIBRARIES} ${OGRE_LIBRARIES} ${OIS_LIBRARIES})
+
+#check code stlye
 IF(EXISTS "/usr/bin/python2")
     SET(PYTHON_VER "python2")
 ELSE()
     SET(PYTHON_VER "python")
 ENDIF()
 
-#check code stlye
 if(CHECKSTYLE)
     add_custom_target(CHECK_STYLE ALL
         COMMAND ${PYTHON_VER} scripts/cpplint.py --filter=-whitespace/tab,-build/header_guard,-build/include ${SOURCES} ${INCLUDES}
@@ -82,12 +96,7 @@ if (APPLE)
     copy_plugins_config(${CMAKE_CFG_INTDIR}/bin/plugins-apple.cfg)
 
 elseif(UNIX)
-    include_directories(
-        ${OGRE_INCLUDE_DIRS}
-	    ${QT_INCLUDE_DIRS}
-    )
     
-    target_link_libraries(collage ${QT_LIBRARIES} ${OGRE_LIBRARIES} ${OIS_LIBRARIES})
     copy_plugins_config(${CMAKE_CFG_INTDIR}/bin/plugins-unix.cfg)
 
 elseif (WIN32)
