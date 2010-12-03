@@ -84,7 +84,11 @@ void AppStateManager::start(AppState* state) {
 					= System::Instance().m_pTimer->getMillisecondsCPU()
 							- startTime;
 		} else {
+#ifdef WIN32
+			 Sleep(1000);
+#else
 			 sleep(1000);
+#endif
 		}
 	}
 
