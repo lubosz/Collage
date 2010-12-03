@@ -23,8 +23,8 @@ function(copy_plugins_config FROM_PLUGINS_CFG)
 endfunction(copy_plugins_config)
 
 #find ogre cmake macro
-if($ENV{OGRE_HOME})
-
+if(EXISTS $ENV{OGRE_HOME})
+    set(CMAKE_MODULE_PATH $ENV{OGRE_HOME}/Cmake)
 else()
     set(CMAKE_MODULE_PATH /usr/lib/OGRE/cmake)
 endif()
@@ -94,88 +94,37 @@ if (APPLE)
     copy_plugins_config(${CMAKE_CFG_INTDIR}/bin/plugins-apple.cfg)
 
 elseif(UNIX)
-    
     copy_plugins_config(${CMAKE_CFG_INTDIR}/bin/plugins-unix.cfg)
 
 elseif (WIN32)
-#    LINK_DIRECTORIES(${OGRE_LIBRARY_DIRS})
-#
     #disable some warnings
-#    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wl,--enable-auto-import")
-#
-#    IF(RELEASE)
-#        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -L$ENV{OGRE_HOME}/lib/release -L$ENV{OGRE_HOME}/bin/Release")
-#    ELSE()
-#        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -L$ENV{OGRE_HOME}/lib/debug -L$ENV{OGRE_HOME}/bin/Debug")
-#    ENDIF()
-#
-#    include_directories(
-#        $ENV{OGRE_HOME}/include
-#        $ENV{OGRE_HOME}/include/OGRE
-#        $ENV{OGRE_HOME}/boost_1_44
-#    )
-#
-#    link_directories(
-#        $ENV{OGRE_HOME}/boost_1_42/lib
-#    )
-#
-#    IF(RELEASE)
-#        link_directories(
-#            $ENV{OGRE_HOME}/lib/release
-#            $ENV{OGRE_HOME}/bin/Release
-#        )
-#        target_link_libraries(collage
-#            OgreMain
-#            OIS
-#        )
-#        target_link_libraries(ogreTest
-#            OgreMain
-#            OIS
-#        )
-#    ELSE()
-#        link_directories(
-#            $ENV{OGRE_HOME}/lib/debug
-#            $ENV{OGRE_HOME}/bin/Debug
-#        )
-#        target_link_libraries(collage
-#            OgreMain_d
-#            OIS_d
-#        )
-#        if(OGRE_TERRAIN)
-#            target_link_libraries(collage OgreTerrain_d)
-#        endif()
-#        target_link_libraries(ogreTest
-#            OgreMain_d
-#            OIS_d
-#        )
-#    ENDIF()
-#
-    #replace backslashes with slashes
-#    STRING(REGEX REPLACE "\\\\" "/" OGREFOLDER "$ENV{OGRE_HOME}")
-#        message("Ogre Folder: " ${OGREFOLDER})
-#
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wl,--enable-auto-import")
+
+    include_directories(
+        $ENV{OGRE_HOME}/boost_1_44
+    )
     copy_plugins_config($ENV{OGRE_HOME}/bin/plugins.cfg)
-#
-#    SET(OGRE_DDLS
-#        cg.dll                                Plugin_BSPSceneManager.dll
-#        libboost_date_time-mgw45-mt-1_44.dll  Plugin_CgProgramManager.dll
-#        libboost_thread-mgw45-mt-1_44.dll     Plugin_OctreeSceneManager.dll
-#        libOIS.dll                            Plugin_OctreeZone.dll
-#        OgreMain.dll                          Plugin_ParticleFX.dll
-#        OgrePaging.dll                        Plugin_PCZSceneManager.dll
-#        OgreProperty.dll                      RenderSystem_Direct3D9.dll
-#        OgreRTShaderSystem.dll                RenderSystem_GL.dll
-#        OgreTerrain.dll
-#    )
-#    foreach(dll ${OGRE_DDLS})
-#        add_custom_command(
-#          TARGET collage POST_BUILD
-#          COMMAND ${CMAKE_COMMAND}
-#          ARGS -E echo "copying ${dll}"
-#          COMMAND ${CMAKE_COMMAND}
-#          ARGS -E copy_if_different ${OGREFOLDER}/bin/Release/${dll} ${CMAKE_CFG_INTDIR}/bin/${dll}
-#        )
-#    endforeach(dll)
+
+    #SET(OGRE_DDLS
+    #    
+    #    libboost_date_time-mgw45-mt-1_44.dll
+    #    libboost_thread-mgw45-mt-1_44.dll  
+    #    libOIS.dll     
+    #    OgreMain.dll
+    #    OgrePaging.dll
+    #    OgreProperty.dll
+    #    RenderSystem_GL.dll
+    #    
+    #)
+    #foreach(dll ${OGRE_DDLS})
+    #    add_custom_command(
+    #      TARGET collage POST_BUILD
+    #      COMMAND ${CMAKE_COMMAND}
+    #      ARGS -E echo "copying ${dll}"
+    #      COMMAND ${CMAKE_COMMAND}
+    #      ARGS -E copy_if_different ${OGREFOLDER}/bin/Release/${dll} ${CMAKE_CFG_INTDIR}/bin/${dll}
+    #    )
+    #endforeach(dll)
 endif()
 
 #link
