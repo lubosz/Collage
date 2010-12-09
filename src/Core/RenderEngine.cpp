@@ -29,7 +29,7 @@ void RenderEngine::updateOgre(double timeSinceLastFrame) {
 bool RenderEngine::initOgre(Ogre::String wndTitle) {
     m_pRoot = new Ogre::Root();
     System::Instance().init();
-    //if (!m_pRoot->restoreConfig())
+    if (!m_pRoot->restoreConfig())
     	if (!m_pRoot->showConfigDialog())
     		exit(0);
 

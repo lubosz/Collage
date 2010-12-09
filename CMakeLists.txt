@@ -22,9 +22,13 @@ function(copy_plugins_config FROM_PLUGINS_CFG)
     )
 endfunction(copy_plugins_config)
 
+
+#replace backslashes with slashes
+STRING(REGEX REPLACE "\\\\" "/" OGREFOLDER "$ENV{OGRE_HOME}")
+
 #find ogre cmake macro
 if(EXISTS $ENV{OGRE_HOME})
-    set(CMAKE_MODULE_PATH $ENV{OGRE_HOME}/Cmake)
+    set(CMAKE_MODULE_PATH ${OGREFOLDER}/CMake)
 else()
     set(CMAKE_MODULE_PATH /usr/lib/OGRE/cmake)
 endif()

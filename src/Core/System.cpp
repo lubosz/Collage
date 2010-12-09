@@ -26,7 +26,7 @@ void System::initTimer() {
 void System::init() {
 	initResources();
 	initTimer();
-    Ogre::LogManager::getSingleton().createLog("Collage.log", true, true, false);
+    //Ogre::LogManager::getSingleton().createLog("Collage.log", true, true, false);
 }
 
 void System::initResources() {
