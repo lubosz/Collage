@@ -35,8 +35,10 @@ endif()
 
 #set cmake macro flags
 FIND_PACKAGE(Qt4 REQUIRED)
-FIND_PACKAGE(OGRE 1.7 REQUIRED)
-FIND_PACKAGE(OIS REQUIRED)
+if (NOT APPLE)
+	FIND_PACKAGE(OGRE 1.7 REQUIRED)
+	FIND_PACKAGE(OIS REQUIRED)
+endif()
 set(QT_USE_QTWEBKIT true)
 set(QT_USE_QTTEST true)
 
@@ -80,21 +82,28 @@ endif()
 
 if (APPLE)
     include_directories(
-        $ENV{OGRE_HOME}/include
-        $ENV{OGRE_HOME}/include/OGRE
-        $ENV{OGRE_HOME}/boost_1_42
+        $ENV{OGRE_HOME}/OgreMain/include
+        $ENV{OGRE_HOME}
+		$ENV{OGRE_HOME}/lib/RelWithDebInfo/Ogre.framework/Versions/1.7.2/Headers
+    #    $ENV{OGRE_HOME}/include/OGRE
+    #    $ENV{OGRE_HOME}/boost_1_42
+        $ENV{OGRE_HOME}/Dependencies/include
+		$ENV{OGRE_HOME}/Components/Terrain/include/
     )
     link_directories(
-        $ENV{OGRE_HOME}/lib
-        $ENV{OGRE_HOME}/lib/release
+        $ENV{OGRE_HOME}/lib/RelWithDebInfo
+        #$ENV{OGRE_HOME}/lib/release
+		$ENV{OGRE_HOME}/Dependencies/bin/debug/
     )
     # Build 32 cause Ogre 1.7 doesn't support 64bit on OSX
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -m32")
+    #set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -m32")
 
     # Also link all the other libs that Ogre apparently needs, see:
     # http://www.ogre3d.org/forums/viewtopic.php?f=2&t=57997
-    set(CMAKE_EXE_LINKER_FLAGS "-m32 -framework Ogre -framework CoreFoundation -framework IOKit -framework ApplicationServices -framework Carbon -framework AppKit")
-    target_link_libraries(collage $ENV{OGRE_HOME}/lib/release/libOIS.a)
+    #set(CMAKE_EXE_LINKER_FLAGS "-m32 -framework Ogre -framework CoreFoundation -framework IOKit -framework ApplicationServices -framework Carbon -framework AppKit")
+    set(CMAKE_EXE_LINKER_FLAGS " -framework Ogre -framework CoreFoundation -framework IOKit -framework ApplicationServices -framework Carbon -framework AppKit")
+    target_link_libraries(collage $ENV{OGRE_HOME}/build/bin/relwithdebinfo/libOIS.a)
+    #target_link_libraries(collage $ENV{OGRE_HOME}/Dependencies/bin/release/libOIS.a)
     copy_plugins_config(${CMAKE_CFG_INTDIR}/bin/plugins-apple.cfg)
 
 elseif(UNIX)
