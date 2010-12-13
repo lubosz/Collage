@@ -18,7 +18,8 @@
 #include "FrameCapture.h"
 #include <QtGui>
 
-CollageApplication::CollageApplication() {
+CollageApplication::CollageApplication(int& argc, char** argv)	:QApplication(argc, argv){
+
 }
 
 CollageApplication::~CollageApplication() {
@@ -48,7 +49,9 @@ int main(int argc, char *argv[]) {
 
 	//QUrl url = QUrl("http://localhost/collage/");
 	//QUrl url = QUrl("http://en.wikipedia.org/wiki/Special:Random");
-	QUrl url = QUrl("http://wallbase.net/random");
+	//QUrl url = QUrl("http://wallbase.net/random");
+	QUrl url = QUrl("http://wallbase.net/random/all/eqeq/1920x1200/1.60/001/20");
+
 	//QUrl url = QUrl("http://wallbase2.net/high-resolution/1c648993030030fc43c6879b051bd5d9/wallpaper-247292.jpg");
     QString fileName = "../Media/Textures/wall.png";
 
@@ -60,7 +63,7 @@ int main(int argc, char *argv[]) {
     //qDebug("image: %s", capture.getFirstAttribute("a","href","http://wallbase.net/wallpaper/"));
     a.exec();
 
-	CollageApplication collage;
+	CollageApplication collage(argc, argv);
 	try {
 		collage.start();
 	}
