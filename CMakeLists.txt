@@ -5,7 +5,7 @@ set(LIBRARY_OUTPUT_PATH ${CMAKE_SOURCE_DIR}/bin)
 set(EXECUTABLE_OUTPUT_PATH ${CMAKE_SOURCE_DIR}/bin)
 
 
-OPTION(RELEASE "Release" OFF)
+OPTION(RELEASE "Release" ON)
 OPTION(CHECKSTYLE "Check Style" OFF)
 
 #Optimization / Debug
@@ -63,7 +63,7 @@ qt4_wrap_cpp (MOC_OUTFILES ${INCLUDES})
 #QT4_WRAP_CPP(src/Generator/moc_FrameCapture.cpp src/Generator/FrameCapture.cpp)
 
 #compile
-add_executable(collage ${SOURCES} ${INCLUDES} ${MOC_OUTFILES})
+add_executable(collage ${SOURCES} ${INCLUDES} ${MOC_OUTFILES} src/CollageApplication.mm)
 #add_executable(ogreTest test/BasicOgre.cpp src/Core/RenderEngine.cpp src/Core/System.cpp)
 
 
@@ -97,11 +97,12 @@ if (APPLE)
     )
     # Build 32 cause Ogre 1.7 doesn't support 64bit on OSX
     #set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -m32")
+    #set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -x objective-c++ -framework Foundation ")
 
     # Also link all the other libs that Ogre apparently needs, see:
     # http://www.ogre3d.org/forums/viewtopic.php?f=2&t=57997
     #set(CMAKE_EXE_LINKER_FLAGS "-m32 -framework Ogre -framework CoreFoundation -framework IOKit -framework ApplicationServices -framework Carbon -framework AppKit")
-    set(CMAKE_EXE_LINKER_FLAGS " -framework Ogre -framework CoreFoundation -framework IOKit -framework ApplicationServices -framework Carbon -framework AppKit")
+    set(CMAKE_EXE_LINKER_FLAGS "-framework Ogre -framework CoreFoundation -framework IOKit -framework ApplicationServices -framework Cocoa -framework AppKit")
     target_link_libraries(collage $ENV{OGRE_HOME}/build/bin/relwithdebinfo/libOIS.a)
     #target_link_libraries(collage $ENV{OGRE_HOME}/Dependencies/bin/release/libOIS.a)
     copy_plugins_config(${CMAKE_CFG_INTDIR}/bin/plugins-apple.cfg)

@@ -1,12 +1,11 @@
 /*
- * AppStateManager.cpp
+ * AppStateManager.mm
  *
  *  Created on: Nov 14, 2010
  *  Author: bmonkey
  *  Copyright 2010 The Collage Project
  */
 
-#include "OgrePlatform.h"
 #include "AppStateManager.h"
 #include <OgreWindowEventUtilities.h>
 #include "RenderEngine.h"
@@ -14,6 +13,10 @@
 #include "Input.h"
 #include "UserInterface.h"
 #include "AppState.h"
+
+#if OGRE_PLATFORM == OGRE_PLATFORM_APPLE
+#import <Cocoa/Cocoa.h>
+#endif
 
 AppStateManager::AppStateManager() {
 	m_bShutdown = false;
@@ -56,45 +59,51 @@ AppState* AppStateManager::findByName(Ogre::String stateName) {
 	return 0;
 }
 
-void AppStateManager::start(AppState* state) {
-	changeAppState(state);
+void AppStateManager::tick() {
+#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
+	Ogre::WindowEventUtilities::messagePump();
+#endif
+	if (!RenderEngine::Instance().m_pRenderWnd->isActive())
+		// TODO sleep in order not to waste resources when inactive 
+		return;
 
 	int timeSinceLastFrame = 1;
 	int startTime = 0;
+	startTime = System::Instance().m_pTimer->getMillisecondsCPU();
 
-#if OGRE_PLATFORM != OGRE_PLATFORM_APPLE
+	Input::Instance().m_pKeyboard->capture();
+	Input::Instance().m_pMouse->capture();
+
+	m_ActiveStateStack.back()->update(timeSinceLastFrame);
+
+	RenderEngine::Instance().updateOgre(timeSinceLastFrame);
+	RenderEngine::Instance().m_pRoot->renderOneFrame();
+
+	timeSinceLastFrame = System::Instance().m_pTimer->getMillisecondsCPU()
+		             - startTime;
+}
+
+void AppStateManager::start(AppState* state) {
+	changeAppState(state);
+
+#if OGRE_PLATFORM == OGRE_PLATFORM_APPLE
+	NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
+	[NSTimer scheduledTimerWithTimeInterval:(NSTimeInterval)(1.0f / 60.0f) //* timeSinceLastFrame
+		target:self
+		selector:@selector(tick:)
+		userInfo:nil
+		repeats:YES];
+	[pool release];
+#else
 	while (!m_bShutdown) {
 		if (RenderEngine::Instance().m_pRenderWnd->isClosed())
 			m_bShutdown = true;
-
-#		if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
-		Ogre::WindowEventUtilities::messagePump();
-#		endif
-		if (RenderEngine::Instance().m_pRenderWnd->isActive()) {
-			startTime
-					= System::Instance().m_pTimer->getMillisecondsCPU();
-
-			Input::Instance().m_pKeyboard->capture();
-			Input::Instance().m_pMouse->capture();
-
-			m_ActiveStateStack.back()->update(timeSinceLastFrame);
-
-			RenderEngine::Instance().updateOgre(timeSinceLastFrame);
-			RenderEngine::Instance().m_pRoot->renderOneFrame();
-
-			timeSinceLastFrame
-					= System::Instance().m_pTimer->getMillisecondsCPU()
-							- startTime;
-		} else {
-#		ifdef WIN32
-			 Sleep(1000);
-#		else
-			 sleep(1000);
-#		endif
-		}
+		else
+			tick();
 	}
 #endif
 
+	// XXX on osx should happen immediately? move up then
 	System::Instance().logMessage("Main loop quit");
 }
 

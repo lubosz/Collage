@@ -26,6 +26,7 @@ class AppStateManager : public AppStateListener {
 	AppState* findByName(Ogre::String stateName);
 
 	void start(AppState* state);
+	void tick();
 	void changeAppState(AppState* state);
 	bool pushAppState(AppState* state);
 	void popAppState(void);
@@ -33,7 +34,7 @@ class AppStateManager : public AppStateListener {
 	void shutdown(void);
 	void popAllAndPushAppState(AppState* state);
 
- protected:
+ //protected:
 	void init(AppState *state);
 
 	std::vector<AppState*> m_ActiveStateStack;

@@ -17,7 +17,7 @@ class CollageApplication {
 
 	void start();
 
- private:
+ //private:
 	AppStateManager* m_pAppStateManager;
 };
 
