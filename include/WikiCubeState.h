@@ -41,6 +41,7 @@ class WikiCubeState : public AppState {
 	bool mouseReleased(const OIS::MouseEvent &arg, OIS::MouseButtonID id);
 
 	void update(double timeSinceLastFrame);
+	void buttonHit(OgreBites::Button* button);
 
  private:
 //	Ogre::SceneNode* m_pOgreHeadNode;
@@ -60,6 +61,6 @@ class WikiCubeState : public AppState {
 //	Ogre::RaySceneQuery* m_pRSQ;
 //	Ogre::SceneNode* m_pCurrentObject;
 //	Ogre::Entity* m_pCurrentEntity;
-//	bool m_bLMouseDown, m_bRMouseDown;
+	bool m_bLMouseDown, m_bRMouseDown;
 //	bool m_bSettingsMode;
 };

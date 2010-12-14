@@ -8,6 +8,7 @@
 
 #include "WikiCubeState.h"
 #include "FrameCapture.h"
+#include "System.h"
 #include <OGRE/OgreTextureManager.h>
 
 // using namespace Ogre;
@@ -16,8 +17,8 @@ WikiCubeState::WikiCubeState() {
 //	m_MoveSpeed = 0.1f;
 //	m_RotateSpeed = 0.3f;
 //
-//	m_bLMouseDown = false;
-//	m_bRMouseDown = false;
+	m_bLMouseDown = false;
+	m_bRMouseDown = false;
 	m_bQuit = false;
 //	m_bSettingsMode = false;
 //
@@ -148,12 +149,15 @@ bool WikiCubeState::keyReleased(const OIS::KeyEvent &keyEventRef) {
 	return true;
 }
 
+
 bool WikiCubeState::mouseMoved(const OIS::MouseEvent &evt) {
 	if (UserInterface::Instance().m_pTrayMgr->injectMouseMove(evt))
 		return true;
 
-	m_pCamera->yaw(Degree(evt.state.X.rel * -0.1f));
-	m_pCamera->pitch(Degree(evt.state.Y.rel * -0.1f));
+	if (m_bRMouseDown) {
+		m_pCamera->yaw(Degree(evt.state.X.rel * -0.1f));
+		m_pCamera->pitch(Degree(evt.state.Y.rel * -0.1f));
+	}
 
 	return true;
 }
@@ -165,6 +169,12 @@ bool WikiCubeState::mousePressed(
 	if (UserInterface::Instance().m_pTrayMgr->injectMouseDown(evt, id))
 		return true;
 
+	if (id == OIS::MB_Left) {
+		m_bLMouseDown = true;
+	} else if (id == OIS::MB_Right) {
+		m_bRMouseDown = true;
+	}
+
 	return true;
 }
 
@@ -174,6 +184,12 @@ bool WikiCubeState::mouseReleased(
 	) {
 	if (UserInterface::Instance().m_pTrayMgr->injectMouseUp(evt, id))
 		return true;
+
+	if (id == OIS::MB_Left) {
+		m_bLMouseDown = false;
+	} else if (id == OIS::MB_Right) {
+		m_bRMouseDown = false;
+	}
 
 	return true;
 }
@@ -218,6 +234,15 @@ void WikiCubeState::update(double timeSinceLastFrame) {
 }
 
 void WikiCubeState::buildGUI() {
+	OgreBites::SdkTrayManager* trayManager = UserInterface::Instance().m_pTrayMgr;
+	trayManager->destroyAllWidgets();
 
+//	trayManager->showCursor();
+	trayManager->createLabel(OgreBites::TL_TOP, "MenuLbl", "Menu", 250);
+	trayManager->createButton(OgreBites::TL_LEFT, "ReloadBtn", "Reload", 250);
 }
 
+void WikiCubeState::buttonHit(OgreBites::Button* button) {
+	if (button->getName() == "ReloadBtn")
+		System::Instance().logMessage("Button Pressed");
+}
