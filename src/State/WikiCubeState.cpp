@@ -7,6 +7,7 @@
  */
 
 #include "WikiCubeState.h"
+#include "FrameCapture.h"
 
 // using namespace Ogre;
 
@@ -80,19 +81,13 @@ void WikiCubeState::exit() {
 }
 
 void WikiCubeState::createScene() {
+	System::Instance().logMessage("Rendering Wiki image...");
+	FrameCapture capture;
+	capture.saveWebRender(QUrl("http://en.wikipedia.org/wiki/Special:Random") , "../Media/Textures/wall.png");
+
 	m_pSceneMgr->createLight("Light")->setPosition(75, 75, 75);
 
-	DotSceneLoader* pDotSceneLoader = new DotSceneLoader();
-	pDotSceneLoader->parseDotScene("CubeScene.xml", "General", m_pSceneMgr,
-	//pDotSceneLoader->parseDotScene("Bulldozer.scene", "General", m_pSceneMgr,
-			m_pSceneMgr->getRootSceneNode());
-	delete pDotSceneLoader;
-
-	m_pSceneMgr->getEntity("Cube01")->setQueryFlags(CUBE_MASK);
-	m_pSceneMgr->getEntity("Cube02")->setQueryFlags(CUBE_MASK);
-	m_pSceneMgr->getEntity("Cube03")->setQueryFlags(CUBE_MASK);
-
-	m_pOgreHeadEntity = m_pSceneMgr->createEntity("Cube", "ogrehead.mesh");
+	m_pOgreHeadEntity = m_pSceneMgr->createEntity("Cube", "Cube.mesh");
 	m_pOgreHeadEntity->setQueryFlags(OGRE_HEAD_MASK);
 	m_pOgreHeadNode = m_pSceneMgr->getRootSceneNode()->createChildSceneNode(
 			"CubeNode");
