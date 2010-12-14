@@ -5,6 +5,7 @@
 #include <QString>
 #include <vector>
 #include <QSignalSpy>
+#include "System.h"
 
 FrameCapture::FrameCapture(): QObject(), m_percent(0)
 {
@@ -82,7 +83,7 @@ void FrameCapture::loadUrl(const QUrl &url){
     m_page.mainFrame()->load(url);
 }
 
-void FrameCapture::loadWallPaper(const QUrl &url, const QString &outputFileName)
+void FrameCapture::saveWallPaper(const QUrl &url, const QString &outputFileName)
 {
 	int timeout = 20000;
     m_fileName = outputFileName;
@@ -107,27 +108,35 @@ void FrameCapture::loadWallPaper(const QUrl &url, const QString &outputFileName)
 
     printf ("Image Url %s\n" ,qPrintable(imageUrl));
 
-    if (imageUrl.contains(".jpg")){
+    if (imageUrl.contains(".jpg"))
 		download(imageUrl);
-	} else {
-		//Use Webkit
-		connect(m_page.mainFrame(), SIGNAL(loadFinished(bool)), this,
-				SLOT(saveResult(bool)));
-
-		m_page.settings()->setAttribute(QWebSettings::AutoLoadImages, true);
-
-		loadUrl(getFirstAttribute("img", "src", "wallpaper-"));
-
-		m_page.setViewportSize(QSize(1366, 768));
-		m_page.mainFrame()->setScrollBarPolicy(Qt::Vertical,
-				Qt::ScrollBarAlwaysOff);
-		m_page.mainFrame()->setScrollBarPolicy(Qt::Horizontal,
-				Qt::ScrollBarAlwaysOff);
-
-	}
 
     //wait for wallpaper to download
     waitForSignal(this, SIGNAL(finished()), timeout);
+}
+
+void FrameCapture::saveWebRender(const QUrl &url, const QString &outputFileName){
+	m_fileName = outputFileName;
+	int timeout = 20000;
+
+	connect(m_page.mainFrame(), SIGNAL(loadFinished(bool)), this,SLOT(saveResult(bool)));
+	loadUrl(url);
+//	waitForSignal(m_page.mainFrame(), SIGNAL(loadFinished(bool)), timeout);
+
+//	m_page.settings()->setAttribute(QWebSettings::AutoLoadImages, true);
+
+//	loadUrl(getFirstAttribute("img", "src", "wallpaper-"));
+
+	System::Instance().logMessage("Setup rendering");
+	m_page.setViewportSize(QSize(1366, 768));
+	m_page.mainFrame()->setScrollBarPolicy(Qt::Vertical,
+			Qt::ScrollBarAlwaysOff);
+	m_page.mainFrame()->setScrollBarPolicy(Qt::Horizontal,
+			Qt::ScrollBarAlwaysOff);
+
+//    saveFrame(m_page.mainFrame());
+
+//    emit finished();
 }
 
 void FrameCapture::printProgress(int percent)
