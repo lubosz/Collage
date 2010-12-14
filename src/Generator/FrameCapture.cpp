@@ -6,6 +6,7 @@
 #include <vector>
 #include <QSignalSpy>
 #include "System.h"
+#include <QtCore>
 
 FrameCapture::FrameCapture(): QObject(), m_percent(0)
 {
@@ -119,9 +120,9 @@ void FrameCapture::saveWebRender(const QUrl &url, const QString &outputFileName)
 	m_fileName = outputFileName;
 	int timeout = 20000;
 
-	connect(m_page.mainFrame(), SIGNAL(loadFinished(bool)), this,SLOT(saveResult(bool)));
+//	connect(m_page.mainFrame(), SIGNAL(loadFinished(bool)), this,SLOT(saveResult(bool)));
 	loadUrl(url);
-//	waitForSignal(m_page.mainFrame(), SIGNAL(loadFinished(bool)), timeout);
+	waitForSignal(m_page.mainFrame(), SIGNAL(loadFinished(bool)), timeout);
 
 //	m_page.settings()->setAttribute(QWebSettings::AutoLoadImages, true);
 
@@ -133,7 +134,7 @@ void FrameCapture::saveWebRender(const QUrl &url, const QString &outputFileName)
 			Qt::ScrollBarAlwaysOff);
 	m_page.mainFrame()->setScrollBarPolicy(Qt::Horizontal,
 			Qt::ScrollBarAlwaysOff);
-
+	saveResult(true);
 //    saveFrame(m_page.mainFrame());
 
 //    emit finished();

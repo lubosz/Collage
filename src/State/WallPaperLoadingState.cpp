@@ -28,7 +28,7 @@ void WallPaperLoadingState::createScene() {
 	//	QUrl url = QUrl("http://wallbase.net/random/all/eqeq/1920x1200/1.60/001/20"); //nsfw
 		QUrl url = QUrl("http://wallbase.net/random");
 	    FrameCapture capture;
-	//    capture.saveWebRender(url , "../Media/Textures/wall.jpg");
+//	    capture.saveWebRender(QUrl("http://en.wikipedia.org/wiki/Special:Random") , "../Media/Textures/wall.png");
 	    capture.saveWallPaper(url , "../Media/Textures/wall.jpg");
 
 	    System::Instance().logMessage("Wallpaper downloaded");
