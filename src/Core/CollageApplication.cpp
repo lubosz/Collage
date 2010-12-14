@@ -7,6 +7,7 @@
  */
 
 #include "CollageApplication.h"
+#include "WallPaperLoadingState.h"
 #include "Input.h"
 #include "RenderEngine.h"
 #include "UserInterface.h"
@@ -14,9 +15,8 @@
 #include "MenuState.h"
 #include "GameState.h"
 #include "PauseState.h"
-#include "Wallpaper.h"
-#include "FrameCapture.h"
-#include <QtGui>
+#include "LoadingState.h"
+
 
 CollageApplication::CollageApplication(int& argc, char** argv)	:QApplication(argc, argv){
 	//QUrl url = QUrl("http://en.wikipedia.org/wiki/Special:Random");
@@ -38,21 +38,16 @@ int CollageApplication::exec()
 
     System::Instance().logMessage("Collage initialized");
 
-//	QUrl url = QUrl("http://wallbase.net/random/all/eqeq/1920x1200/1.60/001/20"); //nsfw
-	QUrl url = QUrl("http://wallbase.net/random");
-    FrameCapture capture;
-//    capture.saveWebRender(url , "../Media/Textures/wall.jpg");
-    capture.saveWallPaper(url , "../Media/Textures/wall.jpg");
-
-    System::Instance().logMessage("Wallpaper downloaded");
-
     m_pAppStateManager = new AppStateManager();
 
 	MenuState::create(m_pAppStateManager, "MenuState");
 	GameState::create(m_pAppStateManager, "GameState");
     PauseState::create(m_pAppStateManager, "PauseState");
+    LoadingState::create(m_pAppStateManager, "LoadingState");
+    WallPaperLoadingState::create(m_pAppStateManager, "WallPaperLoadingState");
+
     System::Instance().logMessage("Appstates initialized");
-	m_pAppStateManager->start(m_pAppStateManager->findByName("MenuState"));
+	m_pAppStateManager->start(m_pAppStateManager->findByName("LoadingState"));
 }
 
 
