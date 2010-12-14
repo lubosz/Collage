@@ -28,6 +28,7 @@ CollageApplication::~CollageApplication() {
 
 void CollageApplication::start() {
 	//Wallpaper myWallPaperGenerator = Wallpaper();
+
 	RenderEngine::Instance().initOgre("Collage");
 	System::Instance().loadRecources();
 	Input::Instance().initOis();
@@ -101,7 +102,6 @@ static id mAppDelegate;
 }
 
 - (void)go {
-    
     NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
     mLastFrameTime = 1;
     mTimer = nil;
@@ -170,19 +170,19 @@ static id mAppDelegate;
 int main(int argc, char *argv[]) {
 	//Qt part
 
-	//QUrl url = QUrl("http://localhost/collage/");
-	//QUrl url = QUrl("http://en.wikipedia.org/wiki/Special:Random");
-	QUrl url = QUrl("http://wallbase.net/random");
-	//QUrl url = QUrl("http://wallbase2.net/high-resolution/1c648993030030fc43c6879b051bd5d9/wallpaper-247292.jpg");
-	QString fileName = "../Media/Textures/wall.png";
-
-	//"http://wallbase.net/wallpaper/"
-	QApplication a(argc, argv);
-	FrameCapture capture;
-	QObject::connect(&capture, SIGNAL(finished()), QApplication::instance(), SLOT(quit()));
-	capture.load(url, fileName);
-	//qDebug("image: %s", capture.getFirstAttribute("a","href","http://wallbase.net/wallpaper/"));
-	a.exec();
+//	//QUrl url = QUrl("http://localhost/collage/");
+//	//QUrl url = QUrl("http://en.wikipedia.org/wiki/Special:Random");
+//	QUrl url = QUrl("http://wallbase.net/random");
+//	//QUrl url = QUrl("http://wallbase2.net/high-resolution/1c648993030030fc43c6879b051bd5d9/wallpaper-247292.jpg");
+//	QString fileName = "../Media/Textures/wall.png";
+//
+//	//"http://wallbase.net/wallpaper/"
+//	QApplication a(argc, argv);
+//	FrameCapture capture;
+//	QObject::connect(&capture, SIGNAL(finished()), QApplication::instance(), SLOT(quit()));
+//	capture.load(url, fileName);
+//	//qDebug("image: %s", capture.getFirstAttribute("a","href","http://wallbase.net/wallpaper/"));
+//	a.exec();
 
 #if (OGRE_PLATFORM == OGRE_PLATFORM_APPLE) && __LP64__
 	NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
