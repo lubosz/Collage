@@ -11,7 +11,7 @@ class FrameCapture : public QObject
 
 public:
     FrameCapture();
-    void load(const QUrl &url, const QString &outputFileName);
+    void loadWallPaper(const QUrl &url, const QString &outputFileName);
     QString getFirstAttribute(const QString &  tag, const QString &  attrib, const QString &  match);
     bool waitForSignal(QObject* obj, const char* signal, int timeout);
     QNetworkReply * download(const QUrl &url);

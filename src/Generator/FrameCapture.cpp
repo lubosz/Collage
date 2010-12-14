@@ -82,12 +82,12 @@ void FrameCapture::loadUrl(const QUrl &url){
     m_page.mainFrame()->load(url);
 }
 
-void FrameCapture::load(const QUrl &url, const QString &outputFileName)
+void FrameCapture::loadWallPaper(const QUrl &url, const QString &outputFileName)
 {
 	int timeout = 20000;
-    int index = outputFileName.lastIndexOf('.');
-    m_fileName = (index == -1) ? outputFileName + ".png" : outputFileName;
+    m_fileName = outputFileName;
 
+    //disable all but html
     m_page.settings()->setAttribute(QWebSettings::AutoLoadImages,false);
     m_page.settings()->setAttribute(QWebSettings::JavascriptEnabled,false);
     m_page.settings()->setAttribute(QWebSettings::JavaEnabled,false);
@@ -105,9 +105,9 @@ void FrameCapture::load(const QUrl &url, const QString &outputFileName)
 
     QString imageUrl = getFirstAttribute("img", "src", "wallpaper-");
 
+    printf ("Image Url %s\n" ,qPrintable(imageUrl));
 
     if (imageUrl.contains(".jpg")){
-	//if (imageUrl.match(".jpg")) {
 		download(imageUrl);
 	} else {
 		//Use Webkit
@@ -125,6 +125,9 @@ void FrameCapture::load(const QUrl &url, const QString &outputFileName)
 				Qt::ScrollBarAlwaysOff);
 
 	}
+
+    //wait for wallpaper to download
+    waitForSignal(this, SIGNAL(finished()), timeout);
 }
 
 void FrameCapture::printProgress(int percent)

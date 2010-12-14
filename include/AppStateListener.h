@@ -9,10 +9,12 @@
 #pragma once
 
 #include <OGRE/Ogre.h>
+#include <QObject>
 //#include "AppState.h"
 class AppState;
 
-class AppStateListener {
+class AppStateListener : public QObject{
+	Q_OBJECT
  public:
 	AppStateListener() {}
 	virtual ~AppStateListener() {}
@@ -26,5 +28,7 @@ class AppStateListener {
 	virtual void pauseAppState(AppState* state) = 0;
 	virtual void shutdown() = 0;
 	virtual void popAllAndPushAppState(AppState* state) = 0;
+signals:
+	void finished();
 };
 
