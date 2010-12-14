@@ -21,7 +21,7 @@
 CollageApplication::CollageApplication(int& argc, char** argv)	:QApplication(argc, argv){
 	//QUrl url = QUrl("http://en.wikipedia.org/wiki/Special:Random");
     //qDebug("image: %s", capture.getFirstAttribute("a","href","http://wallbase.net/wallpaper/"));
-    QObject::connect(m_pAppStateManager, SIGNAL(finished()), QApplication::instance(), SLOT(quit()));
+//    QObject::connect(m_pAppStateManager, SIGNAL(finished()), QApplication::instance(), SLOT(quit()));
     //QObject::connect(&capture, SIGNAL(finished()), QApplication::instance(), SLOT(quit()));
 
 
@@ -39,7 +39,6 @@ int CollageApplication::exec()
     QString fileName = "../Media/Textures/wall.jpg";
     capture.loadWallPaper(url, fileName);
 
-    //Wallpaper myWallPaperGenerator = Wallpaper();
 	RenderEngine::Instance().initOgre("Collage");
 	System::Instance().loadRecources();
 	Input::Instance().initOis();

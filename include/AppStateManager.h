@@ -14,8 +14,6 @@
 
 class AppStateManager : public AppStateListener {
 
-
-
  public:
 	typedef struct {
 		Ogre::String name;
@@ -36,8 +34,6 @@ class AppStateManager : public AppStateListener {
 	void pauseAppState(AppState* state);
 	void shutdown(void);
 	void popAllAndPushAppState(AppState* state);
-
-
 
  protected:
 	void init(AppState *state);
