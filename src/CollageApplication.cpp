@@ -21,11 +21,20 @@
 CollageApplication::CollageApplication(int& argc, char** argv)	:QApplication(argc, argv){
 	//QUrl url = QUrl("http://en.wikipedia.org/wiki/Special:Random");
     //qDebug("image: %s", capture.getFirstAttribute("a","href","http://wallbase.net/wallpaper/"));
-    FrameCapture capture;
     QObject::connect(m_pAppStateManager, SIGNAL(finished()), QApplication::instance(), SLOT(quit()));
     //QObject::connect(&capture, SIGNAL(finished()), QApplication::instance(), SLOT(quit()));
 
+
+}
+
+CollageApplication::~CollageApplication() {
+}
+
+
+int CollageApplication::exec()
+{
 //	QUrl url = QUrl("http://wallbase.net/random/all/eqeq/1920x1200/1.60/001/20");
+    FrameCapture capture;
 	QUrl url = QUrl("http://wallbase.net/random");
     QString fileName = "../Media/Textures/wall.jpg";
     capture.loadWallPaper(url, fileName);
@@ -45,10 +54,6 @@ CollageApplication::CollageApplication(int& argc, char** argv)	:QApplication(arg
     PauseState::create(m_pAppStateManager, "PauseState");
 
 	m_pAppStateManager->start(m_pAppStateManager->findByName("MenuState"));
-
-}
-
-CollageApplication::~CollageApplication() {
 }
 
 

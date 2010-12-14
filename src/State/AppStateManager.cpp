@@ -94,10 +94,6 @@ void AppStateManager::start(AppState* state) {
 	}
 
 	System::Instance().logMessage("Main loop quit");
-//	QApplication::instance()->quit();
-//	QApplication::instance()->exit();
-//	emit finished();
-//	exit(0);
 }
 
 void AppStateManager::changeAppState(AppState* state) {
