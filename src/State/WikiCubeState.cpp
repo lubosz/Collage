@@ -35,8 +35,8 @@ void WikiCubeState::enter() {
 	m_pSceneMgr->setAmbientLight(Ogre::ColourValue(0.7f, 0.7f, 0.7f));
 
 	m_pCamera = m_pSceneMgr->createCamera("GameCamera");
-	m_pCamera->setPosition(Vector3(5, 60, 60));
-	m_pCamera->lookAt(Vector3(5, 20, 0));
+	m_pCamera->setPosition(Vector3(-5, 60, -60));
+	m_pCamera->lookAt(Vector3(0, 0, 0));
 	m_pCamera->setNearClipDistance(5);
 
 	m_pCamera->setAspectRatio(
@@ -93,15 +93,44 @@ void WikiCubeState::createScene() {
 //	Ogre::Texture wikiTexture(creator, "WikiTexture", handle, "Webleech" );
 	Ogre::Image img;
 	img.load("wiki.png", "General");
-	Ogre::TexturePtr tex = Ogre::TextureManager::getSingleton().loadImage("wiki.png","General",img);
+//	Ogre::TexturePtr tex = Ogre::TextureManager::getSingleton().loadImage("wiki.png","General",img);
 
-	cubeEntity = m_pSceneMgr->createEntity("Cube", "Cube.mesh");
+//	cubeEntity = m_pSceneMgr->createEntity("Cube", "Cube.mesh");
+
+	Ogre::MeshManager::getSingleton().createPlane(
+			"ground",
+			Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME,
+			Ogre::Plane(Vector3::UNIT_Y, 0),
+			100, 100, 1, 1, false, 1, 1, 1,
+			Ogre::Vector3::UNIT_Z
+	);
+
+	// create a ground entity from our mesh and attach it to the origin
+	cubeEntity = m_pSceneMgr->createEntity("Ground", "ground");
 
 	cubeNode = m_pSceneMgr->getRootSceneNode()->createChildSceneNode("CubeNode");
 	cubeNode->attachObject(cubeEntity);
-//	cubeNode->setPosition(Vector3(0, 0, -25));
+//	cubeNode->setScale(Vector3(5, 5, 5));
+	cubeNode->setPosition(Vector3(0, 0, 0));
+	cubeNode->setOrientation(90,1,1,1);
 
-	cubeMat = cubeEntity->getSubEntity(0)->getMaterial();
+//	TextureManager::getSingleton().loadRawData(CIRCLES_MATERIAL,
+//                                               ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME,
+//                                               imgstream, 256, 256, PF_A8R8G8B8);
+//	MaterialPtr material =
+//    MaterialManager::getSingleton().create( CIRCLES_MATERIAL,
+//                                           ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
+//	TextureUnitState *texLayer = material->getTechnique(0)->getPass(0)->createTextureUnitState( CIRCLES_MATERIAL );
+//	texLayer->setTextureAddressingMode( TextureUnitState::TAM_CLAMP );
+//	material->setSceneBlending( SBT_ADD );
+//	material->setDepthWriteEnabled( false ) ;
+//    material->load();
+
+
+	cubeMat = Ogre::MaterialManager::getSingleton().create("myassmat","General");
+	cubeEntity->getSubEntity(0)->setMaterial(cubeMat);
+	Ogre::TextureUnitState *texLayer = cubeMat.get()->getTechnique(0)->getPass(0)->createTextureUnitState( "myassmat" );
+//	cubeMat = cubeEntity->getSubEntity(0)->getMaterial();
 	cubeMat.get()->getTechnique(0)->getPass(0)->getTextureUnitState(0)->setTextureName("wiki.png");
 
 }

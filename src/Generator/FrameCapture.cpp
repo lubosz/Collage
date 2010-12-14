@@ -129,7 +129,7 @@ void FrameCapture::saveWebRender(const QUrl &url, const QString &outputFileName)
 //	loadUrl(getFirstAttribute("img", "src", "wallpaper-"));
 
 	System::Instance().logMessage("Setup rendering");
-	m_page.setViewportSize(QSize(1366, 768));
+	m_page.setViewportSize(QSize(1280, 1280));
 	m_page.mainFrame()->setScrollBarPolicy(Qt::Vertical,
 			Qt::ScrollBarAlwaysOff);
 	m_page.mainFrame()->setScrollBarPolicy(Qt::Horizontal,
