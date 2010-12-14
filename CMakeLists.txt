@@ -51,14 +51,28 @@ include_directories(
 
 
 #Find headers and cpps
-file(GLOB_RECURSE SOURCES src/*.cpp)
+#file(GLOB_RECURSE SOURCES src/*.cpp)
+
+#file(GLOB_RECURSE TESTS test/*.cpp)
+
+set(GLOB_DIRS Core Generator State)
 file(GLOB_RECURSE INCLUDES include/*.h)
-file(GLOB_RECURSE TESTS test/*.cpp)
-file(GLOB_RECURSE CORE src/Core/*.cpp)
+
+foreach(GLOB_DIR ${GLOB_DIRS})
+    file(GLOB_RECURSE GLOB_FILES src/${GLOB_DIR}/*.cpp)
+    SET(SOURCES ${SOURCES} ${GLOB_FILES})
+endforeach(GLOB_DIR)
 
 #moc qt stuff
 qt4_wrap_cpp (MOC_OUTFILES ${INCLUDES})
 #QT4_WRAP_CPP(src/Generator/moc_FrameCapture.cpp src/Generator/FrameCapture.cpp)
+
+#add main.cpp
+if(APPLE)
+    SET(SOURCES ${SOURCES} "src/main.mm")
+else()
+    SET(SOURCES ${SOURCES} "src/main.cpp")
+endif()
 
 #compile
 add_executable(collage ${SOURCES} ${INCLUDES} ${MOC_OUTFILES})
