@@ -8,6 +8,7 @@
 
 #include "WikiCubeState.h"
 #include "FrameCapture.h"
+#include <OGRE/OgreTextureManager.h>
 
 // using namespace Ogre;
 
@@ -79,15 +80,20 @@ void WikiCubeState::exit() {
 void WikiCubeState::createScene() {
 	System::Instance().logMessage("Rendering Wiki image...");
 	FrameCapture capture;
-	capture.saveWebRender(QUrl("http://en.wikipedia.org/wiki/Special:Random") , "../Media/Textures/wall.png");
+	capture.saveWebRender(QUrl("http://en.wikipedia.org/wiki/Special:Random") , "../Media/Textures/wiki.png");
 
 	m_pSceneMgr->createLight("Light")->setPosition(75, 75, 75);
 
-
-	;
 	Ogre::MaterialPtr cubeMat;
 	Ogre::Entity * cubeEntity;
 	Ogre::SceneNode* cubeNode;
+
+	Ogre::ResourceManager* creator;
+	Ogre::ResourceHandle handle;
+//	Ogre::Texture wikiTexture(creator, "WikiTexture", handle, "Webleech" );
+	Ogre::Image img;
+	img.load("wiki.png", "General");
+	Ogre::TexturePtr tex = Ogre::TextureManager::getSingleton().loadImage("wiki.png","General",img);
 
 	cubeEntity = m_pSceneMgr->createEntity("Cube", "Cube.mesh");
 
@@ -95,7 +101,8 @@ void WikiCubeState::createScene() {
 	cubeNode->attachObject(cubeEntity);
 //	cubeNode->setPosition(Vector3(0, 0, -25));
 
-	cubeMat = cubeEntity->getSubEntity(1)->getMaterial();
+	cubeMat = cubeEntity->getSubEntity(0)->getMaterial();
+	cubeMat.get()->getTechnique(0)->getPass(0)->getTextureUnitState(0)->setTextureName("wiki.png");
 
 }
 
