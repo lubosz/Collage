@@ -26,7 +26,7 @@ void System::initTimer() {
 void System::init() {
 	initResources();
 	initTimer();
-#ifndef OGRE_PLATFORM_LINUX
+#ifdef WITH_FIXBLACKSCREEN
 	//TODO: Race condition? Black screen
     Ogre::LogManager::getSingleton().createLog("Collage.log", true, true, false);
 #endif

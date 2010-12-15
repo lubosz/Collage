@@ -8,6 +8,7 @@ set(EXECUTABLE_OUTPUT_PATH ${CMAKE_SOURCE_DIR}/bin)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=gnu++0x")
 
 OPTION(RELEASE "Release" OFF)
+OPTION(FIXBLACKSCREEN "Fix Black screen" OFF)
 OPTION(CHECKSTYLE "Check Style" OFF)
 
 #Optimization / Debug
@@ -74,6 +75,11 @@ if(APPLE)
     SET(SOURCES ${SOURCES} "src/main.mm")
 else()
     SET(SOURCES ${SOURCES} "src/main.cpp")
+endif()
+
+#fix black screen race condition
+if(FIXBLACKSCREEN)
+ADD_DEFINITIONS(-DWITH_FIXBLACKSCREEN)
 endif()
 
 #compile

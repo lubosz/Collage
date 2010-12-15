@@ -29,7 +29,7 @@ void RenderEngine::updateOgre(double timeSinceLastFrame) {
 bool RenderEngine::initOgre(Ogre::String wndTitle) {
     m_pRoot = new Ogre::Root();
     System::Instance().init();
-#ifndef OGRE_PLATFORM_LINUX
+#ifndef WITH_FIXBLACKSCREEN
 //TODO: Race condition? Black screen
     if (!m_pRoot->restoreConfig())
 #endif
