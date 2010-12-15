@@ -209,7 +209,7 @@ void WikiCubeState::buildGUI() {
 }
 
 void WikiCubeState::loadBackGround(const QString & url){
-	System::Instance().logMessage("Loading Wikipedia" + url.toStdString());
+	System::Instance().logMessage("Loading " + url.toStdString());
 	capture.saveWebRender(QUrl(url) , "../Media/Textures/wiki.png");
 	Ogre::ResourcePtr wikitex = Ogre::TextureManager::getSingleton().getByName("wiki.png");
 	wikitex->reload();
