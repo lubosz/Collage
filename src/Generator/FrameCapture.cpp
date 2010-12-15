@@ -11,7 +11,7 @@
 FrameCapture::FrameCapture(): QObject(), m_percent(0)
 {
     connect(&m_page, SIGNAL(loadProgress(int)), this, SLOT(printProgress(int)));
-    connect(&manager, SIGNAL(loadProgress(int)), this, SLOT(printProgress(int)));
+//    connect(&manager, SIGNAL(loadProgress(int)), this, SLOT(printProgress(int)));
     //connect(&m_page, SIGNAL(loadFinished(bool)), this, SLOT(saveResult(bool)));
     connect(&manager, SIGNAL(finished(QNetworkReply*)),this, SLOT(downloadFinished(QNetworkReply*)));
 }
@@ -107,7 +107,7 @@ void FrameCapture::saveWallPaper(const QUrl &url, const QString &outputFileName)
 
     QString imageUrl = getFirstAttribute("img", "src", "wallpaper-");
 
-    printf ("Image Url %s\n" ,qPrintable(imageUrl));
+    printf ("\nImage Url %s\n" ,qPrintable(imageUrl));
 
     if (imageUrl.contains(".jpg"))
 		download(imageUrl);
@@ -140,9 +140,8 @@ void FrameCapture::saveWebRender(const QUrl &url, const QString &outputFileName)
 	loadUrl(url);
 	waitForSignal(m_page.mainFrame(), SIGNAL(loadFinished(bool)), timeout);
 
-//	m_page.settings()->setAttribute(QWebSettings::AutoLoadImages, true);
-
 //	loadUrl(getFirstAttribute("img", "src", "wallpaper-"));
+    std::cout << "\n";
 
 	System::Instance().logMessage("Setup rendering");
 	m_page.mainFrame()->setScrollBarPolicy(Qt::Vertical,
