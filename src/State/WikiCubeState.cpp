@@ -220,5 +220,6 @@ void WikiCubeState::buttonHit(OgreBites::Button* button) {
 		System::Instance().logMessage("Reloading");
 		capture.saveWebRender(QUrl("http://en.wikipedia.org/wiki/Special:Random") , "../Media/Textures/wiki.png");
 		Ogre::TextureManager::getSingleton().reloadAll();
+
 	}
 }
