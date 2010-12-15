@@ -7,7 +7,7 @@
  */
 
 #include "WikiCubeState.h"
-#include "FrameCapture.h"
+
 #include "System.h"
 #include <OGRE/OgreTextureManager.h>
 
@@ -80,20 +80,20 @@ void WikiCubeState::exit() {
 
 void WikiCubeState::createScene() {
 	System::Instance().logMessage("Rendering Wiki image...");
-	FrameCapture capture;
-	capture.saveWebRender(QUrl("http://en.wikipedia.org/wiki/Special:Random") , "../Media/Textures/wiki.png");
+
+
 
 	m_pSceneMgr->createLight("Light")->setPosition(75, 75, 75);
 
-	Ogre::MaterialPtr cubeMat;
+
 	Ogre::Entity * cubeEntity;
 	Ogre::SceneNode* cubeNode;
 
 	Ogre::ResourceManager* creator;
 	Ogre::ResourceHandle handle;
 //	Ogre::Texture wikiTexture(creator, "WikiTexture", handle, "Webleech" );
-	Ogre::Image img;
-	img.load("wiki.png", "General");
+//	Ogre::Image img;
+//	img.load("wiki.png", "General");
 //	Ogre::TexturePtr tex = Ogre::TextureManager::getSingleton().loadImage("wiki.png","General",img);
 
 //	cubeEntity = m_pSceneMgr->createEntity("Cube", "Cube.mesh");
@@ -128,9 +128,9 @@ void WikiCubeState::createScene() {
 //    material->load();
 
 
-	cubeMat = Ogre::MaterialManager::getSingleton().create("myassmat","General");
+	cubeMat = Ogre::MaterialManager::getSingleton().create("wiki.png",Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
 	cubeEntity->getSubEntity(0)->setMaterial(cubeMat);
-	Ogre::TextureUnitState *texLayer = cubeMat.get()->getTechnique(0)->getPass(0)->createTextureUnitState( "myassmat" );
+	Ogre::TextureUnitState *texLayer = cubeMat.get()->getTechnique(0)->getPass(0)->createTextureUnitState( "wiki.png" );
 //	cubeMat = cubeEntity->getSubEntity(0)->getMaterial();
 	cubeMat.get()->getTechnique(0)->getPass(0)->getTextureUnitState(0)->setTextureName("wiki.png");
 
@@ -243,6 +243,18 @@ void WikiCubeState::buildGUI() {
 }
 
 void WikiCubeState::buttonHit(OgreBites::Button* button) {
-	if (button->getName() == "ReloadBtn")
-		System::Instance().logMessage("Button Pressed");
+	if (button->getName() == "ReloadBtn"){
+		System::Instance().logMessage("Reloading");
+		capture.saveWebRender(QUrl("http://en.wikipedia.org/wiki/Special:Random") , "../Media/Textures/wiki.png");
+
+		cubeMat->unload();
+		Ogre::TextureManager::getSingleton().load("wiki.png", Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
+		Ogre::TextureManager::getSingleton().reloadAll();
+		cubeMat->reload();
+		Ogre::TextureUnitState *texLayer = cubeMat.get()->getTechnique(0)->getPass(0)->createTextureUnitState( "wiki.png" );
+		texLayer->setTextureName("wiki.png");
+		texLayer->retryTextureLoad();
+//		m_pSceneMgr->getEntity("Ground")->getSubEntity(0)->setMaterial(cubeMat);
+//		cubeMat.get()->getTechnique(0)->getPass(0)->getTextureUnitState(0)->
+	}
 }

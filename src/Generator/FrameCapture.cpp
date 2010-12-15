@@ -129,11 +129,11 @@ void FrameCapture::saveWebRender(const QUrl &url, const QString &outputFileName)
 //	loadUrl(getFirstAttribute("img", "src", "wallpaper-"));
 
 	System::Instance().logMessage("Setup rendering");
-	m_page.setViewportSize(QSize(1280, 1280));
 	m_page.mainFrame()->setScrollBarPolicy(Qt::Vertical,
 			Qt::ScrollBarAlwaysOff);
 	m_page.mainFrame()->setScrollBarPolicy(Qt::Horizontal,
 			Qt::ScrollBarAlwaysOff);
+	m_page.setViewportSize(QSize(1280, 1280));
 	saveResult(true);
 //    saveFrame(m_page.mainFrame());
 
@@ -192,8 +192,13 @@ void FrameCapture::saveFrame(QWebFrame *frame)
 
     QString fileName(m_fileName);
 
-    QImage image(frame->contentsSize(), QImage::Format_ARGB32_Premultiplied);
+    QImage image(QSize(1280, 1280), QImage::Format_ARGB32_Premultiplied);
     image.fill(Qt::transparent);
+    if(image.width() != 1280 || image.height() != 1280){
+    	System::Instance().logMessage("WRONG RESOLUTION!");
+    	printf("width: %d, height %d", image.width(), image.height());
+    	exit(0);
+    }
     QPainter painter(&image);
     painter.setRenderHint(QPainter::Antialiasing, true);
     painter.setRenderHint(QPainter::TextAntialiasing, true);

@@ -16,6 +16,7 @@
 
 #include <OGRE/OgreSubEntity.h>
 #include <OGRE/OgreMaterialManager.h>
+#include "FrameCapture.h"
 
 class WikiCubeState : public AppState {
  public:
@@ -62,5 +63,7 @@ class WikiCubeState : public AppState {
 //	Ogre::SceneNode* m_pCurrentObject;
 //	Ogre::Entity* m_pCurrentEntity;
 	bool m_bLMouseDown, m_bRMouseDown;
+	Ogre::MaterialPtr cubeMat;
+	FrameCapture capture;
 //	bool m_bSettingsMode;
 };
