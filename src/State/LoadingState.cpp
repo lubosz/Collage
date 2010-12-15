@@ -42,7 +42,7 @@ void LoadingState::enter() {
 	OgreBites::SdkTrayManager* trayManager = UserInterface::Instance().m_pTrayMgr;
 	trayManager->destroyAllWidgets();
 	trayManager->createLabel(OgreBites::TL_TOP, "MenuLbl", "Menu", 250);
-	trayManager->createLabel(OgreBites::TL_CENTER, "Loading", "Loading", 250);
+	trayManager->showBackdrop("SdkTrays/LoadingScreen");
 
 	createScene();
 //

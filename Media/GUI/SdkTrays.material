@@ -318,6 +318,20 @@ material SdkTrays/Wallpaper : SdkTrays/Base
     }
 }
 
+material SdkTrays/LoadingScreen : SdkTrays/Base
+{
+    technique
+    {
+        pass
+        {
+            texture_unit
+            {
+                texture loading.png
+            }
+        }
+    }
+}
+
 
 material SdkTrays/Frame : SdkTrays/Base
 {
