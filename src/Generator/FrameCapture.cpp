@@ -122,7 +122,21 @@ void FrameCapture::saveWebRender(const QUrl &url, const QString &outputFileName)
 
 #ifdef OGRE_PLATFORM_LINUX
 	//
-	m_page.settings()->setAttribute(QWebSettings::AutoLoadImages,false);
+//	m_page.settings()->setAttribute(QWebSettings::AutoLoadImages,false);
+//	QList<QString> exts;
+//	exts.append("jpg");
+//	exts.append("jpeg");
+//	exts.append("JPG");
+//	exts.append("JPEG");
+//	// ("jpg","JPG")
+//	//exts.append();
+//	foreach(QString ext, exts)
+//		{
+//			QString code = "$('[src*=" + ext + "]').remove()";
+//			m_page.mainFrame()->evaluateJavaScript(code);
+//		}
+				QString code = "$('[src*=jpg]').remove()";
+				m_page.mainFrame()->evaluateJavaScript(code);
 #endif
 	//	connect(m_page.mainFrame(), SIGNAL(loadFinished(bool)), this,SLOT(saveResult(bool)));
 	loadUrl(url);

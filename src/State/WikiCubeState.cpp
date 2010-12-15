@@ -205,6 +205,7 @@ void WikiCubeState::buildGUI() {
 	trayManager->createLabel(OgreBites::TL_TOP, "MenuLbl", "Menu", 250);
 	trayManager->createButton(OgreBites::TL_LEFT, "LoadWiki", "Wikipedia", 250);
 	trayManager->createButton(OgreBites::TL_LEFT, "LoadXKCD", "XKCD", 250);
+	trayManager->createButton(OgreBites::TL_LEFT, "Debug", "Debug", 250);
 }
 
 void WikiCubeState::loadBackGround(const QString & url){

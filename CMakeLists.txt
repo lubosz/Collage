@@ -4,6 +4,8 @@ project(collage)
 set(LIBRARY_OUTPUT_PATH ${CMAKE_SOURCE_DIR}/bin)
 set(EXECUTABLE_OUTPUT_PATH ${CMAKE_SOURCE_DIR}/bin)
 
+#Set c++0x
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=gnu++0x")
 
 OPTION(RELEASE "Release" OFF)
 OPTION(CHECKSTYLE "Check Style" OFF)
