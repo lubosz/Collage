@@ -205,7 +205,8 @@ void WikiCubeState::buildGUI() {
 	trayManager->createButton(OgreBites::TL_LEFT, "LoadWiki", "Wikipedia", 250);
 	trayManager->createButton(OgreBites::TL_LEFT, "LoadXKCD", "XKCD", 250);
 	trayManager->createButton(OgreBites::TL_LEFT, "Reddit", "Reddit", 250);
-//	trayManager->createButton(OgreBites::TL_LEFT, "Debug", "Debug", 250);
+	trayManager->createButton(OgreBites::TL_LEFT, "4chan", "4chan/b/", 250);
+	//	trayManager->createButton(OgreBites::TL_LEFT, "Debug", "Debug", 250);
 }
 
 void WikiCubeState::loadBackGround(const QString & url){
@@ -225,4 +226,7 @@ void WikiCubeState::buttonHit(OgreBites::Button* button) {
 		loadBackGround("http://bstation/collage/");
 	else if(button->getName() == "Reddit")
 		loadBackGround("http://www.reddit.com/r/random/");
+	else if(button->getName() == "4chan")
+			loadBackGround("http://boards.4chan.org/b/");
+
 }
