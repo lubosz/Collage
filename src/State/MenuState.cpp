@@ -40,9 +40,11 @@ void MenuState::enter() {
 	trayManager->destroyAllWidgets();
 
 //	trayManager->showCursor();
-	trayManager->createLabel(OgreBites::TL_TOP, "MenuLbl", "Menu", 250);
+//	trayManager->createLabel(OgreBites::TL_TOP, "MenuLbl", "Menu", 250);
 //	trayManager->createDecorWidget(OgreBites::TL_CENTER,"splashImage", "SdkTrays/Splash");
-	trayManager->createButton(OgreBites::TL_CENTER, "EnterBtn", "Start Game", 250);
+	trayManager->createButton(OgreBites::TL_CENTER, "BrowserDemo", "Browser", 250);
+	trayManager->createButton(OgreBites::TL_CENTER, "OgreDemo", "Ogre Scene", 250);
+
 	trayManager->createButton(OgreBites::TL_CENTER, "Settings", "Settings", 250);
 	trayManager->createButton(OgreBites::TL_CENTER, "ExitBtn", "Exit Collage", 250);
 
@@ -146,6 +148,10 @@ void MenuState::update(double timeSinceLastFrame) {
 void MenuState::buttonHit(OgreBites::Button* button) {
 	if (button->getName() == "ExitBtn")
 		m_bQuit = true;
-	else if (button->getName() == "EnterBtn")
+	else if (button->getName() == "OgreDemo")
 		popAllAndPushAppState(findByName("GameState"));
+	else if (button->getName() == "BrowserDemo")
+		popAllAndPushAppState(findByName("WikiCubeState"));
+
+
 }

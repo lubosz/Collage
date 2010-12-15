@@ -202,10 +202,10 @@ void WikiCubeState::buildGUI() {
 	trayManager->destroyAllWidgets();
 
 //	trayManager->showCursor();
-	trayManager->createLabel(OgreBites::TL_TOP, "MenuLbl", "Menu", 250);
 	trayManager->createButton(OgreBites::TL_LEFT, "LoadWiki", "Wikipedia", 250);
 	trayManager->createButton(OgreBites::TL_LEFT, "LoadXKCD", "XKCD", 250);
-	trayManager->createButton(OgreBites::TL_LEFT, "Debug", "Debug", 250);
+	trayManager->createButton(OgreBites::TL_LEFT, "Reddit", "Reddit", 250);
+//	trayManager->createButton(OgreBites::TL_LEFT, "Debug", "Debug", 250);
 }
 
 void WikiCubeState::loadBackGround(const QString & url){
@@ -223,4 +223,6 @@ void WikiCubeState::buttonHit(OgreBites::Button* button) {
 		loadBackGround("http://dynamic.xkcd.com/random/comic/");
 	else if(button->getName() == "Debug")
 		loadBackGround("http://bstation/collage/");
+	else if(button->getName() == "Reddit")
+		loadBackGround("http://www.reddit.com/r/random/");
 }

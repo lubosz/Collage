@@ -49,7 +49,7 @@ int CollageApplication::exec()
     WikiCubeState::create(m_pAppStateManager, "WikiCubeState");
 
     System::Instance().logMessage("Appstates initialized");
-	m_pAppStateManager->start(m_pAppStateManager->findByName("WikiCubeState"));
+	m_pAppStateManager->start(m_pAppStateManager->findByName("LoadingState"));
 }
 
 
