@@ -43,6 +43,7 @@ class WikiCubeState : public AppState {
 
 	void update(double timeSinceLastFrame);
 	void buttonHit(OgreBites::Button* button);
+	void loadBackGround(const QString & url);
 
  private:
 //	Ogre::SceneNode* m_pOgreHeadNode;

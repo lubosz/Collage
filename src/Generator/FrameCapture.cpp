@@ -120,7 +120,11 @@ void FrameCapture::saveWebRender(const QUrl &url, const QString &outputFileName)
 	m_fileName = outputFileName;
 	int timeout = 20000;
 
-//	connect(m_page.mainFrame(), SIGNAL(loadFinished(bool)), this,SLOT(saveResult(bool)));
+#ifdef OGRE_PLATFORM_LINUX
+	//
+	m_page.settings()->setAttribute(QWebSettings::AutoLoadImages,false);
+#endif
+	//	connect(m_page.mainFrame(), SIGNAL(loadFinished(bool)), this,SLOT(saveResult(bool)));
 	loadUrl(url);
 	waitForSignal(m_page.mainFrame(), SIGNAL(loadFinished(bool)), timeout);
 
@@ -193,7 +197,7 @@ void FrameCapture::saveFrame(QWebFrame *frame)
     QString fileName(m_fileName);
 
     QImage image(QSize(1280, 1280), QImage::Format_ARGB32_Premultiplied);
-    image.fill(Qt::transparent);
+//    image.fill(Qt::transparent);
     if(image.width() != 1280 || image.height() != 1280){
     	System::Instance().logMessage("WRONG RESOLUTION!");
     	printf("width: %d, height %d", image.width(), image.height());

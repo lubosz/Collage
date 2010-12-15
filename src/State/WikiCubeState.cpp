@@ -11,19 +11,10 @@
 #include "System.h"
 #include <OGRE/OgreTextureManager.h>
 
-// using namespace Ogre;
-
 WikiCubeState::WikiCubeState() {
-//	m_MoveSpeed = 0.1f;
-//	m_RotateSpeed = 0.3f;
-//
 	m_bLMouseDown = false;
 	m_bRMouseDown = false;
 	m_bQuit = false;
-//	m_bSettingsMode = false;
-//
-//	m_pCurrentObject = 0;
-//	m_pDetailsPanel = 0;
 }
 
 void WikiCubeState::enter() {
@@ -212,17 +203,23 @@ void WikiCubeState::buildGUI() {
 
 //	trayManager->showCursor();
 	trayManager->createLabel(OgreBites::TL_TOP, "MenuLbl", "Menu", 250);
-	trayManager->createButton(OgreBites::TL_LEFT, "ReloadBtn", "Reload", 250);
+	trayManager->createButton(OgreBites::TL_LEFT, "LoadWiki", "Wikipedia", 250);
+	trayManager->createButton(OgreBites::TL_LEFT, "LoadXKCD", "XKCD", 250);
+}
+
+void WikiCubeState::loadBackGround(const QString & url){
+	System::Instance().logMessage("Loading Wikipedia" + url.toStdString());
+	capture.saveWebRender(QUrl(url) , "../Media/Textures/wiki.png");
+	Ogre::ResourcePtr wikitex = Ogre::TextureManager::getSingleton().getByName("wiki.png");
+	wikitex->reload();
 }
 
 void WikiCubeState::buttonHit(OgreBites::Button* button) {
-	if (button->getName() == "ReloadBtn"){
-		System::Instance().logMessage("Reloading");
-		capture.saveWebRender(QUrl("http://en.wikipedia.org/wiki/Special:Random") , "../Media/Textures/wiki.png");
-//		Ogre::TextureManager::getSingleton().reloadAll();
-		Ogre::ResourcePtr wikitex = Ogre::TextureManager::getSingleton().getByName("wiki.png");
-		wikitex->reload();
-//		Ogre::ResourceManager::
 
-	}
+	if (button->getName() == "LoadWiki")
+		loadBackGround("http://en.wikipedia.org/wiki/Special:Random");
+	else if (button->getName() == "LoadXKCD")
+		loadBackGround("http://dynamic.xkcd.com/random/comic/");
+	else if(button->getName() == "Debug")
+		loadBackGround("http://bstation/collage/");
 }
