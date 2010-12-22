@@ -11,11 +11,11 @@ class LevelGenerator : public QObject
 public:
     explicit LevelGenerator(QObject *parent = 0);
 
-    float getScore(QWebFrame *webframe);
+    float getScore(QWebPage *webpage);
     Level* generate();
 
 private:
-    QWebFrame *webframe;
+    QWebPage *webpage;
 
 signals:
 

@@ -5,8 +5,8 @@ LevelGenerator::LevelGenerator(QObject *parent) :
 {
 }
 
-float LevelGenerator::getScore(QWebFrame *webframe) {
-    this->webframe = webframe;
+float LevelGenerator::getScore(QWebPage *webpage) {
+    this->webpage = webpage;
     return 1.0;
 }
 

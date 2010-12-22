@@ -3,8 +3,11 @@
 
 #include <QObject>
 #include <QUrl>
+#include <QWebPage>
+#include <QtDebug>
 
 #include <vector>
+#include <iostream>
 
 #include "levelgenerator.h"
 
@@ -17,15 +20,20 @@ public:
     explicit LevelGeneratorManager(QObject *parent = 0);
 
     void addGenerator(LevelGenerator *generator);
-    LevelGenerator* getMatchingGenerator(QUrl url);
+    void requestWebpage(QUrl url);
 
 private:
     std::vector<LevelGenerator*> generators;
+    QWebPage webpage;
+    bool requestLock;
+    int percent;
 
 signals:
+    void finished();
 
-public slots:
-
+private slots:
+    void printProgress(int percent);
+    void getMatchingGenerator(bool ok);
 };
 
 #endif // LEVELGENERATORMANAGER_H
