@@ -18,7 +18,8 @@
 #include "LoadingState.h"
 #include "WikiCubeState.h"
 #include "SimulationTestState.h"
-
+#include <phonon/audiooutput.h>
+#include <phonon/mediaobject.h>
 
 CollageApplication::CollageApplication(int& argc, char** argv)	:QApplication(argc, argv){
 	//QUrl url = QUrl("http://en.wikipedia.org/wiki/Special:Random");
@@ -33,6 +34,18 @@ CollageApplication::~CollageApplication() {
 
 int CollageApplication::exec()
 {
+
+	//audio
+    Phonon::AudioOutput *audioOutput =  new Phonon::AudioOutput(Phonon::MusicCategory);
+    Phonon::MediaObject *mediaObject =  new Phonon::MediaObject();
+
+    Phonon::MediaSource source("http://89.179.179.5:8040");
+    mediaObject->setCurrentSource(source);
+    mediaObject->play();
+
+    Phonon::createPath(mediaObject, audioOutput);
+
+
 	RenderEngine::Instance().initOgre("Collage");
 	System::Instance().loadRecources();
 	Input::Instance().initOis();
