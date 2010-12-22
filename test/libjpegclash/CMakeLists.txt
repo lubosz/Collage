@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 2.8)
 project(QOgre)
-set(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake/modules)
+set(CMAKE_MODULE_PATH /usr/lib/OGRE/cmake)
 FIND_PACKAGE(Qt4 REQUIRED)
 FIND_PACKAGE(OGRE 1.7 REQUIRED)
 set(QT_USE_QTWEBKIT true)
