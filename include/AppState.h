@@ -8,6 +8,8 @@
 
 #pragma once
 
+#include <QObject>
+
 #include "AppStateListener.h"
 
 #include "RenderEngine.h"
@@ -21,9 +23,11 @@ using Ogre::Degree;
 
 class AppState
 :
+	public QObject,
 	public OIS::KeyListener,
 	public OIS::MouseListener,
 	public OgreBites::SdkTrayListener {
+	Q_OBJECT
  public:
 	static void create(AppStateListener* parent, const Ogre::String name) {}
 
@@ -36,7 +40,7 @@ class AppState
 	virtual void update(double timeSinceLastFrame) = 0;
 
  protected:
-	AppState() {};
+    AppState() {};
 
 	AppState* findByName(Ogre::String stateName) {
 		return m_pParent->findByName(stateName);
