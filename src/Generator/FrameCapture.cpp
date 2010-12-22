@@ -120,7 +120,7 @@ void FrameCapture::saveWebRender(const QUrl &url, const QString &outputFileName)
 	m_fileName = outputFileName;
 	int timeout = 20000;
 
-#ifdef OGRE_PLATFORM_LINUX
+#ifdef FREEIMAGE_BUG
 	//
 	m_page.settings()->setAttribute(QWebSettings::AutoLoadImages,false);
 //	QList<QString> exts;

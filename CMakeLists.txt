@@ -10,6 +10,7 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=gnu++0x")
 OPTION(RELEASE "Release" OFF)
 OPTION(FIXBLACKSCREEN "Fix Black screen" OFF)
 OPTION(CHECKSTYLE "Check Style" OFF)
+OPTION(FREEIMAGE_BUG "Free Image Conflict" OFF)
 
 #Optimization / Debug
 IF(RELEASE)
@@ -79,7 +80,12 @@ endif()
 
 #fix black screen race condition
 if(FIXBLACKSCREEN)
-ADD_DEFINITIONS(-DWITH_FIXBLACKSCREEN)
+    ADD_DEFINITIONS(-DWITH_FIXBLACKSCREEN)
+endif()
+
+#freeimage collision prevention
+if(FREEIMAGE_BUG)
+    ADD_DEFINITIONS(-DFREEIMAGE_BUG)
 endif()
 
 #compile
