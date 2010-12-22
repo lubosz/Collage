@@ -44,6 +44,8 @@ void MenuState::enter() {
 //	trayManager->createDecorWidget(OgreBites::TL_CENTER,"splashImage", "SdkTrays/Splash");
 	trayManager->createButton(OgreBites::TL_CENTER, "BrowserDemo", "Browser", 250);
 	trayManager->createButton(OgreBites::TL_CENTER, "OgreDemo", "Ogre Scene", 250);
+	trayManager->createButton(OgreBites::TL_CENTER, "SimulationDemo", "SimulationDemo", 250);
+
 
 	trayManager->createButton(OgreBites::TL_CENTER, "Settings", "Settings", 250);
 	trayManager->createButton(OgreBites::TL_CENTER, "ExitBtn", "Exit Collage", 250);
@@ -152,6 +154,8 @@ void MenuState::buttonHit(OgreBites::Button* button) {
 		popAllAndPushAppState(findByName("GameState"));
 	else if (button->getName() == "BrowserDemo")
 		popAllAndPushAppState(findByName("WikiCubeState"));
+	else if (button->getName() == "SimulationDemo")
+		popAllAndPushAppState(findByName("SimulationTestState"));
 
 
 }

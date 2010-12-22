@@ -17,6 +17,7 @@
 #include "PauseState.h"
 #include "LoadingState.h"
 #include "WikiCubeState.h"
+#include "SimulationTestState.h"
 
 
 CollageApplication::CollageApplication(int& argc, char** argv)	:QApplication(argc, argv){
@@ -47,6 +48,8 @@ int CollageApplication::exec()
     LoadingState::create(m_pAppStateManager, "LoadingState");
     WallPaperLoadingState::create(m_pAppStateManager, "WallPaperLoadingState");
     WikiCubeState::create(m_pAppStateManager, "WikiCubeState");
+    SimulationTestState::create(m_pAppStateManager,"SimulationTestState");
+
 
     System::Instance().logMessage("Appstates initialized");
 	m_pAppStateManager->start(m_pAppStateManager->findByName("LoadingState"));

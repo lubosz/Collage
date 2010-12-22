@@ -59,7 +59,7 @@ include_directories(
 
 #file(GLOB_RECURSE TESTS test/*.cpp)
 
-set(GLOB_DIRS Core Generator State)
+set(GLOB_DIRS Core Generator State Simulation)
 file(GLOB_RECURSE INCLUDES include/*.h)
 
 foreach(GLOB_DIR ${GLOB_DIRS})
