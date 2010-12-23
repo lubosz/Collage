@@ -38,6 +38,7 @@ Ogre::SceneNode *Actor::getSceneNode() const
     return mSceneNode;
 }
 
-
-
+AABB* Actor::getAABB(){
+	return mCollisionShape->getAABB();
+}
 

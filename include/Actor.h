@@ -11,10 +11,9 @@
 #include "OGRE/Ogre.h"
 
 enum ActorBehavior{
-	AB_STATIC,
-	AB_DYNAMIC,
-	AB_TRIGGER,
-	AB_KINEMATIC};
+	AB_STATIC = 1,
+	AB_TRIGGER = 2
+};
 
 class Actor{
 public:
@@ -26,6 +25,7 @@ public:
     ActorBehavior getActorBehavior() const;
     void setBehavior(ActorBehavior mBehavior);
     Ogre::SceneNode *getSceneNode() const;
+    AABB* getAABB();
 
 private:
 

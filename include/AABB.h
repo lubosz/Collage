@@ -11,6 +11,7 @@
 
 class AABB {
 public:
+	AABB();
 	AABB(Ogre::Vector2 pos, Ogre::Vector2 ext);
 	virtual ~AABB();
     Ogre::Vector2 getCenter() const;

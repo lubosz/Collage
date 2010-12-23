@@ -10,7 +10,6 @@
 
 #include "System.h"
 #include <OGRE/OgreTextureManager.h>
-#include <QtCore>
 
 SimulationTestState::SimulationTestState() {
 	m_bLMouseDown = false;
@@ -21,6 +20,8 @@ SimulationTestState::SimulationTestState() {
 void SimulationTestState::enter() {
 	System::Instance().logMessage(
 			"Entering SimulationTestState...");
+
+	m_MoveSpeed = 0.01;
 
 	m_pSceneMgr
 			= RenderEngine::Instance().m_pRoot->createSceneManager(
@@ -72,28 +73,13 @@ void SimulationTestState::exit() {
 
 void SimulationTestState::createScene() {
 
+	mSimulation = new Simulation(m_pSceneMgr->getRootSceneNode());
+
 	m_pSceneMgr->createLight("Light")->setPosition(75, 75, 75);
 
-	Ogre::Entity * cubeEntity;
-	Ogre::SceneNode* cubeNode;
-
-	Ogre::MeshManager::getSingleton().createPlane(
-			"AABB",
-			Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME,
-			Ogre::Plane(0, 0, 1, 0),
-			1,1
-	);
-
-	int i = 0;
-	foreach(AABB foo, *mSimulation.mAABBList){
-		Ogre::Entity *AABBEntity = m_pSceneMgr->createEntity("AABB"+i, "AABB");
-		Ogre::SceneNode *AABBNode = m_pSceneMgr->getRootSceneNode()->createChildSceneNode("AABB_"+i);
-		AABBNode->attachObject(AABBEntity);
-		AABBNode->setPosition(foo.getCenter().x,foo.getCenter().y,0.0);
-		AABBNode->scale(Ogre::Vector3(foo.getExt().x, foo.getExt().y, 0.0));
-		i++;
-	}
-
+	mSimulation->createActor("myActor1", AB_STATIC, Ogre::Vector2(0.0,0.0));
+	mSimulation->createActor("myActor2", AB_STATIC, Ogre::Vector2(1.5,0.0));
+	mSimulation->createActor("myActor3", AB_STATIC, Ogre::Vector2(0.0,1.5));
 
 }
 
@@ -179,10 +165,10 @@ void SimulationTestState::update(double timeSinceLastFrame) {
 		return;
 	}
 
+	m_TranslateVector = Ogre::Vector3::ZERO;
 	m_MoveScale = m_MoveSpeed * timeSinceLastFrame;
-
 	getInput();
-	m_pCamera->moveRelative(m_TranslateVector);
+	m_pCamera->move(m_TranslateVector);
 }
 
 void SimulationTestState::buildGUI() {

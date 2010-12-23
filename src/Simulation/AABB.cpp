@@ -7,6 +7,11 @@
 
 #include "AABB.h"
 
+AABB::AABB() {
+	this->pos = pos;
+	this->ext = ext;
+}
+
 AABB::AABB(Ogre::Vector2 pos, Ogre::Vector2 ext) {
 	this->pos = pos;
 	this->ext = ext;

@@ -51,7 +51,7 @@ class SimulationTestState : public AppState {
 //	Ogre::MaterialPtr m_pOgreHeadMatHigh;
 //
 //    OgreBites::ParamsPanel* m_pDetailsPanel;
-	Simulation mSimulation;
+	Simulation *mSimulation;
 
 	bool m_bQuit;
 //
