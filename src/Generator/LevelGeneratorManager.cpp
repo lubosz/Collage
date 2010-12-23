@@ -6,6 +6,10 @@ LevelGeneratorManager::LevelGeneratorManager(QObject *parent) :
     connect(&webpage, SIGNAL(loadProgress(int)), this, SLOT(printProgress(int)));
     connect(&webpage, SIGNAL(loadFinished(bool)), this, SLOT(getMatchingGenerator(bool)));
     this->requestLock = false;
+
+    // Add all the different generators to our list of generators,
+    // most general LAST!
+    this->addGenerator(new GeneralLevelGenerator());
 }
 
 void LevelGeneratorManager::addGenerator(LevelGenerator *generator) {
@@ -36,6 +40,7 @@ void LevelGeneratorManager::printProgress(int percent) {
 }
 
 void LevelGeneratorManager::getMatchingGenerator(bool ok) {
+    std::cout << std::endl;
     if (!ok)
     {
         qDebug() << "Request failed.";
@@ -46,7 +51,7 @@ void LevelGeneratorManager::getMatchingGenerator(bool ok) {
     qDebug() << "Finished loading webpage";
     qDebug() << this->webpage.viewportSize();
     LevelGenerator *gen = NULL, *best_gen = NULL;
-    float score, best_score;
+    float score, best_score = MAX_SCORE + 1.;
     foreach(gen, this->generators) {
         score = gen->getScore(&this->webpage);
         if (score < best_score) {

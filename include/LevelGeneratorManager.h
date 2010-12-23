@@ -10,8 +10,9 @@
 #include <iostream>
 
 #include "LevelGenerator.h"
+#include "GeneralLevelGenerator.h"
 
-
+const float MAX_SCORE = 100.0;
 
 class LevelGeneratorManager : public QObject
 {

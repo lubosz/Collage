@@ -1,3 +1,4 @@
+#include <QDebug>
 #include "GeneralLevelGenerator.h"
 
 GeneralLevelGenerator::GeneralLevelGenerator(QObject *parent) :
@@ -7,11 +8,12 @@ GeneralLevelGenerator::GeneralLevelGenerator(QObject *parent) :
 
 float GeneralLevelGenerator::getScore(QWebPage *webpage) {
     this->webpage = webpage;
-    return 1.0;
+    return 100.0;
 }
 
 Level* GeneralLevelGenerator::generate() {
     // uses this.webframe to generate Level, returns Level
     Level* level;
+    qDebug() << "YAY!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!";
     return level;
 }
