@@ -1,2 +1,12 @@
 .cproject
 .project
+include/moc*
+Makefile
+CMakeCache.txt
+CMakeFiles/*
+CMakeLists.txt.user*
+*.log
+*.cbp
+bin/collage
+bin/plugins.cfg
+bin/ogre.cfg
