@@ -11,6 +11,7 @@ OPTION(RELEASE "Release" OFF)
 OPTION(FIXBLACKSCREEN "Fix Black screen" OFF)
 OPTION(CHECKSTYLE "Check Style" OFF)
 OPTION(FREEIMAGE_BUG "Free Image Conflict" OFF)
+OPTION(AUDIO "AUDIO" ON)
 
 #Optimization / Debug
 IF(RELEASE)
@@ -19,6 +20,7 @@ IF(RELEASE)
 ELSE()
     set(CMAKE_BUILD_TYPE Debug)
     set(CMAKE_CXX_FLAGS "-O0 -g3 -ggdb") #Debug
+    
 ENDIF()
 
 function(copy_plugins_config FROM_PLUGINS_CFG)
@@ -89,6 +91,10 @@ endif()
 #freeimage collision prevention
 if(FREEIMAGE_BUG)
     ADD_DEFINITIONS(-DFREEIMAGE_BUG)
+endif()
+
+if(AUDIO)
+    ADD_DEFINITIONS(-DAUDIO)
 endif()
 
 #compile
