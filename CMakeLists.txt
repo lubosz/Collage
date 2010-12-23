@@ -15,7 +15,9 @@ OPTION(FREEIMAGE_BUG "Free Image Conflict" OFF)
 #Optimization / Debug
 IF(RELEASE)
     set(CMAKE_CXX_FLAGS "-O3 -msse4 -mssse3") #Optimized
+    set(CMAKE_BUILD_TYPE Release)
 ELSE()
+    set(CMAKE_BUILD_TYPE Debug)
     set(CMAKE_CXX_FLAGS "-O0 -g3 -ggdb") #Debug
 ENDIF()
 
