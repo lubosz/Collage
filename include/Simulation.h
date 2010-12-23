@@ -21,7 +21,12 @@ public:
 
 	void update(float d_t);
 
-	Actor* createActor(Ogre::String name, ActorBehavior behavior, Ogre::Vector2 position);
+	Actor* createActor(
+			Ogre::String name,
+			ActorBehavior behavior,
+			Ogre::Vector2 position,
+			CollisionShape *collisionShape = new AABBCollisioShape(Ogre::Vector2(0.0,0.0),Ogre::Vector2(1.0,1.0))
+	);
     Ogre::Vector2 getGravity() const;
     void setGravity(Ogre::Vector2 mGravity);
 

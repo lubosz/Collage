@@ -8,11 +8,14 @@
 #ifndef COLLISIONSHAPE_H_
 #define COLLISIONSHAPE_H_
 #include "AABB.h"
+#include "OGRE/Ogre.h"
 
 class CollisionShape {
 public:
 	CollisionShape();
 	virtual ~CollisionShape();
+
+	virtual void attachDebugVisualization(Ogre::SceneNode *sceneNode) = 0;
 
 	AABB* getAABB();
 
