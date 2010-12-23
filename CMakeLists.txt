@@ -11,6 +11,7 @@ OPTION(RELEASE "Release" OFF)
 OPTION(FIXBLACKSCREEN "Fix Black screen" OFF)
 OPTION(CHECKSTYLE "Check Style" OFF)
 OPTION(FREEIMAGE_BUG "Free Image Conflict" OFF)
+OPTION(AUDIO "AUDIO" ON)
 
 #Optimization / Debug
 IF(RELEASE)
@@ -19,6 +20,7 @@ IF(RELEASE)
 ELSE()
     set(CMAKE_BUILD_TYPE Debug)
     set(CMAKE_CXX_FLAGS "-O0 -g3 -ggdb") #Debug
+    
 ENDIF()
 
 function(copy_plugins_config FROM_PLUGINS_CFG)
@@ -91,6 +93,10 @@ if(FREEIMAGE_BUG)
     ADD_DEFINITIONS(-DFREEIMAGE_BUG)
 endif()
 
+if(AUDIO)
+    ADD_DEFINITIONS(-DAUDIO)
+endif()
+
 #compile
 add_executable(collage ${SOURCES} ${INCLUDES} ${MOC_OUTFILES})
 #add_executable(ogreTest test/BasicOgre.cpp src/Core/RenderEngine.cpp src/Core/System.cpp)
@@ -130,6 +136,7 @@ if (APPLE)
 
 elseif(UNIX)
     copy_plugins_config(${CMAKE_CFG_INTDIR}/bin/plugins-unix.cfg)
+    set(FREEIMAGEHACK /usr/lib/qt/plugins/imageformats/libqjpeg.so)
 
 elseif (WIN32)
     #disable some warnings
@@ -163,4 +170,4 @@ elseif (WIN32)
 endif()
 
 #link
-target_link_libraries(collage ${QT_LIBRARIES} ${OGRE_LIBRARIES} ${OIS_LIBRARIES})
+target_link_libraries(collage ${QT_LIBRARIES} ${OGRE_LIBRARIES} ${OIS_LIBRARIES} ${FREEIMAGEHACK})

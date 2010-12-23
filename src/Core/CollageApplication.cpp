@@ -34,7 +34,7 @@ CollageApplication::~CollageApplication() {
 
 int CollageApplication::exec()
 {
-
+#ifdef AUDIO
 	//audio
     Phonon::AudioOutput *audioOutput =  new Phonon::AudioOutput(Phonon::MusicCategory);
     Phonon::MediaObject *mediaObject =  new Phonon::MediaObject();
@@ -44,7 +44,7 @@ int CollageApplication::exec()
     mediaObject->play();
 
     Phonon::createPath(mediaObject, audioOutput);
-
+#endif
 
 	RenderEngine::Instance().initOgre("Collage");
 	System::Instance().loadRecources();
