@@ -7,7 +7,7 @@
 
 #ifndef ACTOR_H_
 #define ACTOR_H_
-#include "CollisionShape.h"
+#include "AABBCollisioShape.h"
 #include "OGRE/Ogre.h"
 
 //class Simulation;
@@ -15,13 +15,19 @@
 enum ActorBehavior{
 	AB_DYNAMIC = 0,
 	AB_STATIC = 1,
-	AB_TRIGGER = 2
+	AB_DYNAMIC_TRIGGER = 2,
+	AB_STATIC_TRIGGER = 3
 };
 
 
 class Actor{
 public:
-	Actor(ActorBehavior behavior, Ogre::SceneNode *sceneNode, float mass = 0.0, float drag = 0.0);
+	Actor(
+			ActorBehavior behavior,
+			Ogre::SceneNode *sceneNode,
+			CollisionShape *collisionShape,
+			float mass = 0.0,
+			float drag = 0.0);
 	virtual ~Actor();
 
 	void update(float d_t);
@@ -32,6 +38,8 @@ public:
     void setBehavior(ActorBehavior mBehavior);
     Ogre::SceneNode *getSceneNode() const;
     AABB* getAABB();
+
+    void drawDebugVisualization();
 
 private:
 

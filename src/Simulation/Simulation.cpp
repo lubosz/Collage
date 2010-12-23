@@ -12,30 +12,22 @@
 Simulation::Simulation(Ogre::SceneNode *rootSceneNode) {
 	// TODO Auto-generated constructor stub
 	mRootSceneNode = rootSceneNode;
-
-	Ogre::MeshManager::getSingleton().createPlane(
-			"DebugVisualization",
-			Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME,
-			Ogre::Plane(0, 0, 1, 0),
-			1,1
-	);
 }
 
 Simulation::~Simulation() {
 	// TODO Auto-generated destructor stub
 }
 
-Actor* Simulation::createActor(const Ogre::String name, ActorBehavior behavior, Ogre::Vector2 position){
+Actor* Simulation::createActor(const Ogre::String name, ActorBehavior behavior, Ogre::Vector2 position, CollisionShape *collisionShape){
 	Ogre::SceneNode *sceneNode = mRootSceneNode->createChildSceneNode(name, Ogre::Vector3(position.x, position.y, 0.0));
-	Actor *actor = new Actor(behavior, sceneNode);
-	if(behavior == AB_STATIC){
+	Actor *actor = new Actor(behavior, sceneNode, collisionShape);
+	if(behavior == AB_STATIC || behavior == AB_STATIC_TRIGGER){
 		mActorListStatic.push_back(actor);
 	}else{
 		mActorListDynamic.push_back(actor);
 	}
 	if(mDebugVisualization){
-		Ogre::Entity *debugEntity = sceneNode->getCreator()->createEntity("debug_"+name, "DebugVisualization");
-		sceneNode->attachObject(debugEntity);
+		actor->drawDebugVisualization();
 	}
 	return actor;
 }

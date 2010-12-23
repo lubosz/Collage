@@ -136,7 +136,14 @@ if (APPLE)
 
 elseif(UNIX)
     copy_plugins_config(${CMAKE_CFG_INTDIR}/bin/plugins-unix.cfg)
-
+    #free image hack
+    IF(EXISTS /usr/lib/qt/plugins/imageformats/libqjpeg.so)
+    	#sane
+    	set(FREEIMAGEHACK /usr/lib/qt/plugins/imageformats/libqjpeg.so)
+	ELSEIF(EXISTS /usr/lib/qt4/plugins/imageformats/libqjpeg.so)
+		#ubuntu
+		set(FREEIMAGEHACK /usr/lib/qt4/plugins/imageformats/libqjpeg.so)
+	ENDIF()
 elseif (WIN32)
     #disable some warnings
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wl,--enable-auto-import")
@@ -169,4 +176,4 @@ elseif (WIN32)
 endif()
 
 #link
-target_link_libraries(collage ${QT_LIBRARIES} ${OGRE_LIBRARIES} ${OIS_LIBRARIES})
+target_link_libraries(collage ${QT_LIBRARIES} ${OGRE_LIBRARIES} ${OIS_LIBRARIES} ${FREEIMAGEHACK})
