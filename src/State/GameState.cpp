@@ -8,7 +8,6 @@
 
 #include "GameState.h"
 #include <QUrl>
-#include "LevelGeneratorManager.h"
 
 // using namespace Ogre;
 
@@ -53,9 +52,6 @@ void GameState::enter() {
 	buildGUI();
 
 	createScene();
-
-	LevelGeneratorManager manager;
-	manager.requestWebpage(QUrl("http://www.google.de"));
 }
 
 bool GameState::pause() {

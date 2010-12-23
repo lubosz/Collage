@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include <QUrl>
+#include <QString>
 #include <QWebPage>
 #include <QtDebug>
 
@@ -21,7 +22,7 @@ public:
     explicit LevelGeneratorManager(QObject *parent = 0);
 
     void addGenerator(LevelGenerator *generator);
-    void requestWebpage(QUrl url);
+    void requestWebpage(QString url);
 
 private:
     std::vector<LevelGenerator*> generators;
@@ -30,7 +31,7 @@ private:
     int percent;
 
 signals:
-    void finished();
+    void levelGenerated(Level *level);
 
 private slots:
     void printProgress(int percent);

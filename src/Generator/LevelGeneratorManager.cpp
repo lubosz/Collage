@@ -16,7 +16,8 @@ void LevelGeneratorManager::addGenerator(LevelGenerator *generator) {
     this->generators.push_back(generator);
 }
 
-void LevelGeneratorManager::requestWebpage(QUrl url) {
+void LevelGeneratorManager::requestWebpage(QString _url) {
+    QUrl url(_url);
     if (this->requestLock) {
         qDebug() << "Webpage request already in progress.";
         return;
@@ -65,6 +66,7 @@ void LevelGeneratorManager::getMatchingGenerator(bool ok) {
     }
 
     // No need to pass the webpage, the generator still has it from getScore()
-    best_gen->generate();
+    Level *level = best_gen->generate();
+    emit levelGenerated(level);
     this->requestLock = false;
 }

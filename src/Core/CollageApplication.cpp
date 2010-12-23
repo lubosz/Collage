@@ -18,6 +18,7 @@
 #include "LoadingState.h"
 #include "WikiCubeState.h"
 #include "SimulationTestState.h"
+#include "LevelState.h"
 #include <phonon/audiooutput.h>
 #include <phonon/mediaobject.h>
 
@@ -61,7 +62,8 @@ int CollageApplication::exec()
     LoadingState::create(m_pAppStateManager, "LoadingState");
     WallPaperLoadingState::create(m_pAppStateManager, "WallPaperLoadingState");
     WikiCubeState::create(m_pAppStateManager, "WikiCubeState");
-    SimulationTestState::create(m_pAppStateManager,"SimulationTestState");
+    SimulationTestState::create(m_pAppStateManager, "SimulationTestState");
+    LevelState::create(m_pAppStateManager, "LevelState");
 
 
     System::Instance().logMessage("Appstates initialized");

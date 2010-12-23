@@ -45,6 +45,7 @@ void MenuState::enter() {
 	trayManager->createButton(OgreBites::TL_CENTER, "BrowserDemo", "Browser", 250);
 	trayManager->createButton(OgreBites::TL_CENTER, "OgreDemo", "Ogre Scene", 250);
 	trayManager->createButton(OgreBites::TL_CENTER, "SimulationDemo", "SimulationDemo", 250);
+	trayManager->createButton(OgreBites::TL_CENTER, "LevelState", "LevelState", 250);
 
 
 	trayManager->createButton(OgreBites::TL_CENTER, "Settings", "Settings", 250);
@@ -156,6 +157,6 @@ void MenuState::buttonHit(OgreBites::Button* button) {
 		popAllAndPushAppState(findByName("WikiCubeState"));
 	else if (button->getName() == "SimulationDemo")
 		popAllAndPushAppState(findByName("SimulationTestState"));
-
-
+	else if (button->getName() == "LevelState")
+		popAllAndPushAppState(findByName("LevelState"));
 }
