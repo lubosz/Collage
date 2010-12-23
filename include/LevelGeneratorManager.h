@@ -9,7 +9,7 @@
 #include <vector>
 #include <iostream>
 
-#include "levelgenerator.h"
+#include "LevelGenerator.h"
 
 
 

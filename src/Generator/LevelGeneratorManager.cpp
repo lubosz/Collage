@@ -1,4 +1,4 @@
-#include "levelgeneratormanager.h"
+#include "LevelGeneratorManager.h"
 
 LevelGeneratorManager::LevelGeneratorManager(QObject *parent) :
     QObject(parent)

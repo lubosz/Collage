@@ -3,7 +3,7 @@
 
 #include <QObject>
 #include <QWebFrame>
-#include "level.h"
+#include "Level.h"
 
 class LevelGenerator : public QObject
 {

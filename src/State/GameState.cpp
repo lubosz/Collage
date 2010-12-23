@@ -8,7 +8,7 @@
 
 #include "GameState.h"
 #include <QUrl>
-#include "levelgeneratormanager.h"
+#include "LevelGeneratorManager.h"
 
 // using namespace Ogre;
 
