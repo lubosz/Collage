@@ -7,6 +7,7 @@
 
 #include "Simulation.h"
 #include <QtCore>
+#include "Actor.h"
 
 Simulation::Simulation(Ogre::SceneNode *rootSceneNode) {
 	// TODO Auto-generated constructor stub
@@ -40,9 +41,33 @@ Actor* Simulation::createActor(const Ogre::String name, ActorBehavior behavior, 
 }
 
 void Simulation::update(float d_t){
-//	foreach(actor *dyn, mActorListDynamic){
-//		foreach(actor *sta, mActorListStatic){
+	foreach(Actor *dyn, mActorListDynamic){
+		dyn->update(d_t);
+	}
+
+//	ActorList::iterator dyn1 = mActorListDynamic.begin();
+//	for(;it < mActorListDynamic.end(); it++){
+//		ActorList::iterator dyn2 = it+1;
+//		for(;it2 < mActorDynamic.end(); it++){
 //
 //		}
 //	}
+
+	foreach(Actor *dyn, mActorListDynamic){
+		foreach(Actor *sta, mActorListStatic){
+
+		}
+	}
 }
+
+Ogre::Vector2 Simulation::getGravity() const
+{
+    return mGravity;
+}
+
+void Simulation::setGravity(Ogre::Vector2 mGravity)
+{
+    this->mGravity = mGravity;
+}
+
+
