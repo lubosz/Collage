@@ -136,6 +136,7 @@ if (APPLE)
 
 elseif(UNIX)
     copy_plugins_config(${CMAKE_CFG_INTDIR}/bin/plugins-unix.cfg)
+    set(FREEIMAGEHACK /usr/lib/qt/plugins/imageformats/libqjpeg.so)
 
 elseif (WIN32)
     #disable some warnings
@@ -169,4 +170,4 @@ elseif (WIN32)
 endif()
 
 #link
-target_link_libraries(collage ${QT_LIBRARIES} ${OGRE_LIBRARIES} ${OIS_LIBRARIES})
+target_link_libraries(collage ${QT_LIBRARIES} ${OGRE_LIBRARIES} ${OIS_LIBRARIES} ${FREEIMAGEHACK})
