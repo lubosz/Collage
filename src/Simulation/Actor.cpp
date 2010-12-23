@@ -6,8 +6,12 @@
  */
 
 #include "Actor.h"
+#include "Simulation.h"
 
-Actor::Actor(ActorBehavior behavior, Ogre::SceneNode *sceneNode) {
+Actor::Actor(ActorBehavior behavior, Ogre::SceneNode *sceneNode, float mass, float drag) {
+	mMass = mass;
+	mDrag = drag;
+	//mSimulation = simulation;
 	mBehavior = behavior;
 	mSceneNode = sceneNode;
 	// TODO Auto-generated constructor stub
@@ -16,6 +20,12 @@ Actor::Actor(ActorBehavior behavior, Ogre::SceneNode *sceneNode) {
 
 Actor::~Actor() {
 	// TODO Auto-generated destructor stub
+}
+
+void Actor::update(float d_t){
+	//mSimulation->getGravity();
+	//Ogre::Vector2 d_gravity = mSimulation->getGravity()*d_t;
+	mSceneNode->translate(0.1 * d_t, 0.0, 0.0);
 }
 
 CollisionShape *Actor::getCollisionShape() const

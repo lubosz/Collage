@@ -10,6 +10,7 @@
 
 #include "AABB.h"
 #include "OGRE/ogre.h"
+
 #include "Actor.h"
 
 typedef std::vector<Actor*> ActorList;
@@ -22,6 +23,8 @@ public:
 	void update(float d_t);
 
 	Actor* createActor(Ogre::String name, ActorBehavior behavior, Ogre::Vector2 position);
+    Ogre::Vector2 getGravity() const;
+    void setGravity(Ogre::Vector2 mGravity);
 
 	bool mDebugVisualization;
 
@@ -29,6 +32,8 @@ private:
 	Ogre::SceneNode *mRootSceneNode;
 	ActorList mActorListDynamic;
 	ActorList mActorListStatic;
+
+	Ogre::Vector2 mGravity;
 };
 
 #endif /* SIMULATION_H_ */

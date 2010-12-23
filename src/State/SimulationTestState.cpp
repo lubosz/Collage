@@ -80,6 +80,7 @@ void SimulationTestState::createScene() {
 	mSimulation->createActor("myActor1", AB_STATIC, Ogre::Vector2(0.0,0.0));
 	mSimulation->createActor("myActor2", AB_STATIC, Ogre::Vector2(1.5,0.0));
 	mSimulation->createActor("myActor3", AB_STATIC, Ogre::Vector2(0.0,1.5));
+	mSimulation->createActor("myActor4", AB_DYNAMIC, Ogre::Vector2(1.5,1.5));
 
 }
 
