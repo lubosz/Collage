@@ -11,10 +11,10 @@ class LevelGenerator : public QObject
 public:
     explicit LevelGenerator(QObject *parent = 0);
 
-    float getScore(QWebPage *webpage);
-    Level* generate();
+    virtual float getScore(QWebPage *webpage) = 0;
+    virtual Level* generate() = 0;
 
-private:
+protected:
     QWebPage *webpage;
 
 signals:

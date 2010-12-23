@@ -45,7 +45,7 @@ void LevelGeneratorManager::getMatchingGenerator(bool ok) {
     }
     qDebug() << "Finished loading webpage";
     qDebug() << this->webpage.viewportSize();
-    LevelGenerator *gen, *best_gen;
+    LevelGenerator *gen = NULL, *best_gen = NULL;
     float score, best_score;
     foreach(gen, this->generators) {
         score = gen->getScore(&this->webpage);
@@ -54,6 +54,11 @@ void LevelGeneratorManager::getMatchingGenerator(bool ok) {
             best_gen = gen;
         }
     }
+    if (best_gen == NULL) {
+        qDebug() << "No suitable generator found.";
+        return;
+    }
+
     // No need to pass the webpage, the generator still has it from getScore()
     best_gen->generate();
     this->requestLock = false;
