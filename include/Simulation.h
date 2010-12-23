@@ -9,7 +9,7 @@
 #define SIMULATION_H_
 
 #include "AABB.h"
-#include "OGRE/ogre.h"
+#include "OGRE/Ogre.h"
 #include "Actor.h"
 
 typedef std::vector<Actor*> ActorList;
