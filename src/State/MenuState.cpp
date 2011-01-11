@@ -39,16 +39,15 @@ void MenuState::enter() {
 	OgreBites::SdkTrayManager* trayManager = UserInterface::Instance().m_pTrayMgr;
 	trayManager->destroyAllWidgets();
 
-//	trayManager->showCursor();
-//	trayManager->createLabel(OgreBites::TL_TOP, "MenuLbl", "Menu", 250);
-//	trayManager->createDecorWidget(OgreBites::TL_CENTER,"splashImage", "SdkTrays/Splash");
 	trayManager->createButton(OgreBites::TL_CENTER, "BrowserDemo", "Browser", 250);
 	trayManager->createButton(OgreBites::TL_CENTER, "OgreDemo", "Ogre Scene", 250);
-	trayManager->createButton(OgreBites::TL_CENTER, "SimulationDemo", "SimulationDemo", 250);
+	trayManager->createButton(
+	    OgreBites::TL_CENTER, "SimulationDemo", "SimulationDemo", 250);
 
 
 	trayManager->createButton(OgreBites::TL_CENTER, "Settings", "Settings", 250);
-	trayManager->createButton(OgreBites::TL_CENTER, "ExitBtn", "Exit Collage", 250);
+	trayManager->createButton(
+	    OgreBites::TL_CENTER, "ExitBtn", "Exit Collage", 250);
 
 
 	trayManager->showBackdrop("SdkTrays/Wallpaper");
@@ -94,7 +93,6 @@ void MenuState::exit() {
 	UserInterface::Instance().m_pTrayMgr->clearAllTrays();
 	UserInterface::Instance().m_pTrayMgr->destroyAllWidgets();
 	UserInterface::Instance().m_pTrayMgr->setListener(0);
-
 }
 
 bool MenuState::keyPressed(const OIS::KeyEvent &keyEventRef) {
@@ -156,6 +154,4 @@ void MenuState::buttonHit(OgreBites::Button* button) {
 		popAllAndPushAppState(findByName("WikiCubeState"));
 	else if (button->getName() == "SimulationDemo")
 		popAllAndPushAppState(findByName("SimulationTestState"));
-
-
 }

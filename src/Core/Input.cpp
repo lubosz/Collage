@@ -25,17 +25,17 @@ void Input::initOis(
 		OIS::KeyListener *pKeyListener,
 		OIS::MouseListener *pMouseListener
 	) {
-	unsigned long hWnd = 0;
+	unsigned hWnd = 0;
 
 	RenderEngine::Instance().m_pRenderWnd->getCustomAttribute("WINDOW", &hWnd);
 
     OIS::ParamList paramList;
 
     paramList.insert(
-    		OIS::ParamList::value_type("WINDOW",Ogre::StringConverter::toString(hWnd))
-    );
+    		OIS::ParamList::value_type(
+    		    "WINDOW", Ogre::StringConverter::toString(hWnd)));
 
-    //TODO: Only on debug
+    // TODO(lubosz): Only on debug
 #ifdef WIN32
 	paramList.insert(
 			OIS::ParamList::value_type("w32_mouse", "DISCL_FOREGROUND")

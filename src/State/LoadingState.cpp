@@ -63,7 +63,6 @@ void LoadingState::exit() {
 	UserInterface::Instance().m_pTrayMgr->clearAllTrays();
 	UserInterface::Instance().m_pTrayMgr->destroyAllWidgets();
 	UserInterface::Instance().m_pTrayMgr->setListener(0);
-
 }
 
 bool LoadingState::keyPressed(const OIS::KeyEvent &keyEventRef) {
@@ -107,7 +106,7 @@ bool LoadingState::mouseReleased(
 
 void LoadingState::update(double timeSinceLastFrame) {
 	printf("Time: %f\n", m_FrameEvent.timeSinceLastFrame);
-	//draw one frame hack
+	// draw one frame hack
 	if(m_FrameEvent.timeSinceLastFrame != 0)
 		popAllAndPushAppState(findByName("WallPaperLoadingState"));
 	m_FrameEvent.timeSinceLastFrame = timeSinceLastFrame;

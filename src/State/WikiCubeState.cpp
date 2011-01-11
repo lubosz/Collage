@@ -90,14 +90,14 @@ void WikiCubeState::createScene() {
 
 	cubeNode = m_pSceneMgr->getRootSceneNode()->createChildSceneNode("CubeNode");
 	cubeNode->attachObject(cubeEntity);
-//	cubeNode->setScale(Vector3(5, 5, 5));
 	cubeNode->setPosition(Vector3(0, 0, 0));
-	cubeNode->setOrientation(90,1,1,1);
+	cubeNode->setOrientation(90, 1, 1, 1);
 
-	cubeMat = Ogre::MaterialManager::getSingleton().create("WikiMat",Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
+	cubeMat = Ogre::MaterialManager::getSingleton().create(
+	    "WikiMat", Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
 	cubeEntity->getSubEntity(0)->setMaterial(cubeMat);
-	Ogre::TextureUnitState *texLayer = cubeMat.get()->getTechnique(0)->getPass(0)->createTextureUnitState( "wiki.png" );
-
+	Ogre::TextureUnitState *texLayer = cubeMat.get()->getTechnique(0)->
+	    getPass(0)->createTextureUnitState("wiki.png");
 }
 
 bool WikiCubeState::keyPressed(const OIS::KeyEvent &keyEventRef) {
@@ -201,32 +201,29 @@ void WikiCubeState::buildGUI() {
 	OgreBites::SdkTrayManager* trayManager = UserInterface::Instance().m_pTrayMgr;
 	trayManager->destroyAllWidgets();
 
-//	trayManager->showCursor();
 	trayManager->createButton(OgreBites::TL_LEFT, "LoadWiki", "Wikipedia", 250);
 	trayManager->createButton(OgreBites::TL_LEFT, "LoadXKCD", "XKCD", 250);
 	trayManager->createButton(OgreBites::TL_LEFT, "Reddit", "Reddit", 250);
 	trayManager->createButton(OgreBites::TL_LEFT, "4chan", "4chan/b/", 250);
-	//	trayManager->createButton(OgreBites::TL_LEFT, "Debug", "Debug", 250);
 }
 
-void WikiCubeState::loadBackGround(const QString & url){
+void WikiCubeState::loadBackGround(const QString & url) {
 	System::Instance().logMessage("Loading " + url.toStdString());
 	capture.saveWebRender(QUrl(url) , "../Media/Textures/wiki.png");
-	Ogre::ResourcePtr wikitex = Ogre::TextureManager::getSingleton().getByName("wiki.png");
+	Ogre::ResourcePtr wikitex =
+	    Ogre::TextureManager::getSingleton().getByName("wiki.png");
 	wikitex->reload();
 }
 
 void WikiCubeState::buttonHit(OgreBites::Button* button) {
-
 	if (button->getName() == "LoadWiki")
 		loadBackGround("http://en.wikipedia.org/wiki/Special:Random");
 	else if (button->getName() == "LoadXKCD")
 		loadBackGround("http://dynamic.xkcd.com/random/comic/");
-	else if(button->getName() == "Debug")
+	else if (button->getName() == "Debug")
 		loadBackGround("http://bstation/collage/");
-	else if(button->getName() == "Reddit")
+	else if (button->getName() == "Reddit")
 		loadBackGround("http://www.reddit.com/r/random/");
-	else if(button->getName() == "4chan")
+	else if (button->getName() == "4chan")
 			loadBackGround("http://boards.4chan.org/b/");
-
 }

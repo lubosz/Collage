@@ -3,19 +3,15 @@
  *
  *  Created on: 22.12.2010
  *      Author: lochmann
+ *  Copyright 2010 The Collage Project
  */
 
 #include "CollisionShape.h"
 
-CollisionShape::CollisionShape() {
-	// TODO Auto-generated constructor stub
+CollisionShape::CollisionShape() {}
 
-}
+CollisionShape::~CollisionShape() {}
 
-CollisionShape::~CollisionShape() {
-	// TODO Auto-generated destructor stub
-}
-
-AABB* CollisionShape::getAABB(){
+AABB* CollisionShape::getAABB() {
 	return &mAABB;
 }

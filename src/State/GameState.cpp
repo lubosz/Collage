@@ -89,7 +89,6 @@ void GameState::createScene() {
 
 	DotSceneLoader* pDotSceneLoader = new DotSceneLoader();
 	pDotSceneLoader->parseDotScene("CubeScene.xml", "General", m_pSceneMgr,
-	//pDotSceneLoader->parseDotScene("Bulldozer.scene", "General", m_pSceneMgr,
 			m_pSceneMgr->getRootSceneNode());
 	delete pDotSceneLoader;
 
@@ -341,12 +340,11 @@ void GameState::buildGUI() {
 					OgreBites::TL_TOPLEFT, "DetailsPanel", 200, items);
 	m_pDetailsPanel->show();
 
-	Ogre::String
-			infoText =
-					"[TAB] - Switch input mode\n\n \
-					[W] - Forward / Mode up\n \
-					[S] - Backwards/ Mode down\n \
-					[A] - Left\n";
+	Ogre::String infoText =
+	    "[TAB] - Switch input mode\n\n"
+	    +"[W] - Forward / Mode up\n"
+	    +"[S] - Backwards/ Mode down\n"
+	    +"[A] - Left\n";
 	infoText.append(
 			"[D] - Right\n\nPress [SHIFT] to move faster\n\n[O] - Toggle FPS / logo\n");
 	infoText.append("[Print] - Take screenshot\n\n[ESC] - Exit");

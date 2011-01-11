@@ -1,10 +1,15 @@
+/*
+ *  Copyright 2010 The Collage Project
+ */
 #include "LevelGeneratorManager.h"
 
-LevelGeneratorManager::LevelGeneratorManager(QObject *parent) :
-    QObject(parent)
-{
-    connect(&webpage, SIGNAL(loadProgress(int)), this, SLOT(printProgress(int)));
-    connect(&webpage, SIGNAL(loadFinished(bool)), this, SLOT(getMatchingGenerator(bool)));
+LevelGeneratorManager::LevelGeneratorManager(QObject *parent)
+:
+    QObject(parent) {
+    connect(&webpage, SIGNAL(loadProgress(int)),
+        this, SLOT(printProgress(int)));
+    connect(&webpage, SIGNAL(loadFinished(bool)),
+        this, SLOT(getMatchingGenerator(bool)));
     this->requestLock = false;
 
     // Add all the different generators to our list of generators,
@@ -26,8 +31,10 @@ void LevelGeneratorManager::requestWebpage(QUrl url) {
 
     this->percent = 0;
     webpage.mainFrame()->load(url);
-    webpage.mainFrame()->setScrollBarPolicy(Qt::Vertical, Qt::ScrollBarAlwaysOff);
-    webpage.mainFrame()->setScrollBarPolicy(Qt::Horizontal, Qt::ScrollBarAlwaysOff);
+    webpage.mainFrame()->
+        setScrollBarPolicy(Qt::Vertical, Qt::ScrollBarAlwaysOff);
+    webpage.mainFrame()->
+        setScrollBarPolicy(Qt::Horizontal, Qt::ScrollBarAlwaysOff);
     webpage.setViewportSize(QSize(1024, 768));
 }
 
@@ -41,11 +48,9 @@ void LevelGeneratorManager::printProgress(int percent) {
 
 void LevelGeneratorManager::getMatchingGenerator(bool ok) {
     std::cout << std::endl;
-    if (!ok)
-    {
+    if (!ok) {
         qDebug() << "Request failed.";
-        //return;
-        // TODO:
+        // TODO(dennda):
         // ERROR HANDLING!
     }
     qDebug() << "Finished loading webpage";

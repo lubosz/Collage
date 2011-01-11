@@ -17,10 +17,6 @@ RenderEngine::RenderEngine() {
 
 RenderEngine::~RenderEngine() {
     System::Instance().logMessage("Shutdown Render Engine...");
-
-    // Causes segfault
-	// if (m_pRoot)
-	//	delete m_pRoot;
 }
 
 void RenderEngine::updateOgre(double timeSinceLastFrame) {
@@ -30,7 +26,7 @@ bool RenderEngine::initOgre(Ogre::String wndTitle) {
     m_pRoot = new Ogre::Root();
     System::Instance().init();
 #ifndef WITH_FIXBLACKSCREEN
-//TODO: Race condition? Black screen
+// TODO(lubosz): Race condition? Black screen
     if (!m_pRoot->restoreConfig())
 #endif
     	if (!m_pRoot->showConfigDialog())

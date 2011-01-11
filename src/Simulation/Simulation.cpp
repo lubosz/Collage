@@ -3,6 +3,7 @@
  *
  *  Created on: 22.12.2010
  *      Author: lochmann
+ *  Copyright 2010 The Collage Project
  */
 
 #include "Simulation.h"
@@ -10,56 +11,41 @@
 #include "Actor.h"
 
 Simulation::Simulation(Ogre::SceneNode *rootSceneNode) {
-	// TODO Auto-generated constructor stub
 	mRootSceneNode = rootSceneNode;
 }
 
-Simulation::~Simulation() {
-	// TODO Auto-generated destructor stub
-}
+Simulation::~Simulation() {}
 
-Actor* Simulation::createActor(const Ogre::String name, ActorBehavior behavior, Ogre::Vector2 position, CollisionShape *collisionShape){
-	Ogre::SceneNode *sceneNode = mRootSceneNode->createChildSceneNode(name, Ogre::Vector3(position.x, position.y, 0.0));
+Actor* Simulation::createActor(const Ogre::String name, ActorBehavior behavior,
+    Ogre::Vector2 position, CollisionShape *collisionShape) {
+	Ogre::SceneNode *sceneNode = mRootSceneNode->
+	    createChildSceneNode(name, Ogre::Vector3(position.x, position.y, 0.0));
 	Actor *actor = new Actor(behavior, sceneNode, collisionShape);
-	if(behavior == AB_STATIC || behavior == AB_STATIC_TRIGGER){
+	if (behavior == AB_STATIC || behavior == AB_STATIC_TRIGGER) {
 		mActorListStatic.push_back(actor);
-	}else{
+	} else {
 		mActorListDynamic.push_back(actor);
 	}
-	if(mDebugVisualization){
+	if(mDebugVisualization) {
 		actor->drawDebugVisualization();
 	}
 	return actor;
 }
 
-void Simulation::update(float d_t){
-	foreach(Actor *dyn, mActorListDynamic){
+void Simulation::update(float d_t) {
+	foreach(Actor *dyn, mActorListDynamic) {
 		dyn->update(d_t);
 	}
 
-//	ActorList::iterator dyn1 = mActorListDynamic.begin();
-//	for(;it < mActorListDynamic.end(); it++){
-//		ActorList::iterator dyn2 = it+1;
-//		for(;it2 < mActorDynamic.end(); it++){
-//
-//		}
-//	}
-
-	foreach(Actor *dyn, mActorListDynamic){
-		foreach(Actor *sta, mActorListStatic){
-
-		}
+	foreach(Actor *dyn, mActorListDynamic) {
+		foreach(Actor *sta, mActorListStatic) {}
 	}
 }
 
-Ogre::Vector2 Simulation::getGravity() const
-{
+Ogre::Vector2 Simulation::getGravity() const {
     return mGravity;
 }
 
-void Simulation::setGravity(Ogre::Vector2 mGravity)
-{
+void Simulation::setGravity(Ogre::Vector2 mGravity) {
     this->mGravity = mGravity;
 }
-
-

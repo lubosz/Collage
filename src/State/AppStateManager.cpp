@@ -155,5 +155,5 @@ void AppStateManager::init(AppState* state) {
 	RenderEngine::Instance().m_pRenderWnd->resetStatistics();
 }
 
-void AppStateManager::pauseAppState(AppState* state){
+void AppStateManager::pauseAppState(AppState* state) {
 }

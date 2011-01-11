@@ -102,7 +102,7 @@ ELSE()
 ENDIF()
 
 add_custom_target(style
-        COMMAND ${PYTHON_VER} scripts/cpplint.py --filter=-whitespace/tab,-build/header_guard,-build/include ${SOURCES} ${INCLUDES}
+        COMMAND ${PYTHON_VER} scripts/cpplint.py --filter=-whitespace/tab,-build/header_guard,-build/include,-readability/function ${SOURCES} ${INCLUDES}
 )
 
 add_custom_target(remake
