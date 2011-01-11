@@ -9,12 +9,11 @@
 #pragma once
 #include "Singleton.h"
 #include <OGRE/Ogre.h>
-#include <string>
 
 using std::string;
 
-const string bashRed = "1;31m";
-const string bashGreen = "1;32m";
+const char bashRed[] = "1;31m";
+const char bashGreen[] = "1;32m";
 
 class System : public Singleton<System> {
  public:
@@ -27,13 +26,11 @@ class System : public Singleton<System> {
 
 	Ogre::Timer* m_pTimer;
 
-private:
+ private:
 
 	Ogre::Log* m_pLog;
 
 	void initTimer();
 	void initLogging();
 	void initResources();
-
-
 };

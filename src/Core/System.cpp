@@ -27,8 +27,9 @@ void System::init() {
 	initResources();
 	initTimer();
 #ifdef WITH_FIXBLACKSCREEN
-	//TODO: Race condition? Black screen
-    Ogre::LogManager::getSingleton().createLog("Collage.log", true, true, false);
+	// TODO(lubosz): Race condition? Black screen
+    Ogre::LogManager::getSingleton().createLog(
+        "Collage.log", true, true, false);
 #endif
 }
 
@@ -59,9 +60,8 @@ void System::loadRecources() {
 
 void System::logMessage(string message) {
 #ifdef OGRE_PLATFORM_LINUX
-	//bash color
-	printf("[\e[%sCollage\e[m]: ", bashGreen.c_str()); // red
+	// bash color
+	printf("[\e[%sCollage\e[m]: ", bashGreen);  // red
 #endif
 	Ogre::LogManager::getSingleton().logMessage(message);
-
 }

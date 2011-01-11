@@ -45,12 +45,7 @@ class SimulationTestState : public AppState {
 	void buttonHit(OgreBites::Button* button);
 
  private:
-//	Ogre::SceneNode* m_pOgreHeadNode;
-//	Ogre::Entity* m_pOgreHeadEntity;
-//	Ogre::MaterialPtr m_pOgreHeadMat;
-//	Ogre::MaterialPtr m_pOgreHeadMatHigh;
-//
-//    OgreBites::ParamsPanel* m_pDetailsPanel;
+
 	Simulation *mSimulation;
 
 	bool m_bQuit;
@@ -60,9 +55,6 @@ class SimulationTestState : public AppState {
 	Ogre::Degree m_RotateSpeed;
 	float m_MoveScale;
 	Ogre::Degree m_RotScale;
-//
-//	Ogre::RaySceneQuery* m_pRSQ;
-//	Ogre::SceneNode* m_pCurrentObject;
-//	Ogre::Entity* m_pCurrentEntity;
+
 	bool m_bLMouseDown, m_bRMouseDown;
 };

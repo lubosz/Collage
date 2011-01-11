@@ -12,8 +12,6 @@
 
 #include "DotSceneLoader.h"
 
-
-
 #include <OGRE/OgreSubEntity.h>
 #include <OGRE/OgreMaterialManager.h>
 #include "FrameCapture.h"
@@ -46,25 +44,15 @@ class WikiCubeState : public AppState {
 	void loadBackGround(const QString & url);
 
  private:
-//	Ogre::SceneNode* m_pOgreHeadNode;
-//	Ogre::Entity* m_pOgreHeadEntity;
-//	Ogre::MaterialPtr m_pOgreHeadMat;
-//	Ogre::MaterialPtr m_pOgreHeadMatHigh;
-//
-//    OgreBites::ParamsPanel* m_pDetailsPanel;
+
 	bool m_bQuit;
-//
 	Ogre::Vector3 m_TranslateVector;
 	Ogre::Real m_MoveSpeed;
 	Ogre::Degree m_RotateSpeed;
 	float m_MoveScale;
 	Ogre::Degree m_RotScale;
-//
-//	Ogre::RaySceneQuery* m_pRSQ;
-//	Ogre::SceneNode* m_pCurrentObject;
-//	Ogre::Entity* m_pCurrentEntity;
+
 	bool m_bLMouseDown, m_bRMouseDown;
 	Ogre::MaterialPtr cubeMat;
 	FrameCapture capture;
-//	bool m_bSettingsMode;
 };
