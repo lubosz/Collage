@@ -529,13 +529,6 @@ void DotSceneLoader::processNode(rapidxml::xml_node<>* XMLNode,
 		pElement = pElement->next_sibling("particleSystem");
 	}
 
-	// Process billboardSet (*)
-	pElement = XMLNode->first_node("billboardSet");
-	while (pElement) {
-		processBillboardSet(pElement, pNode);
-		pElement = pElement->next_sibling("billboardSet");
-	}
-
 	// Process plane (*)
 	pElement = XMLNode->first_node("plane");
 	while (pElement) {

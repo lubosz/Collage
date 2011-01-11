@@ -2,6 +2,7 @@
  *  Copyright 2010 The Collage Project
  */
 #include "LevelGeneratorManager.h"
+#include <iostream>
 
 LevelGeneratorManager::LevelGeneratorManager(QObject *parent)
 :

@@ -8,8 +8,10 @@
 
 #include "GameState.h"
 #include <QUrl>
+#include <string>
 #include "LevelGeneratorManager.h"
 
+using std::string;
 // using namespace Ogre;
 
 GameState::GameState() {
@@ -340,14 +342,16 @@ void GameState::buildGUI() {
 					OgreBites::TL_TOPLEFT, "DetailsPanel", 200, items);
 	m_pDetailsPanel->show();
 
-	Ogre::String infoText =
-	    "[TAB] - Switch input mode\n\n"
-	    +"[W] - Forward / Mode up\n"
-	    +"[S] - Backwards/ Mode down\n"
-	    +"[A] - Left\n";
-	infoText.append(
-			"[D] - Right\n\nPress [SHIFT] to move faster\n\n[O] - Toggle FPS / logo\n");
-	infoText.append("[Print] - Take screenshot\n\n[ESC] - Exit");
+	string infoText = "";
+	infoText.append("[TAB] - Switch input mode\n");
+  infoText.append("[W] - Forward / Mode up\n");
+  infoText.append("[S] - Backwards/ Mode down\n");
+  infoText.append("[A] - Left\n");
+  infoText.append("[D] - Right\n");
+  infoText.append("[SHIFT] move faster\n");
+  infoText.append("[O] - Toggle FPS / logo\n");
+  infoText.append("[Print] - Take screenshot\n");
+  infoText.append("[ESC] - Exit");
 	UserInterface::Instance().m_pTrayMgr->createTextBox(
 			OgreBites::TL_RIGHT, "InfoPanel", infoText, 300, 220);
 
