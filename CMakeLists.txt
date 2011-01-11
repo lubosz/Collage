@@ -58,12 +58,6 @@ include_directories(
     ${QT_INCLUDE_DIRS}
 )
 
-
-#Find headers and cpps
-#file(GLOB_RECURSE SOURCES src/*.cpp)
-
-#file(GLOB_RECURSE TESTS test/*.cpp)
-
 set(GLOB_DIRS Core Generator State Simulation)
 file(GLOB_RECURSE INCLUDES include/*.h)
 
@@ -73,9 +67,11 @@ foreach(GLOB_DIR ${GLOB_DIRS})
 endforeach(GLOB_DIR)
 
 #moc qt stuff
-set(MOC_INFILES include/AppState.h include/FrameCapture.h include/CollageApplication.h include/LevelGeneratorManager.h include/GeneralLevelGenerator.h include/LevelGenerator.h include/Level.h)
+set(MOC_CLASSES AppState FrameCapture CollageApplication LevelGeneratorManager GeneralLevelGenerator LevelGenerator Level)
+foreach(MOC_CLASS ${MOC_CLASSES})
+    SET(MOC_INFILES ${MOC_INFILES} include/${MOC_CLASS}.h)
+endforeach(MOC_CLASS)
 qt4_wrap_cpp (MOC_OUTFILES ${MOC_INFILES})
-#QT4_WRAP_CPP(src/Generator/moc_FrameCapture.cpp src/Generator/FrameCapture.cpp)
 
 #add main.cpp
 if(APPLE)
@@ -89,7 +85,7 @@ if(FIXBLACKSCREEN)
     ADD_DEFINITIONS(-DWITH_FIXBLACKSCREEN)
 endif()
 
-#freeimage collision prevention
+#freeimage jpeg collision prevention
 if(FREEIMAGE_BUG)
     ADD_DEFINITIONS(-DFREEIMAGE_BUG)
 endif()
@@ -100,8 +96,6 @@ endif()
 
 #compile
 add_executable(collage ${SOURCES} ${INCLUDES} ${MOC_OUTFILES})
-#add_executable(ogreTest test/BasicOgre.cpp src/Core/RenderEngine.cpp src/Core/System.cpp)
-
 
 #check code stlye
 IF(EXISTS "/usr/bin/python2")
@@ -137,9 +131,9 @@ if (APPLE)
 
 elseif(UNIX)
     copy_plugins_config(${CMAKE_CFG_INTDIR}/bin/plugins-unix.cfg)
-    #free image hack
+    #free image hack (collision in libjpeg with qt)
     IF(EXISTS /usr/lib/qt/plugins/imageformats/libqjpeg.so)
-    	#sane
+    	#arch
     	set(FREEIMAGEHACK /usr/lib/qt/plugins/imageformats/libqjpeg.so)
 	ELSEIF(EXISTS /usr/lib/qt4/plugins/imageformats/libqjpeg.so)
 		#ubuntu
