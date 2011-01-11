@@ -73,7 +73,8 @@ foreach(GLOB_DIR ${GLOB_DIRS})
 endforeach(GLOB_DIR)
 
 #moc qt stuff
-qt4_wrap_cpp (MOC_OUTFILES ${INCLUDES})
+set(MOC_INFILES include/AppState.h include/FrameCapture.h include/CollageApplication.h include/LevelGeneratorManager.h include/GeneralLevelGenerator.h include/LevelGenerator.h include/Level.h)
+qt4_wrap_cpp (MOC_OUTFILES ${MOC_INFILES})
 #QT4_WRAP_CPP(src/Generator/moc_FrameCapture.cpp src/Generator/FrameCapture.cpp)
 
 #add main.cpp
