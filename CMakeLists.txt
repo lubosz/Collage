@@ -4,17 +4,14 @@ project(collage)
 set(LIBRARY_OUTPUT_PATH ${CMAKE_SOURCE_DIR}/bin)
 set(EXECUTABLE_OUTPUT_PATH ${CMAKE_SOURCE_DIR}/bin)
 
-#Set c++0x
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=gnu++0x")
-
-OPTION(RELEASE "Release" OFF)
-OPTION(FIXBLACKSCREEN "Fix Black screen" OFF)
-OPTION(CHECKSTYLE "Check Style" OFF)
-OPTION(FREEIMAGE_BUG "Free Image Conflict" OFF)
-OPTION(AUDIO "AUDIO" ON)
+OPTION(COLLAGE_RELEASE "Release" OFF)
+OPTION(COLLAGE_FIXBLACKSCREEN "Fix Black screen" OFF)
+OPTION(COLLAGE_CHECKSTYLE "Check Style" OFF)
+OPTION(COLLAGE_FREEIMAGE_BUG "Free Image Conflict" OFF)
+OPTION(COLLAGE_AUDIO "AUDIO" ON)
 
 #Optimization / Debug
-IF(RELEASE)
+IF(COLLAGE_RELEASE)
     set(CMAKE_CXX_FLAGS "-O3 -msse4 -mssse3") #Optimized
     set(CMAKE_BUILD_TYPE Release)
 ELSE()
@@ -81,16 +78,16 @@ else()
 endif()
 
 #fix black screen race condition
-if(FIXBLACKSCREEN)
+if(COLLAGE_FIXBLACKSCREEN)
     ADD_DEFINITIONS(-DWITH_FIXBLACKSCREEN)
 endif()
 
 #freeimage jpeg collision prevention
-if(FREEIMAGE_BUG)
+if(COLLAGE_FREEIMAGE_BUG)
     ADD_DEFINITIONS(-DFREEIMAGE_BUG)
 endif()
 
-if(AUDIO)
+if(COLLAGE_AUDIO)
     ADD_DEFINITIONS(-DAUDIO)
 endif()
 
@@ -104,11 +101,14 @@ ELSE()
     SET(PYTHON_VER "python")
 ENDIF()
 
-if(CHECKSTYLE)
-    add_custom_target(CHECK_STYLE ALL
+add_custom_target(style
         COMMAND ${PYTHON_VER} scripts/cpplint.py --filter=-whitespace/tab,-build/header_guard,-build/include ${SOURCES} ${INCLUDES}
-    )
-endif()
+)
+
+add_custom_target(remake
+        COMMAND make clean && rm CMakeCache.txt && cmake . && make -j`getconf _NPROCESSORS_ONLN`
+)
+
 
 if (APPLE)
     include_directories(
