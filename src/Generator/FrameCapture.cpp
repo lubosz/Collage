@@ -200,6 +200,31 @@ void FrameCapture::saveFrame(QWebFrame *frame) {
   frame->documentElement().render(&painter);
   painter.end();
 
-  image.save(fileName);
+  Ogre::Image foo;
+//  printf("Bits content: %s\n", image.bits());
+
+//  uchar mydata[235235];
+//  uchar * data = new uchar[image.byteCount()];
+  // *data = *image.bits();
+//  data = image.bits();
+//  printf("size qt func: %d\n", image.byteCount());
+//  printf("size qt: %d\n", sizeof(image.bits()) / sizeof(image.bits()[0]));
+//  printf("size my: %d\n", sizeof(data) / sizeof(data[0]));
+//  printf("size my: %d\n", sizeof(data));
+//  printf("size my: %d\n", sizeof(*data));
+//  printf("size my: %d\n", sizeof(&data));
+//  printf("size myd: %d\n", sizeof(mydata) / sizeof(mydata[0]));
+//  memcpy(image.bits(), data, image.byteCount());
+
+  foo = foo.loadDynamicImage(
+      image.bits(), image.width(), image.height(),
+      1, Ogre::PF_A8R8G8B8);
+
+  Ogre::TextureManager::getSingleton().remove("convertTest");
+  Ogre::TextureManager::getSingleton().loadImage("convertTest", "General", foo);
+
+
+//
+//  image.save(fileName);
 }
 
