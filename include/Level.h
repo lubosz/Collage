@@ -12,14 +12,10 @@ class Level : public QObject {
     Q_OBJECT
  public:
     explicit Level(QObject *parent = 0);
-    Level(Simulation *simulation);
+    explicit Level(Simulation *simulation);
 
-private:
+ private:
     Simulation *simulation;
-
- signals:
-
-  public slots:
 };
 
 #endif

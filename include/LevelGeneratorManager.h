@@ -29,12 +29,13 @@ class LevelGeneratorManager : public QObject {
  private:
     std::vector<LevelGenerator*> generators;
     bool requestLock;
-    int percent;
+		int percent;
+    bool waitForSignal(QObject* obj, const char* signal, int timeout = 10000);
 
  signals:
-    void finished();
+    void levelGenerated(Level *level);
 
-  private slots:
+ private slots:
     void printProgress(int percent);
     void getMatchingGenerator(bool ok);
 };

@@ -52,7 +52,7 @@ class GameState : public AppState {
 
 	void update(double timeSinceLastFrame);
 	LevelGeneratorManager genman;
-public slots:
+  public slots:
 	void levelGenerated(Level *level);
 
  private:
@@ -61,7 +61,7 @@ public slots:
 	Ogre::MaterialPtr m_pOgreHeadMat;
 	Ogre::MaterialPtr m_pOgreHeadMatHigh;
 
-    OgreBites::ParamsPanel* m_pDetailsPanel;
+  OgreBites::ParamsPanel* m_pDetailsPanel;
 	bool m_bQuit;
 
 	Ogre::Vector3 m_TranslateVector;
