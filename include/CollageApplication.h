@@ -9,13 +9,18 @@
 #pragma once
 
 #include "AppStateManager.h"
+#include <QtCore>
+#include <QObject>
+#include <QApplication>
 
-class CollageApplication {
+class CollageApplication : public QApplication {
+	Q_OBJECT
+
  public:
-	CollageApplication();
+	CollageApplication(int& argc, char** argv); // NOLINT
 	virtual ~CollageApplication();
 
-	void start();
+	int exec();
 
  private:
 	AppStateManager* m_pAppStateManager;

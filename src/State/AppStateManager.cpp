@@ -13,6 +13,7 @@
 #include "Input.h"
 #include "UserInterface.h"
 #include "AppState.h"
+#include <QApplication>
 
 AppStateManager::AppStateManager() {
 	m_bShutdown = false;
@@ -84,7 +85,11 @@ void AppStateManager::start(AppState* state) {
 					= System::Instance().m_pTimer->getMillisecondsCPU()
 							- startTime;
 		} else {
+#ifdef WIN32
+			 Sleep(1000);
+#else
 			 sleep(1000);
+#endif
 		}
 	}
 
@@ -150,5 +155,5 @@ void AppStateManager::init(AppState* state) {
 	RenderEngine::Instance().m_pRenderWnd->resetStatistics();
 }
 
-void AppStateManager::pauseAppState(AppState* state){
+void AppStateManager::pauseAppState(AppState* state) {
 }

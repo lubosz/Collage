@@ -16,6 +16,7 @@
 
 #include <OgreSubEntity.h>
 #include <OgreMaterialManager.h>
+#include <LevelGeneratorManager.h>
 
 enum QueryFlags {
     OGRE_HEAD_MASK	= 1<<0,
@@ -23,6 +24,7 @@ enum QueryFlags {
 };
 
 class GameState : public AppState {
+    Q_OBJECT
  public:
 	GameState();
 
@@ -49,6 +51,9 @@ class GameState : public AppState {
     void itemSelected(OgreBites::SelectMenu* menu);
 
 	void update(double timeSinceLastFrame);
+	LevelGeneratorManager genman;
+  public slots:
+	void levelGenerated(Level *level);
 
  private:
 	Ogre::SceneNode* m_pOgreHeadNode;
@@ -56,7 +61,7 @@ class GameState : public AppState {
 	Ogre::MaterialPtr m_pOgreHeadMat;
 	Ogre::MaterialPtr m_pOgreHeadMatHigh;
 
-    OgreBites::ParamsPanel* m_pDetailsPanel;
+  OgreBites::ParamsPanel* m_pDetailsPanel;
 	bool m_bQuit;
 
 	Ogre::Vector3 m_TranslateVector;

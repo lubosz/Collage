@@ -12,17 +12,6 @@
 #include <OGRE/Terrain/OgreTerrainGroup.h>
 #include <OGRE/Terrain/OgreTerrainMaterialGeneratorA.h>
 
-/*
-#include "PAGEDGEOMETRY/PagedGeometry.h"
-#include "PAGEDGEOMETRY/BatchPage.h"
-#include "PAGEDGEOMETRY/ImpostorPage.h"
-#include "PAGEDGEOMETRY/TreeLoader3D.h"
-
-#pragma warning(disable:4390)
-#pragma warning(disable:4305)
-*/
-// using namespace Forests;
-
 DotSceneLoader::DotSceneLoader()
 :
 #ifdef USE_OGRE_TERRAIN
@@ -323,7 +312,6 @@ void DotSceneLoader::processTerrainPage(rapidxml::xml_node<>* XMLNode) {
 			mTerrainGroup->getResourceGroup(), name)) {
 		mTerrainGroup->defineTerrain(pageX, pageY, name);
 	}
-
 }
 #endif
 void DotSceneLoader::processUserDataReference(rapidxml::xml_node<>* XMLNode,
@@ -396,10 +384,6 @@ void DotSceneLoader::processLight(rapidxml::xml_node<>* XMLNode,
 		if (pElement)
 			processLightAttenuation(pElement, pLight);
 	}
-	// Process userDataReference (?)
-	pElement = XMLNode->first_node("userDataReference");
-	if (pElement)
-		;//processUserDataReference(pElement, pLight);
 }
 
 void DotSceneLoader::processCamera(rapidxml::xml_node<>* XMLNode,
@@ -414,17 +398,6 @@ void DotSceneLoader::processCamera(rapidxml::xml_node<>* XMLNode,
 
 	// Create the camera
 	Ogre::Camera *pCamera = mSceneMgr->createCamera(name);
-
-	//TODO: make a flag or attribute indicating whether or not the camera should be attached to any parent node.
-	//if(pParent)
-	//    pParent->attachObject(pCamera);
-
-	// Set the field-of-view
-	//! @todo Is this always in degrees?
-	//pCamera->setFOVy(Ogre::Degree(fov));
-
-	// Set the aspect ratio
-	//pCamera->setAspectRatio(aspectRatio);
 
 	// Set the projection type
 	if (projectionType == "perspective")
@@ -453,26 +426,6 @@ void DotSceneLoader::processCamera(rapidxml::xml_node<>* XMLNode,
 	pElement = XMLNode->first_node("rotation");
 	if (pElement)
 		pCamera->setOrientation(parseQuaternion(pElement));
-
-	// Process normal (?)
-	pElement = XMLNode->first_node("normal");
-	if (pElement)
-		;//!< @todo What to do with this element?
-
-	// Process lookTarget (?)
-	pElement = XMLNode->first_node("lookTarget");
-	if (pElement)
-		;//!< @todo Implement the camera look target
-
-	// Process trackTarget (?)
-	pElement = XMLNode->first_node("trackTarget");
-	if (pElement)
-		;//!< @todo Implement the camera track target
-
-	// Process userDataReference (?)
-	pElement = XMLNode->first_node("userDataReference");
-	if (pElement)
-		;//!< @todo Implement the camera user data reference
 
 	// construct a scenenode is no parent
 	if (!pParent) {
@@ -556,12 +509,11 @@ void DotSceneLoader::processNode(rapidxml::xml_node<>* XMLNode,
 	}
 
 	// Process light (*)
-	//pElement = XMLNode->first_node("light");
-	//while(pElement)
-	//{
-	//    processLight(pElement, pNode);
-	//    pElement = pElement->next_sibling("light");
-	//}
+	pElement = XMLNode->first_node("light");
+	while (pElement) {
+	    processLight(pElement, pNode);
+	    pElement = pElement->next_sibling("light");
+	}
 
 	// Process camera (*)
 	pElement = XMLNode->first_node("camera");
@@ -575,13 +527,6 @@ void DotSceneLoader::processNode(rapidxml::xml_node<>* XMLNode,
 	while (pElement) {
 		processParticleSystem(pElement, pNode);
 		pElement = pElement->next_sibling("particleSystem");
-	}
-
-	// Process billboardSet (*)
-	pElement = XMLNode->first_node("billboardSet");
-	while (pElement) {
-		processBillboardSet(pElement, pNode);
-		pElement = pElement->next_sibling("billboardSet");
 	}
 
 	// Process plane (*)
@@ -606,8 +551,6 @@ void DotSceneLoader::processNode(rapidxml::xml_node<>* XMLNode,
 
 void DotSceneLoader::processLookTarget(rapidxml::xml_node<>* XMLNode,
 		Ogre::SceneNode *pParent) {
-	//! @todo Is this correct? Cause I don't have a clue actually
-
 	// Process attributes
 	Ogre::String nodeName = getAttrib(XMLNode, "nodeName");
 
@@ -635,17 +578,17 @@ void DotSceneLoader::processLookTarget(rapidxml::xml_node<>* XMLNode,
 		localDirection = parseVector3(pElement);
 
 	// Setup the look target
-	try {
-		if (!nodeName.empty()) {
-			Ogre::SceneNode *pLookNode = mSceneMgr->getSceneNode(nodeName);
-			position = pLookNode->_getDerivedPosition();
-		}
+  try {
+    if (!nodeName.empty()) {
+      Ogre::SceneNode *pLookNode = mSceneMgr->getSceneNode(nodeName);
+      position = pLookNode->_getDerivedPosition();
+    }
 
-		pParent->lookAt(position, relativeTo, localDirection);
-	} catch (Ogre::Exception &/*e*/) {
-		Ogre::LogManager::getSingleton().logMessage(
-				"[DotSceneLoader] Error processing a look target!");
-	}
+    pParent->lookAt(position, relativeTo, localDirection);
+  } catch(...) {
+    Ogre::LogManager::getSingleton().logMessage(
+        "[DotSceneLoader] Error processing a look target!");
+  }
 }
 
 void DotSceneLoader::processTrackTarget(rapidxml::xml_node<>* XMLNode,
@@ -671,7 +614,7 @@ void DotSceneLoader::processTrackTarget(rapidxml::xml_node<>* XMLNode,
 	try {
 		Ogre::SceneNode *pTrackNode = mSceneMgr->getSceneNode(nodeName);
 		pParent->setAutoTracking(true, pTrackNode, localDirection, offset);
-	} catch (Ogre::Exception &/*e*/) {
+	} catch(...) {
 		Ogre::LogManager::getSingleton().logMessage(
 				"[DotSceneLoader] Error processing a track target!");
 	}
@@ -685,7 +628,6 @@ void DotSceneLoader::processEntity(rapidxml::xml_node<>* XMLNode,
 	Ogre::String meshFile = getAttrib(XMLNode, "meshFile");
 	Ogre::String materialFile = getAttrib(XMLNode, "materialFile");
 	bool isStatic = getAttribBool(XMLNode, "static", false);
-	;
 	bool castShadows = getAttribBool(XMLNode, "castShadows", true);
 
 	// TEMP: Maintain a list of static and dynamic objects
@@ -695,16 +637,6 @@ void DotSceneLoader::processEntity(rapidxml::xml_node<>* XMLNode,
 		dynamicObjects.push_back(name);
 
 	rapidxml::xml_node<>* pElement;
-
-	// Process vertexBuffer (?)
-	pElement = XMLNode->first_node("vertexBuffer");
-	if (pElement)
-		;//processVertexBuffer(pElement);
-
-	// Process indexBuffer (?)
-	pElement = XMLNode->first_node("indexBuffer");
-	if (pElement)
-		;//processIndexBuffer(pElement);
 
 	// Create the entity
 	Ogre::Entity *pEntity = 0;
@@ -716,7 +648,7 @@ void DotSceneLoader::processEntity(rapidxml::xml_node<>* XMLNode,
 
 		if (!materialFile.empty())
 			pEntity->setMaterialName(materialFile);
-	} catch (Ogre::Exception &/*e*/) {
+	} catch(...) {
 		Ogre::LogManager::getSingleton().logMessage(
 				"[DotSceneLoader] Error loading an entity!");
 	}
@@ -725,7 +657,6 @@ void DotSceneLoader::processEntity(rapidxml::xml_node<>* XMLNode,
 	pElement = XMLNode->first_node("userDataReference");
 	if (pElement)
 		processUserDataReference(pElement, pEntity);
-
 }
 
 void DotSceneLoader::processParticleSystem(rapidxml::xml_node<>* XMLNode,
@@ -740,15 +671,10 @@ void DotSceneLoader::processParticleSystem(rapidxml::xml_node<>* XMLNode,
 		Ogre::ParticleSystem *pParticles = mSceneMgr->createParticleSystem(
 				name, file);
 		pParent->attachObject(pParticles);
-	} catch (Ogre::Exception &/*e*/) {
+	} catch(...) {
 		Ogre::LogManager::getSingleton().logMessage(
 				"[DotSceneLoader] Error creating a particle system!");
 	}
-}
-
-void DotSceneLoader::processBillboardSet(rapidxml::xml_node<>* XMLNode,
-		Ogre::SceneNode *pParent) {
-	//! @todo Implement this
 }
 
 void DotSceneLoader::processPlane(rapidxml::xml_node<>* XMLNode,
@@ -800,22 +726,6 @@ void DotSceneLoader::processPagedGeometry(rapidxml::xml_node<>* XMLNode,
 	Ogre::Vector4 bounds = Ogre::StringConverter::parseVector4(getAttrib(
 			XMLNode, "bounds"));
 
-	/*
-	PagedGeometry *mPGHandle = new PagedGeometry();
-	mPGHandle->setCamera(mSceneMgr->getCameraIterator().begin()->second);
-	mPGHandle->setPageSize(pagesize);
-	mPGHandle->setInfinite();
-
-	mPGHandle->addDetailLevel<BatchPage> (batchdistance, 0);
-	mPGHandle->addDetailLevel<ImpostorPage> (impostordistance, 0);
-
-	TreeLoader3D *mHandle = new TreeLoader3D(mPGHandle, Forests::TBounds(
-			bounds.x, bounds.y, bounds.z, bounds.w));
-	mPGHandle->setPageLoader(mHandle);
-
-	mPGHandles.push_back(mPGHandle);
-	mTreeHandles.push_back(mHandle);
-*/
 	std::ifstream stream(filename.c_str());
 
 	if (!stream.is_open())
@@ -856,18 +766,7 @@ void DotSceneLoader::processPagedGeometry(rapidxml::xml_node<>* XMLNode,
 
 	if (model != "") {
 		Ogre::Entity *mEntityHandle = mSceneMgr->createEntity(model + ".mesh");
-/*
-		PGInstanceList::iterator it = mInstanceList.begin();
-
-		while (it != mInstanceList.end()) {
-			mHandle->addTree(mEntityHandle, it->pos, Ogre::Degree(it->yaw),
-					it->scale);
-
-			it++;
-		}
-			*/
 	}
-
 }
 
 void DotSceneLoader::processFog(rapidxml::xml_node<>* XMLNode) {
@@ -968,8 +867,6 @@ void DotSceneLoader::processSkyPlane(rapidxml::xml_node<>* XMLNode) {
 }
 
 void DotSceneLoader::processClipping(rapidxml::xml_node<>* XMLNode) {
-	//! @todo Implement this
-
 	// Process attributes
 	Ogre::Real fNear = getAttribReal(XMLNode, "near", 0);
 	Ogre::Real fFar = getAttribReal(XMLNode, "far", 1);
@@ -1036,9 +933,8 @@ Ogre::Vector3 DotSceneLoader::parseVector3(rapidxml::xml_node<>* XMLNode) {
 					XMLNode->first_attribute("z")->value()));
 }
 
-Ogre::Quaternion DotSceneLoader::parseQuaternion(rapidxml::xml_node<>* XMLNode) {
-	//! @todo Fix this crap!
-
+Ogre::Quaternion DotSceneLoader::parseQuaternion(
+    rapidxml::xml_node<>* XMLNode) {
 	Ogre::Quaternion orientation;
 
 	if (XMLNode->first_attribute("qx")) {
@@ -1070,7 +966,6 @@ Ogre::Quaternion DotSceneLoader::parseQuaternion(rapidxml::xml_node<>* XMLNode) 
 				"axisZ")->value());
 		Ogre::Real angle = Ogre::StringConverter::parseReal(
 				XMLNode->first_attribute("angle")->value());
-		;
 		orientation.FromAngleAxis(Ogre::Angle(angle), axis);
 	} else if (XMLNode->first_attribute("angleX")) {
 		Ogre::Vector3 axis;
@@ -1080,8 +975,6 @@ Ogre::Quaternion DotSceneLoader::parseQuaternion(rapidxml::xml_node<>* XMLNode) 
 				"angleY")->value());
 		axis.z = Ogre::StringConverter::parseReal(XMLNode->first_attribute(
 				"angleZ")->value());
-		//orientation.FromAxes(&axis);
-		//orientation.F
 	} else if (XMLNode->first_attribute("x")) {
 		orientation.x = Ogre::StringConverter::parseReal(
 				XMLNode->first_attribute("x")->value());

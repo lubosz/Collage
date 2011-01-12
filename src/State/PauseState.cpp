@@ -20,13 +20,15 @@ void PauseState::enter() {
 	OgreBites::SdkTrayManager* trayManager = UserInterface::Instance().m_pTrayMgr;
 	trayManager->destroyAllWidgets();
 	trayManager->showCursor();
-	trayManager->createButton(OgreBites::TL_CENTER, "BackToGameBtn", "Return to Game", 250);
-	trayManager->createButton(OgreBites::TL_CENTER, "BackToMenuBtn", "Return to Menu", 250);
-	trayManager->createButton(OgreBites::TL_CENTER, "ExitBtn", "Exit Collage", 250);
+	trayManager->createButton(
+	    OgreBites::TL_CENTER, "BackToGameBtn", "Return to Game", 250);
+	trayManager->createButton(
+	    OgreBites::TL_CENTER, "BackToMenuBtn", "Return to Menu", 250);
+	trayManager->createButton(
+	    OgreBites::TL_CENTER, "ExitBtn", "Exit Collage", 250);
 	trayManager->createLabel(OgreBites::TL_TOP, "PauseLbl", "Pause", 250);
 	trayManager->showBackdrop("SdkTrays/Shade");
 	m_bQuit = false;
-
 }
 
 void PauseState::exit() {
@@ -36,7 +38,6 @@ void PauseState::exit() {
 	UserInterface::Instance().m_pTrayMgr->clearAllTrays();
 	UserInterface::Instance().m_pTrayMgr->destroyAllWidgets();
 	UserInterface::Instance().m_pTrayMgr->setListener(0);
-
 }
 
 bool PauseState::keyPressed(const OIS::KeyEvent &keyEventRef) {

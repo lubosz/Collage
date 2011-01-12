@@ -9,7 +9,6 @@
 #pragma once
 
 #include <OGRE/Ogre.h>
-//#include "AppState.h"
 class AppState;
 
 class AppStateListener {

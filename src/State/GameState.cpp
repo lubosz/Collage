@@ -7,8 +7,11 @@
  */
 
 #include "GameState.h"
+#include <QUrl>
+#include <string>
+#include "LevelGeneratorManager.h"
 
-// using namespace Ogre;
+using std::string;
 
 GameState::GameState() {
 	m_MoveSpeed = 0.1f;
@@ -21,9 +24,13 @@ GameState::GameState() {
 
 	m_pCurrentObject = 0;
 	m_pDetailsPanel = 0;
+
+	connect(&genman, SIGNAL(levelGenerated(Level*)),
+					this, SLOT(levelGenerated(Level*)));
 }
 
 void GameState::enter() {
+  genman.requestWebpage("http://www.example.net");
 	System::Instance().logMessage(
 			"Entering GameState...");
 
@@ -84,7 +91,6 @@ void GameState::createScene() {
 
 	DotSceneLoader* pDotSceneLoader = new DotSceneLoader();
 	pDotSceneLoader->parseDotScene("CubeScene.xml", "General", m_pSceneMgr,
-	//pDotSceneLoader->parseDotScene("Bulldozer.scene", "General", m_pSceneMgr,
 			m_pSceneMgr->getRootSceneNode());
 	delete pDotSceneLoader;
 
@@ -105,7 +111,14 @@ void GameState::createScene() {
 	m_pOgreHeadMatHigh->getTechnique(0)->getPass(0)->setDiffuse(1, 0, 0, 0);
 }
 
+void GameState::levelGenerated(Level *level) {
+			 System::Instance().logMessage("Received level from generator...");
+}
+
+
 bool GameState::keyPressed(const OIS::KeyEvent &keyEventRef) {
+    if (Input::Instance().m_pKeyboard->isKeyDown(OIS::KC_X)) {
+    }
 	if (m_bSettingsMode == true) {
 		if (Input::Instance().m_pKeyboard->isKeyDown(OIS::KC_S)) {
 			OgreBites::SelectMenu
@@ -336,15 +349,16 @@ void GameState::buildGUI() {
 					OgreBites::TL_TOPLEFT, "DetailsPanel", 200, items);
 	m_pDetailsPanel->show();
 
-	Ogre::String
-			infoText =
-					"[TAB] - Switch input mode\n\n \
-					[W] - Forward / Mode up\n \
-					[S] - Backwards/ Mode down\n \
-					[A] - Left\n";
-	infoText.append(
-			"[D] - Right\n\nPress [SHIFT] to move faster\n\n[O] - Toggle FPS / logo\n");
-	infoText.append("[Print] - Take screenshot\n\n[ESC] - Exit");
+	string infoText = "";
+	infoText.append("[TAB] - Switch input mode\n");
+  infoText.append("[W] - Forward / Mode up\n");
+  infoText.append("[S] - Backwards/ Mode down\n");
+  infoText.append("[A] - Left\n");
+  infoText.append("[D] - Right\n");
+  infoText.append("[SHIFT] move faster\n");
+  infoText.append("[O] - Toggle FPS / logo\n");
+  infoText.append("[Print] - Take screenshot\n");
+  infoText.append("[ESC] - Exit");
 	UserInterface::Instance().m_pTrayMgr->createTextBox(
 			OgreBites::TL_RIGHT, "InfoPanel", infoText, 300, 220);
 

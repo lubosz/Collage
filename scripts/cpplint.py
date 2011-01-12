@@ -1736,9 +1736,12 @@ def CheckSpacing(filename, clean_lines, linenum, error):
         # but some lines are exceptions -- e.g. if they're big
         # comment delimiters like:
         # //----------------------------------------------------------
+        # or are an empty C++ style Doxygen comment, like:
+        # ///
         # or they begin with multiple slashes followed by a space:
         # //////// Header comment
         match = (Search(r'[=/-]{4,}\s*$', line[commentend:]) or
+                 Search(r'^/$', line[commentend:]) or
                  Search(r'^/+ ', line[commentend:]))
         if not match:
           error(filename, linenum, 'whitespace/comments', 4,
@@ -2089,7 +2092,7 @@ def CheckStyle(filename, clean_lines, linenum, file_extension, error):
           'Line ends in whitespace.  Consider deleting these extra spaces.')
   # There are certain situations we allow one space, notably for labels
   elif ((initial_spaces == 1 or initial_spaces == 3) and
-        not Match(r'\s*\w+\s*:\s*$', cleansed_line)):
+        not Match(r'\s*\w+\s*\w*\s*:\s*$', cleansed_line)):
     error(filename, linenum, 'whitespace/indent', 3,
           'Weird number of spaces at line-start.  '
           'Are you using a 2-space indent?')
