@@ -12,7 +12,6 @@
 #include "LevelGeneratorManager.h"
 
 using std::string;
-// using namespace Ogre;
 
 GameState::GameState() {
 	m_MoveSpeed = 0.1f;

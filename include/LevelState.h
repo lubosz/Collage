@@ -1,5 +1,5 @@
 /*
- * GameState.h
+ * LevelState.h
  *
  *  Created on: Nov 14, 2010
  *  Author: bmonkey
@@ -16,45 +16,46 @@
 
 #include "LevelGeneratorManager.h"
 
-
 class LevelState : public AppState {
     Q_OBJECT
  public:
-    LevelState();
+  LevelState();
 
-    DECLARE_APPSTATE_CLASS(LevelState)
+  DECLARE_APPSTATE_CLASS(LevelState)
 
-	void enter();
-	void createScene();
-	void exit();
-	bool pause();
-	void resume();
+  void enter();
+  void createScene();
+  void exit();
+  bool pause();
+  void resume();
 
-	void moveCamera();
-	void getInput();
-	void buildGUI();
+  void moveCamera();
+  void getInput();
+  void buildGUI();
 
-	bool keyPressed(const OIS::KeyEvent &keyEventRef);
-	bool keyReleased(const OIS::KeyEvent &keyEventRef);
+  bool keyPressed(const OIS::KeyEvent &keyEventRef);
+  bool keyReleased(const OIS::KeyEvent &keyEventRef);
 
-	bool mouseMoved(const OIS::MouseEvent &arg);
-	bool mousePressed(const OIS::MouseEvent &arg, OIS::MouseButtonID id);
-	bool mouseReleased(const OIS::MouseEvent &arg, OIS::MouseButtonID id);
+  bool mouseMoved(const OIS::MouseEvent &arg);
+  bool mousePressed(const OIS::MouseEvent &arg, OIS::MouseButtonID id);
+  bool mouseReleased(const OIS::MouseEvent &arg, OIS::MouseButtonID id);
 
-	void update(double timeSinceLastFrame);
-	void buttonHit(OgreBites::Button* button);
+  void onLeftPressed(const OIS::MouseEvent &evt);
+
+  void update(double timeSinceLastFrame);
+  LevelGeneratorManager genman;
+  public slots:
+  void levelGenerated(Level *level);
 
  private:
-	bool m_bQuit;
-	Ogre::Vector3 m_TranslateVector;
-	Ogre::Real m_MoveSpeed;
-	Ogre::Degree m_RotateSpeed;
-	float m_MoveScale;
-	Ogre::Degree m_RotScale;
-	bool m_bLMouseDown, m_bRMouseDown;
 
-	LevelGeneratorManager genman;
+  bool quit;
 
-  public slots:
-	void levelGenerated(Level *level);
+  Ogre::Vector3 translateVector;
+  Ogre::Real moveSpeed;
+  Ogre::Degree rotateSpeed;
+  float moveScale;
+  Ogre::Degree rotScale;
+
+  bool lMouseDown, rMouseDown;
 };
