@@ -64,7 +64,7 @@ foreach(GLOB_DIR ${GLOB_DIRS})
 endforeach(GLOB_DIR)
 
 #moc qt stuff
-set(MOC_CLASSES AppState FrameCapture CollageApplication LevelGeneratorManager GeneralLevelGenerator LevelGenerator Level)
+set(MOC_CLASSES AppState FrameCapture CollageApplication LevelGeneratorManager GeneralLevelGenerator LevelGenerator Level GameState LevelState)
 foreach(MOC_CLASS ${MOC_CLASSES})
     SET(MOC_INFILES ${MOC_INFILES} include/${MOC_CLASS}.h)
 endforeach(MOC_CLASS)
@@ -101,9 +101,11 @@ ELSE()
     SET(PYTHON_VER "python")
 ENDIF()
 
+if(COLLAGE_CHECKSTYLE)
 add_custom_target(style ALL
         COMMAND ${PYTHON_VER} scripts/cpplint.py --filter=-whitespace/tab,-build/header_guard,-build/include,-readability/function,-readability/streams ${SOURCES} ${INCLUDES}
 )
+endif()
 
 add_custom_target(remake
         COMMAND make clean && rm CMakeCache.txt && cmake . && make -j`getconf _NPROCESSORS_ONLN`
