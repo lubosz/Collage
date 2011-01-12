@@ -3,8 +3,8 @@
 
 #include <QObject>
 #include <QUrl>
-#include <QString>
 #include <QWebPage>
+#include <QString>
 #include <QtDebug>
 
 #include <vector>
@@ -23,17 +23,17 @@ public:
 
     void addGenerator(LevelGenerator *generator);
     void requestWebpage(QString url);
+    QWebPage webpage;
 
 private:
     std::vector<LevelGenerator*> generators;
-    QWebPage webpage;
     bool requestLock;
     int percent;
 
 signals:
     void levelGenerated(Level *level);
 
-private slots:
+public slots:
     void printProgress(int percent);
     void getMatchingGenerator(bool ok);
 };

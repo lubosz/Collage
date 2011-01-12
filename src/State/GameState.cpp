@@ -22,9 +22,14 @@ GameState::GameState() {
 
 	m_pCurrentObject = 0;
 	m_pDetailsPanel = 0;
+
+	connect(&genman, SIGNAL(levelGenerated(Level*)), this, SLOT(levelGenerated(Level*)));
 }
 
 void GameState::enter() {
+  //LevelGeneratorManager genman;
+  //connect(genman, SIGNAL(levelGenerated(Level*)), this, SLOT(levelGenerated(Level*)));
+  genman.requestWebpage("http://www.example.net");
 	System::Instance().logMessage(
 			"Entering GameState...");
 
@@ -106,7 +111,14 @@ void GameState::createScene() {
 	m_pOgreHeadMatHigh->getTechnique(0)->getPass(0)->setDiffuse(1, 0, 0, 0);
 }
 
+void GameState::levelGenerated(Level *level) {
+			 System::Instance().logMessage("Received level from generator...");
+}
+
+
 bool GameState::keyPressed(const OIS::KeyEvent &keyEventRef) {
+    if (Input::Instance().m_pKeyboard->isKeyDown(OIS::KC_X)) {
+    }
 	if (m_bSettingsMode == true) {
 		if (Input::Instance().m_pKeyboard->isKeyDown(OIS::KC_S)) {
 			OgreBites::SelectMenu

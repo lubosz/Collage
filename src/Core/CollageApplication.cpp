@@ -35,6 +35,7 @@ CollageApplication::~CollageApplication() {
 
 int CollageApplication::exec()
 {
+
 #ifdef AUDIO
 	//audio
     Phonon::AudioOutput *audioOutput =  new Phonon::AudioOutput(Phonon::MusicCategory);
