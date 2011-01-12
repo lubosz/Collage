@@ -182,12 +182,7 @@ QString FrameCapture::getFirstAttribute(const QString & tag,
 }
 
 void FrameCapture::saveFrame(QWebFrame *frame) {
-  static int frameCounter = 0;
-
-  QString fileName(m_fileName);
-
   QImage image(QSize(1280, 1280), QImage::Format_ARGB32_Premultiplied);
-  //    image.fill(Qt::transparent);
   if (image.width() != 1280 || image.height() != 1280) {
     System::Instance().logMessage("WRONG RESOLUTION!");
     printf("width: %d, height %d", image.width(), image.height());
@@ -210,8 +205,5 @@ void FrameCapture::saveFrame(QWebFrame *frame) {
       targetImage.toStdString());
   Ogre::TextureManager::getSingleton().loadImage(
       targetImage.toStdString(), "General", foo);
-
-//
-//  image.save(fileName);
 }
 
