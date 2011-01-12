@@ -209,7 +209,7 @@ void WikiCubeState::buildGUI() {
 
 void WikiCubeState::loadBackGround(const QString & url) {
 	System::Instance().logMessage("Loading " + url.toStdString());
-	capture.saveWebRender(QUrl(url) , "convertTest");
+	capture.urlToOgreImage(QUrl(url) , "convertTest");
 	cubeMat.get()->getTechnique(0)->getPass(0)->removeAllTextureUnitStates();
 	cubeMat.get()->getTechnique(0)->
 	    getPass(0)->createTextureUnitState("convertTest");

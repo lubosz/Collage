@@ -14,7 +14,7 @@ Q_OBJECT
  public:
   FrameCapture();
   void saveWallPaper(const QUrl &url, const QString &outputFileName);
-  void saveWebRender(const QUrl &url, const QString &outputFileName);
+  void urlToOgreImage(const QUrl &url, const QString &outputFileName);
   QString getFirstAttribute(const QString & tag, const QString & attrib,
       const QString & match);
   bool waitForSignal(QObject* obj, const char* signal, int timeout);
@@ -35,6 +35,6 @@ Q_OBJECT
   int m_percent;
   QNetworkAccessManager manager;
 
-  void saveFrame(QWebFrame *frame);
+  void saveFrame(const QSize & siteResolution);
   void loadUrl(const QUrl &url);
 };

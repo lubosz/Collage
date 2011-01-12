@@ -109,12 +109,14 @@ void FrameCapture::saveWallPaper(
 
   if (imageUrl.contains(".jpg"))
     download(imageUrl);
+  else
+    return;
 
   // wait for wallpaper to download
   waitForSignal(this, SIGNAL(finished()), timeout);
 }
 
-void FrameCapture::saveWebRender(
+void FrameCapture::urlToOgreImage(
     const QUrl &url, const QString &targetImage) {
   this->targetImage = targetImage;
   int timeout = 20000;
@@ -128,10 +130,6 @@ void FrameCapture::saveWebRender(
   std::cout << "\n";
 
   System::Instance().logMessage("Setup rendering");
-  m_page.mainFrame()->setScrollBarPolicy(Qt::Vertical, Qt::ScrollBarAlwaysOff);
-  m_page.mainFrame()->
-      setScrollBarPolicy(Qt::Horizontal, Qt::ScrollBarAlwaysOff);
-  m_page.setViewportSize(QSize(1280, 1280));
   saveResult(true);
 }
 
@@ -156,7 +154,7 @@ void FrameCapture::saveResult(bool ok) {
   }
 
   // save each frame in different image files
-  saveFrame(m_page.mainFrame());
+  saveFrame(QSize(1280, 1280));
 
   emit finished();
 }
@@ -181,29 +179,31 @@ QString FrameCapture::getFirstAttribute(const QString & tag,
   }
 }
 
-void FrameCapture::saveFrame(QWebFrame *frame) {
-  QImage image(QSize(1280, 1280), QImage::Format_ARGB32_Premultiplied);
-  if (image.width() != 1280 || image.height() != 1280) {
-    System::Instance().logMessage("WRONG RESOLUTION!");
-    printf("width: %d, height %d", image.width(), image.height());
-    exit(0);
-  }
+void FrameCapture::saveFrame(const QSize & siteResolution) {
+  m_page.mainFrame()->setScrollBarPolicy(
+      Qt::Vertical, Qt::ScrollBarAlwaysOff);
+  m_page.mainFrame()->setScrollBarPolicy(
+      Qt::Horizontal, Qt::ScrollBarAlwaysOff);
+  m_page.setViewportSize(siteResolution);
+  QImage image(siteResolution, QImage::Format_ARGB32_Premultiplied);
+
   QPainter painter(&image);
   painter.setRenderHint(QPainter::Antialiasing, true);
   painter.setRenderHint(QPainter::TextAntialiasing, true);
   painter.setRenderHint(QPainter::SmoothPixmapTransform, true);
-  frame->documentElement().render(&painter);
+  m_page.mainFrame()->documentElement().render(&painter);
   painter.end();
-
-  Ogre::Image foo;
-
-  foo = foo.loadDynamicImage(
-      image.bits(), image.width(), image.height(),
-      1, Ogre::PF_A8R8G8B8);
 
   Ogre::TextureManager::getSingleton().remove(
       targetImage.toStdString());
   Ogre::TextureManager::getSingleton().loadImage(
-      targetImage.toStdString(), "General", foo);
+      targetImage.toStdString(),
+      "General",
+      Ogre::Image().loadDynamicImage(
+          image.bits(),
+          image.width(),
+          image.height(),
+          1,
+          Ogre::PF_A8R8G8B8));
 }
 
