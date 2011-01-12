@@ -1,3 +1,6 @@
+/*
+ *  Copyright 2010 The Collage Project
+ */
 #ifndef LEVEL_H
 #define LEVEL_H
 
@@ -5,20 +8,18 @@
 
 #include "Simulation.h"
 
-class Level : public QObject
-{
+class Level : public QObject {
     Q_OBJECT
-public:
+ public:
     explicit Level(QObject *parent = 0);
     Level(Simulation *simulation);
 
 private:
     Simulation *simulation;
 
-signals:
+ signals:
 
-public slots:
-
+  public slots:
 };
 
-#endif // LEVEL_H
+#endif

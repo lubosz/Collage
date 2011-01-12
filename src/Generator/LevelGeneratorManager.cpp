@@ -1,13 +1,18 @@
+/*
+ *  Copyright 2010 The Collage Project
+ */
 #include "LevelGeneratorManager.h"
+#include <iostream>
 
 LevelGeneratorManager::LevelGeneratorManager(QObject *parent) :
     QObject(parent)
 {
-    connect(&webpage, SIGNAL(loadProgress(int)), this, SLOT(printProgress(int)));
-    connect(&webpage, SIGNAL(loadFinished(bool)), this, SLOT(getMatchingGenerator(bool)));
+    connect(&webpage, SIGNAL(loadProgress(int)),
+		this, SLOT(printProgress(int)));
+    connect(&webpage, SIGNAL(loadFinished(bool)),
+		this, SLOT(getMatchingGenerator(bool)));
 //    webpage.mainFrame()->load(QUrl("http://www.example.net"));
     //this->requestLock = false;
-
     // Add all the different generators to our list of generators,
     // most general LAST!
 //    this->addGenerator(new GeneralLevelGenerator());
@@ -28,8 +33,10 @@ void LevelGeneratorManager::requestWebpage(QString _url) {
 
 //    this->percent = 0;
     webpage.mainFrame()->load(*url);
-    webpage.mainFrame()->setScrollBarPolicy(Qt::Vertical, Qt::ScrollBarAlwaysOff);
-    webpage.mainFrame()->setScrollBarPolicy(Qt::Horizontal, Qt::ScrollBarAlwaysOff);
+    webpage.mainFrame()->setScrollBarPolicy(
+		Qt::Vertical, Qt::ScrollBarAlwaysOff);
+    webpage.mainFrame()->setScrollBarPolicy(
+		Qt::Horizontal, Qt::ScrollBarAlwaysOff);
     webpage.setViewportSize(QSize(1024, 768));
 }
 
@@ -44,11 +51,9 @@ void LevelGeneratorManager::printProgress(int percent) {
 
 void LevelGeneratorManager::getMatchingGenerator(bool ok) {
     std::cout << "FUFUFUFUFUFUUFU done" << std::endl;
-    if (!ok)
-    {
+    if (!ok) {
         qDebug() << "Request failed.";
-        //return;
-        // TODO:
+        // TODO(dennda):
         // ERROR HANDLING!
     }
     qDebug() << "Finished loading webpage";

@@ -1,21 +1,22 @@
+/*
+ *  Copyright 2010 The Collage Project
+ */
 #ifndef GENERALLEVELGENERATOR_H
 #define GENERALLEVELGENERATOR_H
 
 #include "LevelGenerator.h"
 
-class GeneralLevelGenerator : public LevelGenerator
-{
+class GeneralLevelGenerator : public LevelGenerator {
     Q_OBJECT
-public:
+ public:
     explicit GeneralLevelGenerator(QObject *parent = 0);
 
     float getScore(QWebPage *webpage);
     Level* generate();
 
-signals:
+ signals:
 
-public slots:
-
+  public slots:
 };
 
-#endif // GENERALLEVELGENERATOR_H
+#endif

@@ -73,17 +73,17 @@ void SimulationTestState::exit() {
 }
 
 void SimulationTestState::createScene() {
-
 	mSimulation = new Simulation(m_pSceneMgr->getRootSceneNode());
 
 	m_pSceneMgr->createLight("Light")->setPosition(75, 75, 75);
 
-	AABBCollisioShape* shape = new AABBCollisioShape(Ogre::Vector2(0.0,0.0),Ogre::Vector2(1.5,1.5));
-	mSimulation->createActor("myActor1", AB_STATIC, Ogre::Vector2(0.0,0.0));
-	mSimulation->createActor("myActor2", AB_STATIC, Ogre::Vector2(1.5,0.0));
-	mSimulation->createActor("myActor3", AB_STATIC, Ogre::Vector2(0.0,1.5));
-	mSimulation->createActor("myActor4", AB_DYNAMIC, Ogre::Vector2(1.5,1.5), shape);
-
+	AABBCollisioShape* shape =
+	    new AABBCollisioShape(Ogre::Vector2(0.0, 0.0), Ogre::Vector2(1.5, 1.5));
+	mSimulation->createActor("myActor1", AB_STATIC, Ogre::Vector2(0.0, 0.0));
+	mSimulation->createActor("myActor2", AB_STATIC, Ogre::Vector2(1.5, 0.0));
+	mSimulation->createActor("myActor3", AB_STATIC, Ogre::Vector2(0.0, 1.5));
+	mSimulation->createActor("myActor4",
+	    AB_DYNAMIC, Ogre::Vector2(1.5, 1.5), shape);
 }
 
 bool SimulationTestState::keyPressed(const OIS::KeyEvent &keyEventRef) {
@@ -178,26 +178,6 @@ void SimulationTestState::update(double timeSinceLastFrame) {
 void SimulationTestState::buildGUI() {
 	OgreBites::SdkTrayManager* trayManager = UserInterface::Instance().m_pTrayMgr;
 	trayManager->destroyAllWidgets();
-
-//	trayManager->showCursor();
-//	trayManager->createButton(OgreBites::TL_LEFT, "LoadWiki", "Wikipedia", 250);
-//	trayManager->createButton(OgreBites::TL_LEFT, "LoadXKCD", "XKCD", 250);
-//	trayManager->createButton(OgreBites::TL_LEFT, "Reddit", "Reddit", 250);
-//	trayManager->createButton(OgreBites::TL_LEFT, "4chan", "4chan/b/", 250);
-	//	trayManager->createButton(OgreBites::TL_LEFT, "Debug", "Debug", 250);
 }
 
-void SimulationTestState::buttonHit(OgreBites::Button* button) {
-
-//	if (button->getName() == "LoadWiki")
-//		loadBackGround("http://en.wikipedia.org/wiki/Special:Random");
-//	else if (button->getName() == "LoadXKCD")
-//		loadBackGround("http://dynamic.xkcd.com/random/comic/");
-//	else if(button->getName() == "Debug")
-//		loadBackGround("http://bstation/collage/");
-//	else if(button->getName() == "Reddit")
-//		loadBackGround("http://www.reddit.com/r/random/");
-//	else if(button->getName() == "4chan")
-//			loadBackGround("http://boards.4chan.org/b/");
-
-}
+void SimulationTestState::buttonHit(OgreBites::Button* button) {}

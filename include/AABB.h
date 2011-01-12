@@ -3,6 +3,7 @@
  *
  *  Created on: 22.12.2010
  *      Author: lochmann
+ *  Copyright 2010 The Collage Project
  */
 
 #ifndef AABB_H_
@@ -10,7 +11,7 @@
 #include "OGRE/OgreVector2.h"
 
 class AABB {
-public:
+ public:
 	AABB();
 	AABB(Ogre::Vector2 pos, Ogre::Vector2 ext);
 	virtual ~AABB();
@@ -25,7 +26,7 @@ public:
 
 
 
-private:
+ private:
 	Ogre::Vector2 pos;
 	Ogre::Vector2 ext;
 };

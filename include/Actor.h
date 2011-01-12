@@ -3,6 +3,7 @@
  *
  *  Created on: 22.12.2010
  *      Author: lochmann
+ *  Copyright 2010 The Collage Project
  */
 
 #ifndef ACTOR_H_
@@ -10,9 +11,7 @@
 #include "AABBCollisioShape.h"
 #include "OGRE/Ogre.h"
 
-//class Simulation;
-
-enum ActorBehavior{
+enum ActorBehavior {
 	AB_DYNAMIC = 0,
 	AB_STATIC = 1,
 	AB_DYNAMIC_TRIGGER = 2,
@@ -20,8 +19,8 @@ enum ActorBehavior{
 };
 
 
-class Actor{
-public:
+class Actor {
+ public:
 	Actor(
 			ActorBehavior behavior,
 			Ogre::SceneNode *sceneNode,
@@ -41,9 +40,7 @@ public:
 
     void drawDebugVisualization();
 
-private:
-
-    //Simulation *mSimulation;
+ private:
 
     ActorBehavior mBehavior;
     CollisionShape *mCollisionShape;

@@ -1,11 +1,14 @@
+/*
+ *  Copyright 2010 The Collage Project
+ */
 #include <QDebug>
 #include "GeneralLevelGenerator.h"
 
 #include "RenderEngine.h"
 
-GeneralLevelGenerator::GeneralLevelGenerator(QObject *parent) :
-    LevelGenerator(parent)
-{
+GeneralLevelGenerator::GeneralLevelGenerator(QObject *parent)
+:
+    LevelGenerator(parent) {
 }
 
 float GeneralLevelGenerator::getScore(QWebPage *webpage) {

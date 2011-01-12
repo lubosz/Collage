@@ -14,11 +14,10 @@
 #include <QApplication>
 
 class CollageApplication : public QApplication {
-
 	Q_OBJECT
 
  public:
-	CollageApplication(int& argc, char** argv);
+	CollageApplication(int& argc, char** argv); // NOLINT
 	virtual ~CollageApplication();
 
 	int exec();

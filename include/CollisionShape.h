@@ -3,6 +3,7 @@
  *
  *  Created on: 22.12.2010
  *      Author: lochmann
+ *  Copyright 2010 The Collage Project
  */
 
 #ifndef COLLISIONSHAPE_H_
@@ -11,7 +12,7 @@
 #include "OGRE/Ogre.h"
 
 class CollisionShape {
-public:
+ public:
 	CollisionShape();
 	virtual ~CollisionShape();
 
@@ -19,7 +20,7 @@ public:
 
 	AABB* getAABB();
 
-private:
+ private:
 	AABB mAABB;
 };
 

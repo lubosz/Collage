@@ -1,3 +1,6 @@
+/*
+ *  Copyright 2010 The Collage Project
+ */
 #ifndef LEVELGENERATORMANAGER_H
 #define LEVELGENERATORMANAGER_H
 
@@ -8,34 +11,32 @@
 #include <QtDebug>
 
 #include <vector>
-#include <iostream>
 
 #include "LevelGenerator.h"
 #include "GeneralLevelGenerator.h"
 
 const float MAX_SCORE = 100.0;
 
-class LevelGeneratorManager : public QObject
-{
+class LevelGeneratorManager : public QObject {
     Q_OBJECT
-public:
+ public:
     explicit LevelGeneratorManager(QObject *parent = 0);
 
     void addGenerator(LevelGenerator *generator);
     void requestWebpage(QString url);
     QWebPage webpage;
 
-private:
+ private:
     std::vector<LevelGenerator*> generators;
     bool requestLock;
     int percent;
 
-signals:
-    void levelGenerated(Level *level);
+ signals:
+    void finished();
 
-public slots:
+  private slots:
     void printProgress(int percent);
     void getMatchingGenerator(bool ok);
 };
 
-#endif // LEVELGENERATORMANAGER_H
+#endif
