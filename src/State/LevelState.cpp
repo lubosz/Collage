@@ -140,7 +140,6 @@ bool LevelState::mousePressed(
     return true;
 
   if (id == OIS::MB_Left) {
-    onLeftPressed(evt);
     lMouseDown = true;
   } else if (id == OIS::MB_Right) {
     rMouseDown = true;
@@ -163,10 +162,6 @@ bool LevelState::mouseReleased(
   }
 
   return true;
-}
-
-void LevelState::onLeftPressed(const OIS::MouseEvent &evt) {
-
 }
 
 void LevelState::moveCamera() {
