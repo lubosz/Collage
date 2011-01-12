@@ -31,8 +31,8 @@ class LevelGeneratorManager : public QObject {
     bool requestLock;
     int percent;
 
- signals:
-    void finished();
+  signals:
+    void levelGenerated(Level *level);
 
   private slots:
     void printProgress(int percent);

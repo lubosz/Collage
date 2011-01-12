@@ -60,6 +60,7 @@ int CollageApplication::exec() {
   WallPaperLoadingState::create(m_pAppStateManager, "WallPaperLoadingState");
   WikiCubeState::create(m_pAppStateManager, "WikiCubeState");
   SimulationTestState::create(m_pAppStateManager, "SimulationTestState");
+  LevelState::create(m_pAppStateManager, "LevelState");
 
   System::Instance().logMessage("Appstates initialized");
   m_pAppStateManager->start(m_pAppStateManager->findByName("LoadingState"));
