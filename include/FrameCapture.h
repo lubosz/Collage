@@ -31,7 +31,7 @@ Q_OBJECT
 
  private:
   QWebPage m_page;
-  QString m_fileName;
+  QString m_fileName, targetImage;
   int m_percent;
   QNetworkAccessManager manager;
 

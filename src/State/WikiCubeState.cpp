@@ -209,16 +209,10 @@ void WikiCubeState::buildGUI() {
 
 void WikiCubeState::loadBackGround(const QString & url) {
 	System::Instance().logMessage("Loading " + url.toStdString());
-	capture.saveWebRender(QUrl(url) , "../Media/Textures/wiki.png");
-// Ogre::ResourcePtr wikitex =
-// Ogre::TextureManager::getSingleton().getByName("wiki.png");
-  // Ogre::TextureManager::getSingleton().getByName("convertTest");
-	// wikitex->
-// wikitex->reload();
+	capture.saveWebRender(QUrl(url) , "convertTest");
 	cubeMat.get()->getTechnique(0)->getPass(0)->removeAllTextureUnitStates();
-
 	cubeMat.get()->getTechnique(0)->
-	          getPass(0)->createTextureUnitState("convertTest");
+	    getPass(0)->createTextureUnitState("convertTest");
 }
 
 void WikiCubeState::buttonHit(OgreBites::Button* button) {
