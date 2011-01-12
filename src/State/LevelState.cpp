@@ -18,7 +18,8 @@ LevelState::LevelState() {
 	m_bRMouseDown = false;
 	m_bQuit = false;
 
-	connect(&genman, SIGNAL(levelGenerated(Level*)), this, SLOT(levelGenerated(Level*)));
+	connect(&genman, SIGNAL(levelGenerated(Level*)),
+			this, SLOT(levelGenerated(Level*)));
 }
 
 void LevelState::levelGenerated(Level *level) {
@@ -26,15 +27,13 @@ void LevelState::levelGenerated(Level *level) {
 }
 
 void LevelState::enter() {
-    System::Instance().logMessage("Entering LevelState...");
+	System::Instance().logMessage("Entering LevelState...");
 
-    this->genman.requestWebpage("http://www.google.de");
-    //return;
-    ///////////////////////////////////////////////////////////////////////
+	this->genman.requestWebpage("http://www.google.de");
 	m_MoveSpeed = 0.01;
 
 	m_pSceneMgr
-			= RenderEngine::Instance().m_pRoot->createSceneManager(
+		= RenderEngine::Instance().m_pRoot->createSceneManager(
 				Ogre::ST_GENERIC, "GameSceneMgr");
 	m_pSceneMgr->setAmbientLight(Ogre::ColourValue(0.7f, 0.7f, 0.7f));
 
@@ -44,10 +43,10 @@ void LevelState::enter() {
 	m_pCamera->setNearClipDistance(5);
 
 	m_pCamera->setAspectRatio(
-				Real(
-					RenderEngine::Instance().m_pViewport->getActualWidth())
-				/ Real(
-					RenderEngine::Instance().m_pViewport->getActualHeight()));
+			Real(
+				RenderEngine::Instance().m_pViewport->getActualWidth())
+			/ Real(
+				RenderEngine::Instance().m_pViewport->getActualHeight()));
 
 	RenderEngine::Instance().m_pViewport->setCamera(m_pCamera);
 
@@ -57,16 +56,6 @@ void LevelState::enter() {
 }
 
 void LevelState::createScene() {
-//    Ogre::SceneNode *node = m_pSceneMgr->getRootSceneNode()->createChildSceneNode("bla");
-//    mSimulation = new Simulation(node);
-
-//    m_pSceneMgr->createLight("Light")->setPosition(75, 75, 75);
-
-//	mSimulation->createActor("myActor1", AB_STATIC, Ogre::Vector2(0.0,0.0));
-//	mSimulation->createActor("myActor2", AB_STATIC, Ogre::Vector2(1.5,0.0));
-//	mSimulation->createActor("myActor3", AB_STATIC, Ogre::Vector2(0.0,1.5));
-//	mSimulation->createActor("myActor4", AB_DYNAMIC, Ogre::Vector2(1.5,1.5));
-
 }
 
 bool LevelState::pause() {
@@ -76,8 +65,7 @@ bool LevelState::pause() {
 }
 
 void LevelState::resume() {
-	System::Instance().logMessage(
-			"Resuming LevelState...");
+	System::Instance().logMessage("Resuming LevelState...");
 
 	buildGUI();
 
@@ -107,22 +95,22 @@ bool LevelState::keyReleased(const OIS::KeyEvent &keyEventRef) {
 	return true;
 }
 
-bool LevelState::mouseMoved(const OIS::MouseEvent &evt) {
-	if (UserInterface::Instance().m_pTrayMgr->injectMouseMove(evt))
+	bool LevelState::mouseMoved(const OIS::MouseEvent &evt) {
+		if (UserInterface::Instance().m_pTrayMgr->injectMouseMove(evt))
+			return true;
+
+		if (m_bRMouseDown) {
+			m_pCamera->yaw(Degree(evt.state.X.rel * -0.1f));
+			m_pCamera->pitch(Degree(evt.state.Y.rel * -0.1f));
+		}
+
 		return true;
-
-	if (m_bRMouseDown) {
-		m_pCamera->yaw(Degree(evt.state.X.rel * -0.1f));
-		m_pCamera->pitch(Degree(evt.state.Y.rel * -0.1f));
 	}
-
-	return true;
-}
 
 bool LevelState::mousePressed(
 		const OIS::MouseEvent &evt,
 		OIS::MouseButtonID id
-	) {
+		) {
 	if (UserInterface::Instance().m_pTrayMgr->injectMouseDown(evt, id))
 		return true;
 
@@ -138,7 +126,7 @@ bool LevelState::mousePressed(
 bool LevelState::mouseReleased(
 		const OIS::MouseEvent &evt,
 		OIS::MouseButtonID id
-	) {
+		) {
 	if (UserInterface::Instance().m_pTrayMgr->injectMouseUp(evt, id))
 		return true;
 
@@ -151,7 +139,7 @@ bool LevelState::mouseReleased(
 	return true;
 }
 
-void LevelState::getInput() {
+	void LevelState::getInput() {
 		if (Input::Instance().m_pKeyboard->isKeyDown(OIS::KC_UP))
 			m_TranslateVector.y = m_MoveScale;
 
@@ -163,7 +151,7 @@ void LevelState::getInput() {
 
 		if (Input::Instance().m_pKeyboard->isKeyDown(OIS::KC_RIGHT))
 			m_TranslateVector.x = m_MoveScale;
-}
+	}
 
 void LevelState::update(double timeSinceLastFrame) {
 	m_FrameEvent.timeSinceLastFrame = timeSinceLastFrame;
@@ -184,26 +172,7 @@ void LevelState::update(double timeSinceLastFrame) {
 void LevelState::buildGUI() {
 	OgreBites::SdkTrayManager* trayManager = UserInterface::Instance().m_pTrayMgr;
 	trayManager->destroyAllWidgets();
-
-//	trayManager->showCursor();
-//	trayManager->createButton(OgreBites::TL_LEFT, "LoadWiki", "Wikipedia", 250);
-//	trayManager->createButton(OgreBites::TL_LEFT, "LoadXKCD", "XKCD", 250);
-//	trayManager->createButton(OgreBites::TL_LEFT, "Reddit", "Reddit", 250);
-//	trayManager->createButton(OgreBites::TL_LEFT, "4chan", "4chan/b/", 250);
-	//	trayManager->createButton(OgreBites::TL_LEFT, "Debug", "Debug", 250);
 }
 
 void LevelState::buttonHit(OgreBites::Button* button) {
-
-//	if (button->getName() == "LoadWiki")
-//		loadBackGround("http://en.wikipedia.org/wiki/Special:Random");
-//	else if (button->getName() == "LoadXKCD")
-//		loadBackGround("http://dynamic.xkcd.com/random/comic/");
-//	else if(button->getName() == "Debug")
-//		loadBackGround("http://bstation/collage/");
-//	else if(button->getName() == "Reddit")
-//		loadBackGround("http://www.reddit.com/r/random/");
-//	else if(button->getName() == "4chan")
-//			loadBackGround("http://boards.4chan.org/b/");
-
 }

@@ -26,12 +26,11 @@ GameState::GameState() {
 	m_pCurrentObject = 0;
 	m_pDetailsPanel = 0;
 
-	connect(&genman, SIGNAL(levelGenerated(Level*)), this, SLOT(levelGenerated(Level*)));
+	connect(&genman, SIGNAL(levelGenerated(Level*)),
+					this, SLOT(levelGenerated(Level*)));
 }
 
 void GameState::enter() {
-  //LevelGeneratorManager genman;
-  //connect(genman, SIGNAL(levelGenerated(Level*)), this, SLOT(levelGenerated(Level*)));
   genman.requestWebpage("http://www.example.net");
 	System::Instance().logMessage(
 			"Entering GameState...");

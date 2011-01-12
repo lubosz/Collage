@@ -55,6 +55,6 @@ class LevelState : public AppState {
 
 	LevelGeneratorManager genman;
 
-public slots:
+  public slots:
 	void levelGenerated(Level *level);
 };
