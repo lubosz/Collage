@@ -22,7 +22,8 @@ void TagNestingToTerrainGenerator::addBox(unsigned height) {
   std::cout << std::endl;
 }
 
-Level* TagNestingToTerrainGenerator::generate(Ogre::SceneManager * sceneManager) {
+Level* TagNestingToTerrainGenerator::generate(
+    Ogre::SceneManager * sceneManager) {
 	qDebug() << "Beginning generation... TagNestingToTerrainGenerator";
 	QWebFrame *frame = this->webpage->mainFrame();
 	QWebElement document = frame->documentElement();
@@ -37,8 +38,7 @@ Level* TagNestingToTerrainGenerator::generate(Ogre::SceneManager * sceneManager)
 		if (!cur.isNull()) {
       last = cur;
       this->addBox(indent);
-		}
-		else {
+		}	else {
       QWebElement sibling = last.nextSibling();
       while (sibling.isNull() && (last.tagName() != "BODY")) {
         last = last.parent();
@@ -55,6 +55,6 @@ Level* TagNestingToTerrainGenerator::generate(Ogre::SceneManager * sceneManager)
 	  }
   }
 
-	Level *level = NULL; //new Level(simulation);
+	Level *level = NULL;  // new Level(simulation);
 	return level;
 }

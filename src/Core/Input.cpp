@@ -44,12 +44,14 @@ void Input::initOis(
 			OIS::ParamList::value_type("w32_mouse", "DISCL_NONEXCLUSIVE")
 	);
 #else
-//	paramList.insert(
-//			OIS::ParamList::value_type("x11_mouse_grab", "false")
-//	);
-//	paramList.insert(
-//			OIS::ParamList::value_type("x11_keyboard_grab", "false")
-//	);
+/*
+	paramList.insert(
+			OIS::ParamList::value_type("x11_mouse_grab", "false")
+	);
+	paramList.insert(
+			OIS::ParamList::value_type("x11_keyboard_grab", "false")
+	);
+*/
 #endif
 
     m_pInputMgr = OIS::InputManager::createInputSystem(paramList);

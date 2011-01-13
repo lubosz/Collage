@@ -45,7 +45,8 @@ bool LevelGeneratorManager::waitForSignal(
 	return timeoutSpy.isEmpty();
 }
 
-void LevelGeneratorManager::sceneFromUrl(QString _url, Ogre::SceneManager * sceneManager) {
+void LevelGeneratorManager::sceneFromUrl(
+    QString _url, Ogre::SceneManager * sceneManager) {
   this->sceneManager = sceneManager;
   requestWebpage(_url);
 }
@@ -65,7 +66,7 @@ void LevelGeneratorManager::requestWebpage(QString _url) {
   webpage.settings()->setAttribute(QWebSettings::JavascriptEnabled, false);
   webpage.settings()->setAttribute(QWebSettings::JavaEnabled, false);
   webpage.settings()->setAttribute(QWebSettings::PluginsEnabled, false);
-  //webpage.settings()->setAttribute(QWebSettings::PrivateBrowsingEnabled, true);
+  webpage.settings()->setAttribute(QWebSettings::PrivateBrowsingEnabled, true);
   webpage.settings()->setAttribute(
       QWebSettings::JavascriptCanOpenWindows, false);
 	webpage.mainFrame()->load(url);
@@ -106,9 +107,9 @@ void LevelGeneratorManager::getMatchingGenerator(bool ok) {
 	if (best_gen == NULL) {
 		qDebug() << "No suitable generator found.";
 		return;
-	}
-	else {
-		qDebug() << "Found generator " << best_gen->getName() << " with score " << best_score;
+	}	else {
+		qDebug() << "Found generator " <<
+		    best_gen->getName() << " with score " << best_score;
 	}
 
 	// No need to pass the webpage, the generator still has it from getScore()

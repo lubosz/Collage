@@ -14,7 +14,6 @@ class Level : public QObject {
     Ogre::SceneManager* sceneManager;
 
     Level();
-
 };
 
 #endif
