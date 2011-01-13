@@ -14,8 +14,8 @@
 using std::string;
 
 LevelState::LevelState() {
-  moveSpeed = 0.1f;
-  rotateSpeed = 0.3f;
+  moveSpeed = 0.5f;
+  rotateSpeed = -0.5f;
 
   lMouseDown = false;
   rMouseDown = false;
@@ -107,11 +107,11 @@ bool LevelState::mouseMoved(const OIS::MouseEvent &evt) {
   if (UserInterface::Instance().m_pTrayMgr->injectMouseMove(evt))
     return true;
 
-    OIS::MouseState &mutableMouseState = const_cast<OIS::MouseState &>(Input::Instance().m_pMouse->getMouseState());
-//  if (rMouseDown) {
-    m_pCamera->yaw(Degree(mutableMouseState.X.rel * -0.1f));
-    m_pCamera->pitch(Degree(mutableMouseState.Y.rel * -0.1f));
-//  }
+//    OIS::MouseState &mutableMouseState = const_cast<OIS::MouseState &>(Input::Instance().m_pMouse->getMouseState());
+////  if (rMouseDown) {
+//    m_pCamera->yaw(Degree(mutableMouseState.X.rel * -0.1f));
+//    m_pCamera->pitch(Degree(mutableMouseState.Y.rel * -0.1f));
+////  }
 
 //    Input::Instance().m_pMouse->capture();
 
@@ -167,16 +167,16 @@ void LevelState::moveCamera() {
 
 void LevelState::getInput() {
     if (Input::Instance().m_pKeyboard->isKeyDown(OIS::KC_A))
-      translateVector.x = -moveScale;
+      translateVector.x = -moveSpeed;
 
     if (Input::Instance().m_pKeyboard->isKeyDown(OIS::KC_D))
-      translateVector.x = moveScale;
+      translateVector.x = moveSpeed;
 
     if (Input::Instance().m_pKeyboard->isKeyDown(OIS::KC_W))
-      translateVector.z = -moveScale;
+      translateVector.z = -moveSpeed;
 
     if (Input::Instance().m_pKeyboard->isKeyDown(OIS::KC_S))
-      translateVector.z = moveScale;
+      translateVector.z = moveSpeed;
 }
 
 void LevelState::update(double timeSinceLastFrame) {
@@ -199,8 +199,8 @@ void LevelState::update(double timeSinceLastFrame) {
 
   OIS::MouseState &mutableMouseState = const_cast<OIS::MouseState &>(Input::Instance().m_pMouse->getMouseState());
 //  if (rMouseDown) {
-  m_pCamera->yaw(Degree(mutableMouseState.X.rel * -0.1f));
-  m_pCamera->pitch(Degree(mutableMouseState.Y.rel * -0.1f));
+  m_pCamera->yaw(Degree(mutableMouseState.X.rel * rotateSpeed));
+  m_pCamera->pitch(Degree(mutableMouseState.Y.rel * rotateSpeed));
 }
 
 void LevelState::buildGUI() {
@@ -208,6 +208,6 @@ void LevelState::buildGUI() {
       OgreBites::TL_BOTTOMLEFT);
   UserInterface::Instance().m_pTrayMgr->createLabel(
       OgreBites::TL_TOP, "GameLbl", "Level mode", 250);
-  UserInterface::Instance().m_pTrayMgr->showCursor();
+  UserInterface::Instance().m_pTrayMgr->hideCursor();
 
 }
