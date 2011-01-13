@@ -11,11 +11,10 @@
 class Level : public QObject {
     Q_OBJECT
  public:
-    explicit Level(QObject *parent = 0);
-    explicit Level(Simulation *simulation);
+    Ogre::SceneManager* sceneManager;
 
- private:
-    Simulation *simulation;
+    Level();
+
 };
 
 #endif
