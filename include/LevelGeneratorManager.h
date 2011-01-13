@@ -14,6 +14,7 @@
 
 #include "LevelGenerator.h"
 #include "GeneralLevelGenerator.h"
+#include "DivBoxGenerator.h"
 #include "TagNestingToTerrainGenerator.h"
 
 const float MAX_SCORE = 100.0;
@@ -25,7 +26,9 @@ class LevelGeneratorManager : public QObject {
 
     void addGenerator(LevelGenerator *generator);
     void requestWebpage(QString url);
+    void sceneFromUrl(QString _url, Ogre::SceneManager * sceneManager);
     QWebPage webpage;
+    Ogre::SceneManager * sceneManager;
 
  private:
     std::vector<LevelGenerator*> generators;

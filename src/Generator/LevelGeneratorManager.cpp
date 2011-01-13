@@ -22,6 +22,7 @@ LevelGeneratorManager::LevelGeneratorManager(QObject *parent)
 	// Add all the different generators to our list of generators,
 	// most general LAST!
 	this->addGenerator(new TagNestingToTerrainGenerator());
+	this->addGenerator(new DivBoxGenerator());
 	this->addGenerator(new GeneralLevelGenerator());
 }
 
@@ -42,6 +43,11 @@ bool LevelGeneratorManager::waitForSignal(
 	}
 	loop.exec();
 	return timeoutSpy.isEmpty();
+}
+
+void LevelGeneratorManager::sceneFromUrl(QString _url, Ogre::SceneManager * sceneManager) {
+  this->sceneManager = sceneManager;
+  requestWebpage(_url);
 }
 
 void LevelGeneratorManager::requestWebpage(QString _url) {
@@ -106,7 +112,7 @@ void LevelGeneratorManager::getMatchingGenerator(bool ok) {
 	}
 
 	// No need to pass the webpage, the generator still has it from getScore()
-	Level *level = best_gen->generate();
+	Level *level = best_gen->generate(sceneManager);
 	emit levelGenerated(level);
 	this->requestLock = false;
 }

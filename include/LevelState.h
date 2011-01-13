@@ -24,7 +24,6 @@ class LevelState : public AppState {
   DECLARE_APPSTATE_CLASS(LevelState)
 
   void enter();
-  void createScene();
   void exit();
   bool pause();
   void resume();
@@ -39,8 +38,6 @@ class LevelState : public AppState {
   bool mouseMoved(const OIS::MouseEvent &arg);
   bool mousePressed(const OIS::MouseEvent &arg, OIS::MouseButtonID id);
   bool mouseReleased(const OIS::MouseEvent &arg, OIS::MouseButtonID id);
-
-  void onLeftPressed(const OIS::MouseEvent &evt);
 
   void update(double timeSinceLastFrame);
   LevelGeneratorManager genman;

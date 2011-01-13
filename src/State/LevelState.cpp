@@ -14,8 +14,8 @@
 using std::string;
 
 LevelState::LevelState() {
-  moveSpeed = 0.1f;
-  rotateSpeed = 0.3f;
+  moveSpeed = 0.5f;
+  rotateSpeed = -0.5f;
 
   lMouseDown = false;
   rMouseDown = false;
@@ -26,7 +26,9 @@ LevelState::LevelState() {
 }
 
 void LevelState::enter() {
-  genman.requestWebpage("http://www.example.net");
+
+  Input::Instance().m_pMouse->setBuffered(false);
+
   System::Instance().logMessage(
       "Entering LevelState...");
 
@@ -48,9 +50,9 @@ void LevelState::enter() {
 
   RenderEngine::Instance().m_pViewport->setCamera(m_pCamera);
 
+  genman.sceneFromUrl("http://en.wikipedia.org/wiki/Lol", m_pSceneMgr);
   buildGUI();
 
-  createScene();
 }
 
 bool LevelState::pause() {
@@ -70,6 +72,7 @@ void LevelState::resume() {
 }
 
 void LevelState::exit() {
+  Input::Instance().m_pMouse->setBuffered(true);
   System::Instance().logMessage("Leaving LevelState...");
 
   m_pSceneMgr->destroyCamera(m_pCamera);
@@ -78,27 +81,7 @@ void LevelState::exit() {
         m_pSceneMgr);
 }
 
-void LevelState::createScene() {
-  m_pSceneMgr->createLight("Light")->setPosition(75, 75, 75);
 
-
-  Ogre::SceneNode* m_pOgreHeadNode;
-  Ogre::Entity* m_pOgreHeadEntity;
-  Ogre::MaterialPtr m_pOgreHeadMat;
-  Ogre::MaterialPtr m_pOgreHeadMatHigh;
-
-
-  m_pOgreHeadEntity = m_pSceneMgr->createEntity("Cube", "ogrehead.mesh");
-  m_pOgreHeadNode = m_pSceneMgr->getRootSceneNode()->createChildSceneNode(
-      "CubeNode");
-  m_pOgreHeadNode->attachObject(m_pOgreHeadEntity);
-  m_pOgreHeadNode->setPosition(Vector3(0, 0, -25));
-
-  m_pOgreHeadMat = m_pOgreHeadEntity->getSubEntity(1)->getMaterial();
-  m_pOgreHeadMatHigh = m_pOgreHeadMat->clone("OgreHeadMatHigh");
-  m_pOgreHeadMatHigh->getTechnique(0)->getPass(0)->setAmbient(1, 0, 0);
-  m_pOgreHeadMatHigh->getTechnique(0)->getPass(0)->setDiffuse(1, 0, 0, 0);
-}
 
 void LevelState::levelGenerated(Level *level) {
        System::Instance().logMessage("Received level from generator...");
@@ -124,10 +107,22 @@ bool LevelState::mouseMoved(const OIS::MouseEvent &evt) {
   if (UserInterface::Instance().m_pTrayMgr->injectMouseMove(evt))
     return true;
 
-  if (rMouseDown) {
-    m_pCamera->yaw(Degree(evt.state.X.rel * -0.1f));
-    m_pCamera->pitch(Degree(evt.state.Y.rel * -0.1f));
-  }
+//    OIS::MouseState &mutableMouseState = const_cast<OIS::MouseState &>(Input::Instance().m_pMouse->getMouseState());
+////  if (rMouseDown) {
+//    m_pCamera->yaw(Degree(mutableMouseState.X.rel * -0.1f));
+//    m_pCamera->pitch(Degree(mutableMouseState.Y.rel * -0.1f));
+////  }
+
+//    Input::Instance().m_pMouse->capture();
+
+//    mutableMouseState.X.abs = RenderEngine::Instance().m_pRenderWnd->getWidth() /2;
+//    mutableMouseState.Y.abs = RenderEngine::Instance().m_pRenderWnd->getHeight() /2;
+//    const_cast<OIS::MouseState &>(Input::Instance().m_pMouse->getMouseState()).clear();
+//    Input::Instance().m_pMouse->getMouseState().height =
+//            RenderEngine::Instance().m_pRenderWnd->getHeight();
+//    Input::Instance().m_pMouse->getMouseState().width  =
+//            RenderEngine::Instance().m_pRenderWnd->getWidth();
+
 
   return true;
 }
@@ -140,7 +135,6 @@ bool LevelState::mousePressed(
     return true;
 
   if (id == OIS::MB_Left) {
-    onLeftPressed(evt);
     lMouseDown = true;
   } else if (id == OIS::MB_Right) {
     rMouseDown = true;
@@ -165,10 +159,6 @@ bool LevelState::mouseReleased(
   return true;
 }
 
-void LevelState::onLeftPressed(const OIS::MouseEvent &evt) {
-
-}
-
 void LevelState::moveCamera() {
   if (Input::Instance().m_pKeyboard->isKeyDown(OIS::KC_LSHIFT))
     m_pCamera->moveRelative(translateVector*5);
@@ -177,16 +167,16 @@ void LevelState::moveCamera() {
 
 void LevelState::getInput() {
     if (Input::Instance().m_pKeyboard->isKeyDown(OIS::KC_A))
-      translateVector.x = -moveScale;
+      translateVector.x = -moveSpeed;
 
     if (Input::Instance().m_pKeyboard->isKeyDown(OIS::KC_D))
-      translateVector.x = moveScale;
+      translateVector.x = moveSpeed;
 
     if (Input::Instance().m_pKeyboard->isKeyDown(OIS::KC_W))
-      translateVector.z = -moveScale;
+      translateVector.z = -moveSpeed;
 
     if (Input::Instance().m_pKeyboard->isKeyDown(OIS::KC_S))
-      translateVector.z = moveScale;
+      translateVector.z = moveSpeed;
 }
 
 void LevelState::update(double timeSinceLastFrame) {
@@ -206,6 +196,11 @@ void LevelState::update(double timeSinceLastFrame) {
 
   getInput();
   moveCamera();
+
+  OIS::MouseState &mutableMouseState = const_cast<OIS::MouseState &>(Input::Instance().m_pMouse->getMouseState());
+//  if (rMouseDown) {
+  m_pCamera->yaw(Degree(mutableMouseState.X.rel * rotateSpeed));
+  m_pCamera->pitch(Degree(mutableMouseState.Y.rel * rotateSpeed));
 }
 
 void LevelState::buildGUI() {
@@ -213,6 +208,6 @@ void LevelState::buildGUI() {
       OgreBites::TL_BOTTOMLEFT);
   UserInterface::Instance().m_pTrayMgr->createLabel(
       OgreBites::TL_TOP, "GameLbl", "Level mode", 250);
-  UserInterface::Instance().m_pTrayMgr->showCursor();
+  UserInterface::Instance().m_pTrayMgr->hideCursor();
 
 }
