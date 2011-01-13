@@ -1,14 +1,15 @@
 /*
  *  Copyright 2010 The Collage Project
  */
-#include "LevelGeneratorManager.h"
 #include <iostream>
 #include <QtWebKit>
 #include <QString>
 #include <vector>
 #include <QSignalSpy>
-#include "System.h"
 #include <QtCore>
+
+#include "System.h"
+#include "LevelGeneratorManager.h"
 
 LevelGeneratorManager::LevelGeneratorManager(QObject *parent)
 :
@@ -52,6 +53,14 @@ void LevelGeneratorManager::requestWebpage(QString _url) {
 	this->requestLock = true;
 
 	this->percent = 0;
+
+  webpage.settings()->setAttribute(QWebSettings::AutoLoadImages, true);
+  webpage.settings()->setAttribute(QWebSettings::JavascriptEnabled, false);
+  webpage.settings()->setAttribute(QWebSettings::JavaEnabled, false);
+  webpage.settings()->setAttribute(QWebSettings::PluginsEnabled, false);
+  //webpage.settings()->setAttribute(QWebSettings::PrivateBrowsingEnabled, true);
+  webpage.settings()->setAttribute(
+      QWebSettings::JavascriptCanOpenWindows, false);
 	webpage.mainFrame()->load(url);
 	waitForSignal(webpage.mainFrame(), SIGNAL(loadFinished(bool)), 10000);
 	webpage.mainFrame()->setScrollBarPolicy(
@@ -70,7 +79,7 @@ void LevelGeneratorManager::printProgress(int percent) {
 }
 
 void LevelGeneratorManager::getMatchingGenerator(bool ok) {
-	std::cout << "FUFUFUFUFUFUUFU done" << std::endl;
+	std::cout << std::endl;
 	if (!ok) {
 		qDebug() << "Request failed.";
 		// TODO(dennda)
@@ -90,6 +99,9 @@ void LevelGeneratorManager::getMatchingGenerator(bool ok) {
 	if (best_gen == NULL) {
 		qDebug() << "No suitable generator found.";
 		return;
+	}
+	else {
+		qDebug() << "Found generator " << best_gen->getName() << " with score " << best_score;
 	}
 
 	// No need to pass the webpage, the generator still has it from getScore()
