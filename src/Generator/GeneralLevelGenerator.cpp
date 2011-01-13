@@ -7,7 +7,7 @@
 #include "RenderEngine.h"
 
 GeneralLevelGenerator::GeneralLevelGenerator(QObject *parent)
-:
+  :
     LevelGenerator(parent) {
       this->name = "GeneralLevelGenerator";
     }

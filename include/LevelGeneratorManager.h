@@ -14,6 +14,7 @@
 
 #include "LevelGenerator.h"
 #include "GeneralLevelGenerator.h"
+#include "TagNestingToTerrainGenerator.h"
 
 const float MAX_SCORE = 100.0;
 

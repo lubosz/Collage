@@ -64,7 +64,7 @@ foreach(GLOB_DIR ${GLOB_DIRS})
 endforeach(GLOB_DIR)
 
 #moc qt stuff
-set(MOC_CLASSES AppState FrameCapture CollageApplication LevelGeneratorManager GeneralLevelGenerator LevelGenerator Level GameState LevelState)
+set(MOC_CLASSES AppState FrameCapture CollageApplication LevelGeneratorManager GeneralLevelGenerator TagNestingToTerrainGenerator LevelGenerator Level GameState LevelState)
 foreach(MOC_CLASS ${MOC_CLASSES})
     SET(MOC_INFILES ${MOC_INFILES} include/${MOC_CLASS}.h)
 endforeach(MOC_CLASS)

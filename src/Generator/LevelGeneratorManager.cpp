@@ -21,6 +21,7 @@ LevelGeneratorManager::LevelGeneratorManager(QObject *parent)
 	this->requestLock = false;
 	// Add all the different generators to our list of generators,
 	// most general LAST!
+	this->addGenerator(new TagNestingToTerrainGenerator());
 	this->addGenerator(new GeneralLevelGenerator());
 }
 
