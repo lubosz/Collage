@@ -22,7 +22,7 @@ void TagNestingToTerrainGenerator::addBox(unsigned height) {
   std::cout << std::endl;
 }
 
-Level* TagNestingToTerrainGenerator::generate() {
+Level* TagNestingToTerrainGenerator::generate(Ogre::SceneManager * sceneManager) {
 	qDebug() << "Beginning generation... TagNestingToTerrainGenerator";
 	QWebFrame *frame = this->webpage->mainFrame();
 	QWebElement document = frame->documentElement();
