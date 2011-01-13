@@ -15,6 +15,7 @@ PauseState::PauseState() {
 }
 
 void PauseState::enter() {
+  Input::Instance().m_pMouse->setBuffered(true);
 	System::Instance().logMessage("Entering PauseState...");
 
 	OgreBites::SdkTrayManager* trayManager = UserInterface::Instance().m_pTrayMgr;

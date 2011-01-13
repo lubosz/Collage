@@ -26,6 +26,9 @@ LevelState::LevelState() {
 }
 
 void LevelState::enter() {
+
+  Input::Instance().m_pMouse->setBuffered(false);
+
   System::Instance().logMessage(
       "Entering LevelState...");
 
@@ -69,6 +72,7 @@ void LevelState::resume() {
 }
 
 void LevelState::exit() {
+  Input::Instance().m_pMouse->setBuffered(true);
   System::Instance().logMessage("Leaving LevelState...");
 
   m_pSceneMgr->destroyCamera(m_pCamera);
@@ -103,10 +107,22 @@ bool LevelState::mouseMoved(const OIS::MouseEvent &evt) {
   if (UserInterface::Instance().m_pTrayMgr->injectMouseMove(evt))
     return true;
 
-  if (rMouseDown) {
-    m_pCamera->yaw(Degree(evt.state.X.rel * -0.1f));
-    m_pCamera->pitch(Degree(evt.state.Y.rel * -0.1f));
-  }
+    OIS::MouseState &mutableMouseState = const_cast<OIS::MouseState &>(Input::Instance().m_pMouse->getMouseState());
+//  if (rMouseDown) {
+    m_pCamera->yaw(Degree(mutableMouseState.X.rel * -0.1f));
+    m_pCamera->pitch(Degree(mutableMouseState.Y.rel * -0.1f));
+//  }
+
+//    Input::Instance().m_pMouse->capture();
+
+//    mutableMouseState.X.abs = RenderEngine::Instance().m_pRenderWnd->getWidth() /2;
+//    mutableMouseState.Y.abs = RenderEngine::Instance().m_pRenderWnd->getHeight() /2;
+//    const_cast<OIS::MouseState &>(Input::Instance().m_pMouse->getMouseState()).clear();
+//    Input::Instance().m_pMouse->getMouseState().height =
+//            RenderEngine::Instance().m_pRenderWnd->getHeight();
+//    Input::Instance().m_pMouse->getMouseState().width  =
+//            RenderEngine::Instance().m_pRenderWnd->getWidth();
+
 
   return true;
 }
@@ -180,6 +196,11 @@ void LevelState::update(double timeSinceLastFrame) {
 
   getInput();
   moveCamera();
+
+  OIS::MouseState &mutableMouseState = const_cast<OIS::MouseState &>(Input::Instance().m_pMouse->getMouseState());
+//  if (rMouseDown) {
+  m_pCamera->yaw(Degree(mutableMouseState.X.rel * -0.1f));
+  m_pCamera->pitch(Degree(mutableMouseState.Y.rel * -0.1f));
 }
 
 void LevelState::buildGUI() {
