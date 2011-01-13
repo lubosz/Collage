@@ -2,6 +2,8 @@
  *  Copyright 2010 The Collage Project
  */
 #include <QDebug>
+#include <QWebElement>
+#include <QWebPage>
 #include "DivBoxGenerator.h"
 
 #include "RenderEngine.h"
@@ -14,6 +16,29 @@ float DivBoxGenerator::getScore(QWebPage *webpage) {
 }
 
 Level* DivBoxGenerator::generate(Ogre::SceneManager * sceneManager) {
+
+  Ogre::SceneNode* node;
+  Ogre::Entity* cube;
+
+
+
+  QWebElement document = webpage->mainFrame()->documentElement();
+  QWebElementCollection elements = document.findAll("div");
+  Ogre::Real count = 0;
+  foreach(QWebElement element, elements){
+
+    qDebug() << "Some Div " << element.attributeNames();
+
+    Ogre::Real width = element.geometry().width() / 100.0;
+    Ogre::Real height = element.geometry().height() / 100.0;
+
+    node = sceneManager->getRootSceneNode()->createChildSceneNode();
+    cube = sceneManager->createEntity("Cube.mesh");
+    node->attachObject(cube);
+    node->setPosition(Ogre::Vector3(count, 0, 0));
+    node->setScale(width,height,1.0);
+    count+=10;
+  }
     // uses this.webframe to generate Level, returns Level
 //    Ogre::SceneManager* manager =
 //            RenderEngine::Instance().m_pRoot->createSceneManager(
@@ -28,17 +53,8 @@ Level* DivBoxGenerator::generate(Ogre::SceneManager * sceneManager) {
 //	simulation->createActor("myActor4", AB_DYNAMIC, Ogre::Vector2(1.5, 1.5));
   sceneManager->createLight("Light")->setPosition(75, 75, 75);
 
-  Ogre::SceneNode* m_pOgreHeadNode;
-  Ogre::Entity* m_pOgreHeadEntity;
-  Ogre::MaterialPtr m_pOgreHeadMat;
 
-
-  m_pOgreHeadEntity = sceneManager->createEntity("Cube", "Cube.mesh");
-  m_pOgreHeadNode = sceneManager->getRootSceneNode()->createChildSceneNode(
-      "CubeNode");
-  m_pOgreHeadNode->attachObject(m_pOgreHeadEntity);
-  m_pOgreHeadNode->setPosition(Ogre::Vector3(0, 0, -25));
-
+//  Ogre::MaterialPtr m_pOgreHeadMat;
 //  m_pOgreHeadMat = m_pOgreHeadEntity->getSubEntity(1)->getMaterial();
 //  m_pOgreHeadMatHigh = m_pOgreHeadMat->clone("OgreHeadMatHigh");
 //  m_pOgreHeadMatHigh->getTechnique(0)->getPass(0)->setAmbient(1, 0, 0);
