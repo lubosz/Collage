@@ -2,6 +2,7 @@
  *  Copyright 2010 The Collage Project
  */
 #include "LevelGeneratorManager.h"
+#include "DivBoxGenerator.h"
 #include <iostream>
 #include <QtWebKit>
 #include <QString>
@@ -20,7 +21,8 @@ LevelGeneratorManager::LevelGeneratorManager(QObject *parent)
 	this->requestLock = false;
 	// Add all the different generators to our list of generators,
 	// most general LAST!
-	this->addGenerator(new GeneralLevelGenerator());
+  this->addGenerator(new GeneralLevelGenerator());
+	this->addGenerator(new DivBoxGenerator());
 }
 
 void LevelGeneratorManager::addGenerator(LevelGenerator *generator) {
