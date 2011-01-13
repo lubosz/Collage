@@ -4,6 +4,10 @@
 #include "LevelGenerator.h"
 
 LevelGenerator::LevelGenerator(QObject *parent)
-:
+  :
     QObject(parent) {
+    }
+
+QString LevelGenerator::getName() {
+  return this->name;
 }

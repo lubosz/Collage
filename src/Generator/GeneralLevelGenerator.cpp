@@ -7,13 +7,14 @@
 #include "RenderEngine.h"
 
 GeneralLevelGenerator::GeneralLevelGenerator(QObject *parent)
-:
+  :
     LevelGenerator(parent) {
-}
+      this->name = "GeneralLevelGenerator";
+    }
 
 float GeneralLevelGenerator::getScore(QWebPage *webpage) {
-    this->webpage = webpage;
-    return 100.0;
+  this->webpage = webpage;
+  return 100.0;
 }
 
 Level* GeneralLevelGenerator::generate(Ogre::SceneManager * sceneManager) {

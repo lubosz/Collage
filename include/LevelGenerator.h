@@ -6,20 +6,25 @@
 
 #include <QObject>
 #include <QWebFrame>
+#include <QWebPage>
+#include <QString>
+#include <QWebElement>
 #include "Level.h"
 
 class LevelGenerator : public QObject {
-    Q_OBJECT
- public:
+  Q_OBJECT
+  public:
     explicit LevelGenerator(QObject *parent = 0);
 
     virtual float getScore(QWebPage *webpage) = 0;
     virtual Level* generate(Ogre::SceneManager * sceneManager) = 0;
+    QString getName();
 
- protected:
+  protected:
+    QString name;
     QWebPage *webpage;
 
- signals:
+  signals:
 
   public slots:
 };
