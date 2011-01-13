@@ -26,7 +26,6 @@ LevelState::LevelState() {
 }
 
 void LevelState::enter() {
-  genman.requestWebpage("http://www.example.net");
   System::Instance().logMessage(
       "Entering LevelState...");
 
@@ -48,9 +47,9 @@ void LevelState::enter() {
 
   RenderEngine::Instance().m_pViewport->setCamera(m_pCamera);
 
+  genman.sceneFromUrl("http://www.example.net", m_pSceneMgr);
   buildGUI();
 
-  createScene();
 }
 
 bool LevelState::pause() {
@@ -78,27 +77,7 @@ void LevelState::exit() {
         m_pSceneMgr);
 }
 
-void LevelState::createScene() {
-  m_pSceneMgr->createLight("Light")->setPosition(75, 75, 75);
 
-
-  Ogre::SceneNode* m_pOgreHeadNode;
-  Ogre::Entity* m_pOgreHeadEntity;
-  Ogre::MaterialPtr m_pOgreHeadMat;
-  Ogre::MaterialPtr m_pOgreHeadMatHigh;
-
-
-  m_pOgreHeadEntity = m_pSceneMgr->createEntity("Cube", "ogrehead.mesh");
-  m_pOgreHeadNode = m_pSceneMgr->getRootSceneNode()->createChildSceneNode(
-      "CubeNode");
-  m_pOgreHeadNode->attachObject(m_pOgreHeadEntity);
-  m_pOgreHeadNode->setPosition(Vector3(0, 0, -25));
-
-  m_pOgreHeadMat = m_pOgreHeadEntity->getSubEntity(1)->getMaterial();
-  m_pOgreHeadMatHigh = m_pOgreHeadMat->clone("OgreHeadMatHigh");
-  m_pOgreHeadMatHigh->getTechnique(0)->getPass(0)->setAmbient(1, 0, 0);
-  m_pOgreHeadMatHigh->getTechnique(0)->getPass(0)->setDiffuse(1, 0, 0, 0);
-}
 
 void LevelState::levelGenerated(Level *level) {
        System::Instance().logMessage("Received level from generator...");

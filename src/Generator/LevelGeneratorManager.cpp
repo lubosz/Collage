@@ -42,6 +42,11 @@ bool LevelGeneratorManager::waitForSignal(
 	return timeoutSpy.isEmpty();
 }
 
+void LevelGeneratorManager::sceneFromUrl(QString _url, Ogre::SceneManager * sceneManager) {
+  this->sceneManager = sceneManager;
+  requestWebpage(_url);
+}
+
 void LevelGeneratorManager::requestWebpage(QString _url) {
 	QUrl url(_url);
 	if (this->requestLock) {
@@ -93,7 +98,7 @@ void LevelGeneratorManager::getMatchingGenerator(bool ok) {
 	}
 
 	// No need to pass the webpage, the generator still has it from getScore()
-	Level *level = best_gen->generate();
+	Level *level = best_gen->generate(sceneManager);
 	emit levelGenerated(level);
 	this->requestLock = false;
 }

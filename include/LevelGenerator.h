@@ -14,7 +14,7 @@ class LevelGenerator : public QObject {
     explicit LevelGenerator(QObject *parent = 0);
 
     virtual float getScore(QWebPage *webpage) = 0;
-    virtual Level* generate() = 0;
+    virtual Level* generate(Ogre::SceneManager * sceneManager) = 0;
 
  protected:
     QWebPage *webpage;

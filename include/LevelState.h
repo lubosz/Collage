@@ -24,7 +24,6 @@ class LevelState : public AppState {
   DECLARE_APPSTATE_CLASS(LevelState)
 
   void enter();
-  void createScene();
   void exit();
   bool pause();
   void resume();
