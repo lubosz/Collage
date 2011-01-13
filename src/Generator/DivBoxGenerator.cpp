@@ -25,19 +25,23 @@ Level* DivBoxGenerator::generate(Ogre::SceneManager * sceneManager) {
   QWebElement document = webpage->mainFrame()->documentElement();
   QWebElementCollection elements = document.findAll("div");
   Ogre::Real count = 0;
+  Ogre::Real scale = .01;
   foreach(QWebElement element, elements){
 
-    qDebug() << "Some Div " << element.geometry();
+    if(element.geometry().width() != 0 && element.geometry().height() != 0){
 
-    Ogre::Real width = element.geometry().width() / 100.0;
-    Ogre::Real height = element.geometry().height() / 100.0;
+      qDebug() << "Some Div " << element.geometry();
 
-    node = sceneManager->getRootSceneNode()->createChildSceneNode();
-    cube = sceneManager->createEntity("Cube.mesh");
-    node->attachObject(cube);
-    node->setPosition(Ogre::Vector3(element.geometry().left(), element.geometry().top(), count));
-    node->setScale(width,height,1.0);
-    count+=10;
+      Ogre::Real width = element.geometry().width()*scale;
+      Ogre::Real height = element.geometry().height()*scale;
+
+      node = sceneManager->getRootSceneNode()->createChildSceneNode();
+      cube = sceneManager->createEntity("Cube.mesh");
+      node->attachObject(cube);
+      node->setPosition(Ogre::Vector3(-element.geometry().left()*scale, -element.geometry().top()*scale, count));
+      node->setScale(width,height,1.0);
+      count+=10;
+    }
   }
     // uses this.webframe to generate Level, returns Level
 //    Ogre::SceneManager* manager =
