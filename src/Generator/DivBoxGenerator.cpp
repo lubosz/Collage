@@ -9,7 +9,9 @@
 
 #include "RenderEngine.h"
 
-DivBoxGenerator::DivBoxGenerator() {}
+DivBoxGenerator::DivBoxGenerator() {
+  this->name = "Deine Mudder";
+}
 
 float DivBoxGenerator::getScore(QWebPage *webpage) {
     this->webpage = webpage;
@@ -17,7 +19,10 @@ float DivBoxGenerator::getScore(QWebPage *webpage) {
 }
 
 Level* DivBoxGenerator::generate(Ogre::SceneManager * sceneManager) {
-  QSize siteResolution = QSize(1280, 1280);
+  QWebElement document = webpage->mainFrame()->documentElement().findFirst("div").geometry();
+//  QSize siteResolution = document.geometry().size();
+  QSize siteResolution = QSize(1024, 1024);
+  qDebug() << "Whole Page " << document.findFirst("div").geometry();
   std::string targetImage = "foo";
 
   webpage->mainFrame()->setScrollBarPolicy(
@@ -56,10 +61,29 @@ Level* DivBoxGenerator::generate(Ogre::SceneManager * sceneManager) {
   cubeMat.get()->getTechnique(0)->
       getPass(0)->createTextureUnitState(targetImage);
 
-  QWebElement document = webpage->mainFrame()->documentElement();
   QWebElementCollection elements = document.findAll("div");
   Ogre::Real count = 0;
   Ogre::Real scale = .01;
+
+
+
+  Ogre::Real width = document.geometry().width()*scale;
+       Ogre::Real height = document.geometry().height()*scale;
+
+       node = sceneManager->getRootSceneNode()->createChildSceneNode();
+       cube = sceneManager->createEntity("Cube.mesh");
+       cube->getSubEntity(0)->setMaterial(cubeMat);
+       node->attachObject(cube);
+       node->setPosition(
+           Ogre::Vector3(
+               -document.geometry().left()*scale,
+               -document.geometry().top()*scale,
+               count));
+       node->setScale(width, height, 1.0);
+       count+=2;
+
+
+
   foreach(QWebElement element, elements) {
     if (element.geometry().width() != 0 && element.geometry().height() != 0) {
       qDebug() << "Some Div " << element.geometry();
