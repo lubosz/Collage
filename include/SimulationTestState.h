@@ -14,7 +14,6 @@
 
 #include "Simulation.h"
 
-
 #include <OGRE/OgreSubEntity.h>
 #include <OGRE/OgreMaterialManager.h>
 
@@ -46,10 +45,10 @@ class SimulationTestState : public AppState {
 
  private:
 
-	Simulation *mSimulation;
+	// Simulation *simulation;
 
 	bool m_bQuit;
-//
+
 	Ogre::Vector3 m_TranslateVector;
 	Ogre::Real m_MoveSpeed;
 	Ogre::Degree m_RotateSpeed;

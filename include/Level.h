@@ -4,12 +4,9 @@
 #ifndef LEVEL_H
 #define LEVEL_H
 
-#include <QObject>
+#include "OGRE/Ogre.h"
 
-#include "Simulation.h"
-
-class Level : public QObject {
-    Q_OBJECT
+class Level {
  public:
     Ogre::SceneManager* sceneManager;
 

@@ -32,7 +32,7 @@ class Simulation {
 	bool mDebugVisualization;
 
 
-private:
+ private:
 	Ogre::SceneNode *rootSceneNode;
 
 	typedef std::vector<Actor*> ActorList;
@@ -48,11 +48,11 @@ private:
   int currentInteractionTypeID;
   int generateInteractionTypeID();
 
-	void sortArctorsByActorID(Actor* a, Actor* b);
+	void sortActorsByActorID(Actor* a, Actor* b);
 
-	void sortArctorsTypeID(Actor* a, Actor* b);
+	void sortActorsTypeID(Actor* a, Actor* b);
 
-	void sortArctorsByShapeID(Actor* a, Actor* b);
+	void sortActorsByShapeID(Actor* a, Actor* b);
 
 	void sortInt(int* a, int* b);
 };
