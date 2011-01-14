@@ -49,7 +49,8 @@ void LevelState::enter() {
 
   RenderEngine::Instance().m_pViewport->setCamera(m_pCamera);
 
-  genman.sceneFromUrl("http://en.wikipedia.org/wiki/Lol", m_pSceneMgr);
+  genman.sceneFromUrl("http://en.wikipedia.org/wiki/Special:Random",
+                      m_pSceneMgr);
   buildGUI();
 }
 

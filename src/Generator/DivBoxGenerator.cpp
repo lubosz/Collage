@@ -19,8 +19,6 @@ Level* DivBoxGenerator::generate(Ogre::SceneManager * sceneManager) {
   Ogre::SceneNode* node;
   Ogre::Entity* cube;
 
-
-
   QWebElement document = webpage->mainFrame()->documentElement();
   QWebElementCollection elements = document.findAll("div");
   Ogre::Real count = 0;
