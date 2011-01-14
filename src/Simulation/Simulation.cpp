@@ -10,22 +10,19 @@
 #include <QtCore>
 #include <sstream>
 
+#include "IHCharacterGravity.h"
+
 Simulation::Simulation(Ogre::SceneNode *rootSceneNode) {
 	this->rootSceneNode = rootSceneNode;
 	currentActorID = 0;
-
-	int a = 0;
-	int b = 1;
-	sortInt(&a, &b);
-	interactionHandlers[InteractionHandlerID(a, b)] = new InteractionHandler();
 }
 
 Simulation::~Simulation() {}
 
 
 Actor* Simulation::createActor(
-    std::string actorType,
-    std::string collisionShape,
+    ActorType actorType,
+    CollisionShape collisionShape,
     Ogre::Vector3 position,
     bool isStatic,
     float orientation,
@@ -36,15 +33,8 @@ Actor* Simulation::createActor(
 	Ogre::SceneNode *sceneNode =
 	    rootSceneNode->createChildSceneNode(name.str(), position);
 
-	int shapeID = 0;
-	if (collisionShape.compare("circle") == 0) shapeID = 1;
-	if (collisionShape.compare("box") == 0) shapeID = 2;
-
-  int typeID = 0;
-  if (actorType.compare("character") == 0) typeID = 1;
-  if (actorType.compare("item") == 0) typeID = 2;
-  if (actorType.compare("terrain") == 0) typeID = 3;
-
+	int shapeID = actorType;
+  int typeID = collisionShape;
 
 	Actor *actor = new Actor(actorID, typeID, shapeID, sceneNode);
 
@@ -56,6 +46,15 @@ Actor* Simulation::createActor(
 	return actor;
 }
 
+void Simulation::attachInteractionHandler(
+    ActorType actorTypeA,
+    ActorType actorTypeB,
+    InteractionHandler* interactionHandler) {
+  int a = actorTypeA;
+  int b = actorTypeB;
+  sortInt(&a, &b);
+  interactionHandlers[InteractionHandlerID(a, b)] = interactionHandler;
+}
 
 void Simulation::update(float d_t) {
   foreach(Actor* a, dynamicActors) {
@@ -63,11 +62,29 @@ void Simulation::update(float d_t) {
       Actor* aTemp = a;
       Actor* bTemp = b;
 
-      // sortActorsByTypeID(aTemp, bTemp);
+      sortActorsByTypeID(&aTemp, &bTemp);
+      InteractionHandlerID id =
+          InteractionHandlerID(aTemp->getTypeID(), bTemp->getTypeID());
+      std::map<InteractionHandlerID, InteractionHandler*>::iterator it =
+          interactionHandlers.find(id);
 
-      InteractionHandlerID id
-      = InteractionHandlerID(aTemp->getTypeID(), bTemp->getTypeID());
-      // interactionHandlers[];
+#ifdef DEBUG_OUTPUT_TRIGGERED
+      std::cout <<
+          "Collision Detected between Actors" << aTemp->getActorID() <<
+          " and " << bTemp->getActorID() <<
+          std::endl;
+      if (it == interactionHandlers.end()) {
+        std::cout <<
+            "InteractionHandler for Actortypes " << aTemp->getTypeID() <<
+            " and " << bTemp->getTypeID() <<
+            std::endl;
+      } else {
+        std::cout <<
+            "No InteractionHandler for Actorstypes " << aTemp->getTypeID() <<
+            " and " << bTemp->getTypeID() <<
+            std::endl;
+      }
+#endif
     }
   }
 }
@@ -84,31 +101,31 @@ int Simulation::generateInteractionTypeID() {
   return ret;
 }
 
-void Simulation::sortActorsByActorID(Actor* a, Actor* b) {
-  if (a->getActorID() < b->getActorID()) return;
-  Actor* c = a;
-  a = b;
-  b = c;
+void Simulation::sortActorsByActorID(Actor** a, Actor** b) {
+  if ((*a)->getActorID() < (*b)->getActorID()) return;
+  Actor* c = *a;
+  *a = *b;
+  *b = c;
 }
 
-void Simulation::sortActorsTypeID(Actor* a, Actor* b) {
-  if (a->getTypeID() < b->getTypeID()) return;
-  Actor* c = a;
-  a = b;
-  b = c;
+void Simulation::sortActorsByTypeID(Actor** a, Actor** b) {
+  if ((*a)->getTypeID() < (*b)->getTypeID()) return;
+  Actor* c = *a;
+  *a = *b;
+  *b = c;
 }
 
-void Simulation::sortActorsByShapeID(Actor* a, Actor* b) {
-  if (a->getShapeID() < b->getShapeID()) return;
-  Actor* c = a;
-  a = b;
-  b = c;
+void Simulation::sortActorsByShapeID(Actor** a, Actor** b) {
+  if ((*a)->getShapeID() < (*b)->getShapeID()) return;
+  Actor* c = *a;
+  *a = *b;
+  *b = c;
 }
 
 void Simulation::sortInt(int* a, int* b) {
   if (*a < *b) return;
-  int* c = a;
-  a = b;
-  b = c;
+  int c = *a;
+  *a = *b;
+  *b = c;
 }
 

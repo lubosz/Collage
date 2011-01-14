@@ -18,6 +18,14 @@ Actor::Actor(
   this->typeID = typeID;
   this->shapeID = shapeID;
   this->sceneNode = sceneNode;
+
+#ifdef DEBUG_OUTPUT
+  std::cout<<
+      "Created Actor: " << actorID <<
+      ", shapeID: " << shapeID <<
+      ", typeID:" << typeID <<
+      std::endl;
+#endif
 }
 
 Actor::~Actor() {

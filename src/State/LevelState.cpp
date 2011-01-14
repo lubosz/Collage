@@ -49,7 +49,7 @@ void LevelState::enter() {
 
   RenderEngine::Instance().m_pViewport->setCamera(m_pCamera);
 
-  genman.sceneFromUrl("http://en.wikipedia.org/wiki/Special:Random",
+  genman.sceneFromUrl("http://boards.4chan.org/hr/",
                       m_pSceneMgr);
   buildGUI();
 }

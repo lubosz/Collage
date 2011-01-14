@@ -72,13 +72,18 @@ void SimulationTestState::exit() {
 }
 
 void SimulationTestState::createScene() {
-  //  simulation = new Simulation(m_pSceneMgr->getRootSceneNode());
+  simulation = new Simulation(m_pSceneMgr->getRootSceneNode());
 
 	m_pSceneMgr->createLight("Light")->setPosition(75, 75, 75);
 
-	//
-	//  simulation->createActor("terrain", "box", Ogre::Vector3(1.0, 0.0, 0.0));
-  //  simulation->createActor("terrain", "box", Ogre::Vector3(2.0, 0.0, 0.0));
+	simulation->createActor(
+	    AT_CHARACTER, CS_CIRCLE, Ogre::Vector3(0.0, 2.0, 0.0), false);
+  simulation->createActor(
+      AT_TERRAIN, CS_BOX, Ogre::Vector3(0.0, -2.0, 0.0));
+  simulation->createActor(
+      AT_GRAVITY, CS_GLOBAL);
+  simulation->attachInteractionHandler(
+      AT_CHARACTER, AT_GRAVITY, new InteractionHandler());
 }
 
 bool SimulationTestState::keyPressed(const OIS::KeyEvent &keyEventRef) {
@@ -154,6 +159,7 @@ void SimulationTestState::getInput() {
 }
 
 void SimulationTestState::update(double timeSinceLastFrame) {
+  simulation->update(timeSinceLastFrame);
 	m_FrameEvent.timeSinceLastFrame = timeSinceLastFrame;
 	UserInterface::Instance().m_pTrayMgr->frameRenderingQueued(
 			m_FrameEvent);
@@ -167,7 +173,6 @@ void SimulationTestState::update(double timeSinceLastFrame) {
 	m_MoveScale = m_MoveSpeed * timeSinceLastFrame;
 	getInput();
 	m_pCamera->move(m_TranslateVector);
-	//  simulation->update(timeSinceLastFrame);
 }
 
 void SimulationTestState::buildGUI() {
