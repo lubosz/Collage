@@ -31,10 +31,10 @@ void TagNestingToTerrainGenerator::addBox(
   node->attachObject(cube);
   node->setPosition(
       Ogre::Vector3(
-          0,
+          count * 6,
           height * 6,
-          count * 6));
-  node->setScale(10., 1., 1.);
+          0));
+  node->setScale(1., 1., 10.);
 }
 
 Level* TagNestingToTerrainGenerator::generate(
