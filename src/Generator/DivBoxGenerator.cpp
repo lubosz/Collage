@@ -17,7 +17,6 @@ float DivBoxGenerator::getScore(QWebPage *webpage) {
 }
 
 Level* DivBoxGenerator::generate(Ogre::SceneManager * sceneManager) {
-
   QSize siteResolution = QSize(1280, 1280);
   std::string targetImage = "foo";
 
