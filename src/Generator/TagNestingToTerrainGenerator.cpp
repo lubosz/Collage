@@ -13,7 +13,7 @@ TagNestingToTerrainGenerator::TagNestingToTerrainGenerator(QObject *parent)
 
 float TagNestingToTerrainGenerator::getScore(QWebPage *webpage) {
 	this->webpage = webpage;
-	return 0.0;
+	return 50.0;
 }
 
 void TagNestingToTerrainGenerator::addBox(
