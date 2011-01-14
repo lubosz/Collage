@@ -8,44 +8,124 @@
 
 #include "Simulation.h"
 #include <QtCore>
-#include "Actor.h"
+#include <sstream>
 
 Simulation::Simulation(Ogre::SceneNode *rootSceneNode) {
-	mRootSceneNode = rootSceneNode;
+
+	this->rootSceneNode = rootSceneNode;
+	currentActorID = 0;
+
+	int a = 0;
+	int b = 1;
+	sortInt(&a, &b);
+	interactionHandlers[InteractionHandlerID(a, b)] = new InteractionHandler();
 }
 
 Simulation::~Simulation() {}
 
-Actor* Simulation::createActor(const Ogre::String name, ActorBehavior behavior,
-    Ogre::Vector2 position, CollisionShape *collisionShape) {
-	Ogre::SceneNode *sceneNode = mRootSceneNode->
-	    createChildSceneNode(name, Ogre::Vector3(position.x, position.y, 0.0));
-	Actor *actor = new Actor(behavior, sceneNode, collisionShape);
-	if (behavior == AB_STATIC || behavior == AB_STATIC_TRIGGER) {
-		mActorListStatic.push_back(actor);
-	} else {
-		mActorListDynamic.push_back(actor);
+
+Actor* Simulation::createActor(
+    std::string actorType,
+    std::string collisionShape,
+    Ogre::Vector3 position,
+    bool isStatic,
+    float orientation,
+    float scale){
+  int actorID = generateActorID();
+  std::stringstream name;
+  name << actorID;
+	Ogre::SceneNode *sceneNode = rootSceneNode->createChildSceneNode(name.str(), position);
+
+	int shapeID = 0;
+  int typeID = 0;
+	/*
+	switch(collisionShape){
+	case "circle":
+	  shapeID = 0;
+	  break;
+	case "box":
+	  shapeID = 1;
+	  break;
 	}
-	if(mDebugVisualization) {
-		actor->drawDebugVisualization();
-	}
+
+  switch(actorType){
+  case "item":
+    shapeID = 0;
+    break;
+  case "character":
+    shapeID = 1;
+    break;
+  case "terrain":
+    shapeID = 1;
+    break;
+  }
+  */
+
+	Actor *actor = new Actor(actorID, typeID, shapeID, sceneNode);
+
+	if(isStatic) staticActors.push_back(actor);
+	else dynamicActors.push_back(actor);
+
 	return actor;
 }
 
-void Simulation::update(float d_t) {
-	foreach(Actor *dyn, mActorListDynamic) {
-		dyn->update(d_t);
-	}
 
-	foreach(Actor *dyn, mActorListDynamic) {
-		foreach(Actor *sta, mActorListStatic) {}
-	}
+void Simulation::update(float d_t){
+//	foreach(Actor *dyn, mActorListDynamic){
+//		dyn->update(d_t);
+//	}
+//	foreach(Actor *dyn, mActorListDynamic){
+//		foreach(Actor *sta, mActorListStatic){
+//
+//		}
+//	}
+  foreach(Actor* a, dynamicActors){
+    foreach(Actor* b, staticActors){
+      Actor* aTemp = a;
+      Actor* bTemp = b;
+//      sortArctorsByTypeID(aTemp, bTemp);
+      InteractionHandlerID id = InteractionHandlerID(aTemp->getTypeID(), bTemp->getTypeID());
+      //interactionHandlers[];
+    }
+  }
 }
 
-Ogre::Vector2 Simulation::getGravity() const {
-    return mGravity;
+int Simulation::generateActorID(){
+  int ret = currentActorID;
+  currentActorID++;
+  return ret;
 }
 
-void Simulation::setGravity(Ogre::Vector2 mGravity) {
-    this->mGravity = mGravity;
+int Simulation::generateInteractionTypeID(){
+  int ret = currentInteractionTypeID;
+  currentInteractionTypeID++;
+  return ret;
+}
+
+void Simulation::sortArctorsByActorID(Actor* a, Actor* b){
+  if(a->getActorID() < b->getActorID()) return;
+  Actor* c = a;
+  a = b;
+  b = c;
+}
+
+void Simulation::sortArctorsTypeID(Actor* a, Actor* b){
+  if(a->getTypeID() < b->getTypeID()) return;
+  Actor* c = a;
+  a = b;
+  b = c;
+}
+
+void Simulation::sortArctorsByShapeID(Actor* a, Actor* b){
+  if(a->getShapeID() < b->getShapeID()) return;
+  Actor* c = a;
+  a = b;
+  b = c;
+}
+
+void Simulation::sortInt(int* a, int* b){
+  if(*a < *b)return;
+  int* c = a;
+  a = b;
+  b = c;
 }

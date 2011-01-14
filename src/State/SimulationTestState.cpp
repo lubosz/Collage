@@ -10,7 +10,6 @@
 
 #include "System.h"
 #include <OGRE/OgreTextureManager.h>
-#include "AABBCollisioShape.h"
 
 SimulationTestState::SimulationTestState() {
 	m_bLMouseDown = false;
@@ -77,13 +76,9 @@ void SimulationTestState::createScene() {
 
 	m_pSceneMgr->createLight("Light")->setPosition(75, 75, 75);
 
-	AABBCollisioShape* shape =
-	    new AABBCollisioShape(Ogre::Vector2(0.0, 0.0), Ogre::Vector2(1.5, 1.5));
-	mSimulation->createActor("myActor1", AB_STATIC, Ogre::Vector2(0.0, 0.0));
-	mSimulation->createActor("myActor2", AB_STATIC, Ogre::Vector2(1.5, 0.0));
-	mSimulation->createActor("myActor3", AB_STATIC, Ogre::Vector2(0.0, 1.5));
-	mSimulation->createActor("myActor4",
-	    AB_DYNAMIC, Ogre::Vector2(1.5, 1.5), shape);
+
+	mSimulation->createActor("terrain", "box", Ogre::Vector3(1.0,0.0,0.0));
+	mSimulation->createActor("terrain", "box", Ogre::Vector3(2.0,0.0,0.0));
 }
 
 bool SimulationTestState::keyPressed(const OIS::KeyEvent &keyEventRef) {

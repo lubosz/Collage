@@ -9,11 +9,8 @@
 #ifndef SIMULATION_H_
 #define SIMULATION_H_
 
-#include "AABB.h"
 #include "OGRE/Ogre.h"
-#include "Actor.h"
-
-typedef std::vector<Actor*> ActorList;
+#include "InteractionHandler.h"
 
 class Simulation {
  public:
@@ -23,23 +20,40 @@ class Simulation {
 	void update(float d_t);
 
 	Actor* createActor(
-			Ogre::String name,
-			ActorBehavior behavior,
-			Ogre::Vector2 position,
-			CollisionShape *collisionShape =
-			    new AABBCollisioShape(Ogre::Vector2(0.0, 0.0), Ogre::Vector2(1.0, 1.0))
+
+			std::string actorType,
+			std::string collisionShape,
+			Ogre::Vector3 position = Ogre::Vector3::ZERO,
+			bool isStatic = true,
+			float rotation = 0.0,
+			float scale = 1.0
 	);
-    Ogre::Vector2 getGravity() const;
-    void setGravity(Ogre::Vector2 mGravity);
 
 	bool mDebugVisualization;
 
- private:
-	Ogre::SceneNode *mRootSceneNode;
-	ActorList mActorListDynamic;
-	ActorList mActorListStatic;
 
-	Ogre::Vector2 mGravity;
+private:
+	Ogre::SceneNode *rootSceneNode;
+
+	typedef std::vector<Actor*> ActorList;
+  ActorList dynamicActors;
+  ActorList staticActors;
+
+  typedef std::pair<int, int> InteractionHandlerID;
+  std::map<InteractionHandlerID, InteractionHandler*> interactionHandlers;
+
+	int currentActorID;
+	int generateActorID();
+
+  int currentInteractionTypeID;
+  int generateInteractionTypeID();
+
+	void sortArctorsByActorID(Actor* a, Actor* b);
+
+	void sortArctorsTypeID(Actor* a, Actor* b);
+
+	void sortArctorsByShapeID(Actor* a, Actor* b);
+
+	void sortInt(int* a, int* b);
 };
-
 #endif /* SIMULATION_H_ */
