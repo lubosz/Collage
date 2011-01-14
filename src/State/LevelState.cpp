@@ -37,8 +37,8 @@ void LevelState::enter() {
   m_pSceneMgr->setAmbientLight(Ogre::ColourValue(0.7f, 0.7f, 0.7f));
 
   m_pCamera = m_pSceneMgr->createCamera("GameCamera");
-  m_pCamera->setPosition(Vector3(5, 60, 60));
-  m_pCamera->lookAt(Vector3(5, 20, 0));
+  m_pCamera->setPosition(Vector3(-5, 45, 100));
+  m_pCamera->lookAt(Vector3(0, 0, 0));
   m_pCamera->setNearClipDistance(5);
 
   m_pCamera->setAspectRatio(
@@ -49,7 +49,8 @@ void LevelState::enter() {
 
   RenderEngine::Instance().m_pViewport->setCamera(m_pCamera);
 
-  genman.sceneFromUrl("http://en.wikipedia.org/wiki/Lol", m_pSceneMgr);
+  genman.sceneFromUrl("http://en.wikipedia.org/wiki/Special:Random",
+                      m_pSceneMgr);
   buildGUI();
 }
 

@@ -3027,7 +3027,8 @@ def ProcessFile(filename, vlevel):
             'One or more unexpected \\r (^M) found;'
             'better to use only a \\n')
 
-  sys.stderr.write('Done processing %s\n' % filename)
+  # dennda:
+  # sys.stderr.write('Done processing %s\n' % filename)
 
 
 def PrintUsage(message):

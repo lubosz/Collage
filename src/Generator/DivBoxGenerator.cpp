@@ -4,6 +4,7 @@
 #include <QDebug>
 #include <QWebElement>
 #include <QWebPage>
+#include <QPainter>
 #include "DivBoxGenerator.h"
 
 #include "RenderEngine.h"
@@ -16,10 +17,44 @@ float DivBoxGenerator::getScore(QWebPage *webpage) {
 }
 
 Level* DivBoxGenerator::generate(Ogre::SceneManager * sceneManager) {
+  QSize siteResolution = QSize(1280, 1280);
+  std::string targetImage = "foo";
+
+  webpage->mainFrame()->setScrollBarPolicy(
+      Qt::Vertical, Qt::ScrollBarAlwaysOff);
+  webpage->mainFrame()->setScrollBarPolicy(
+      Qt::Horizontal, Qt::ScrollBarAlwaysOff);
+  webpage->setViewportSize(siteResolution);
+  QImage image(siteResolution, QImage::Format_ARGB32_Premultiplied);
+
+  QPainter painter(&image);
+  painter.setRenderHint(QPainter::Antialiasing, true);
+  painter.setRenderHint(QPainter::TextAntialiasing, true);
+  painter.setRenderHint(QPainter::SmoothPixmapTransform, true);
+  webpage->mainFrame()->documentElement().render(&painter);
+  painter.end();
+
+  Ogre::TextureManager::getSingleton().remove(targetImage);
+  Ogre::TextureManager::getSingleton().loadImage(
+      targetImage,
+      "General",
+      Ogre::Image().loadDynamicImage(
+          image.bits(),
+          image.width(),
+          image.height(),
+          1,
+          Ogre::PF_A8R8G8B8));
+
+
   Ogre::SceneNode* node;
   Ogre::Entity* cube;
+  Ogre::MaterialPtr cubeMat;
 
-
+  cubeMat = Ogre::MaterialManager::getSingleton().create(
+        "PageMat", Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
+  cubeMat.get()->getTechnique(0)->getPass(0)->removeAllTextureUnitStates();
+  cubeMat.get()->getTechnique(0)->
+      getPass(0)->createTextureUnitState(targetImage);
 
   QWebElement document = webpage->mainFrame()->documentElement();
   QWebElementCollection elements = document.findAll("div");
@@ -34,6 +69,7 @@ Level* DivBoxGenerator::generate(Ogre::SceneManager * sceneManager) {
 
       node = sceneManager->getRootSceneNode()->createChildSceneNode();
       cube = sceneManager->createEntity("Cube.mesh");
+      cube->getSubEntity(0)->setMaterial(cubeMat);
       node->attachObject(cube);
       node->setPosition(
           Ogre::Vector3(
@@ -41,7 +77,7 @@ Level* DivBoxGenerator::generate(Ogre::SceneManager * sceneManager) {
               -element.geometry().top()*scale,
               count));
       node->setScale(width, height, 1.0);
-      count+=10;
+      count+=2;
     }
   }
 
