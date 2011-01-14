@@ -72,13 +72,13 @@ void SimulationTestState::exit() {
 }
 
 void SimulationTestState::createScene() {
-	mSimulation = new Simulation(m_pSceneMgr->getRootSceneNode());
+  //  simulation = new Simulation(m_pSceneMgr->getRootSceneNode());
 
 	m_pSceneMgr->createLight("Light")->setPosition(75, 75, 75);
 
-
-	mSimulation->createActor("terrain", "box", Ogre::Vector3(1.0,0.0,0.0));
-	mSimulation->createActor("terrain", "box", Ogre::Vector3(2.0,0.0,0.0));
+	//
+	//  simulation->createActor("terrain", "box", Ogre::Vector3(1.0, 0.0, 0.0));
+  //  simulation->createActor("terrain", "box", Ogre::Vector3(2.0, 0.0, 0.0));
 }
 
 bool SimulationTestState::keyPressed(const OIS::KeyEvent &keyEventRef) {
@@ -167,7 +167,7 @@ void SimulationTestState::update(double timeSinceLastFrame) {
 	m_MoveScale = m_MoveSpeed * timeSinceLastFrame;
 	getInput();
 	m_pCamera->move(m_TranslateVector);
-	mSimulation->update(timeSinceLastFrame);
+	//  simulation->update(timeSinceLastFrame);
 }
 
 void SimulationTestState::buildGUI() {
