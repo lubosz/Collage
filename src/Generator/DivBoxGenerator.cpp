@@ -19,10 +19,10 @@ float DivBoxGenerator::getScore(QWebPage *webpage) {
 }
 
 Level* DivBoxGenerator::generate(Ogre::SceneManager * sceneManager) {
-  QWebElement document = webpage->mainFrame()->documentElement().findFirst("div").geometry();
+  QWebElement document = webpage->mainFrame()->documentElement();
 //  QSize siteResolution = document.geometry().size();
   QSize siteResolution = QSize(1024, 1024);
-  qDebug() << "Whole Page " << document.findFirst("div").geometry();
+  qDebug() << "Whole Page " << webpage->mainFrame()->geometry();
   std::string targetImage = "foo";
 
   webpage->mainFrame()->setScrollBarPolicy(
@@ -64,8 +64,6 @@ Level* DivBoxGenerator::generate(Ogre::SceneManager * sceneManager) {
   QWebElementCollection elements = document.findAll("div");
   Ogre::Real count = 0;
   Ogre::Real scale = .01;
-
-
 
   Ogre::Real width = document.geometry().width()*scale;
        Ogre::Real height = document.geometry().height()*scale;
