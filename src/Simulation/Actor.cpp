@@ -6,53 +6,38 @@
  */
 
 #include "Actor.h"
-#include "Simulation.h"
 
-Actor::Actor(ActorBehavior behavior, Ogre::SceneNode *sceneNode, CollisionShape *collisionShape, float mass, float drag) {
-	mMass = mass;
-	mDrag = drag;
-	//mSimulation = simulation;
-	mBehavior = behavior;
-	mSceneNode = sceneNode;
-	mCollisionShape = collisionShape;
-	// TODO Auto-generated constructor stub
-
+Actor::Actor(
+    int actorID,
+    int typeID,
+    int shapeID,
+    Ogre::SceneNode *sceneNode){
+  this->actorID = actorID;
+  this->typeID = typeID;
+  this->shapeID = shapeID;
+  this->sceneNode = sceneNode;
 }
 
 Actor::~Actor() {
-	// TODO Auto-generated destructor stub
+  // TODO Auto-generated destructor stub
 }
 
-void Actor::update(float d_t){
-	//mSimulation->getGravity();
-	//Ogre::Vector2 d_gravity = mSimulation->getGravity()*d_t;
-	mSceneNode->translate(0.0, -0.001 * d_t, 0.0);
-}
-
-CollisionShape *Actor::getCollisionShape() const
+int Actor::getActorID() const
 {
-    return mCollisionShape;
-}
-
-ActorBehavior Actor::getActorBehavior() const
-{
-    return mBehavior;
-}
-
-void Actor::setBehavior(ActorBehavior mBehavior)
-{
-    this->mBehavior = mBehavior;
+    return actorID;
 }
 
 Ogre::SceneNode *Actor::getSceneNode() const
 {
-    return mSceneNode;
+    return sceneNode;
 }
 
-AABB* Actor::getAABB(){
-	return mCollisionShape->getAABB();
+int Actor::getShapeID() const
+{
+    return shapeID;
 }
 
-void Actor::drawDebugVisualization(){
-	mCollisionShape->attachDebugVisualization(mSceneNode);
+int Actor::getTypeID() const
+{
+    return typeID;
 }
