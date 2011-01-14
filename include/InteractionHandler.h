@@ -1,17 +1,13 @@
 /*
- * InteractionHandler.h
- *
- *  Created on: 13.01.2011
- *      Author: lochmann
+ *  Copyright 2010 The Collage Project
  */
-
 #ifndef INTERACTIONHANDLER_H_
 #define INTERACTIONHANDLER_H_
 
 #include "Interaction.h"
 
 class InteractionHandler {
-public:
+ public:
   InteractionHandler();
   virtual ~InteractionHandler();
 
@@ -25,7 +21,7 @@ public:
 
   virtual void leave(Interaction* interaction);
 
-private:
+ private:
   typedef std::pair<int, int> InteractionID;
   std::map<InteractionID, Interaction*> interactions;
 };

@@ -33,7 +33,7 @@ void Input::initOis(
 
     paramList.insert(
     		OIS::ParamList::value_type(
-    		    "WINDOW", Ogre::StringConverter::toString(hWnd)));
+    		    "WINDOW", Ogre::StringConverter::toString(static_cast<int>(hWnd))));
 
     // TODO(lubosz): Only on debug
 #ifdef WIN32

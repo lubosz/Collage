@@ -1,17 +1,13 @@
 /*
- * Interaction.h
- *
- *  Created on: 14.01.2011
- *      Author: lochmann
+ *  Copyright 2010 The Collage Project
  */
-
 #ifndef INTERACTION_H_
 #define INTERACTION_H_
 
 #include "Actor.h"
 
 class Interaction {
-public:
+ public:
   Interaction(Actor* a, Actor* b);
   virtual ~Interaction();
     Actor *getA() const;
@@ -19,7 +15,7 @@ public:
     bool getOk() const;
     void setOk(bool ok);
 
-private:
+ private:
   bool ok;
   Actor* a;
   Actor* b;

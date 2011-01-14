@@ -10,18 +10,13 @@
 #define ACTOR_H_
 #include "OGRE/Ogre.h"
 
-
-//class Simulation;
-
-
-class Actor{
-public:
+class Actor {
+ public:
   Actor(
       int actorID,
       int typeID,
       int shapeID,
-      Ogre::SceneNode *sceneNode
-      );
+      Ogre::SceneNode *sceneNode);
 
   virtual ~Actor();
     int getActorID() const;
@@ -31,7 +26,7 @@ public:
     int getTypeID() const;
 
 
-private:
+ private:
   int actorID;
   int typeID;
   int shapeID;

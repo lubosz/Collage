@@ -13,7 +13,7 @@ Actor::Actor(
     int actorID,
     int typeID,
     int shapeID,
-    Ogre::SceneNode *sceneNode){
+    Ogre::SceneNode *sceneNode) {
   this->actorID = actorID;
   this->typeID = typeID;
   this->shapeID = shapeID;
@@ -21,25 +21,20 @@ Actor::Actor(
 }
 
 Actor::~Actor() {
-  // TODO Auto-generated destructor stub
 }
 
-int Actor::getActorID() const
-{
+int Actor::getActorID() const {
     return actorID;
 }
 
-Ogre::SceneNode *Actor::getSceneNode() const
-{
+Ogre::SceneNode *Actor::getSceneNode() const {
     return sceneNode;
 }
 
-int Actor::getShapeID() const
-{
+int Actor::getShapeID() const {
     return shapeID;
 }
 
-int Actor::getTypeID() const
-{
+int Actor::getTypeID() const {
     return typeID;
 }
