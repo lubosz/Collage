@@ -10,7 +10,7 @@
 #include <sstream>
 
 Simulation::Simulation(Ogre::SceneNode *rootSceneNode) {
-	this.rootSceneNode = rootSceneNode;
+	this->rootSceneNode = rootSceneNode;
 	currentActorID = 0;
 
 	int a = 0;
@@ -33,30 +33,16 @@ Actor* Simulation::createActor(
   int actorID = generateActorID();
   std::stringstream name;
   name << actorID;
-	Ogre::SceneNode *sceneNode = rootSceneNode->createChildSceneNode(name, position);
+	Ogre::SceneNode *sceneNode = rootSceneNode->createChildSceneNode(name.str(), position);
 
 	int shapeID = 0;
-	switch(collisionShape){
-	case "circle":
-	  shapeID = 0;
-	  break;
-	case "box":
-	  shapeID = 1;
-	  break;
-	}
+	if(collisionShape.compare("circle") == 0) shapeID = 1;
+	if(collisionShape.compare("box") == 0) shapeID = 2;
 
   int typeID = 0;
-  switch(actorType){
-  case "item":
-    shapeID = 0;
-    break;
-  case "character":
-    shapeID = 1;
-    break;
-  case "terrain":
-    shapeID = 1;
-    break;
-  }
+  if(actorType.compare("character") == 0) typeID = 1;
+  if(actorType.compare("item") == 0) typeID = 2;
+  if(actorType.compare("terrain") == 0) typeID = 3;
 
 	Actor *actor = new Actor(actorID, typeID, shapeID, sceneNode);
 
@@ -79,7 +65,7 @@ void Simulation::update(float d_t){
     foreach(Actor* b, staticActors){
       Actor* aTemp = a;
       Actor* bTemp = b;
-      sortArctorsByTypeID(aTemp, bTemp);
+      sortActorsByTypeID(aTemp, bTemp);
       InteractionHandlerID id = InteractionHandlerID(aTemp->getTypeID(), bTemp->getTypeID());
       //interactionHandlers[];
     }
@@ -98,21 +84,21 @@ int Simulation::generateInteractionTypeID(){
   return ret;
 }
 
-void Simulation::sortArctorsByActorID(Actor* a, Actor* b){
+void Simulation::sortActorsByActorID(Actor* a, Actor* b){
   if(a->getActorID() < b->getActorID()) return;
   Actor* c = a;
   a = b;
   b = c;
 }
 
-void Simulation::sortArctorsTypeID(Actor* a, Actor* b){
+void Simulation::sortActorsTypeID(Actor* a, Actor* b){
   if(a->getTypeID() < b->getTypeID()) return;
   Actor* c = a;
   a = b;
   b = c;
 }
 
-void Simulation::sortArctorsByShapeID(Actor* a, Actor* b){
+void Simulation::sortActorsByShapeID(Actor* a, Actor* b){
   if(a->getShapeID() < b->getShapeID()) return;
   Actor* c = a;
   a = b;
@@ -125,3 +111,4 @@ void Simulation::sortInt(int* a, int* b){
   a = b;
   b = c;
 }
+
