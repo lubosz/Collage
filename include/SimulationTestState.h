@@ -45,7 +45,7 @@ class SimulationTestState : public AppState {
 
  private:
 
-	// Simulation *simulation;
+	Simulation *simulation;
 
 	bool m_bQuit;
 

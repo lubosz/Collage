@@ -9,6 +9,7 @@
 #include "Simulation.h"
 #include <QtCore>
 #include <sstream>
+#define DEBUG_OUTPUT
 
 Simulation::Simulation(Ogre::SceneNode *rootSceneNode) {
 	this->rootSceneNode = rootSceneNode;
@@ -52,6 +53,14 @@ Actor* Simulation::createActor(
 	  staticActors.push_back(actor);
 	else
 	  dynamicActors.push_back(actor);
+
+#ifdef DEBUG_OUTPUT
+	std::cout<<
+	    "Created Actor: " << name <<
+	    ", shapeID: " << shapeID <<
+	    ", typeID:" << typeID <<
+	    std::endl;
+#endif
 
 	return actor;
 }
