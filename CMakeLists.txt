@@ -108,7 +108,7 @@ add_custom_target(style ALL
 endif()
 
 add_custom_target(remake
-        COMMAND make clean && rm CMakeCache.txt && cmake . && make -j`getconf _NPROCESSORS_ONLN`
+        COMMAND make clean && rm CMakeCache.txt && cmake . -G\"Unix Makefiles\" && make -j`getconf _NPROCESSORS_ONLN`
 )
 
 
