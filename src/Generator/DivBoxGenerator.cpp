@@ -78,7 +78,7 @@ Level* DivBoxGenerator::generate(Ogre::SceneManager * sceneManager) {
               -element.geometry().top()*scale,
               count));
       node->setScale(width, height, 1.0);
-      count+=10;
+      count+=2;
     }
   }
 
