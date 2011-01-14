@@ -13,7 +13,6 @@
 #include "AppStateListener.h"
 
 class AppStateManager : public AppStateListener {
-
  public:
 	typedef struct {
 		Ogre::String name;

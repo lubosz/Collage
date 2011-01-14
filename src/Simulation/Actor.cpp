@@ -3,9 +3,11 @@
  *
  *  Created on: 22.12.2010
  *      Author: lochmann
+ *  Copyright 2010 The Collage Project
  */
 
 #include "Actor.h"
+
 
 Actor::Actor(
     int actorID,

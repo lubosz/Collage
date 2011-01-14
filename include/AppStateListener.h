@@ -11,9 +11,8 @@
 #include <OGRE/Ogre.h>
 class AppState;
 
-class AppStateListener{
-
-public:
+class AppStateListener {
+ public:
 	AppStateListener() {}
 	virtual ~AppStateListener() {}
 

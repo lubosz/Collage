@@ -31,21 +31,21 @@ class TreeLoader3D;
 }
 
 class nodeProperty {
-public:
+ public:
 	Ogre::String nodeName;
 	Ogre::String propertyNm;
 	Ogre::String valueName;
 	Ogre::String typeName;
 
 	nodeProperty(const Ogre::String &node, const Ogre::String &propertyName,
-			const Ogre::String &value, const Ogre::String &type) :
-		nodeName(node), propertyNm(propertyName), valueName(value), typeName(
-				type) {
-	}
+      const Ogre::String &value, const Ogre::String &type)
+:
+    nodeName(node), propertyNm(propertyName), valueName(value), typeName(type) {
+  }
 };
 
 class DotSceneLoader {
-public:
+ public:
 #ifdef USE_OGRE_TERRAIN
 	Ogre::TerrainGlobalOptions *mTerrainGlobalOptions;
 #endif
@@ -72,7 +72,7 @@ public:
 	std::vector<Forests::PagedGeometry *> mPGHandles;
 	std::vector<Forests::TreeLoader3D *> mTreeHandles;
 
-protected:
+ protected:
 	void processScene(rapidxml::xml_node<>* XMLRoot);
 
 	void processNodes(rapidxml::xml_node<>* XMLNode);

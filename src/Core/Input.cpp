@@ -25,17 +25,17 @@ void Input::initOis(
 		OIS::KeyListener *pKeyListener,
 		OIS::MouseListener *pMouseListener
 	) {
-	unsigned long hWnd = 0;
+	int64_t hWnd = 0;
 
 	RenderEngine::Instance().m_pRenderWnd->getCustomAttribute("WINDOW", &hWnd);
 
     OIS::ParamList paramList;
 
     paramList.insert(
-    		OIS::ParamList::value_type("WINDOW",Ogre::StringConverter::toString(hWnd))
-    );
+    		OIS::ParamList::value_type(
+    		    "WINDOW", Ogre::StringConverter::toString(hWnd)));
 
-    //TODO: Only on debug
+    // TODO(lubosz): Only on debug
 #ifdef WIN32
 	paramList.insert(
 			OIS::ParamList::value_type("w32_mouse", "DISCL_FOREGROUND")
@@ -44,12 +44,14 @@ void Input::initOis(
 			OIS::ParamList::value_type("w32_mouse", "DISCL_NONEXCLUSIVE")
 	);
 #else
+/*
 	paramList.insert(
 			OIS::ParamList::value_type("x11_mouse_grab", "false")
 	);
 	paramList.insert(
 			OIS::ParamList::value_type("x11_keyboard_grab", "false")
 	);
+*/
 #endif
 
     m_pInputMgr = OIS::InputManager::createInputSystem(paramList);
@@ -65,6 +67,10 @@ void Input::initOis(
     		RenderEngine::Instance().m_pRenderWnd->getHeight();
     m_pMouse->getMouseState().width  =
     		RenderEngine::Instance().m_pRenderWnd->getWidth();
+
+//    m_pMouse->getMouseState().clear();
+//    OIS::MouseState::clear();
+
 
     m_pKeyboard->setEventCallback(pKeyListener);
     m_pMouse->setEventCallback(pMouseListener);

@@ -1,18 +1,19 @@
+/*
+ *  Copyright 2010 The Collage Project
+ */
 #ifndef LEVEL_H
 #define LEVEL_H
 
 #include <QObject>
 
-class Level : public QObject
-{
+#include "Simulation.h"
+
+class Level : public QObject {
     Q_OBJECT
-public:
-    explicit Level(QObject *parent = 0);
+ public:
+    Ogre::SceneManager* sceneManager;
 
-signals:
-
-public slots:
-
+    Level();
 };
 
-#endif // LEVEL_H
+#endif

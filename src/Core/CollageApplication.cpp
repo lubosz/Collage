@@ -18,26 +18,24 @@
 #include "LoadingState.h"
 #include "WikiCubeState.h"
 #include "SimulationTestState.h"
+#include "LevelState.h"
 #include <phonon/audiooutput.h>
 #include <phonon/mediaobject.h>
 
-CollageApplication::CollageApplication(int& argc, char** argv)	:QApplication(argc, argv){
-	//QUrl url = QUrl("http://en.wikipedia.org/wiki/Special:Random");
-    //qDebug("image: %s", capture.getFirstAttribute("a","href","http://wallbase.net/wallpaper/"));
-//    QObject::connect(m_pAppStateManager, SIGNAL(finished()), QApplication::instance(), SLOT(quit()));
-    //QObject::connect(&capture, SIGNAL(finished()), QApplication::instance(), SLOT(quit()));
+CollageApplication::CollageApplication(int& argc, char** argv)  // NOLINT
+: QApplication(argc, argv) {
 }
 
 CollageApplication::~CollageApplication() {
 }
 
 
-int CollageApplication::exec()
-{
+int CollageApplication::exec() {
 #ifdef AUDIO
-	//audio
-    Phonon::AudioOutput *audioOutput =  new Phonon::AudioOutput(Phonon::MusicCategory);
-    Phonon::MediaObject *mediaObject =  new Phonon::MediaObject();
+	// audio
+    Phonon::AudioOutput *audioOutput =
+        new Phonon::AudioOutput(Phonon::MusicCategory);
+    Phonon::MediaObject *mediaObject = new Phonon::MediaObject();
 
     Phonon::MediaSource source("http://89.179.179.5:8040");
     mediaObject->setCurrentSource(source);
@@ -47,25 +45,25 @@ int CollageApplication::exec()
 #endif
 
 	RenderEngine::Instance().initOgre("Collage");
-	System::Instance().loadRecources();
-	Input::Instance().initOis();
-	UserInterface::Instance().initOgreBites();
+  System::Instance().loadRecources();
+  Input::Instance().initOis();
+  UserInterface::Instance().initOgreBites();
 
-    System::Instance().logMessage("Collage initialized");
+  System::Instance().logMessage("Collage initialized");
 
-    m_pAppStateManager = new AppStateManager();
+  m_pAppStateManager = new AppStateManager();
 
-	MenuState::create(m_pAppStateManager, "MenuState");
-	GameState::create(m_pAppStateManager, "GameState");
-    PauseState::create(m_pAppStateManager, "PauseState");
-    LoadingState::create(m_pAppStateManager, "LoadingState");
-    WallPaperLoadingState::create(m_pAppStateManager, "WallPaperLoadingState");
-    WikiCubeState::create(m_pAppStateManager, "WikiCubeState");
-    SimulationTestState::create(m_pAppStateManager,"SimulationTestState");
+  MenuState::create(m_pAppStateManager, "MenuState");
+  GameState::create(m_pAppStateManager, "GameState");
+  PauseState::create(m_pAppStateManager, "PauseState");
+  LoadingState::create(m_pAppStateManager, "LoadingState");
+  WallPaperLoadingState::create(m_pAppStateManager, "WallPaperLoadingState");
+  WikiCubeState::create(m_pAppStateManager, "WikiCubeState");
+  SimulationTestState::create(m_pAppStateManager, "SimulationTestState");
+  LevelState::create(m_pAppStateManager, "LevelState");
 
-
-    System::Instance().logMessage("Appstates initialized");
-	m_pAppStateManager->start(m_pAppStateManager->findByName("LoadingState"));
+  System::Instance().logMessage("Appstates initialized");
+  m_pAppStateManager->start(m_pAppStateManager->findByName("LoadingState"));
 }
 
 

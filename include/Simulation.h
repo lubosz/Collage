@@ -3,6 +3,7 @@
  *
  *  Created on: 22.12.2010
  *      Author: lochmann
+ *  Copyright 2010 The Collage Project
  */
 
 #ifndef SIMULATION_H_
@@ -12,13 +13,14 @@
 #include "InteractionHandler.h"
 
 class Simulation {
-public:
-	Simulation(Ogre::SceneNode *rootSceneNode);
+ public:
+	explicit Simulation(Ogre::SceneNode *rootSceneNode);
 	virtual ~Simulation();
 
 	void update(float d_t);
 
 	Actor* createActor(
+
 			std::string actorType,
 			std::string collisionShape,
 			Ogre::Vector3 position = Ogre::Vector3::ZERO,
@@ -29,7 +31,8 @@ public:
 
 	bool mDebugVisualization;
 
-private:
+
+ private:
 	Ogre::SceneNode *rootSceneNode;
 
 	typedef std::vector<Actor*> ActorList;
@@ -52,7 +55,5 @@ private:
 	void sortActorsByShapeID(Actor* a, Actor* b);
 
 	void sortInt(int* a, int* b);
-
-}
-
+};
 #endif /* SIMULATION_H_ */

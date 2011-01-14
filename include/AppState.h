@@ -40,7 +40,7 @@ class AppState
 	virtual void update(double timeSinceLastFrame) = 0;
 
  protected:
-    AppState() {};
+    AppState() {}
 
 	AppState* findByName(Ogre::String stateName) {
 		return m_pParent->findByName(stateName);

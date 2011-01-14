@@ -4,17 +4,14 @@ project(collage)
 set(LIBRARY_OUTPUT_PATH ${CMAKE_SOURCE_DIR}/bin)
 set(EXECUTABLE_OUTPUT_PATH ${CMAKE_SOURCE_DIR}/bin)
 
-#Set c++0x
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=gnu++0x")
-
-OPTION(RELEASE "Release" OFF)
-OPTION(FIXBLACKSCREEN "Fix Black screen" OFF)
-OPTION(CHECKSTYLE "Check Style" OFF)
-OPTION(FREEIMAGE_BUG "Free Image Conflict" OFF)
-OPTION(AUDIO "AUDIO" ON)
+OPTION(COLLAGE_RELEASE "Release" OFF)
+OPTION(COLLAGE_FIXBLACKSCREEN "Fix Black screen" OFF)
+OPTION(COLLAGE_CHECKSTYLE "Check Style" ON)
+OPTION(COLLAGE_FREEIMAGE_BUG "Free Image Conflict" OFF)
+OPTION(COLLAGE_AUDIO "AUDIO" ON)
 
 #Optimization / Debug
-IF(RELEASE)
+IF(COLLAGE_RELEASE)
     set(CMAKE_CXX_FLAGS "-O3 -msse4 -mssse3") #Optimized
     set(CMAKE_BUILD_TYPE Release)
 ELSE()
@@ -58,12 +55,6 @@ include_directories(
     ${QT_INCLUDE_DIRS}
 )
 
-
-#Find headers and cpps
-#file(GLOB_RECURSE SOURCES src/*.cpp)
-
-#file(GLOB_RECURSE TESTS test/*.cpp)
-
 set(GLOB_DIRS Core Generator State Simulation)
 file(GLOB_RECURSE INCLUDES include/*.h)
 
@@ -73,8 +64,11 @@ foreach(GLOB_DIR ${GLOB_DIRS})
 endforeach(GLOB_DIR)
 
 #moc qt stuff
-qt4_wrap_cpp (MOC_OUTFILES ${INCLUDES})
-#QT4_WRAP_CPP(src/Generator/moc_FrameCapture.cpp src/Generator/FrameCapture.cpp)
+set(MOC_CLASSES AppState FrameCapture CollageApplication LevelGeneratorManager GeneralLevelGenerator TagNestingToTerrainGenerator LevelGenerator Level GameState LevelState)
+foreach(MOC_CLASS ${MOC_CLASSES})
+    SET(MOC_INFILES ${MOC_INFILES} include/${MOC_CLASS}.h)
+endforeach(MOC_CLASS)
+qt4_wrap_cpp (MOC_OUTFILES ${MOC_INFILES})
 
 #add main.cpp
 if(APPLE)
@@ -84,23 +78,21 @@ else()
 endif()
 
 #fix black screen race condition
-if(FIXBLACKSCREEN)
+if(COLLAGE_FIXBLACKSCREEN)
     ADD_DEFINITIONS(-DWITH_FIXBLACKSCREEN)
 endif()
 
-#freeimage collision prevention
-if(FREEIMAGE_BUG)
+#freeimage jpeg collision prevention
+if(COLLAGE_FREEIMAGE_BUG)
     ADD_DEFINITIONS(-DFREEIMAGE_BUG)
 endif()
 
-if(AUDIO)
+if(COLLAGE_AUDIO)
     ADD_DEFINITIONS(-DAUDIO)
 endif()
 
 #compile
 add_executable(collage ${SOURCES} ${INCLUDES} ${MOC_OUTFILES})
-#add_executable(ogreTest test/BasicOgre.cpp src/Core/RenderEngine.cpp src/Core/System.cpp)
-
 
 #check code stlye
 IF(EXISTS "/usr/bin/python2")
@@ -109,11 +101,16 @@ ELSE()
     SET(PYTHON_VER "python")
 ENDIF()
 
-if(CHECKSTYLE)
-    add_custom_target(CHECK_STYLE ALL
-        COMMAND ${PYTHON_VER} scripts/cpplint.py --filter=-whitespace/tab,-build/header_guard,-build/include ${SOURCES} ${INCLUDES}
-    )
+if(COLLAGE_CHECKSTYLE)
+add_custom_target(style ALL
+        COMMAND ${PYTHON_VER} scripts/cpplint.py --filter=-whitespace/tab,-build/header_guard,-build/include,-readability/function,-readability/streams ${SOURCES} ${INCLUDES}
+)
 endif()
+
+add_custom_target(remake
+        COMMAND make clean && rm CMakeCache.txt && cmake . -G\"Unix Makefiles\" && make -j`getconf _NPROCESSORS_ONLN`
+)
+
 
 if (APPLE)
     include_directories(
@@ -136,8 +133,14 @@ if (APPLE)
 
 elseif(UNIX)
     copy_plugins_config(${CMAKE_CFG_INTDIR}/bin/plugins-unix.cfg)
-    set(FREEIMAGEHACK /usr/lib/qt/plugins/imageformats/libqjpeg.so)
-
+    #free image hack (collision in libjpeg with qt)
+    IF(EXISTS /usr/lib/qt/plugins/imageformats/libqjpeg.so)
+    	#arch
+    	set(FREEIMAGEHACK /usr/lib/qt/plugins/imageformats/libqjpeg.so)
+	ELSEIF(EXISTS /usr/lib/qt4/plugins/imageformats/libqjpeg.so)
+		#ubuntu
+		set(FREEIMAGEHACK /usr/lib/qt4/plugins/imageformats/libqjpeg.so)
+	ENDIF()
 elseif (WIN32)
     #disable some warnings
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wl,--enable-auto-import")
