@@ -12,7 +12,7 @@
 
 #include "DotSceneLoader.h"
 
-// #include "Simulation.h"
+#include "Simulation.h"
 
 #include <OGRE/OgreSubEntity.h>
 #include <OGRE/OgreMaterialManager.h>

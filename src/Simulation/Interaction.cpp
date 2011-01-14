@@ -26,5 +26,3 @@ bool Interaction::getOk() const {
 void Interaction::setOk(bool ok) {
     this->ok = ok;
 }
-
-
