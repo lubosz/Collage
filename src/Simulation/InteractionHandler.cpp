@@ -32,10 +32,31 @@ void InteractionHandler::cleanup() {
 
 
 void InteractionHandler::inside(Interaction* interaction, float d_t) {
+#ifdef DEBUG_OUTPUT
+  std::cout<<
+      "Interaction: " << "inside" <<
+      ", Actor A: " << interaction->getA()->getActorID() <<
+      ", Actor B:" << interaction->getB()->getActorID() <<
+      std::endl;
+#endif
 }
 
 void InteractionHandler::enter(Interaction* interaction) {
+#ifdef DEBUG_OUTPUT
+  std::cout<<
+      "Interaction: " << "enter" <<
+      ", Actor A: " << interaction->getA()->getActorID() <<
+      ", Actor B:" << interaction->getB()->getActorID() <<
+      std::endl;
+#endif
 }
 
 void InteractionHandler::leave(Interaction* interaction) {
+#ifdef DEBUG_OUTPUT
+  std::cout<<
+      "Interaction: " << "leave" <<
+      ", Actor A: " << interaction->getA()->getActorID() <<
+      ", Actor B:" << interaction->getB()->getActorID() <<
+      std::endl;
+#endif
 }

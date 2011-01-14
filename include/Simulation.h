@@ -11,6 +11,7 @@
 
 #include "OGRE/Ogre.h"
 #include "InteractionHandler.h"
+#include "SimulationEnums.h"
 
 class Simulation {
  public:
@@ -20,13 +21,18 @@ class Simulation {
 	void update(float d_t);
 
 	Actor* createActor(
-
-			std::string actorType,
-			std::string collisionShape,
+	    ActorType actorType,
+	    CollisionShape collisionShape,
 			Ogre::Vector3 position = Ogre::Vector3::ZERO,
 			bool isStatic = true,
 			float rotation = 0.0,
 			float scale = 1.0
+	);
+
+	void attachInteractionHandler(
+	    ActorType actorTypeA,
+	    ActorType actorTypeB,
+	    InteractionHandler* interactionHandler
 	);
 
 	bool mDebugVisualization;
@@ -48,11 +54,11 @@ class Simulation {
   int currentInteractionTypeID;
   int generateInteractionTypeID();
 
-	void sortActorsByActorID(Actor* a, Actor* b);
+	void sortActorsByActorID(Actor** a, Actor** b);
 
-	void sortActorsTypeID(Actor* a, Actor* b);
+	void sortActorsByTypeID(Actor** a, Actor** b);
 
-	void sortActorsByShapeID(Actor* a, Actor* b);
+	void sortActorsByShapeID(Actor** a, Actor** b);
 
 	void sortInt(int* a, int* b);
 };
