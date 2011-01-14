@@ -3,6 +3,7 @@
  *
  *  Created on: 14.01.2011
  *      Author: lochmann
+ *  Copyright 2010 The Collage Project
  */
 
 #ifndef IHCHARACTERGRAVITY_H_
@@ -11,7 +12,7 @@
 #include "InteractionHandler.h"
 
 class IHCharacterGravity: public InteractionHandler {
-public:
+ public:
   IHCharacterGravity();
   virtual ~IHCharacterGravity();
 };
