@@ -84,7 +84,10 @@ void LevelState::enter() {
       new IHCharacterGravity(Ogre::Vector2(0.0, -9.81)));
 
   // Generate Level
-  genman.sceneFromUrl("http://the-space-station.com", m_pSceneMgr);
+  genman.sceneFromUrl(
+  "http://the-space-station.com", m_pSceneMgr);
+//  genman.sceneFromUrl(
+//      "http://www.randomwebsite.com/cgi-bin/random.pl", m_pSceneMgr);
 
   // Build gui (surprise!)
   buildGUI();

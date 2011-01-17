@@ -10,8 +10,8 @@
 #define ACTOR_H_
 #include "OGRE/Ogre.h"
 
-#define DEBUG_OUTPUT
-#define DEBUG_OUTPUT_TRIGGERED
+// #define DEBUG_OUTPUT
+// #define DEBUG_OUTPUT_TRIGGERED
 
 class Actor {
  public:
