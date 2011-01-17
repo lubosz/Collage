@@ -72,7 +72,7 @@ void SimulationTestState::exit() {
 }
 
 void SimulationTestState::createScene() {
-  simulation = new Simulation(m_pSceneMgr->getRootSceneNode(), 60.0);
+  simulation = new Simulation(m_pSceneMgr->getRootSceneNode(), 1.0);
 
 	m_pSceneMgr->createLight("Light")->setPosition(75, 75, 75);
 
@@ -161,7 +161,7 @@ void SimulationTestState::getInput() {
 }
 
 void SimulationTestState::update(double timeSinceLastFrame) {
-  simulation->update(timeSinceLastFrame*0.0000001);
+  simulation->update(timeSinceLastFrame*0.000001);
 	m_FrameEvent.timeSinceLastFrame = timeSinceLastFrame;
 	UserInterface::Instance().m_pTrayMgr->frameRenderingQueued(
 			m_FrameEvent);
