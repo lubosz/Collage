@@ -88,7 +88,7 @@ void AppStateManager::start(AppState* state) {
 #ifdef WIN32
 			 Sleep(1000);
 #else
-			 sleep(1000);
+			 sleep(1);
 #endif
 		}
 	}
