@@ -24,7 +24,7 @@ class DivBoxGenerator : public LevelGenerator {
         const QWebElement& document,
         Ogre::Real scale,
         Ogre::Real step,
-        QString tagName,
+        std::vector<QString> tags,
         Ogre::String meshName,
         Ogre::SceneManager * sceneManager);
     void setPageRendering(const QSize & siteResolution);

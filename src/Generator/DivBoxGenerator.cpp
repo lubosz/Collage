@@ -77,17 +77,19 @@ void DivBoxGenerator::makeElementBoxes(
     const QWebElement & document,
     Ogre::Real scale,
     Ogre::Real step,
-    QString tagName,
+    std::vector<QString> tags,
     Ogre::String meshName,
     Ogre::SceneManager * sceneManager) {
 
-  QWebElementCollection elements = document.findAll(tagName);
+  QWebElementCollection elements;
+  foreach(QString tag, tags)
+    elements.append(document.findAll(tag));
   Ogre::Real count = 0;
   Ogre::Vector3 position = Ogre::Vector3();
 
   foreach(QWebElement element, elements) {
       if (fits(&element, 0, 4096)) {
-        qDebug() << "Some " << tagName << " " << element.geometry();
+//        qDebug() << "Some " << tagName << " " << element.geometry();
         Ogre::Entity* cube = sceneManager->createEntity(meshName);
         Ogre::String textureName =
             "PageTex" + Ogre::StringConverter::toString(count);
@@ -127,13 +129,12 @@ Level* DivBoxGenerator::generate(Ogre::SceneManager *sceneManager) {
 //  qDebug() << "Whole Page " << webpage->mainFrame()->geometry();
   setPageRendering(QSize(1440, 800));
 
-//  makeElementBoxes(
-//      webpage->mainFrame()->documentElement(),
-//      1, 200, "img", "Cube.mesh", sceneManager);
+  std::vector<QString> tags = {"div", "p", "img", "h2", "h1", "h3"};
 
   makeElementBoxes(
       webpage->mainFrame()->documentElement(),
-      .01, 1, "div", "Cube.mesh", sceneManager);
+      .01, 1, tags,
+      "Cube.mesh", sceneManager);
 
   sceneManager->createLight("Light")->setPosition(75, 75, 75);
 
