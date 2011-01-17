@@ -21,10 +21,11 @@ class DivBoxGenerator : public LevelGenerator {
     float getScore(QWebPage *webpage);
     Level* generate(Ogre::SceneManager * sceneManager);
     void makeElementBoxes(
-        QWebElement * document,
+        const QWebElement& document,
         Ogre::Real scale,
         Ogre::Real step,
         QString tagName,
         Ogre::String meshName,
         Ogre::SceneManager * sceneManager);
+    void setPageRendering(const QSize & siteResolution);
 };

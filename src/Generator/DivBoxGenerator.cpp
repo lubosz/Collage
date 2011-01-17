@@ -56,24 +56,25 @@ void DivBoxGenerator::attachNode(
   Ogre::SceneNode* node = parentNode->createChildSceneNode();
 
   cube->getSubEntity(0)->setMaterial(material);
+  Ogre::Real x, y, z;
+  x = -element->geometry().left()*scale - width/2;
+  y = -element->geometry().top()*scale;
+  z = count + width;
+  qDebug() << "Position:" << x << y << z << "Size:" << width << height;
+  node->setPosition(Ogre::Vector3((x, y, z)));
   node->attachObject(cube);
-  node->setPosition(
-      Ogre::Vector3(
-          -element->geometry().left()*scale,
-          -element->geometry().top()*scale,
-          count));
-  node->setScale(width, height, 1.0);
+  node->setScale(width, height, width);
 }
 
 void DivBoxGenerator::makeElementBoxes(
-    QWebElement * document,
+    const QWebElement & document,
     Ogre::Real scale,
     Ogre::Real step,
     QString tagName,
     Ogre::String meshName,
     Ogre::SceneManager * sceneManager) {
 
-  QWebElementCollection elements = document->findAll(tagName);
+  QWebElementCollection elements = document.findAll(tagName);
   Ogre::Real count = 0;
 
   foreach(QWebElement element, elements) {
@@ -101,19 +102,26 @@ bool DivBoxGenerator::fits(QWebElement * element, unsigned min, unsigned max) {
   return false;
 }
 
-Level* DivBoxGenerator::generate(Ogre::SceneManager * sceneManager) {
-  QWebElement document = webpage->mainFrame()->documentElement();
-//  QSize siteResolution = document.geometry().size();
-  QSize siteResolution = QSize(1024, 1024);
-  qDebug() << "Whole Page " << webpage->mainFrame()->geometry();
-
+void DivBoxGenerator::setPageRendering(const QSize& siteResolution) {
   webpage->mainFrame()->setScrollBarPolicy(
       Qt::Vertical, Qt::ScrollBarAlwaysOff);
   webpage->mainFrame()->setScrollBarPolicy(
       Qt::Horizontal, Qt::ScrollBarAlwaysOff);
   webpage->setViewportSize(siteResolution);
+}
 
-  makeElementBoxes(&document, 0.01, 2, "img", "Cube.mesh", sceneManager);
+Level* DivBoxGenerator::generate(Ogre::SceneManager *sceneManager) {
+//  QSize siteResolution = document.geometry().size();
+//  qDebug() << "Whole Page " << webpage->mainFrame()->geometry();
+  setPageRendering(QSize(1024, 1024));
+
+  makeElementBoxes(
+      webpage->mainFrame()->documentElement(),
+      0.01, 2, "img", "Cube.mesh", sceneManager);
+
+  makeElementBoxes(
+      webpage->mainFrame()->documentElement(),
+      0.01, 2, "div", "Cube.mesh", sceneManager);
 
   sceneManager->createLight("Light")->setPosition(75, 75, 75);
 
