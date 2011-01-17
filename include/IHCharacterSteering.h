@@ -12,7 +12,4 @@ class IHCharacterSteering : public InteractionHandler {
   public:
     IHCharacterSteering();
     void inside(Interaction* interaction, float d_t);
-
-  private:
-    
 };
