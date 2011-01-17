@@ -51,12 +51,12 @@ void LevelState::enter() {
   RenderEngine::Instance().m_pViewport->setCamera(m_pCamera);
 
   // Set up character
-	Ogre::SceneNode *charNode = m_pSceneMgr->getRootSceneNode()->createChildSceneNode(
-			"CharNode");
+	Ogre::SceneNode *charNode = m_pSceneMgr->getRootSceneNode()->
+    createChildSceneNode("CharNode");
 	Ogre::Entity *charEntity = m_pSceneMgr->createEntity("Char", "character.mesh");
 	charNode->attachObject(charEntity);
   const float rad = 90. * (3.145 / 180.);
-  charNode->rotate(Ogre::UNIT_Z, rad, Ogre::relativeTo);
+  // charNode->rotate(Ogre::UNIT_Z, rad, Ogre::relativeTo);
 	// m_pOgreHeadNode->setPosition(Vector3(0, 0, -25));
 
 	// m_pOgreHeadMat = m_pOgreHeadEntity->getSubEntity(1)->getMaterial();
