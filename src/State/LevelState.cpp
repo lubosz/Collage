@@ -85,9 +85,10 @@ void LevelState::enter() {
 
   // Generate Level
   genman.sceneFromUrl(
-  "http://en.wikipedia.org/wiki/Special:Random", m_pSceneMgr);
-//  genman.sceneFromUrl(
-//      "http://www.randomwebsite.com/cgi-bin/random.pl", m_pSceneMgr);
+//      "http://www.youtube.com/watch?v=urAyOKlgGDk",
+//      "http://www.randomwebsite.com/cgi-bin/random.pl",
+      "http://en.wikipedia.org/wiki/Special:Random",
+      m_pSceneMgr);
 
   // Build gui (surprise!)
   buildGUI();
