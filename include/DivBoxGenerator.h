@@ -10,14 +10,14 @@ class DivBoxGenerator : public LevelGenerator {
     DivBoxGenerator();
     void makeOgreImage(
         QWebElement * element, const Ogre::String & textureName);
-    void attachNode(
+    Ogre::Vector3 attachNode(
         QWebElement * element,
         Ogre::SceneNode * parentNode,
         Ogre::Real scale,
-        Ogre::Real count,
         const Ogre::String & textureName,
-        Ogre::Entity* cube);
-    bool fits(QWebElement * element, unsigned min, unsigned max);
+        Ogre::Entity* cube,
+        Ogre::Vector3 position);
+    bool fits(QWebElement * element, int min, int max);
     float getScore(QWebPage *webpage);
     Level* generate(Ogre::SceneManager * sceneManager);
     void makeElementBoxes(

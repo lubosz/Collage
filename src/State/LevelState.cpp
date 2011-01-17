@@ -85,7 +85,7 @@ void LevelState::enter() {
 
   // Generate Level
   genman.sceneFromUrl(
-  "http://the-space-station.com", m_pSceneMgr);
+  "http://en.wikipedia.org/wiki/Special:Random", m_pSceneMgr);
 //  genman.sceneFromUrl(
 //      "http://www.randomwebsite.com/cgi-bin/random.pl", m_pSceneMgr);
 

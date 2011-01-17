@@ -21,7 +21,7 @@ float DivBoxGenerator::getScore(QWebPage *webpage) {
 void DivBoxGenerator::makeOgreImage(QWebElement * element,
     const Ogre::String & textureName) {
   QImage image(element->geometry().size(), QImage::Format_ARGB32_Premultiplied);
-  image.fill(Qt::transparent);
+  image.fill(Qt::white);
   QPainter painter(&image);
   painter.setRenderHint(QPainter::Antialiasing, true);
   painter.setRenderHint(QPainter::TextAntialiasing, true);
@@ -35,16 +35,16 @@ void DivBoxGenerator::makeOgreImage(QWebElement * element,
           image.height(), 1, Ogre::PF_A8R8G8B8));
 }
 
-void DivBoxGenerator::attachNode(
+Ogre::Vector3 DivBoxGenerator::attachNode(
     QWebElement * element,
     Ogre::SceneNode * parentNode,
     Ogre::Real scale,
-    Ogre::Real count,
     const Ogre::String & textureName,
-    Ogre::Entity* cube) {
+    Ogre::Entity* cube,
+    Ogre::Vector3 position) {
 
   Ogre::MaterialPtr material = Ogre::MaterialManager::getSingleton().create(
-      "PageMat" + Ogre::StringConverter::toString(count),
+      "PageMat" + Ogre::StringConverter::toString(position),
       Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
 
   material.get()->getTechnique(0)-> getPass(0)->createTextureUnitState(
@@ -57,15 +57,20 @@ void DivBoxGenerator::attachNode(
 
   cube->getSubEntity(0)->setMaterial(material);
   Ogre::Real x, y, z;
-  x = -element->geometry().left()*scale - width*4;
-  y = -element->geometry().top()*scale;
-  z = count + width*4 + 30;
+//  x = width/2;
+  x = 0;
+  y = -height/3.0;
+  z = width*2;
+
+  Ogre::Vector3 move(x, y, z);
 
   qDebug() << "Position:" << x << y << z
       << "Size:" << width << height << "Scale:" << scale;
   node->attachObject(cube);
-  node->setPosition(x, y, z);
+  node->setPosition(move + position);
   node->setScale(width, height, width);
+
+  return move;
 }
 
 void DivBoxGenerator::makeElementBoxes(
@@ -78,30 +83,31 @@ void DivBoxGenerator::makeElementBoxes(
 
   QWebElementCollection elements = document.findAll(tagName);
   Ogre::Real count = 0;
+  Ogre::Vector3 position = Ogre::Vector3();
 
   foreach(QWebElement element, elements) {
-      if (fits(&element, 0, 2048)) {
+      if (fits(&element, 0, 4096)) {
         qDebug() << "Some " << tagName << " " << element.geometry();
         Ogre::Entity* cube = sceneManager->createEntity(meshName);
         Ogre::String textureName =
             "PageTex" + Ogre::StringConverter::toString(count);
 
         makeOgreImage(&element, textureName);
-        attachNode(&element, sceneManager->getRootSceneNode(), scale, count,
-            textureName, cube);
-
-        count += step;
+        position +=
+            attachNode(&element, sceneManager->getRootSceneNode(), scale,
+            textureName, cube, position);
       }
     }
 }
 
-bool DivBoxGenerator::fits(QWebElement * element, unsigned min, unsigned max) {
+bool DivBoxGenerator::fits(QWebElement * element, int min, int max) {
   if (element->geometry().width() > min &&
       element->geometry().height() > min &&
       element->geometry().width() < max &&
       element->geometry().height() < max)
     return true;
-  return false;
+  else
+    return false;
 }
 
 void DivBoxGenerator::setPageRendering(const QSize& siteResolution) {
@@ -118,7 +124,7 @@ Level* DivBoxGenerator::generate(Ogre::SceneManager *sceneManager) {
 
 //  QSize siteResolution = document.geometry().size();
 //  qDebug() << "Whole Page " << webpage->mainFrame()->geometry();
-  setPageRendering(QSize(1024, 1024));
+  setPageRendering(QSize(1440, 800));
 
 //  makeElementBoxes(
 //      webpage->mainFrame()->documentElement(),
@@ -126,7 +132,7 @@ Level* DivBoxGenerator::generate(Ogre::SceneManager *sceneManager) {
 
   makeElementBoxes(
       webpage->mainFrame()->documentElement(),
-      .01, 2, "div", "Cube.mesh", sceneManager);
+      .01, 1, "div", "Cube.mesh", sceneManager);
 
   sceneManager->createLight("Light")->setPosition(75, 75, 75);
 
