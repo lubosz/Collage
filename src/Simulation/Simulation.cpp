@@ -57,8 +57,10 @@ void Simulation::attachInteractionHandler(
   interactionHandlers.find(InteractionHandlerID(a, b))->second->cleanup();
 }
 
-void Simulation::update(float timeSinceLastFrame) {
-  d_t += timeSinceLastFrame * 0.001;
+void Simulation::update(float secondsSinceLastFrame) {
+  if (secondsSinceLastFrame < 10) {
+  }
+  d_t += secondsSinceLastFrame;
   if (d_t > 1.0 / frequency) {
 #ifdef DEBUG_OUTPUT_TRIGGERED
     printf("NEW FRAME, d_t: %f \n", d_t);
