@@ -6,6 +6,8 @@
  *  Copyright 2010 The Collage Project
  */
 
+#pragma once
+
 #include "InteractionHandler.h"
 
 class IHCharacterSteering : public InteractionHandler {

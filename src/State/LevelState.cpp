@@ -29,11 +29,9 @@ void LevelState::enter() {
   Input::Instance().m_pMouse->setBuffered(false);
 
   // Set up Camera
-  System::Instance().logMessage(
-      "Entering LevelState...");
+  System::Instance().logMessage("Entering LevelState...");
 
-  m_pSceneMgr
-      = RenderEngine::Instance().m_pRoot->createSceneManager(
+  m_pSceneMgr = RenderEngine::Instance().m_pRoot->createSceneManager(
           Ogre::ST_GENERIC, "LevelSceneManager");
   m_pSceneMgr->setAmbientLight(Ogre::ColourValue(0.7f, 0.7f, 0.7f));
 
@@ -42,20 +40,17 @@ void LevelState::enter() {
   m_pCamera->lookAt(Vector3(0, 0, 0));
   m_pCamera->setNearClipDistance(5);
 
-  m_pCamera->setAspectRatio(
-      Real(
-          RenderEngine::Instance().m_pViewport->getActualWidth())
-          / Real(
-              RenderEngine::Instance().m_pViewport->getActualHeight()));
+  m_pCamera->setAspectRatio(Real(RenderEngine::Instance().m_pViewport->
+    getActualWidth()) / Real(RenderEngine::Instance().m_pViewport->
+      getActualHeight()));
 
   RenderEngine::Instance().m_pViewport->setCamera(m_pCamera);
 
-  // Set up character
-	Ogre::SceneNode *charNode = m_pSceneMgr->getRootSceneNode()->
-    createChildSceneNode("CharNode");
+	//m_pSceneMgr->createLight("Light")->setPosition(75, 75, 75);
+
+  // Set up character geometry
 	Ogre::Entity *charEntity = m_pSceneMgr->createEntity("Char", "character.mesh");
-	charNode->attachObject(charEntity);
-  const float rad = 90. * (3.145 / 180.);
+  // const float rad = 90. * (3.145 / 180.);
   // charNode->rotate(Ogre::UNIT_Z, rad, Ogre::relativeTo);
 	// m_pOgreHeadNode->setPosition(Vector3(0, 0, -25));
 
@@ -64,9 +59,24 @@ void LevelState::enter() {
 	// m_pOgreHeadMatHigh->getTechnique(0)->getPass(0)->setAmbient(1, 0, 0);
 	// m_pOgreHeadMatHigh->getTechnique(0)->getPass(0)->setDiffuse(1, 0, 0, 0);
 
+  // Set up physics simulation with 100 Hz
+  simulation = new Simulation(m_pSceneMgr->getRootSceneNode(), 100.0);
+
+	simulation->createActor(
+	    IT_STEERING, CS_GLOBAL);
+	Ogre::SceneNode *actorNode = simulation->createActor(
+	    IT_CHARACTER, CS_CIRCLE, Ogre::Vector3(0.0, 2.0, 0.0), false)->getSceneNode();
+  actorNode->attachObject(charEntity);
+	//m_pSceneMgr->getRootSceneNode()->addChild(actorNode);
+  simulation->attachInteractionHandler(
+      IT_CHARACTER,
+      IT_STEERING,
+      new IHCharacterSteering());
+
   // Generate Level
-  genman.sceneFromUrl("http://the-space-station.com",
-                      m_pSceneMgr);
+  genman.sceneFromUrl("http://the-space-station.com", m_pSceneMgr);
+
+  // Build gui (surprise!)
   buildGUI();
 }
 
@@ -96,12 +106,9 @@ void LevelState::exit() {
         m_pSceneMgr);
 }
 
-
-
 void LevelState::levelGenerated(Level *level) {
        System::Instance().logMessage("Received level from generator...");
 }
-
 
 bool LevelState::keyPressed(const OIS::KeyEvent &keyEventRef) {
   if (Input::Instance().m_pKeyboard->isKeyDown(OIS::KC_ESCAPE)) {
@@ -156,28 +163,29 @@ bool LevelState::mouseReleased(
   return true;
 }
 
-void LevelState::moveCamera() {
-  if (Input::Instance().m_pKeyboard->isKeyDown(OIS::KC_LSHIFT))
-    m_pCamera->moveRelative(translateVector*5);
-  m_pCamera->moveRelative(translateVector);
-}
+// void LevelState::moveCamera() {
+//   if (Input::Instance().m_pKeyboard->isKeyDown(OIS::KC_LSHIFT))
+//     m_pCamera->moveRelative(translateVector*5);
+//   m_pCamera->moveRelative(translateVector);
+// }
 
-void LevelState::getInput() {
-    if (Input::Instance().m_pKeyboard->isKeyDown(OIS::KC_A))
-      translateVector.x = -moveSpeed;
-
-    if (Input::Instance().m_pKeyboard->isKeyDown(OIS::KC_D))
-      translateVector.x = moveSpeed;
-
-    if (Input::Instance().m_pKeyboard->isKeyDown(OIS::KC_W))
-      translateVector.z = -moveSpeed;
-
-    if (Input::Instance().m_pKeyboard->isKeyDown(OIS::KC_S))
-      translateVector.z = moveSpeed;
-}
+// void LevelState::getInput() {
+//     if (Input::Instance().m_pKeyboard->isKeyDown(OIS::KC_A))
+//       translateVector.x = -moveSpeed;
+//
+//     if (Input::Instance().m_pKeyboard->isKeyDown(OIS::KC_D))
+//       translateVector.x = moveSpeed;
+//
+//     if (Input::Instance().m_pKeyboard->isKeyDown(OIS::KC_W))
+//       translateVector.z = -moveSpeed;
+//
+//     if (Input::Instance().m_pKeyboard->isKeyDown(OIS::KC_S))
+//       translateVector.z = moveSpeed;
+// }
 
 void LevelState::update(double timeSinceLastFrame) {
   m_FrameEvent.timeSinceLastFrame = timeSinceLastFrame;
+  simulation->update(timeSinceLastFrame*0.000001);
   UserInterface::Instance().m_pTrayMgr->frameRenderingQueued(
       m_FrameEvent);
 
@@ -189,10 +197,10 @@ void LevelState::update(double timeSinceLastFrame) {
   moveScale = moveSpeed * timeSinceLastFrame;
   rotScale = rotateSpeed * timeSinceLastFrame;
 
-  translateVector = Vector3::ZERO;
+  // translateVector = Vector3::ZERO;
 
-  getInput();
-  moveCamera();
+  // getInput();
+  // moveCamera();
 
   OIS::MouseState &mutableMouseState =
       const_cast<OIS::MouseState &>(
