@@ -20,6 +20,9 @@ ELSE()
     
 ENDIF()
 
+#Set c++0x
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=gnu++0x")
+
 function(copy_plugins_config FROM_PLUGINS_CFG)
     message(STATUS "Copy from ${FROM_PLUGINS_CFG}")
     execute_process(
