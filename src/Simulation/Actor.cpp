@@ -19,6 +19,7 @@ Actor::Actor(
   this->shapeID = shapeID;
   this->sceneNode = sceneNode;
   this->velocity = Ogre::Vector3::ZERO;
+  this->acceleration = Ogre::Vector3::ZERO;
 
 #ifdef DEBUG_OUTPUT
   std::cout<<
@@ -56,8 +57,16 @@ Ogre::Vector3 Actor::getVelocity() {
   return velocity;
 }
 
+Ogre::Vector3 Actor::getAcceleration() {
+  return acceleration;
+}
+
 void Actor::addVelocity(Ogre::Vector3 velocity) {
   this->velocity += velocity;
+}
+
+void Actor::addAcceleration(Ogre::Vector3 acceleration) {
+  this->acceleration += acceleration;
 }
 
 void Actor::addMotionLock(Ogre::Vector2 wallNormal) {
@@ -65,8 +74,9 @@ void Actor::addMotionLock(Ogre::Vector2 wallNormal) {
 }
 
 void Actor::update(float d_t) {
-  Ogre::Vector3 resVel = velocity * d_t;
-  sceneNode->translate(resVel, Ogre::Node::TS_LOCAL);
+  velocity *= d_t;
+  sceneNode->translate(velocity, Ogre::Node::TS_LOCAL);
+  velocity = Ogre::Vector3::ZERO;
 
 #ifdef DEBUG_OUTPUT_TRIGGERED
   std::cout<<

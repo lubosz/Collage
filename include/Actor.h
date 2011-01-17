@@ -32,7 +32,9 @@ class Actor {
   Ogre::SceneNode *getSceneNode() const;
   Ogre::Vector3 getPosition();
   Ogre::Vector3 getVelocity();
+  Ogre::Vector3 getAcceleration();
   void addVelocity(Ogre::Vector3 velocity);
+  void addAcceleration(Ogre::Vector3 acceleration);
   void addMotionLock(Ogre::Vector2 wallNormal);
   void update(float d_t);
 
@@ -45,6 +47,7 @@ class Actor {
   // Animation
   Ogre::SceneNode* sceneNode;
   Ogre::Vector3 velocity;
+  Ogre::Vector3 acceleration;
   std::queue<Ogre::Vector2> motionLocks;
 };
 
