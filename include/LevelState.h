@@ -29,8 +29,8 @@ class LevelState : public AppState {
   bool pause();
   void resume();
 
-  // void moveCamera();
-  // void getInput();
+  void moveCamera();
+  void getInput();
   void buildGUI();
 
   bool keyPressed(const OIS::KeyEvent &keyEventRef);
@@ -50,7 +50,7 @@ class LevelState : public AppState {
   Simulation *simulation;
   bool quit;
 
-  // Ogre::Vector3 translateVector;
+  Ogre::Vector3 translateVector;
   Ogre::Real moveSpeed;
   Ogre::Degree rotateSpeed;
   float moveScale;

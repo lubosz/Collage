@@ -50,6 +50,8 @@ void LevelState::enter() {
 
   // Set up character geometry
 	Ogre::Entity *charEntity = m_pSceneMgr->createEntity("Char", "character.mesh");
+	Ogre::Entity *doorEntity = m_pSceneMgr->createEntity("door.mesh");
+  m_pSceneMgr->getRootSceneNode()->createChildSceneNode("Door");
   // const float rad = 90. * (3.145 / 180.);
   // charNode->rotate(Ogre::UNIT_Z, rad, Ogre::relativeTo);
 	// m_pOgreHeadNode->setPosition(Vector3(0, 0, -25));
@@ -171,25 +173,25 @@ bool LevelState::mouseReleased(
   return true;
 }
 
-// void LevelState::moveCamera() {
-//   if (Input::Instance().m_pKeyboard->isKeyDown(OIS::KC_LSHIFT))
-//     m_pCamera->moveRelative(translateVector*5);
-//   m_pCamera->moveRelative(translateVector);
-// }
+void LevelState::moveCamera() {
+  if (Input::Instance().m_pKeyboard->isKeyDown(OIS::KC_LSHIFT))
+    m_pCamera->moveRelative(translateVector*5);
+  m_pCamera->moveRelative(translateVector);
+}
 
-// void LevelState::getInput() {
-//     if (Input::Instance().m_pKeyboard->isKeyDown(OIS::KC_A))
-//       translateVector.x = -moveSpeed;
-//
-//     if (Input::Instance().m_pKeyboard->isKeyDown(OIS::KC_D))
-//       translateVector.x = moveSpeed;
-//
-//     if (Input::Instance().m_pKeyboard->isKeyDown(OIS::KC_W))
-//       translateVector.z = -moveSpeed;
-//
-//     if (Input::Instance().m_pKeyboard->isKeyDown(OIS::KC_S))
-//       translateVector.z = moveSpeed;
-// }
+void LevelState::getInput() {
+    if (Input::Instance().m_pKeyboard->isKeyDown(OIS::KC_A))
+      translateVector.x = -moveSpeed;
+
+    if (Input::Instance().m_pKeyboard->isKeyDown(OIS::KC_D))
+      translateVector.x = moveSpeed;
+
+    if (Input::Instance().m_pKeyboard->isKeyDown(OIS::KC_W))
+      translateVector.z = -moveSpeed;
+
+    if (Input::Instance().m_pKeyboard->isKeyDown(OIS::KC_S))
+      translateVector.z = moveSpeed;
+}
 
 void LevelState::update(double timeSinceLastFrame) {
   m_FrameEvent.timeSinceLastFrame = timeSinceLastFrame;
@@ -205,10 +207,10 @@ void LevelState::update(double timeSinceLastFrame) {
   moveScale = moveSpeed * timeSinceLastFrame;
   rotScale = rotateSpeed * timeSinceLastFrame;
 
-  // translateVector = Vector3::ZERO;
+  translateVector = Vector3::ZERO;
 
-  // getInput();
-  // moveCamera();
+  getInput();
+  moveCamera();
 
   OIS::MouseState &mutableMouseState =
       const_cast<OIS::MouseState &>(
