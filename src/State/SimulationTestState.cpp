@@ -72,7 +72,7 @@ void SimulationTestState::exit() {
 }
 
 void SimulationTestState::createScene() {
-  simulation = new Simulation(m_pSceneMgr->getRootSceneNode(), 100.0);
+  simulation = new Simulation(m_pSceneMgr->getRootSceneNode(), 60.0);
 
 	m_pSceneMgr->createLight("Light")->setPosition(75, 75, 75);
 
