@@ -12,9 +12,12 @@ InteractionHandler::~InteractionHandler() {
 
 void InteractionHandler::interact(Actor* a, Actor* b, float d_t) {
   std::map<InteractionID, Interaction*>::iterator found;
-  found = interactions.find(InteractionID(a->getTypeID(), b->getTypeID()));
+  InteractionID id(a->getTypeID(), b->getTypeID());
+  found = interactions.find(id);
   if (found == interactions.end()) {
-    enter(found->second);
+    Interaction* interaction = new Interaction(a, b);
+    interactions[id] = interaction;
+    enter(interaction);
   } else {
     inside(found->second, d_t);
   }
@@ -35,8 +38,8 @@ void InteractionHandler::inside(Interaction* interaction, float d_t) {
 #ifdef DEBUG_OUTPUT
   std::cout<<
       "Interaction: " << "inside" <<
-      ", Actor A: " << interaction->getA()->getActorID() <<
-      ", Actor B:" << interaction->getB()->getActorID() <<
+      ", A" << interaction->getA()->getActorID() <<
+      ", A" << interaction->getB()->getActorID() <<
       std::endl;
 #endif
 }

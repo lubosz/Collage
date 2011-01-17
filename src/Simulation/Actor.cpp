@@ -18,12 +18,13 @@ Actor::Actor(
   this->typeID = typeID;
   this->shapeID = shapeID;
   this->sceneNode = sceneNode;
+  this->velocity = Ogre::Vector3::ZERO;
 
 #ifdef DEBUG_OUTPUT
   std::cout<<
-      "Created Actor: " << actorID <<
-      ", shapeID: " << shapeID <<
+      "Created Actor: A" << actorID <<
       ", typeID:" << typeID <<
+      ", shapeID: " << shapeID <<
       std::endl;
 #endif
 }
@@ -35,14 +36,44 @@ int Actor::getActorID() const {
     return actorID;
 }
 
-Ogre::SceneNode *Actor::getSceneNode() const {
-    return sceneNode;
-}
-
 int Actor::getShapeID() const {
     return shapeID;
 }
 
 int Actor::getTypeID() const {
     return typeID;
+}
+
+Ogre::SceneNode *Actor::getSceneNode() const {
+    return sceneNode;
+}
+
+Ogre::Vector3 Actor::getPosition() {
+  return sceneNode->getPosition();
+}
+
+Ogre::Vector3 Actor::getVelocity() {
+  return velocity;
+}
+
+void Actor::addVelocity(Ogre::Vector3 velocity) {
+  this->velocity += velocity;
+}
+
+void Actor::addMotionLock(Ogre::Vector2 wallNormal) {
+  motionLocks.push(wallNormal);
+}
+
+void Actor::update(float d_t) {
+  Ogre::Vector3 resVel = velocity * d_t;
+  sceneNode->translate(resVel, Ogre::Node::TS_LOCAL);
+
+#ifdef DEBUG_OUTPUT_TRIGGERED
+  std::cout<<
+      "Updated A" << actorID <<
+      ", position: (" << getPosition().x <<
+      ", " << getPosition().y <<
+      ", " << getPosition().z << ")" <<
+      std::endl;
+#endif
 }

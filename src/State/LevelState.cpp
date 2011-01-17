@@ -28,6 +28,7 @@ LevelState::LevelState() {
 void LevelState::enter() {
   Input::Instance().m_pMouse->setBuffered(false);
 
+  // Set up Camera
   System::Instance().logMessage(
       "Entering LevelState...");
 
@@ -49,7 +50,22 @@ void LevelState::enter() {
 
   RenderEngine::Instance().m_pViewport->setCamera(m_pCamera);
 
-  genman.sceneFromUrl("http://boards.4chan.org/hr/",
+  // Set up character
+	Ogre::SceneNode *charNode = m_pSceneMgr->getRootSceneNode()->createChildSceneNode(
+			"CharNode");
+	Ogre::Entity *charEntity = m_pSceneMgr->createEntity("Char", "character.mesh");
+	charNode->attachObject(charEntity);
+  const float rad = 90. * (3.145 / 180.);
+  charNode->rotate(Ogre::UNIT_Z, rad, Ogre::relativeTo);
+	// m_pOgreHeadNode->setPosition(Vector3(0, 0, -25));
+
+	// m_pOgreHeadMat = m_pOgreHeadEntity->getSubEntity(1)->getMaterial();
+	// m_pOgreHeadMatHigh = m_pOgreHeadMat->clone("OgreHeadMatHigh");
+	// m_pOgreHeadMatHigh->getTechnique(0)->getPass(0)->setAmbient(1, 0, 0);
+	// m_pOgreHeadMatHigh->getTechnique(0)->getPass(0)->setDiffuse(1, 0, 0, 0);
+
+  // Generate Level
+  genman.sceneFromUrl("http://the-space-station.com",
                       m_pSceneMgr);
   buildGUI();
 }

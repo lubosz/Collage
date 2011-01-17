@@ -10,18 +10,17 @@
 #define SIMULATION_H_
 
 #include "OGRE/Ogre.h"
-#include "InteractionHandler.h"
 #include "SimulationEnums.h"
 
 class Simulation {
  public:
-	explicit Simulation(Ogre::SceneNode *rootSceneNode);
+	Simulation(Ogre::SceneNode *rootSceneNode, float frequency);
 	virtual ~Simulation();
 
-	void update(float d_t);
+	void update(float timeSinceLastFrame);
 
 	Actor* createActor(
-	    ActorType actorType,
+	    InteractionType actorType,
 	    CollisionShape collisionShape,
 			Ogre::Vector3 position = Ogre::Vector3::ZERO,
 			bool isStatic = true,
@@ -30,8 +29,8 @@ class Simulation {
 	);
 
 	void attachInteractionHandler(
-	    ActorType actorTypeA,
-	    ActorType actorTypeB,
+	    InteractionType actorTypeA,
+	    InteractionType actorTypeB,
 	    InteractionHandler* interactionHandler
 	);
 
@@ -39,6 +38,9 @@ class Simulation {
 
 
  private:
+	float frequency;
+	float d_t;
+
 	Ogre::SceneNode *rootSceneNode;
 
 	typedef std::vector<Actor*> ActorList;
