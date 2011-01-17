@@ -15,13 +15,13 @@ DivBoxGenerator::DivBoxGenerator() {
 
 float DivBoxGenerator::getScore(QWebPage *webpage) {
     this->webpage = webpage;
-    return 10.0;
+    return 4.0;
 }
 
 void DivBoxGenerator::makeOgreImage(QWebElement * element,
     const Ogre::String & textureName) {
   QImage image(element->geometry().size(), QImage::Format_ARGB32_Premultiplied);
-
+  image.fill(Qt::transparent);
   QPainter painter(&image);
   painter.setRenderHint(QPainter::Antialiasing, true);
   painter.setRenderHint(QPainter::TextAntialiasing, true);
@@ -65,6 +65,33 @@ void DivBoxGenerator::attachNode(
   node->setScale(width, height, 1.0);
 }
 
+void DivBoxGenerator::makeElementBoxes(
+    QWebElement * document,
+    Ogre::Real scale,
+    Ogre::Real step,
+    QString tagName,
+    Ogre::String meshName,
+    Ogre::SceneManager * sceneManager) {
+
+  QWebElementCollection elements = document->findAll(tagName);
+  Ogre::Real count = 0;
+
+  foreach(QWebElement element, elements) {
+      if (fits(&element, 0, 2048)) {
+        qDebug() << "Some " << tagName << " " << element.geometry();
+        Ogre::Entity* cube = sceneManager->createEntity(meshName);
+        Ogre::String textureName =
+            "PageTex" + Ogre::StringConverter::toString(count);
+
+        makeOgreImage(&element, textureName);
+        attachNode(&element, sceneManager->getRootSceneNode(), scale, count,
+            textureName, cube);
+
+        count += step;
+      }
+    }
+}
+
 bool DivBoxGenerator::fits(QWebElement * element, unsigned min, unsigned max) {
   if (element->geometry().width() > min &&
       element->geometry().height() > min &&
@@ -86,24 +113,7 @@ Level* DivBoxGenerator::generate(Ogre::SceneManager * sceneManager) {
       Qt::Horizontal, Qt::ScrollBarAlwaysOff);
   webpage->setViewportSize(siteResolution);
 
-  QWebElementCollection elements = document.findAll("img");
-  Ogre::Real count = 0;
-  Ogre::Real scale = .01;
-
-  foreach(QWebElement element, elements) {
-      if (fits(&element, 0, 2048)) {
-        qDebug() << "Some Div " << element.geometry();
-        Ogre::Entity* cube = sceneManager->createEntity("Cube.mesh");
-        Ogre::String textureName =
-            "PageTex" + Ogre::StringConverter::toString(count);
-
-        makeOgreImage(&element, textureName);
-        attachNode(&element, sceneManager->getRootSceneNode(), scale, count,
-            textureName, cube);
-
-        count += 2;
-      }
-    }
+  makeElementBoxes(&document, 0.01, 2, "img", "Cube.mesh", sceneManager);
 
   sceneManager->createLight("Light")->setPosition(75, 75, 75);
 
