@@ -62,16 +62,24 @@ void LevelState::enter() {
   // Set up physics simulation with 100 Hz
   simulation = new Simulation(m_pSceneMgr->getRootSceneNode(), 100.0);
 
+  // Character
 	simulation->createActor(
 	    IT_STEERING, CS_GLOBAL);
 	Ogre::SceneNode *actorNode = simulation->createActor(
 	    IT_CHARACTER, CS_CIRCLE, Ogre::Vector3(0.0, 2.0, 0.0), false)->getSceneNode();
   actorNode->attachObject(charEntity);
-	//m_pSceneMgr->getRootSceneNode()->addChild(actorNode);
   simulation->attachInteractionHandler(
       IT_CHARACTER,
       IT_STEERING,
       new IHCharacterSteering());
+
+  // Gravity
+  simulation->createActor(
+      IT_GRAVITY, CS_GLOBAL);
+  simulation->attachInteractionHandler(
+      IT_CHARACTER,
+      IT_GRAVITY,
+      new IHCharacterGravity(Ogre::Vector2(0.0, -9.81)));
 
   // Generate Level
   genman.sceneFromUrl("http://the-space-station.com", m_pSceneMgr);
