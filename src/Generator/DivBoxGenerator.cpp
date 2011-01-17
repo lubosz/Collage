@@ -114,6 +114,7 @@ void DivBoxGenerator::setPageRendering(const QSize& siteResolution) {
 }
 
 Level* DivBoxGenerator::generate(Ogre::SceneManager *sceneManager) {
+  this->sceneManager = sceneManager;
 //  QSize siteResolution = document.geometry().size();
 //  qDebug() << "Whole Page " << webpage->mainFrame()->geometry();
   setPageRendering(QSize(1024, 1024));
@@ -127,6 +128,8 @@ Level* DivBoxGenerator::generate(Ogre::SceneManager *sceneManager) {
       .01, 2, "div", "Cube.mesh", sceneManager);
 
   sceneManager->createLight("Light")->setPosition(75, 75, 75);
+
+  this->addDoors();
 
   return new Level();
 }
