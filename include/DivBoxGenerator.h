@@ -8,7 +8,16 @@
 class DivBoxGenerator : public LevelGenerator {
  public:
     DivBoxGenerator();
-
+    void makeOgreImage(
+        QWebElement * element, const Ogre::String & textureName);
+    void attachNode(
+        QWebElement * element,
+        Ogre::SceneNode * parentNode,
+        Ogre::Real scale,
+        Ogre::Real count,
+        const Ogre::String & textureName,
+        Ogre::Entity* cube);
+    bool fits(QWebElement * element, unsigned min, unsigned max);
     float getScore(QWebPage *webpage);
     Level* generate(Ogre::SceneManager * sceneManager);
 };
