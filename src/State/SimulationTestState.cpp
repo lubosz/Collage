@@ -167,7 +167,7 @@ void SimulationTestState::getInput() {
 }
 
 void SimulationTestState::update(double timeSinceLastFrame) {
-  simulation->update(timeSinceLastFrame);
+  simulation->update(timeSinceLastFrame*0.000001);
 	m_FrameEvent.timeSinceLastFrame = timeSinceLastFrame;
 	UserInterface::Instance().m_pTrayMgr->frameRenderingQueued(
 			m_FrameEvent);

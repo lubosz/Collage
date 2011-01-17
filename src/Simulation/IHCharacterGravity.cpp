@@ -18,6 +18,5 @@ IHCharacterGravity::~IHCharacterGravity() {
 
 void IHCharacterGravity::inside(Interaction* interaction, float d_t) {
   Actor* character = interaction->getA();
-  Ogre::Vector3 d_v = to3D(gravity * d_t);
-  character->addVelocity(d_v);
+  character->addVelocity(to3D(gravity)*d_t);
 }
