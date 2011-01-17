@@ -76,8 +76,8 @@ void SimulationTestState::createScene() {
 
 	m_pSceneMgr->createLight("Light")->setPosition(75, 75, 75);
 
-	simulation->createActor(
-	    IT_CHARACTER, CS_CIRCLE, Ogre::Vector3(0.0, 2.0, 0.0), false);
+  simulation->createActor(
+      IT_CHARACTER, CS_CIRCLE, Ogre::Vector3(0.0, 2.0, 0.0), false);
   simulation->createActor(
       IT_TERRAIN, CS_BOX, Ogre::Vector3(0.0, -2.0, 0.0));
   simulation->createActor(
@@ -161,7 +161,7 @@ void SimulationTestState::getInput() {
 }
 
 void SimulationTestState::update(double timeSinceLastFrame) {
-  simulation->update(timeSinceLastFrame);
+  simulation->update(timeSinceLastFrame*0.0000001);
 	m_FrameEvent.timeSinceLastFrame = timeSinceLastFrame;
 	UserInterface::Instance().m_pTrayMgr->frameRenderingQueued(
 			m_FrameEvent);

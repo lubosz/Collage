@@ -71,7 +71,7 @@ void AppStateManager::start(AppState* state) {
 #endif
 		if (RenderEngine::Instance().m_pRenderWnd->isActive()) {
 			startTime
-					= System::Instance().m_pTimer->getMillisecondsCPU();
+					= System::Instance().m_pTimer->getMicroseconds();
 
 			Input::Instance().m_pKeyboard->capture();
 			Input::Instance().m_pMouse->capture();
@@ -82,7 +82,7 @@ void AppStateManager::start(AppState* state) {
 			RenderEngine::Instance().m_pRoot->renderOneFrame();
 
 			timeSinceLastFrame
-					= System::Instance().m_pTimer->getMillisecondsCPU()
+					= System::Instance().m_pTimer->getMicroseconds()
 							- startTime;
 		} else {
 #ifdef WIN32
