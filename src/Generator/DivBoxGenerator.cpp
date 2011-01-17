@@ -35,7 +35,7 @@ void DivBoxGenerator::makeOgreImage(QWebElement * element,
           image.height(), 1, Ogre::PF_A8R8G8B8));
 }
 
-void DivBoxGenerator::attachNode(
+Ogre::Real DivBoxGenerator::attachNode(
     QWebElement * element,
     Ogre::SceneNode * parentNode,
     Ogre::Real scale,
@@ -59,21 +59,23 @@ void DivBoxGenerator::attachNode(
   node->attachObject(cube);
   node->setPosition(
       Ogre::Vector3(
-          -element->geometry().left()*scale,
+          (-element->geometry().left()*scale) + width/2,
           -element->geometry().top()*scale,
           count));
-  node->setScale(width, height, 1.0);
+  node->setScale(width, height, width);
+
+  return width;
 }
 
 void DivBoxGenerator::makeElementBoxes(
-    QWebElement * document,
+    const QWebElement & document,
     Ogre::Real scale,
     Ogre::Real step,
     QString tagName,
     Ogre::String meshName,
     Ogre::SceneManager * sceneManager) {
 
-  QWebElementCollection elements = document->findAll(tagName);
+  QWebElementCollection elements = document.findAll(tagName);
   Ogre::Real count = 0;
 
   foreach(QWebElement element, elements) {
@@ -84,10 +86,11 @@ void DivBoxGenerator::makeElementBoxes(
             "PageTex" + Ogre::StringConverter::toString(count);
 
         makeOgreImage(&element, textureName);
-        attachNode(&element, sceneManager->getRootSceneNode(), scale, count,
+        Ogre::Real depth =
+            attachNode(&element, sceneManager->getRootSceneNode(), scale, count,
             textureName, cube);
 
-        count += step;
+        count += (step+depth);
       }
     }
 }
@@ -101,19 +104,26 @@ bool DivBoxGenerator::fits(QWebElement * element, unsigned min, unsigned max) {
   return false;
 }
 
-Level* DivBoxGenerator::generate(Ogre::SceneManager * sceneManager) {
-  QWebElement document = webpage->mainFrame()->documentElement();
-//  QSize siteResolution = document.geometry().size();
-  QSize siteResolution = QSize(1024, 1024);
-  qDebug() << "Whole Page " << webpage->mainFrame()->geometry();
-
+void DivBoxGenerator::setPageRendering(const QSize& siteResolution) {
   webpage->mainFrame()->setScrollBarPolicy(
       Qt::Vertical, Qt::ScrollBarAlwaysOff);
   webpage->mainFrame()->setScrollBarPolicy(
       Qt::Horizontal, Qt::ScrollBarAlwaysOff);
   webpage->setViewportSize(siteResolution);
+}
 
-  makeElementBoxes(&document, 0.01, 2, "img", "Cube.mesh", sceneManager);
+Level* DivBoxGenerator::generate(Ogre::SceneManager *sceneManager) {
+//  QSize siteResolution = document.geometry().size();
+//  qDebug() << "Whole Page " << webpage->mainFrame()->geometry();
+  setPageRendering(QSize(1024, 1024));
+
+  makeElementBoxes(
+      webpage->mainFrame()->documentElement(),
+      0.01, 2, "img", "Cube.mesh", sceneManager);
+
+  makeElementBoxes(
+      webpage->mainFrame()->documentElement(),
+      0.01, 2, "div", "Cube.mesh", sceneManager);
 
   sceneManager->createLight("Light")->setPosition(75, 75, 75);
 
