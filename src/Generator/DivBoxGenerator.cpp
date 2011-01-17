@@ -20,6 +20,8 @@ float DivBoxGenerator::getScore(QWebPage *webpage) {
 
 void DivBoxGenerator::makeOgreImage(QWebElement * element,
     const Ogre::String & textureName) {
+  qDebug() << "Style" << webpage->mainFrame()->
+      documentElement().styleProperty("background-color", QWebElement::ComputedStyle);
   QImage image(element->geometry().size(), QImage::Format_ARGB32_Premultiplied);
   image.fill(Qt::transparent);
   QPainter painter(&image);
@@ -57,15 +59,14 @@ void DivBoxGenerator::attachNode(
 
   cube->getSubEntity(0)->setMaterial(material);
   Ogre::Real x, y, z;
-//  x = -element->geometry().left()*scale - width;
+  x = -element->geometry().left()*scale - width;
   x = -element->geometry().left()*scale;
-  y = -element->geometry().top()*scale;
-//  z = count;
-  z = 0;
+  z = count + width;
+
   qDebug() << "Position:" << x << y << z
       << "Size:" << width << height << "Scale:" << scale;
-  node->setPosition(Ogre::Vector3((x, y, z)));
   node->attachObject(cube);
+  node->setPosition(x, y, z);
   node->setScale(width, height, width);
 }
 
