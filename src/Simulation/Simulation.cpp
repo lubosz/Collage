@@ -58,8 +58,6 @@ void Simulation::attachInteractionHandler(
 }
 
 void Simulation::update(float secondsSinceLastFrame) {
-  if (secondsSinceLastFrame < 10) {
-  }
   d_t += secondsSinceLastFrame;
   if (d_t > 1.0 / frequency) {
 #ifdef DEBUG_OUTPUT_TRIGGERED
