@@ -35,7 +35,7 @@ void DivBoxGenerator::makeOgreImage(QWebElement * element,
           image.height(), 1, Ogre::PF_A8R8G8B8));
 }
 
-Ogre::Real DivBoxGenerator::attachNode(
+void DivBoxGenerator::attachNode(
     QWebElement * element,
     Ogre::SceneNode * parentNode,
     Ogre::Real scale,
@@ -56,15 +56,14 @@ Ogre::Real DivBoxGenerator::attachNode(
   Ogre::SceneNode* node = parentNode->createChildSceneNode();
 
   cube->getSubEntity(0)->setMaterial(material);
+  Ogre::Real x, y, z;
+  x = -element->geometry().left()*scale - width/2;
+  y = -element->geometry().top()*scale;
+  z = count + width;
+  qDebug() << "Position:" << x << y << z << "Size:" << width << height;
+  node->setPosition(Ogre::Vector3((x, y, z)));
   node->attachObject(cube);
-  node->setPosition(
-      Ogre::Vector3(
-          (-element->geometry().left()*scale) + width/2,
-          -element->geometry().top()*scale,
-          count));
   node->setScale(width, height, width);
-
-  return width;
 }
 
 void DivBoxGenerator::makeElementBoxes(
@@ -86,11 +85,10 @@ void DivBoxGenerator::makeElementBoxes(
             "PageTex" + Ogre::StringConverter::toString(count);
 
         makeOgreImage(&element, textureName);
-        Ogre::Real depth =
-            attachNode(&element, sceneManager->getRootSceneNode(), scale, count,
+        attachNode(&element, sceneManager->getRootSceneNode(), scale, count,
             textureName, cube);
 
-        count += (step+depth);
+        count += step;
       }
     }
 }

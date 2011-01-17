@@ -10,7 +10,7 @@ class DivBoxGenerator : public LevelGenerator {
     DivBoxGenerator();
     void makeOgreImage(
         QWebElement * element, const Ogre::String & textureName);
-    Ogre::Real attachNode(
+    void attachNode(
         QWebElement * element,
         Ogre::SceneNode * parentNode,
         Ogre::Real scale,
