@@ -16,7 +16,7 @@ class IHCharacterGravity: public InteractionHandler {
   explicit IHCharacterGravity(Ogre::Vector2 gravity);
   virtual ~IHCharacterGravity();
 
-  void inside(Interaction* interaction);
+  void inside(Interaction* interaction, float d_t);
 
   Ogre::Vector2 gravity;
 };

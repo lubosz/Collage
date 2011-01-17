@@ -16,7 +16,7 @@ IHCharacterGravity::~IHCharacterGravity() {
   // TODO(gerrit): Auto-generated destructor stub
 }
 
-void IHCharacterGravity::inside(Interaction* interaction) {
+void IHCharacterGravity::inside(Interaction* interaction, float d_t) {
   Actor* character = interaction->getA();
-  character->addAcceleration(to3D(gravity));
+  character->addVelocity(to3D(gravity)*d_t);
 }
