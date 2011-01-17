@@ -57,10 +57,13 @@ void DivBoxGenerator::attachNode(
 
   cube->getSubEntity(0)->setMaterial(material);
   Ogre::Real x, y, z;
-  x = -element->geometry().left()*scale - width/2;
+//  x = -element->geometry().left()*scale - width;
+  x = -element->geometry().left()*scale;
   y = -element->geometry().top()*scale;
-  z = count + width;
-  qDebug() << "Position:" << x << y << z << "Size:" << width << height;
+//  z = count;
+  z = count;
+  qDebug() << "Position:" << x << y << z
+      << "Size:" << width << height << "Scale:" << scale;
   node->setPosition(Ogre::Vector3((x, y, z)));
   node->attachObject(cube);
   node->setScale(width, height, width);
@@ -115,13 +118,13 @@ Level* DivBoxGenerator::generate(Ogre::SceneManager *sceneManager) {
 //  qDebug() << "Whole Page " << webpage->mainFrame()->geometry();
   setPageRendering(QSize(1024, 1024));
 
-  makeElementBoxes(
-      webpage->mainFrame()->documentElement(),
-      0.01, 2, "img", "Cube.mesh", sceneManager);
+//  makeElementBoxes(
+//      webpage->mainFrame()->documentElement(),
+//      1, 200, "img", "Cube.mesh", sceneManager);
 
   makeElementBoxes(
       webpage->mainFrame()->documentElement(),
-      0.01, 2, "div", "Cube.mesh", sceneManager);
+      .01, 2, "div", "Cube.mesh", sceneManager);
 
   sceneManager->createLight("Light")->setPosition(75, 75, 75);
 
