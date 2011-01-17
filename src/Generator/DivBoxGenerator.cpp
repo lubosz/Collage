@@ -61,7 +61,7 @@ void DivBoxGenerator::attachNode(
   x = -element->geometry().left()*scale;
   y = -element->geometry().top()*scale;
 //  z = count;
-  z = count;
+  z = 0;
   qDebug() << "Position:" << x << y << z
       << "Size:" << width << height << "Scale:" << scale;
   node->setPosition(Ogre::Vector3((x, y, z)));

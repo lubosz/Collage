@@ -46,7 +46,6 @@ void LevelState::enter() {
 
   RenderEngine::Instance().m_pViewport->setCamera(m_pCamera);
 
-	//m_pSceneMgr->createLight("Light")->setPosition(75, 75, 75);
 
   // Set up character geometry
 	Ogre::Entity *charEntity = m_pSceneMgr->createEntity("Char", "character.mesh");
@@ -66,8 +65,9 @@ void LevelState::enter() {
 	simulation->createActor(
 	    IT_STEERING, CS_GLOBAL);
 	Ogre::SceneNode *actorNode = simulation->createActor(
-	    IT_CHARACTER, CS_CIRCLE, Ogre::Vector3(0.0, 2.0, 0.0), false)->getSceneNode();
-  actorNode->attachObject(charEntity);
+	    IT_CHARACTER, CS_CIRCLE,
+	    Ogre::Vector3(0.0, 2.0, 0.0), false)->getSceneNode();
+      actorNode->attachObject(charEntity);
   simulation->attachInteractionHandler(
       IT_CHARACTER,
       IT_STEERING,
