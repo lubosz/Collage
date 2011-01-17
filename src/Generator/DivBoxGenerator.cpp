@@ -20,8 +20,6 @@ float DivBoxGenerator::getScore(QWebPage *webpage) {
 
 void DivBoxGenerator::makeOgreImage(QWebElement * element,
     const Ogre::String & textureName) {
-  qDebug() << "Style" << webpage->mainFrame()->
-      documentElement().styleProperty("background-color", QWebElement::ComputedStyle);
   QImage image(element->geometry().size(), QImage::Format_ARGB32_Premultiplied);
   image.fill(Qt::transparent);
   QPainter painter(&image);
@@ -59,9 +57,9 @@ void DivBoxGenerator::attachNode(
 
   cube->getSubEntity(0)->setMaterial(material);
   Ogre::Real x, y, z;
-  x = -element->geometry().left()*scale - width;
-  x = -element->geometry().left()*scale;
-  z = count + width;
+  x = -element->geometry().left()*scale - width*4;
+  y = -element->geometry().top()*scale;
+  z = count + width*4 + 30;
 
   qDebug() << "Position:" << x << y << z
       << "Size:" << width << height << "Scale:" << scale;
@@ -115,6 +113,9 @@ void DivBoxGenerator::setPageRendering(const QSize& siteResolution) {
 }
 
 Level* DivBoxGenerator::generate(Ogre::SceneManager *sceneManager) {
+  qDebug() << "\n\nStyle" << webpage->mainFrame()->documentElement().
+      styleProperty("#background-color", QWebElement::ComputedStyle);
+
 //  QSize siteResolution = document.geometry().size();
 //  qDebug() << "Whole Page " << webpage->mainFrame()->geometry();
   setPageRendering(QSize(1024, 1024));
