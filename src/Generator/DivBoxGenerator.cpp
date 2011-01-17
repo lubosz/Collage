@@ -119,6 +119,7 @@ void DivBoxGenerator::setPageRendering(const QSize& siteResolution) {
 }
 
 Level* DivBoxGenerator::generate(Ogre::SceneManager *sceneManager) {
+  this->sceneManager = sceneManager;
   qDebug() << "\n\nStyle" << webpage->mainFrame()->documentElement().
       styleProperty("#background-color", QWebElement::ComputedStyle);
 
@@ -135,6 +136,8 @@ Level* DivBoxGenerator::generate(Ogre::SceneManager *sceneManager) {
       .01, 1, "div", "Cube.mesh", sceneManager);
 
   sceneManager->createLight("Light")->setPosition(75, 75, 75);
+
+  this->addDoors();
 
   return new Level();
 }

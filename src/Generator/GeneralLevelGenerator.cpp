@@ -18,6 +18,7 @@ float GeneralLevelGenerator::getScore(QWebPage *webpage) {
 }
 
 Level* GeneralLevelGenerator::generate(Ogre::SceneManager * sceneManager) {
+  this->sceneManager = sceneManager;
     // uses this.webframe to generate Level, returns Level
 //    Ogre::SceneManager* manager =
 //            RenderEngine::Instance().m_pRoot->createSceneManager(
@@ -49,6 +50,8 @@ Level* GeneralLevelGenerator::generate(Ogre::SceneManager * sceneManager) {
   m_pOgreHeadMatHigh->getTechnique(0)->getPass(0)->setAmbient(1, 0, 0);
   m_pOgreHeadMatHigh->getTechnique(0)->getPass(0)->setDiffuse(1, 0, 0, 0);
 
+  this->addDoors();
+
   Level *level = new Level();
-    return level;
+  return level;
 }

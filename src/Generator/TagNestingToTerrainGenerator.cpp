@@ -38,6 +38,8 @@ void TagNestingToTerrainGenerator::addBox(
 Level* TagNestingToTerrainGenerator::generate(
     Ogre::SceneManager *sceneManager) {
 
+  this->sceneManager = sceneManager;
+
   sceneManager->createLight("Light")->setPosition(75, 75, 75);
   Ogre::ManualObject *manual = sceneManager->createManualObject("ground");
   manual->begin("BaseWhiteNoLighting",
@@ -79,6 +81,8 @@ Level* TagNestingToTerrainGenerator::generate(
   manual->setMaterialName(0, "GroundNoCulling");
   sceneManager->getRootSceneNode()->
             createChildSceneNode()->attachObject(manual);
+
+  this->addDoors();
 
   Level *level = new Level();
   return level;
