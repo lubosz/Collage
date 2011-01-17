@@ -10,18 +10,18 @@
 #include <QtCore>
 #include <sstream>
 
-#include "IHCharacterGravity.h"
-
-Simulation::Simulation(Ogre::SceneNode *rootSceneNode) {
+Simulation::Simulation(Ogre::SceneNode *rootSceneNode, float frequency) {
 	this->rootSceneNode = rootSceneNode;
+	this->frequency = frequency;
 	currentActorID = 0;
+	d_t = 0.0;
 }
 
 Simulation::~Simulation() {}
 
 
 Actor* Simulation::createActor(
-    ActorType actorType,
+    InteractionType interactionType,
     CollisionShape collisionShape,
     Ogre::Vector3 position,
     bool isStatic,
@@ -33,8 +33,8 @@ Actor* Simulation::createActor(
 	Ogre::SceneNode *sceneNode =
 	    rootSceneNode->createChildSceneNode(name.str(), position);
 
-	int shapeID = actorType;
-  int typeID = collisionShape;
+	int shapeID = collisionShape;
+  int typeID = interactionType;
 
 	Actor *actor = new Actor(actorID, typeID, shapeID, sceneNode);
 
@@ -47,45 +47,76 @@ Actor* Simulation::createActor(
 }
 
 void Simulation::attachInteractionHandler(
-    ActorType actorTypeA,
-    ActorType actorTypeB,
+    InteractionType actorTypeA,
+    InteractionType actorTypeB,
     InteractionHandler* interactionHandler) {
   int a = actorTypeA;
   int b = actorTypeB;
   sortInt(&a, &b);
   interactionHandlers[InteractionHandlerID(a, b)] = interactionHandler;
+  interactionHandlers.find(InteractionHandlerID(a, b))->second->cleanup();
 }
 
-void Simulation::update(float d_t) {
-  foreach(Actor* a, dynamicActors) {
-    foreach(Actor* b, staticActors) {
-      Actor* aTemp = a;
-      Actor* bTemp = b;
+void Simulation::update(float timeSinceLastFrame) {
+  d_t += timeSinceLastFrame * 0.001;
+  if (d_t > 1.0 / frequency) {
+#ifdef DEBUG_OUTPUT_TRIGGERED
+    printf("NEW FRAME, d_t: %f \n", d_t);
+#endif
 
-      sortActorsByTypeID(&aTemp, &bTemp);
-      InteractionHandlerID id =
-          InteractionHandlerID(aTemp->getTypeID(), bTemp->getTypeID());
-      std::map<InteractionHandlerID, InteractionHandler*>::iterator it =
-          interactionHandlers.find(id);
+    foreach(Actor* a, dynamicActors) {
+      foreach(Actor* b, staticActors) {
+        bool collision = false;
 
 #ifdef DEBUG_OUTPUT_TRIGGERED
-      std::cout <<
-          "Collision Detected between Actors" << aTemp->getActorID() <<
-          " and " << bTemp->getActorID() <<
-          std::endl;
-      if (it == interactionHandlers.end()) {
-        std::cout <<
-            "InteractionHandler for Actortypes " << aTemp->getTypeID() <<
-            " and " << bTemp->getTypeID() <<
-            std::endl;
-      } else {
-        std::cout <<
-            "No InteractionHandler for Actorstypes " << aTemp->getTypeID() <<
-            " and " << bTemp->getTypeID() <<
-            std::endl;
-      }
+        printf("collision test: A%i, A%i -> ",
+            a->getActorID(),
+            b->getActorID());
 #endif
+
+        // Collision Tests
+        switch (b->getShapeID()) {
+        case CS_GLOBAL:
+          collision = true;
+#ifdef DEBUG_OUTPUT_TRIGGERED
+          printf("GLOBAL \n");
+#endif
+          break;
+        default:
+#ifdef DEBUG_OUTPUT_TRIGGERED
+          printf("NONE \n");
+#endif
+        }
+
+        // Find type specific interaction
+        if (collision) {
+        Actor* aTemp = a;
+        Actor* bTemp = b;
+        sortActorsByTypeID(&aTemp, &bTemp);
+        InteractionHandlerID id =
+            InteractionHandlerID(aTemp->getTypeID(), bTemp->getTypeID());
+        std::map<InteractionHandlerID, InteractionHandler*>::iterator it =
+            interactionHandlers.find(id);
+          if (it != interactionHandlers.end()) {
+            it->second->interact(aTemp, bTemp, d_t);
+#ifdef DEBUG_OUTPUT_TRIGGERED
+            printf("interaction handler: %i, %i \n",
+                aTemp->getTypeID(),
+                bTemp->getTypeID());
+          } else {
+            printf("no interaction handler for: %i, %i \n",
+                aTemp->getTypeID(),
+                bTemp->getTypeID());
+#endif
+          }
+        }
+      }
     }
+
+    foreach(Actor* a, dynamicActors) {
+      a->update(d_t);
+    }
+    d_t = 0.0;
   }
 }
 
