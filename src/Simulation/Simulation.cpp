@@ -149,6 +149,11 @@ void Simulation::update(float secondsSinceLastFrame) {
     foreach(Actor* a, dynamicActors) {
       a->update(d_t);
     }
+    std::map<InteractionHandlerID, InteractionHandler*>::iterator it =
+        interactionHandlers.begin();
+    for (; it != interactionHandlers.end(); it++) {
+      it->second->cleanup();
+    }
     d_t = 0.0;
   }
 }

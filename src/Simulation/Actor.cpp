@@ -86,8 +86,10 @@ void Actor::update(float d_t) {
   translation += velocity * d_t;
 
   while (!motionLocks.empty()) {
-    if (to2D(translation).dotProduct(motionLocks.front()) < 0.0)
+    if (to2D(translation).dotProduct(motionLocks.front()) < 0.0) {
       translation = Ogre::Vector3::ZERO;
+      velocity = Ogre::Vector3::ZERO;
+    }
     motionLocks.pop();
   }
 

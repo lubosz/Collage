@@ -64,12 +64,27 @@ void LevelState::enter() {
   simulation = new Simulation(m_pSceneMgr->getRootSceneNode(), 100.0);
 
   // Character
-	simulation->createActor(
-	    IT_STEERING, CT_GLOBAL);
-	Ogre::SceneNode *actorNode = simulation->createActor(
+
+  simulation->createActor(IT_STEERING, CT_GLOBAL);
+
+  simulation->createActor(
+      IT_TERRAIN,
+      CT_AABB,
+      Ogre::Vector3(0.0, -1.0, 0.0));
+
+
+
+	Actor* actor = simulation->createActor(
 	    IT_CHARACTER, CT_AABB,
-	    Ogre::Vector3(0.0, 2.0, 0.0), false)->getSceneNode();
+	    Ogre::Vector3(0.0, 5.0, 0.0),
+	    false);
+
+	Ogre::SceneNode *actorNode = actor->getSceneNode();
+	static_cast<CSAABB*>(actor->getCollisionShape())
+	    ->aABB = Ogre::Vector2(5., 10.);
+
       actorNode->attachObject(charEntity);
+
   simulation->attachInteractionHandler(
       IT_CHARACTER,
       IT_STEERING,
@@ -84,7 +99,7 @@ void LevelState::enter() {
   simulation->attachInteractionHandler(
       IT_CHARACTER,
       IT_GRAVITY,
-      new IHCharacterGravity(Ogre::Vector2(0.0, -9.81)));
+      new IHCharacterGravity(Ogre::Vector2(0.0, -30.81)));
 
   // Generate Level
   genman.sceneFromUrl(

@@ -18,24 +18,28 @@ void InteractionHandler::interact(Actor* a, Actor* b, float d_t) {
     Interaction* interaction = new Interaction(a, b);
     interactions[id] = interaction;
     enter(interaction);
+    interaction->setOk(true);
   } else {
+    found->second->setOk(true);
     inside(found->second, d_t);
   }
 }
 
 void InteractionHandler::cleanup() {
   std::map<InteractionID, Interaction*>::iterator it = interactions.begin();
-  for (; it != interactions.begin(); it++) {
+  for (; it != interactions.end(); it++) {
      if (!it->second->getOk()) {
        leave(it->second);
        interactions.erase(it);
+     } else {
+       it->second->setOk(false);
      }
   }
 }
 
 
 void InteractionHandler::inside(Interaction* interaction, float d_t) {
-#ifdef DEBUG_OUTPUT
+#ifdef DEBUG_OUTPUT_TRIGGERED
   std::cout<<
       "Interaction: " << "inside" <<
       ", A" << interaction->getA()->getActorID() <<
