@@ -32,7 +32,7 @@ void LevelGenerator::addDoors() {
       if (url.contains("#"))
         continue;
       bool cont = false;
-      foreach (QString entry, blacklist) {
+      foreach(QString entry, blacklist) {
         if (url.contains(entry, Qt::CaseInsensitive))
           cont = true;
       }
@@ -44,7 +44,8 @@ void LevelGenerator::addDoors() {
       Ogre::Entity* door = sceneManager->createEntity("door.mesh");
       actor->getSceneNode()->attachObject(door);
       // XXX Set size properly
-      static_cast<CSAABB*>(actor->getCollisionShape())->aABB = Ogre::Vector2(0.01, 0.01);
+      static_cast<CSAABB*>(actor->getCollisionShape())->aABB =
+          Ogre::Vector2(0.01, 0.01);
     }
   this->simulation->attachInteractionHandler(IT_DOOR, IT_GRAVITY,
       new IHCharacterGravity(Ogre::Vector2(0., -9.81)));
