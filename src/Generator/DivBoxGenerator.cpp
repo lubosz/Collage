@@ -65,7 +65,7 @@ Ogre::Vector3 DivBoxGenerator::attachNode(
 
   Ogre::SceneNode* node = parentNode->createChildSceneNode();
 
-  cube->getSubEntity(0)->setMaterial(material);
+  cube->getSubEntity(1)->setMaterial(material);
   Ogre::Real x, y, z;
   x = width*2;
   y = -height/3.0;
