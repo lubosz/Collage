@@ -151,7 +151,7 @@ Level* DivBoxGenerator::generate(Ogre::SceneManager *sceneManager,
 //  qDebug() << "Whole Page " << webpage->mainFrame()->geometry();
   setPageRendering(QSize(1440, 800));
 
-  std::vector<QString> tags = {"div", "p", "img", "h2", "h1", "h3"};
+  std::vector<QString> tags = {"div", "p", "img", "h2", "h1", "h3", "table"};
 
   makeElementBoxes(
       webpage->mainFrame()->documentElement(),
