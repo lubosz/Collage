@@ -19,7 +19,8 @@ class DivBoxGenerator : public LevelGenerator {
         Ogre::Vector3 position);
     bool fits(QWebElement * element, int min, int max);
     float getScore(QWebPage *webpage);
-    Level* generate(Ogre::SceneManager * sceneManager);
+    Level* generate(Ogre::SceneManager * sceneManager,
+        Simulation *simulation);
     void makeElementBoxes(
         const QWebElement& document,
         Ogre::Real scale,

@@ -15,9 +15,12 @@ IHCharacterTerrain::~IHCharacterTerrain() {
 }
 
 void IHCharacterTerrain::enter(Interaction* interaction) {
-  Actor* character = interaction->getA();
-  character->addMotionLock(Ogre::Vector2::NEGATIVE_UNIT_Y);
 }
 
 void IHCharacterTerrain::inside(Interaction* interaction, float d_t) {
+  Actor* character = interaction->getA();
+  character->addMotionLock(Ogre::Vector2::UNIT_Y);
+
+  if (Input::Instance().m_pKeyboard->isKeyDown(OIS::KC_UP))
+    character->addVelocity(Ogre::Vector3(0., 1., 0.));
 }

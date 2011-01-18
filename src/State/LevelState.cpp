@@ -75,6 +75,9 @@ void LevelState::enter() {
       IT_STEERING,
       new IHCharacterSteering());
 
+  simulation->attachInteractionHandler(
+      IT_CHARACTER, IT_TERRAIN, new IHCharacterTerrain());
+
   // Gravity
   simulation->createActor(
       IT_GRAVITY, CT_GLOBAL);
@@ -91,7 +94,7 @@ void LevelState::enter() {
 //      "http://www.libpng.org/pub/png/png-rgba32.html",
 //      "http://webkit.org/",
         "http://the-space-station.com",
-      m_pSceneMgr);
+      m_pSceneMgr, simulation);
 
   // Build gui (surprise!)
   buildGUI();

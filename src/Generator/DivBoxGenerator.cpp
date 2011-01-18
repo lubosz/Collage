@@ -84,7 +84,7 @@ Ogre::Vector3 DivBoxGenerator::attachNode(
 }
 
 void DivBoxGenerator::makeElementBoxes(
-    const QWebElement & document,
+    const QWebElement &document,
     Ogre::Real scale,
     Ogre::Real step,
     std::vector<QString> tags,
@@ -107,6 +107,13 @@ void DivBoxGenerator::makeElementBoxes(
 
         element.setStyleProperty("background-color", "white");
 
+        Ogre::Real width = element.geometry().width()*scale;
+        Ogre::Real height = element.geometry().height()*scale;
+
+        Actor *actor = this->simulation->createActor(IT_TERRAIN, CT_AABB);
+        CSAABB *aabb = static_cast<CSAABB*>(actor->getCollisionShape());
+        aabb->aABB.x = width;
+        aabb->aABB.y = height;
         makeOgreImage(&element, textureName);
         position +=
             attachNode(&element, sceneManager->getRootSceneNode(), scale,
@@ -134,8 +141,10 @@ void DivBoxGenerator::setPageRendering(const QSize& siteResolution) {
   webpage->setViewportSize(siteResolution);
 }
 
-Level* DivBoxGenerator::generate(Ogre::SceneManager *sceneManager) {
+Level* DivBoxGenerator::generate(Ogre::SceneManager *sceneManager,
+    Simulation *simulation) {
   this->sceneManager = sceneManager;
+  this->simulation = simulation;
   qDebug() << "\n\nStyle" << webpage->mainFrame()->documentElement().
       styleProperty("#background-color", QWebElement::ComputedStyle);
 
