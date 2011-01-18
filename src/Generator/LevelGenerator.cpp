@@ -26,6 +26,6 @@ void LevelGenerator::addDoors() {
       Ogre::SceneNode * node = root->createChildSceneNode();
       node->attachObject(door);
       node->setPosition(i, 0, 0);
-      ++i;
+      i+=3;
     }
 }

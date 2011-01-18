@@ -1,6 +1,6 @@
 <mesh>
 	<submeshes>
-		<submesh material="Material" usesharedvertices="false">
+		<submesh material="door" usesharedvertices="false">
 			<faces count="46">
 				<face v1="0" v2="1" v3="3"/>
 				<face v1="1" v2="2" v3="3"/>
