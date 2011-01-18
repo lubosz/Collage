@@ -78,6 +78,7 @@ void SimulationTestState::createScene() {
 
   simulation->createActor(
       IT_CHARACTER, CT_AABB, Ogre::Vector3(0.0, 2.0, 0.0), false);
+
   simulation->createActor(
       IT_TERRAIN, CT_AABB, Ogre::Vector3(0.0, -2.0, 0.0));
   simulation->createActor(
@@ -87,9 +88,11 @@ void SimulationTestState::createScene() {
       IT_GRAVITY,
       new IHCharacterGravity(Ogre::Vector2(0.0, -9.81)));
   simulation->attachInteractionHandler(
+
       IT_TERRAIN,
       IT_GRAVITY,
       new IHCharacterGravity(Ogre::Vector2(0.0, 9.81)));
+
 }
 
 bool SimulationTestState::keyPressed(const OIS::KeyEvent &keyEventRef) {

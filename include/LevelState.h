@@ -8,12 +8,13 @@
 
 #pragma once
 
-#include "AppState.h"
-#include "DotSceneLoader.h"
-
 #include <OGRE/OgreSubEntity.h>
 #include <OGRE/OgreMaterialManager.h>
 
+#include "DotSceneLoader.h"
+
+#include "AppState.h"
+#include "Simulation.h"
 #include "LevelGeneratorManager.h"
 
 class LevelState : public AppState {
@@ -34,7 +35,6 @@ class LevelState : public AppState {
 
   bool keyPressed(const OIS::KeyEvent &keyEventRef);
   bool keyReleased(const OIS::KeyEvent &keyEventRef);
-
   bool mouseMoved(const OIS::MouseEvent &arg);
   bool mousePressed(const OIS::MouseEvent &arg, OIS::MouseButtonID id);
   bool mouseReleased(const OIS::MouseEvent &arg, OIS::MouseButtonID id);
@@ -46,6 +46,7 @@ class LevelState : public AppState {
 
  private:
 
+  Simulation *simulation;
   bool quit;
 
   Ogre::Vector3 translateVector;

@@ -15,6 +15,6 @@ class TagNestingToTerrainGenerator : public LevelGenerator {
 		Level* generate(Ogre::SceneManager *sceneManager);
 
     void addBox(unsigned height, unsigned count,
-                Ogre::SceneManager *sceneManager);
+                Ogre::ManualObject *manual);
 };
 

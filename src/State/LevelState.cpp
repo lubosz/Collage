@@ -28,29 +28,70 @@ LevelState::LevelState() {
 void LevelState::enter() {
   Input::Instance().m_pMouse->setBuffered(false);
 
-  System::Instance().logMessage(
-      "Entering LevelState...");
+  // Set up Camera
+  System::Instance().logMessage("Entering LevelState...");
 
-  m_pSceneMgr
-      = RenderEngine::Instance().m_pRoot->createSceneManager(
+  m_pSceneMgr = RenderEngine::Instance().m_pRoot->createSceneManager(
           Ogre::ST_GENERIC, "LevelSceneManager");
   m_pSceneMgr->setAmbientLight(Ogre::ColourValue(0.7f, 0.7f, 0.7f));
 
   m_pCamera = m_pSceneMgr->createCamera("GameCamera");
   m_pCamera->setPosition(Vector3(-5, 45, 100));
   m_pCamera->lookAt(Vector3(0, 0, 0));
-  m_pCamera->setNearClipDistance(5);
+  m_pCamera->setNearClipDistance(0.1);
 
-  m_pCamera->setAspectRatio(
-      Real(
-          RenderEngine::Instance().m_pViewport->getActualWidth())
-          / Real(
-              RenderEngine::Instance().m_pViewport->getActualHeight()));
+  m_pCamera->setAspectRatio(Real(RenderEngine::Instance().m_pViewport->
+    getActualWidth()) / Real(RenderEngine::Instance().m_pViewport->
+      getActualHeight()));
 
   RenderEngine::Instance().m_pViewport->setCamera(m_pCamera);
 
-  genman.sceneFromUrl("http://boards.4chan.org/hr/",
-                      m_pSceneMgr);
+
+  // Set up character geometry
+	Ogre::Entity *charEntity = m_pSceneMgr->createEntity("Char", "character.mesh");
+	Ogre::Entity *doorEntity = m_pSceneMgr->createEntity("door.mesh");
+  m_pSceneMgr->getRootSceneNode()->createChildSceneNode("Door");
+  // const float rad = 90. * (3.145 / 180.);
+  // charNode->rotate(Ogre::UNIT_Z, rad, Ogre::relativeTo);
+	// m_pOgreHeadNode->setPosition(Vector3(0, 0, -25));
+
+	// m_pOgreHeadMat = m_pOgreHeadEntity->getSubEntity(1)->getMaterial();
+	// m_pOgreHeadMatHigh = m_pOgreHeadMat->clone("OgreHeadMatHigh");
+	// m_pOgreHeadMatHigh->getTechnique(0)->getPass(0)->setAmbient(1, 0, 0);
+	// m_pOgreHeadMatHigh->getTechnique(0)->getPass(0)->setDiffuse(1, 0, 0, 0);
+
+  // Set up physics simulation with 100 Hz
+  simulation = new Simulation(m_pSceneMgr->getRootSceneNode(), 100.0);
+
+  // Character
+	simulation->createActor(
+	    IT_STEERING, CS_GLOBAL);
+	Ogre::SceneNode *actorNode = simulation->createActor(
+	    IT_CHARACTER, CS_CIRCLE,
+	    Ogre::Vector3(0.0, 2.0, 0.0), false)->getSceneNode();
+      actorNode->attachObject(charEntity);
+  simulation->attachInteractionHandler(
+      IT_CHARACTER,
+      IT_STEERING,
+      new IHCharacterSteering());
+
+  // Gravity
+  simulation->createActor(
+      IT_GRAVITY, CS_GLOBAL);
+  simulation->attachInteractionHandler(
+      IT_CHARACTER,
+      IT_GRAVITY,
+      new IHCharacterGravity(Ogre::Vector2(0.0, -9.81)));
+
+  // Generate Level
+  genman.sceneFromUrl(
+//      "http://www.youtube.com/watch?v=urAyOKlgGDk",
+//      "http://www.randomwebsite.com/cgi-bin/random.pl",
+//      "http://en.wikipedia.org/wiki/Special:Random",
+      "http://www.libpng.org/pub/png/png-rgba32.html",
+      m_pSceneMgr);
+
+  // Build gui (surprise!)
   buildGUI();
 }
 
@@ -80,12 +121,9 @@ void LevelState::exit() {
         m_pSceneMgr);
 }
 
-
-
 void LevelState::levelGenerated(Level *level) {
        System::Instance().logMessage("Received level from generator...");
 }
-
 
 bool LevelState::keyPressed(const OIS::KeyEvent &keyEventRef) {
   if (Input::Instance().m_pKeyboard->isKeyDown(OIS::KC_ESCAPE)) {
@@ -162,6 +200,7 @@ void LevelState::getInput() {
 
 void LevelState::update(double timeSinceLastFrame) {
   m_FrameEvent.timeSinceLastFrame = timeSinceLastFrame;
+  simulation->update(timeSinceLastFrame*0.000001);
   UserInterface::Instance().m_pTrayMgr->frameRenderingQueued(
       m_FrameEvent);
 

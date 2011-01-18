@@ -8,9 +8,9 @@
 
 class Level {
  public:
-    Ogre::SceneManager* sceneManager;
-
     Level();
+
+    Ogre::SceneManager* sceneManager;
 };
 
 #endif

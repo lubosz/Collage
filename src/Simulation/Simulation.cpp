@@ -116,6 +116,7 @@ void Simulation::update(float secondsSinceLastFrame) {
 #ifdef DEBUG_OUTPUT_TRIGGERED
           printf("NONE \n");
 #endif
+          break;
         }
 
         // Find type specific interaction

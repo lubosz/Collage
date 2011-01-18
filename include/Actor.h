@@ -18,8 +18,8 @@ enum CollisionType {
   CT_AABB = 2
 };
 
-#define DEBUG_OUTPUT
-#define DEBUG_OUTPUT_TRIGGERED
+// #define DEBUG_OUTPUT
+// #define DEBUG_OUTPUT_TRIGGERED
 
 class Actor {
  public:

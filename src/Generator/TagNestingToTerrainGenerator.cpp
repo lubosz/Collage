@@ -13,34 +13,37 @@ TagNestingToTerrainGenerator::TagNestingToTerrainGenerator(QObject *parent)
 
 float TagNestingToTerrainGenerator::getScore(QWebPage *webpage) {
 	this->webpage = webpage;
-	return 50.0;
+	return 5.0;
 }
 
 void TagNestingToTerrainGenerator::addBox(
-    unsigned height, unsigned count, Ogre::SceneManager *sceneManager) {
+    unsigned height, unsigned count, Ogre::ManualObject *manual) {
 
   // for (unsigned i = 0; i < height; i++)
   //   std::cout << "." << std::flush;
   // std::cout << std::endl;
 
-  Ogre::SceneNode* node;
-  Ogre::Entity* cube;
 
-  node = sceneManager->getRootSceneNode()->createChildSceneNode();
-  cube = sceneManager->createEntity("Cube.mesh");
-  node->attachObject(cube);
-  node->setPosition(
-      Ogre::Vector3(
-          count * 6,
-          height * 6,
-          0));
-  node->setScale(1., 1., 10.);
+  // 'radius', half the width
+  float radz = 5.;
+  float radx = 1.;
+  // Front
+  manual->normal(0, 1, 0);
+  manual->position(count, height,  radz);
+  // Back
+  manual->normal(0, 1, 0);
+  manual->position(count, height, -radz);
 }
 
 Level* TagNestingToTerrainGenerator::generate(
     Ogre::SceneManager *sceneManager) {
 
+  this->sceneManager = sceneManager;
+
   sceneManager->createLight("Light")->setPosition(75, 75, 75);
+  Ogre::ManualObject *manual = sceneManager->createManualObject("ground");
+  manual->begin("BaseWhiteNoLighting",
+                Ogre::RenderOperation::OT_TRIANGLE_STRIP);
 
 	qDebug() << "Beginning generation... TagNestingToTerrainGenerator";
 	QWebFrame *frame = this->webpage->mainFrame();
@@ -56,23 +59,30 @@ Level* TagNestingToTerrainGenerator::generate(
     indent++;
 		if (!cur.isNull()) {
       last = cur;
-      this->addBox(indent, count++, sceneManager);
+      this->addBox(indent, count++, manual);
 		}	else {
       QWebElement sibling = last.nextSibling();
       while (sibling.isNull() && (last.tagName() != "BODY")) {
         last = last.parent();
         sibling = last.nextSibling();
         indent--;
-        this->addBox(indent, count++, sceneManager);
+        this->addBox(indent, count++, manual);
 		  }
       if (!sibling.isNull()) {
         cur = sibling;
         last = sibling;
         indent--;
-        this->addBox(indent, count++, sceneManager);
+        this->addBox(indent, count++, manual);
       }
 	  }
   }
+
+  manual->end();
+  manual->setMaterialName(0, "GroundNoCulling");
+  sceneManager->getRootSceneNode()->
+            createChildSceneNode()->attachObject(manual);
+
+  this->addDoors();
 
   Level *level = new Level();
   return level;
