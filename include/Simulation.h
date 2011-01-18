@@ -21,7 +21,7 @@ class Simulation {
 
 	Actor* createActor(
 	    InteractionType actorType,
-	    CollisionShape collisionShape,
+	    CollisionType collisionType,
 			Ogre::Vector3 position = Ogre::Vector3::ZERO,
 			bool isStatic = true,
 			float rotation = 0.0,
@@ -58,9 +58,9 @@ class Simulation {
 
 	void sortActorsByActorID(Actor** a, Actor** b);
 
-	void sortActorsByTypeID(Actor** a, Actor** b);
+	void sortActorsByInteractionTypeID(Actor** a, Actor** b);
 
-	void sortActorsByShapeID(Actor** a, Actor** b);
+	void sortActorsByCollisionTypeID(Actor** a, Actor** b);
 
 	void sortInt(int* a, int* b);
 };

@@ -22,7 +22,7 @@ Simulation::~Simulation() {}
 
 Actor* Simulation::createActor(
     InteractionType interactionType,
-    CollisionShape collisionShape,
+    CollisionType collisionType,
     Ogre::Vector3 position,
     bool isStatic,
     float orientation,
@@ -33,10 +33,13 @@ Actor* Simulation::createActor(
 	Ogre::SceneNode *sceneNode =
 	    rootSceneNode->createChildSceneNode(name.str(), position);
 
-	int shapeID = collisionShape;
-  int typeID = interactionType;
 
-	Actor *actor = new Actor(actorID, typeID, shapeID, sceneNode);
+
+	Actor *actor = new Actor(
+	    actorID,
+	    interactionType,
+	    collisionType,
+	    sceneNode);
 
 	if(isStatic)
 	  staticActors.push_back(actor);
@@ -75,12 +78,39 @@ void Simulation::update(float secondsSinceLastFrame) {
 #endif
 
         // Collision Tests
-        switch (b->getShapeID()) {
-        case CS_GLOBAL:
+        switch (b->getCollisionTypeID()) {
+        case CT_GLOBAL:
           collision = true;
 #ifdef DEBUG_OUTPUT_TRIGGERED
           printf("GLOBAL \n");
 #endif
+          break;
+        case CT_AABB:
+          switch (a->getCollisionTypeID()) {
+          case CT_AABB:
+#ifdef DEBUG_OUTPUT_TRIGGERED
+            printf("AABB, AABB -> ");
+#endif
+            CSAABB* aCS = static_cast<CSAABB*>(a->getCollisionShape());
+            CSAABB* bCS = static_cast<CSAABB*>(b->getCollisionShape());
+            float aCx = a->getSceneNode()->getPosition().x;
+            float bCx = b->getSceneNode()->getPosition().x;
+            float aCy = a->getSceneNode()->getPosition().y;
+            float bCy = b->getSceneNode()->getPosition().y;
+            float aRx = aCS->aABB.x/2;
+            float bRx = bCS->aABB.x/2;
+            float aRy = aCS->aABB.y/2;
+            float bRy = bCS->aABB.y/2;
+            collision = true;
+            if (abs(aCx - bCx) > (aRx + bRx)) collision = false;
+            if (abs(aCy - bCy) > (aRy + bRy)) collision = false;
+#ifdef DEBUG_OUTPUT_TRIGGERED
+            if (collision) printf("TRUE \n");
+            else
+              printf("FALSE \n");
+#endif
+            break;
+          }
           break;
         default:
 #ifdef DEBUG_OUTPUT_TRIGGERED
@@ -92,21 +122,23 @@ void Simulation::update(float secondsSinceLastFrame) {
         if (collision) {
         Actor* aTemp = a;
         Actor* bTemp = b;
-        sortActorsByTypeID(&aTemp, &bTemp);
+        sortActorsByInteractionTypeID(&aTemp, &bTemp);
         InteractionHandlerID id =
-            InteractionHandlerID(aTemp->getTypeID(), bTemp->getTypeID());
+            InteractionHandlerID(
+                aTemp->getInteractionTypeID(),
+                bTemp->getInteractionTypeID());
         std::map<InteractionHandlerID, InteractionHandler*>::iterator it =
             interactionHandlers.find(id);
           if (it != interactionHandlers.end()) {
             it->second->interact(aTemp, bTemp, d_t);
 #ifdef DEBUG_OUTPUT_TRIGGERED
             printf("interaction handler: %i, %i \n",
-                aTemp->getTypeID(),
-                bTemp->getTypeID());
+                aTemp->getInteractionTypeID(),
+                bTemp->getInteractionTypeID());
           } else {
             printf("no interaction handler for: %i, %i \n",
-                aTemp->getTypeID(),
-                bTemp->getTypeID());
+                aTemp->getInteractionTypeID(),
+                bTemp->getInteractionTypeID());
 #endif
           }
         }
@@ -139,15 +171,15 @@ void Simulation::sortActorsByActorID(Actor** a, Actor** b) {
   *b = c;
 }
 
-void Simulation::sortActorsByTypeID(Actor** a, Actor** b) {
-  if ((*a)->getTypeID() < (*b)->getTypeID()) return;
+void Simulation::sortActorsByInteractionTypeID(Actor** a, Actor** b) {
+  if ((*a)->getInteractionTypeID() < (*b)->getInteractionTypeID()) return;
   Actor* c = *a;
   *a = *b;
   *b = c;
 }
 
-void Simulation::sortActorsByShapeID(Actor** a, Actor** b) {
-  if ((*a)->getShapeID() < (*b)->getShapeID()) return;
+void Simulation::sortActorsByCollisionTypeID(Actor** a, Actor** b) {
+  if ((*a)->getCollisionTypeID() < (*b)->getCollisionTypeID()) return;
   Actor* c = *a;
   *a = *b;
   *b = c;

@@ -12,7 +12,7 @@ InteractionHandler::~InteractionHandler() {
 
 void InteractionHandler::interact(Actor* a, Actor* b, float d_t) {
   std::map<InteractionID, Interaction*>::iterator found;
-  InteractionID id(a->getTypeID(), b->getTypeID());
+  InteractionID id(a->getInteractionTypeID(), b->getInteractionTypeID());
   found = interactions.find(id);
   if (found == interactions.end()) {
     Interaction* interaction = new Interaction(a, b);

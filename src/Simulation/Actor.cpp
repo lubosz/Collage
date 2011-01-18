@@ -7,26 +7,38 @@
  */
 
 #include "Actor.h"
-
+#include <QtCore>
 
 Actor::Actor(
     int actorID,
-    int typeID,
-    int shapeID,
+    int interactionTypeID,
+    CollisionType collisionTypeID,
     Ogre::SceneNode *sceneNode) {
   this->actorID = actorID;
-  this->typeID = typeID;
-  this->shapeID = shapeID;
+  this->interactionTypeID = interactionTypeID;
+  this->collisionTypeID = collisionTypeID;
   this->sceneNode = sceneNode;
   this->velocity = Ogre::Vector3::ZERO;
   this->totalVelocity = Ogre::Vector3::ZERO;
   this->translation = Ogre::Vector3::ZERO;
 
+  switch (collisionTypeID) {
+  case CT_GLOBAL:
+    this->collisionShape = NULL;
+    break;
+  case CT_POLYGON:
+    this->collisionShape = new CSPolygon();
+    break;
+  case CT_AABB:
+    this->collisionShape = new CSAABB();
+    break;
+  }
+
 #ifdef DEBUG_OUTPUT
   std::cout<<
       "Created Actor: A" << actorID <<
-      ", typeID:" << typeID <<
-      ", shapeID: " << shapeID <<
+      ", interactionTypeID:" << interactionTypeID <<
+      ", collisionTypeID: " << collisionTypeID <<
       std::endl;
 #endif
 }
@@ -38,12 +50,12 @@ int Actor::getActorID() const {
     return actorID;
 }
 
-int Actor::getShapeID() const {
-    return shapeID;
+int Actor::getCollisionTypeID() const {
+    return collisionTypeID;
 }
 
-int Actor::getTypeID() const {
-    return typeID;
+int Actor::getInteractionTypeID() const {
+    return interactionTypeID;
 }
 
 Ogre::SceneNode *Actor::getSceneNode() const {
@@ -72,6 +84,13 @@ void Actor::addMotionLock(Ogre::Vector2 wallNormal) {
 
 void Actor::update(float d_t) {
   translation += velocity * d_t;
+
+  while (!motionLocks.empty()) {
+    if (to2D(translation).dotProduct(motionLocks.front()) < 0.0)
+      translation = Ogre::Vector3::ZERO;
+    motionLocks.pop();
+  }
+
   sceneNode->translate(translation, Ogre::Node::TS_LOCAL);
   translation = Ogre::Vector3::ZERO;
 
@@ -83,4 +102,8 @@ void Actor::update(float d_t) {
       ", " << getPosition().z << ")" <<
       std::endl;
 #endif
+}
+
+CollisionShape* Actor::getCollisionShape() {
+  return collisionShape;
 }

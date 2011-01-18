@@ -77,15 +77,19 @@ void SimulationTestState::createScene() {
 	m_pSceneMgr->createLight("Light")->setPosition(75, 75, 75);
 
   simulation->createActor(
-      IT_CHARACTER, CS_CIRCLE, Ogre::Vector3(0.0, 2.0, 0.0), false);
+      IT_CHARACTER, CT_AABB, Ogre::Vector3(0.0, 2.0, 0.0), false);
   simulation->createActor(
-      IT_TERRAIN, CS_BOX, Ogre::Vector3(0.0, -2.0, 0.0));
+      IT_TERRAIN, CT_AABB, Ogre::Vector3(0.0, -2.0, 0.0));
   simulation->createActor(
-      IT_GRAVITY, CS_GLOBAL);
+      IT_GRAVITY, CT_GLOBAL);
   simulation->attachInteractionHandler(
       IT_CHARACTER,
       IT_GRAVITY,
       new IHCharacterGravity(Ogre::Vector2(0.0, -9.81)));
+  simulation->attachInteractionHandler(
+      IT_TERRAIN,
+      IT_GRAVITY,
+      new IHCharacterGravity(Ogre::Vector2(0.0, 9.81)));
 }
 
 bool SimulationTestState::keyPressed(const OIS::KeyEvent &keyEventRef) {

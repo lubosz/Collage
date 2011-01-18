@@ -7,12 +7,6 @@
  */
 #include "IHCharacterGravity.h"
 
-enum CollisionShape {
-  CS_BOX = 0,
-  CS_CIRCLE = 1,
-  CS_GLOBAL = 2
-};
-
 enum InteractionType {
   IT_CHARACTER = 0,
   IT_ITEM = 1,
