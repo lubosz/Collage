@@ -9,7 +9,8 @@ class DivBoxGenerator : public LevelGenerator {
  public:
     DivBoxGenerator();
     void makeOgreImage(
-        QWebElement * element, const Ogre::String & textureName);
+        QWebElement * element, const Ogre::String & textureName,
+        unsigned faces = 1);
     Ogre::Vector3 attachNode(
         QWebElement * element,
         Ogre::SceneNode * parentNode,
@@ -29,4 +30,5 @@ class DivBoxGenerator : public LevelGenerator {
         Ogre::String meshName,
         Ogre::SceneManager * sceneManager);
     void setPageRendering(const QSize & siteResolution);
+    Ogre::MaterialPtr makeMaterial(Ogre::String name, Ogre::String textureName);
 };

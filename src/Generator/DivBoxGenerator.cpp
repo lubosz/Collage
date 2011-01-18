@@ -19,8 +19,12 @@ float DivBoxGenerator::getScore(QWebPage *webpage) {
 }
 
 void DivBoxGenerator::makeOgreImage(QWebElement * element,
-    const Ogre::String & textureName) {
-  QImage image(element->geometry().size(), QImage::Format_ARGB32_Premultiplied);
+    const Ogre::String & textureName, unsigned faces) {
+  QSize renderSize = QSize(2048, 2048);
+  if (element->geometry().size() != QSize(0, 0))
+    renderSize = element->geometry().size();
+
+  QImage image(renderSize, QImage::Format_ARGB32_Premultiplied);
   image.fill(Qt::white);
   QPainter painter(&image);
   painter.setRenderHint(QPainter::Antialiasing, true);
@@ -35,7 +39,16 @@ void DivBoxGenerator::makeOgreImage(QWebElement * element,
   Ogre::TextureManager::getSingleton().remove(textureName);
   Ogre::TextureManager::getSingleton().loadImage(textureName, "General",
       Ogre::Image().loadDynamicImage(image.bits(), image.width(),
-          image.height(), 1, Ogre::PF_A8R8G8B8));
+          image.height(), faces, Ogre::PF_A8R8G8B8));
+}
+
+Ogre::MaterialPtr DivBoxGenerator::makeMaterial(
+    Ogre::String name, Ogre::String textureName) {
+  Ogre::MaterialPtr material = Ogre::MaterialManager::getSingleton().create(
+      name, Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
+  material.get()->getTechnique(0)-> getPass(0)->createTextureUnitState(
+      textureName);
+  return material;
 }
 
 Ogre::Vector3 DivBoxGenerator::attachNode(
@@ -46,15 +59,9 @@ Ogre::Vector3 DivBoxGenerator::attachNode(
     Ogre::Entity* cube,
     Ogre::Vector3 position) {
 
-  Ogre::MaterialPtr material = Ogre::MaterialManager::getSingleton().create(
-      "PageMat" + Ogre::StringConverter::toString(position),
-      Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
-
-  material.get()->getTechnique(0)-> getPass(0)->createTextureUnitState(
+  Ogre::MaterialPtr material =
+      makeMaterial("PageMat" + Ogre::StringConverter::toString(position),
       textureName);
-
-  material.get()->setDiffuse(1, 1, 1, 1);
-
 //  material.get()->setSceneBlending(
 //      Ogre::SBF_SOURCE_ALPHA, Ogre::SBF_DEST_ALPHA);
 //  material.get()->getTechnique(0)->getPass(0)->setSceneBlending(
@@ -104,6 +111,8 @@ void DivBoxGenerator::makeElementBoxes(
             "PageTex"  + element.tagName().toStdString()
             + Ogre::StringConverter::toString(i);
 
+//  qDebug() << "\n\nStyle" << webpage->mainFrame()->documentElement().
+//      styleProperty("#background-color", QWebElement::ComputedStyle);
         element.setStyleProperty("background-color", "white");
 
         Ogre::Real width = element.geometry().width()*scale;
@@ -144,18 +153,22 @@ Level* DivBoxGenerator::generate(Ogre::SceneManager *sceneManager,
     Simulation *simulation) {
   this->sceneManager = sceneManager;
   this->simulation = simulation;
-  qDebug() << "\n\nStyle" << webpage->mainFrame()->documentElement().
-      styleProperty("#background-color", QWebElement::ComputedStyle);
 
 //  QSize siteResolution = document.geometry().size();
 //  qDebug() << "Whole Page " << webpage->mainFrame()->geometry();
   setPageRendering(QSize(1440, 800));
 
+  QWebElement page = webpage->mainFrame()->documentElement();
+
+  makeOgreImage(&page, "skytex", 1);
+  makeMaterial("skydome", "skytex");
+//  sceneManager->setSkyBox(true, "skyBox");
+  sceneManager->setSkyDome(true, "skydome", 50, 2);
+
   std::vector<QString> tags = {"div", "p", "img", "h2", "h1", "h3", "table"};
 
   makeElementBoxes(
-      webpage->mainFrame()->documentElement(),
-      .01, 1, tags,
+      page, .01, 1, tags,
       "Cube.mesh", sceneManager);
 
   sceneManager->createLight("Light")->setPosition(75, 75, 75);
