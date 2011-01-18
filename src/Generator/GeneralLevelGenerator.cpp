@@ -17,8 +17,10 @@ float GeneralLevelGenerator::getScore(QWebPage *webpage) {
   return 100.0;
 }
 
-Level* GeneralLevelGenerator::generate(Ogre::SceneManager * sceneManager) {
+Level* GeneralLevelGenerator::generate(Ogre::SceneManager *sceneManager,
+    Simulation *simulation) {
   this->sceneManager = sceneManager;
+  this->simulation = simulation;
     // uses this.webframe to generate Level, returns Level
 //    Ogre::SceneManager* manager =
 //            RenderEngine::Instance().m_pRoot->createSceneManager(

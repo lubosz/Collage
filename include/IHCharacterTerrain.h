@@ -9,6 +9,7 @@
 #ifndef IHCHARACTERTERRAIN_H_
 #define IHCHARACTERTERRAIN_H_
 
+#include "Input.h"
 #include "InteractionHandler.h"
 
 class IHCharacterTerrain : public InteractionHandler {

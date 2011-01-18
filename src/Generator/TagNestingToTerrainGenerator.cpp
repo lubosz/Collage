@@ -36,9 +36,11 @@ void TagNestingToTerrainGenerator::addBox(
 }
 
 Level* TagNestingToTerrainGenerator::generate(
-    Ogre::SceneManager *sceneManager) {
+    Ogre::SceneManager *sceneManager,
+    Simulation *simulation) {
 
   this->sceneManager = sceneManager;
+  this->simulation = simulation;
 
   sceneManager->createLight("Light")->setPosition(75, 75, 75);
   Ogre::ManualObject *manual = sceneManager->createManualObject("ground");

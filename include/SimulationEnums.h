@@ -7,6 +7,7 @@
  */
 #include "IHCharacterGravity.h"
 #include "IHCharacterSteering.h"
+#include "IHCharacterTerrain.h"
 
 enum InteractionType {
   IT_CHARACTER = 0,

@@ -12,7 +12,8 @@ class TagNestingToTerrainGenerator : public LevelGenerator {
 		explicit TagNestingToTerrainGenerator(QObject *parent = 0);
 
 		float getScore(QWebPage *webpage);
-		Level* generate(Ogre::SceneManager *sceneManager);
+		Level* generate(Ogre::SceneManager *sceneManager,
+        Simulation *simulation);
 
     void addBox(unsigned height, unsigned count,
                 Ogre::ManualObject *manual);
