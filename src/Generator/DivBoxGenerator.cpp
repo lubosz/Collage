@@ -29,6 +29,12 @@ void DivBoxGenerator::makeOgreImage(QWebElement * element,
   element->render(&painter);
   painter.end();
 
+//  QImage white(element->geometry().size());
+//  white.fill(Qt::white);
+//  image.setAlphaChannel(white);
+  image.save(QString::fromStdString(
+          "/home/bmonkey/Desktop/collage/"+textureName+".png"));
+
   Ogre::TextureManager::getSingleton().remove(textureName);
   Ogre::TextureManager::getSingleton().loadImage(textureName, "General",
       Ogre::Image().loadDynamicImage(image.bits(), image.width(),
@@ -49,6 +55,11 @@ Ogre::Vector3 DivBoxGenerator::attachNode(
 
   material.get()->getTechnique(0)-> getPass(0)->createTextureUnitState(
       textureName);
+
+//  material.get()->setSceneBlending(
+//      Ogre::SBF_SOURCE_ALPHA, Ogre::SBF_DEST_ALPHA);
+//  material.get()->getTechnique(0)->getPass(0)->setSceneBlending(
+//      Ogre::SBT_TRANSPARENT_COLOUR);
 
   Ogre::Real width = element->geometry().width()*scale;
   Ogre::Real height = element->geometry().height()*scale;
@@ -84,7 +95,6 @@ void DivBoxGenerator::makeElementBoxes(
   QWebElementCollection elements;
   foreach(QString tag, tags)
     elements.append(document.findAll(tag));
-  Ogre::Real count = 0;
   Ogre::Vector3 position = Ogre::Vector3();
 
   foreach(QWebElement element, elements) {
@@ -92,7 +102,7 @@ void DivBoxGenerator::makeElementBoxes(
 //        qDebug() << "Some " << tagName << " " << element.geometry();
         Ogre::Entity* cube = sceneManager->createEntity(meshName);
         Ogre::String textureName =
-            "PageTex" + Ogre::StringConverter::toString(count);
+            "PageTex" + Ogre::StringConverter::toString(position);
 
         makeOgreImage(&element, textureName);
         position +=
