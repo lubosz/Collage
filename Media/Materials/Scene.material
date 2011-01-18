@@ -36,7 +36,7 @@ material GroundNoCulling
 }
 
 
-material Material
+material character
 {
 	technique
 	{
