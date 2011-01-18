@@ -29,11 +29,8 @@ void DivBoxGenerator::makeOgreImage(QWebElement * element,
   element->render(&painter);
   painter.end();
 
-//  QImage white(element->geometry().size());
-//  white.fill(Qt::white);
-//  image.setAlphaChannel(white);
-  image.save(QString::fromStdString(
-          "/home/bmonkey/Desktop/collage/"+textureName+".png"));
+//  image.save(QString::fromStdString(
+//          "/home/bmonkey/Desktop/collage/"+textureName+".png"));
 
   Ogre::TextureManager::getSingleton().remove(textureName);
   Ogre::TextureManager::getSingleton().loadImage(textureName, "General",
