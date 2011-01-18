@@ -22,10 +22,14 @@ void LevelGenerator::addDoors() {
   int i = 0;
   foreach(QWebElement element, elements) {
 //      qDebug() << "Adding door";
+      QString url = element.attribute("href");
+      i+=3;
+      qDebug() << "Door for" << url;
+      if (url.contains("#"))
+        continue;
       Ogre::Entity* door = sceneManager->createEntity("door.mesh");
-      Ogre::SceneNode * node = root->createChildSceneNode();
+      Ogre::SceneNode *node = root->createChildSceneNode();
       node->attachObject(door);
       node->setPosition(i, 0, 0);
-      i+=3;
     }
 }
