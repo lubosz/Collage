@@ -56,6 +56,8 @@ Ogre::Vector3 DivBoxGenerator::attachNode(
   material.get()->getTechnique(0)-> getPass(0)->createTextureUnitState(
       textureName);
 
+  material.get()->setDiffuse(1, 1, 1, 1);
+
 //  material.get()->setSceneBlending(
 //      Ogre::SBF_SOURCE_ALPHA, Ogre::SBF_DEST_ALPHA);
 //  material.get()->getTechnique(0)->getPass(0)->setSceneBlending(
@@ -96,18 +98,23 @@ void DivBoxGenerator::makeElementBoxes(
   foreach(QString tag, tags)
     elements.append(document.findAll(tag));
   Ogre::Vector3 position = Ogre::Vector3();
+  int i = 0;
 
   foreach(QWebElement element, elements) {
       if (fits(&element, 0, 4096)) {
 //        qDebug() << "Some " << tagName << " " << element.geometry();
         Ogre::Entity* cube = sceneManager->createEntity(meshName);
         Ogre::String textureName =
-            "PageTex" + Ogre::StringConverter::toString(position);
+            "PageTex"  + element.tagName().toStdString()
+            + Ogre::StringConverter::toString(i);
+
+        element.setStyleProperty("background-color", "white");
 
         makeOgreImage(&element, textureName);
         position +=
             attachNode(&element, sceneManager->getRootSceneNode(), scale,
             textureName, cube, position);
+        i++;
       }
     }
 }

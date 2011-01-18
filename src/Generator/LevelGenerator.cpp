@@ -19,9 +19,13 @@ void LevelGenerator::addDoors() {
   int count = elements.count();
 
   Ogre::SceneNode *root = this->sceneManager->getRootSceneNode();
+  int i = 0;
   foreach(QWebElement element, elements) {
-      qDebug() << "Adding door";
+//      qDebug() << "Adding door";
       Ogre::Entity* door = sceneManager->createEntity("door.mesh");
-      root->createChildSceneNode()->attachObject(door);
+      Ogre::SceneNode * node = root->createChildSceneNode();
+      node->attachObject(door);
+      node->setPosition(i, 0, 0);
+      ++i;
     }
 }
