@@ -14,11 +14,10 @@ IHCharacterTerrain::IHCharacterTerrain() {
 IHCharacterTerrain::~IHCharacterTerrain() {
 }
 
-void IHCharacterTerrain::enter(Interaction* interaction){
+void IHCharacterTerrain::enter(Interaction* interaction) {
   Actor* character = interaction->getA();
   character->addMotionLock(Ogre::Vector2::NEGATIVE_UNIT_Y);
 }
 
-void IHCharacterTerrain::inside(Interaction* interaction, float d_t){
-
+void IHCharacterTerrain::inside(Interaction* interaction, float d_t) {
 }

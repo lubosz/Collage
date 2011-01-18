@@ -92,7 +92,6 @@ void SimulationTestState::createScene() {
       IT_TERRAIN,
       IT_GRAVITY,
       new IHCharacterGravity(Ogre::Vector2(0.0, 9.81)));
-
 }
 
 bool SimulationTestState::keyPressed(const OIS::KeyEvent &keyEventRef) {

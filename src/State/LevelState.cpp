@@ -65,9 +65,9 @@ void LevelState::enter() {
 
   // Character
 	simulation->createActor(
-	    IT_STEERING, CS_GLOBAL);
+	    IT_STEERING, CT_GLOBAL);
 	Ogre::SceneNode *actorNode = simulation->createActor(
-	    IT_CHARACTER, CS_CIRCLE,
+	    IT_CHARACTER, CT_AABB,
 	    Ogre::Vector3(0.0, 2.0, 0.0), false)->getSceneNode();
       actorNode->attachObject(charEntity);
   simulation->attachInteractionHandler(
@@ -77,7 +77,7 @@ void LevelState::enter() {
 
   // Gravity
   simulation->createActor(
-      IT_GRAVITY, CS_GLOBAL);
+      IT_GRAVITY, CT_GLOBAL);
   simulation->attachInteractionHandler(
       IT_CHARACTER,
       IT_GRAVITY,

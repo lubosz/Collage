@@ -11,7 +11,7 @@
 
 #include "InteractionHandler.h"
 
-class IHCharacterTerrain : public InteractionHandler{
+class IHCharacterTerrain : public InteractionHandler {
  public:
   IHCharacterTerrain();
   virtual ~IHCharacterTerrain();
