@@ -15,7 +15,7 @@ IHCharacterSteering::IHCharacterSteering() {
 }
 
 void IHCharacterSteering::inside(Interaction* interaction, float d_t) {
-  float speed = 10.;
+  float speed = 20.;
   Ogre::Vector3 moveVec = Ogre::Vector3::ZERO;
   if (Input::Instance().m_pKeyboard->isKeyDown(OIS::KC_LEFT))
     moveVec += Ogre::Vector3(-1., 0., 0.);

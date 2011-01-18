@@ -53,7 +53,7 @@ Ogre::MaterialPtr DivBoxGenerator::makeMaterial(
 
 Ogre::Vector3 DivBoxGenerator::attachNode(
     QWebElement * element,
-    Ogre::SceneNode * parentNode,
+    Ogre::SceneNode * node,
     Ogre::Real scale,
     const Ogre::String & textureName,
     Ogre::Entity* cube,
@@ -69,8 +69,6 @@ Ogre::Vector3 DivBoxGenerator::attachNode(
 
   Ogre::Real width = element->geometry().width()*scale;
   Ogre::Real height = element->geometry().height()*scale;
-
-  Ogre::SceneNode* node = parentNode->createChildSceneNode();
 
   cube->getSubEntity(1)->setMaterial(material);
   Ogre::Real x, y, z;
@@ -124,7 +122,7 @@ void DivBoxGenerator::makeElementBoxes(
         aabb->aABB.y = height;
         makeOgreImage(&element, textureName);
         position +=
-            attachNode(&element, sceneManager->getRootSceneNode(), scale,
+            attachNode(&element, actor->getSceneNode(), scale,
             textureName, cube, position);
         i++;
       }

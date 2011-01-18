@@ -22,11 +22,11 @@ void IHCharacterTerrain::inside(Interaction* interaction, float d_t) {
   character->addMotionLock(Ogre::Vector2::UNIT_Y);
 
   if (Input::Instance().m_pKeyboard->isKeyDown(OIS::KC_UP))
-    character->addTranslation(Ogre::Vector3(0., 10., 0.));
+    character->addVelocity(Ogre::Vector3(0., 40.*d_t, 0.));
 }
 
 void IHCharacterTerrain::leave(Interaction* interaction) {
   Actor* character = interaction->getA();
   if (Input::Instance().m_pKeyboard->isKeyDown(OIS::KC_UP))
-    character->addVelocity(Ogre::Vector3(0., 1., 0.));
+    character->addVelocity(Ogre::Vector3(0., 30., 0.));
 }
