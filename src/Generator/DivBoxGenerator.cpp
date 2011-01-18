@@ -67,10 +67,9 @@ Ogre::Vector3 DivBoxGenerator::attachNode(
 
   cube->getSubEntity(0)->setMaterial(material);
   Ogre::Real x, y, z;
-//  x = width/2;
-  x = 0;
+  x = width*2;
   y = -height/3.0;
-  z = width*2;
+  z = 0;
 
   Ogre::Vector3 move(x, y, z);
 
