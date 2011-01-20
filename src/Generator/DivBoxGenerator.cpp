@@ -5,6 +5,7 @@
 #include <QWebElement>
 #include <QWebPage>
 #include <QPainter>
+#include "System.h"
 #include "DivBoxGenerator.h"
 
 #include "RenderEngine.h"
@@ -21,8 +22,11 @@ float DivBoxGenerator::getScore(QWebPage *webpage) {
 void DivBoxGenerator::makeOgreImage(QWebElement * element,
     const Ogre::String & textureName, unsigned faces) {
   QSize renderSize = QSize(2048, 2048);
-  if (element->geometry().size() != QSize(0, 0))
+  if (element->geometry().size().width() != 0 &&
+		  element->geometry().size().height() != 0)
     renderSize = element->geometry().size();
+  else
+	  System::Instance().logMessage("WARNING! The element Size is 0");
 
   QImage image(renderSize, QImage::Format_ARGB32_Premultiplied);
   image.fill(Qt::white);
@@ -30,6 +34,7 @@ void DivBoxGenerator::makeOgreImage(QWebElement * element,
   painter.setRenderHint(QPainter::Antialiasing, true);
   painter.setRenderHint(QPainter::TextAntialiasing, true);
   painter.setRenderHint(QPainter::SmoothPixmapTransform, true);
+  qDebug() << element->tagName() << element->geometry().size();
   element->render(&painter);
   painter.end();
 
