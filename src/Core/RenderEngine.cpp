@@ -39,9 +39,5 @@ bool RenderEngine::initOgre(Ogre::String wndTitle) {
     m_pViewport->setBackgroundColour(Ogre::ColourValue(0.5f, 0.5f, 0.5f, 1.0f));
     m_pViewport->setCamera(0);
 
-
-
-
-
     return true;
 }
