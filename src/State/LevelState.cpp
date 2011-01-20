@@ -103,12 +103,15 @@ void LevelState::enter() {
 
   // Generate Level
   genman.sceneFromUrl(
+      "http://www.uni-koblenz.de",
 //      "http://www.youtube.com/watch?v=urAyOKlgGDk",
 //      "http://www.randomwebsite.com/cgi-bin/random.pl",
-      "http://en.wikipedia.org/wiki/Special:Random",
+//      "http://en.wikipedia.org/wiki/Special:Random",
 //      "http://www.libpng.org/pub/png/png-rgba32.html",
 //      "http://webkit.org/",
 //        "http://the-space-station.com",
+// 		"http://www.uni-koblenz.de/~lohoff/",
+// 		"http://www.lubosz.de",
       m_pSceneMgr, simulation);
 
   // Build gui (surprise!)
