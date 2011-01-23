@@ -10,15 +10,14 @@ class Interaction {
  public:
   Interaction(Actor* a, Actor* b);
   virtual ~Interaction();
-    Actor *getA() const;
-    Actor *getB() const;
-    bool getOk() const;
-    void setOk(bool ok);
+  bool ok;
+
+  virtual void enter();
+  virtual void leave();
+  virtual void inside(float d_t);
 
  private:
-  bool ok;
   Actor* a;
   Actor* b;
 };
-
 #endif /* INTERACTION_H_ */

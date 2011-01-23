@@ -15,8 +15,8 @@ Actor::Actor(
     CollisionType collisionTypeID,
     Ogre::SceneNode *sceneNode) {
   this->actorID = actorID;
-  this->interactionTypeID = interactionTypeID;
-  this->collisionTypeID = collisionTypeID;
+  this->interactionType = interactionType;
+  this->collisionType = collisionType;
   this->sceneNode = sceneNode;
   this->velocity = Ogre::Vector3::ZERO;
   this->totalVelocity = Ogre::Vector3::ZERO;
@@ -37,8 +37,8 @@ Actor::Actor(
 #ifdef DEBUG_OUTPUT
   std::cout<<
       "Created Actor: A" << actorID <<
-      ", interactionTypeID:" << interactionTypeID <<
-      ", collisionTypeID: " << collisionTypeID <<
+      ", interactionTypeID:" << interactionType <<
+      ", collisionTypeID: " << collisionType <<
       std::endl;
 #endif
 }
@@ -50,12 +50,12 @@ int Actor::getActorID() const {
     return actorID;
 }
 
-int Actor::getCollisionTypeID() const {
-    return collisionTypeID;
+int Actor::getCollisionType() const {
+    return collisionType;
 }
 
-int Actor::getInteractionTypeID() const {
-    return interactionTypeID;
+InteractionType Actor::getInteractionType() const {
+    return interactionType;
 }
 
 Ogre::SceneNode *Actor::getSceneNode() const {

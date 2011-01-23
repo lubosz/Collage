@@ -9,14 +9,14 @@
 #include "IHCharacterGravity.h"
 
 IHCharacterGravity::IHCharacterGravity(Ogre::Vector2 gravity) {
-  this->gravity = gravity;
+//  this->gravity = gravity;
 }
 
 IHCharacterGravity::~IHCharacterGravity() {
   // TODO(gerrit): Auto-generated destructor stub
 }
-
-void IHCharacterGravity::inside(Interaction* interaction, float d_t) {
-  Actor* character = interaction->getA();
-  character->addVelocity(to3D(gravity)*d_t);
-}
+//
+// void IHCharacterGravity::inside(Interaction* interaction, float d_t) {
+//  Actor* character = interaction->getA();
+//  character->addVelocity(to3D(gravity)*d_t);
+// }

@@ -10,60 +10,43 @@ InteractionHandler::InteractionHandler() {
 InteractionHandler::~InteractionHandler() {
 }
 
+Interaction* InteractionHandler::createInteraction(Actor* a, Actor* b) {
+  InteractionType TypeA = a->getInteractionType();
+  InteractionType TypeB = b->getInteractionType();
+  switch (TypeA | TypeB) {
+//  case (IT_CHARACTER | IT_TERRAIN):
+//      return new InteractionCharacterTerrain();
+//  case (IT_CHARACTER | IT_ENEMY):
+//      return new InteractionCharacterEnemy();
+  default:
+    return new Interaction(a, b);
+  }
+}
+
 void InteractionHandler::interact(Actor* a, Actor* b, float d_t) {
   std::map<InteractionID, Interaction*>::iterator found;
-  InteractionID id(a->getInteractionTypeID(), b->getInteractionTypeID());
+  InteractionID id(a->getActorID(), b->getActorID());
   found = interactions.find(id);
   if (found == interactions.end()) {
-    Interaction* interaction = new Interaction(a, b);
+    Interaction* interaction = createInteraction(a, b);
+// TODO(Gerrit): support multiple interaction types.
     interactions[id] = interaction;
-    enter(interaction);
-    interaction->setOk(true);
+    interaction->ok = true;
+    interaction->enter();
   } else {
-    found->second->setOk(true);
-    inside(found->second, d_t);
+    found->second->ok = true;
+    found->second->inside(d_t);
   }
 }
 
 void InteractionHandler::cleanup() {
   std::map<InteractionID, Interaction*>::iterator it = interactions.begin();
   for (; it != interactions.end(); it++) {
-     if (!it->second->getOk()) {
-       leave(it->second);
+     if (!it->second->ok) {
+       it->second->leave();
        interactions.erase(it);
      } else {
-       it->second->setOk(false);
+       it->second->ok = false;
      }
   }
-}
-
-
-void InteractionHandler::inside(Interaction* interaction, float d_t) {
-#ifdef DEBUG_OUTPUT_TRIGGERED
-  std::cout<<
-      "Interaction: " << "inside" <<
-      ", A" << interaction->getA()->getActorID() <<
-      ", A" << interaction->getB()->getActorID() <<
-      std::endl;
-#endif
-}
-
-void InteractionHandler::enter(Interaction* interaction) {
-#ifdef DEBUG_OUTPUT
-  std::cout<<
-      "Interaction: " << "enter" <<
-      ", Actor A: " << interaction->getA()->getActorID() <<
-      ", Actor B:" << interaction->getB()->getActorID() <<
-      std::endl;
-#endif
-}
-
-void InteractionHandler::leave(Interaction* interaction) {
-#ifdef DEBUG_OUTPUT
-  std::cout<<
-      "Interaction: " << "leave" <<
-      ", Actor A: " << interaction->getA()->getActorID() <<
-      ", Actor B:" << interaction->getB()->getActorID() <<
-      std::endl;
-#endif
 }

@@ -47,8 +47,8 @@ void LevelGenerator::addDoors() {
       static_cast<CSAABB*>(actor->getCollisionShape())->aABB =
           Ogre::Vector2(0.01, 0.01);
     }
-  this->simulation->attachInteractionHandler(IT_DOOR, IT_GRAVITY,
-      new IHCharacterGravity(Ogre::Vector2(0., -9.81)));
-  this->simulation->attachInteractionHandler(IT_DOOR, IT_TERRAIN,
-      new IHCharacterTerrain());
+//  this->simulation->attachInteractionHandler(IT_DOOR, IT_GRAVITY,
+//      new IHCharacterGravity(Ogre::Vector2(0., -9.81)));
+//  this->simulation->attachInteractionHandler(IT_DOOR, IT_TERRAIN,
+//      new IHCharacterTerrain());
 }

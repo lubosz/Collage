@@ -11,15 +11,11 @@ class InteractionHandler {
   InteractionHandler();
   virtual ~InteractionHandler();
 
+  virtual Interaction* createInteraction(Actor* a, Actor* b);
+
   void interact(Actor* a, Actor* b, float d_t);
 
   void cleanup();
-
-  virtual void inside(Interaction* interaction, float d_t);
-
-  virtual void enter(Interaction* interaction);
-
-  virtual void leave(Interaction* interaction);
 
  private:
   typedef std::pair<int, int> InteractionID;

@@ -10,7 +10,7 @@
 #define SIMULATION_H_
 
 #include "OGRE/Ogre.h"
-#include "SimulationEnums.h"
+#include "InteractionHandler.h"
 
 class Simulation {
  public:
@@ -28,11 +28,11 @@ class Simulation {
 			float scale = 1.0
 	);
 
-	void attachInteractionHandler(
-	    InteractionType actorTypeA,
-	    InteractionType actorTypeB,
-	    InteractionHandler* interactionHandler
-	);
+//  void attachInteractionHandler(
+//    InteractionType actorTypeA,
+//    InteractionType actorTypeB,
+//    InteractionHandler* interactionHandler
+//  );
 
 	bool mDebugVisualization;
 
@@ -47,8 +47,10 @@ class Simulation {
   ActorList dynamicActors;
   ActorList staticActors;
 
-  typedef std::pair<int, int> InteractionHandlerID;
-  std::map<InteractionHandlerID, InteractionHandler*> interactionHandlers;
+  InteractionHandler* interactionHandler;
+//
+//  typedef std::pair<int, int> InteractionHandlerID;
+//  std::map<InteractionHandlerID, InteractionHandler*> interactionHandlers;
 
 	int currentActorID;
 	int generateActorID();
@@ -58,9 +60,9 @@ class Simulation {
 
 	void sortActorsByActorID(Actor** a, Actor** b);
 
-	void sortActorsByInteractionTypeID(Actor** a, Actor** b);
+	void sortActorsByInteractionType(Actor** a, Actor** b);
 
-	void sortActorsByCollisionTypeID(Actor** a, Actor** b);
+	void sortActorsByCollisionType(Actor** a, Actor** b);
 
 	void sortInt(int* a, int* b);
 };

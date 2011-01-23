@@ -49,16 +49,16 @@ Actor* Simulation::createActor(
 	return actor;
 }
 
-void Simulation::attachInteractionHandler(
-    InteractionType actorTypeA,
-    InteractionType actorTypeB,
-    InteractionHandler* interactionHandler) {
-  int a = actorTypeA;
-  int b = actorTypeB;
-  sortInt(&a, &b);
-  interactionHandlers[InteractionHandlerID(a, b)] = interactionHandler;
-  interactionHandlers.find(InteractionHandlerID(a, b))->second->cleanup();
-}
+// void Simulation::attachInteractionHandler(
+//    InteractionType actorTypeA,
+//    InteractionType actorTypeB,
+//    InteractionHandler* interactionHandler) {
+//  int a = actorTypeA;
+//  int b = actorTypeB;
+//  sortInt(&a, &b);
+//  interactionHandlers[InteractionHandlerID(a, b)] = interactionHandler;
+//  interactionHandlers.find(InteractionHandlerID(a, b))->second->cleanup();
+// }
 
 void Simulation::update(float secondsSinceLastFrame) {
   d_t += secondsSinceLastFrame;
@@ -78,7 +78,7 @@ void Simulation::update(float secondsSinceLastFrame) {
 #endif
 
         // Collision Tests
-        switch (b->getCollisionTypeID()) {
+        switch (b->getCollisionType()) {
         case CT_GLOBAL:
           collision = true;
 #ifdef DEBUG_OUTPUT_TRIGGERED
@@ -86,7 +86,7 @@ void Simulation::update(float secondsSinceLastFrame) {
 #endif
           break;
         case CT_AABB:
-          switch (a->getCollisionTypeID()) {
+          switch (a->getCollisionType()) {
           case CT_AABB:
 #ifdef DEBUG_OUTPUT_TRIGGERED
             printf("AABB, AABB -> ");
@@ -120,40 +120,15 @@ void Simulation::update(float secondsSinceLastFrame) {
         }
 
         // Find type specific interaction
-        if (collision) {
-        Actor* aTemp = a;
-        Actor* bTemp = b;
-        sortActorsByInteractionTypeID(&aTemp, &bTemp);
-        InteractionHandlerID id =
-            InteractionHandlerID(
-                aTemp->getInteractionTypeID(),
-                bTemp->getInteractionTypeID());
-        std::map<InteractionHandlerID, InteractionHandler*>::iterator it =
-            interactionHandlers.find(id);
-          if (it != interactionHandlers.end()) {
-            it->second->interact(aTemp, bTemp, d_t);
-#ifdef DEBUG_OUTPUT_TRIGGERED
-            printf("interaction handler: %i, %i \n",
-                aTemp->getInteractionTypeID(),
-                bTemp->getInteractionTypeID());
-          } else {
-            printf("no interaction handler for: %i, %i \n",
-                aTemp->getInteractionTypeID(),
-                bTemp->getInteractionTypeID());
-#endif
-          }
-        }
+        if (collision)
+          interactionHandler->interact(a, b, d_t);
       }
     }
 
     foreach(Actor* a, dynamicActors) {
       a->update(d_t);
     }
-    std::map<InteractionHandlerID, InteractionHandler*>::iterator it =
-        interactionHandlers.begin();
-    for (; it != interactionHandlers.end(); it++) {
-      it->second->cleanup();
-    }
+    interactionHandler->cleanup();
     d_t = 0.0;
   }
 }
@@ -177,15 +152,15 @@ void Simulation::sortActorsByActorID(Actor** a, Actor** b) {
   *b = c;
 }
 
-void Simulation::sortActorsByInteractionTypeID(Actor** a, Actor** b) {
-  if ((*a)->getInteractionTypeID() < (*b)->getInteractionTypeID()) return;
+void Simulation::sortActorsByInteractionType(Actor** a, Actor** b) {
+  if ((*a)->getInteractionType() < (*b)->getInteractionType()) return;
   Actor* c = *a;
   *a = *b;
   *b = c;
 }
 
-void Simulation::sortActorsByCollisionTypeID(Actor** a, Actor** b) {
-  if ((*a)->getCollisionTypeID() < (*b)->getCollisionTypeID()) return;
+void Simulation::sortActorsByCollisionType(Actor** a, Actor** b) {
+  if ((*a)->getCollisionType() < (*b)->getCollisionType()) return;
   Actor* c = *a;
   *a = *b;
   *b = c;

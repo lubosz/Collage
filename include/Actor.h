@@ -11,6 +11,7 @@
 #include "OGRE/Ogre.h"
 #include "CSPolygon.h"
 #include "CSAABB.h"
+#include "SimulationEnums.h"
 
 enum CollisionType {
   CT_GLOBAL = 0,
@@ -33,8 +34,8 @@ class Actor {
 
   // Identification
   int getActorID() const;
-  int getCollisionTypeID() const;
-  int getInteractionTypeID() const;
+  int getCollisionType() const;
+  InteractionType getInteractionType() const;
 
   // Animation
   Ogre::SceneNode *getSceneNode() const;
@@ -51,8 +52,8 @@ class Actor {
  private:
   // Identification
   int actorID;
-  int interactionTypeID;
-  int collisionTypeID;
+  InteractionType interactionType;
+  int collisionType;
 
   // Animation
   Ogre::SceneNode* sceneNode;

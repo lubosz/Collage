@@ -1,5 +1,5 @@
 /*
- *  Copyright 2010 The Collage Project
+ *  Copyright 2011 The Collage Project
  */
 #include "Interaction.h"
 
@@ -11,18 +11,26 @@ Interaction::Interaction(Actor* a, Actor* b) {
 Interaction::~Interaction() {
 }
 
-Actor *Interaction::getA() const {
-    return a;
+void Interaction::enter() {
+#ifdef DEBUG_OUTPUT
+  printf("A%i, A%i -> enter (no specific interaction)",
+      a->getActorID(),
+      b->getActorID());
+#endif
 }
 
-Actor *Interaction::getB() const {
-    return b;
+void Interaction::leave() {
+#ifdef DEBUG_OUTPUT
+  printf("A%i, A%i -> leave (no specific interaction)",
+      a->getActorID(),
+      b->getActorID());
+#endif
 }
 
-bool Interaction::getOk() const {
-    return ok;
-}
-
-void Interaction::setOk(bool ok) {
-    this->ok = ok;
+void Interaction::inside(float d_t) {
+#ifdef DEBUG_OUTPUT_TRIGGERED
+  printf("A%i, A%i -> inside (no specific interaction)",
+      a->getActorID(),
+      b->getActorID());
+#endif
 }

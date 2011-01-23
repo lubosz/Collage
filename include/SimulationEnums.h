@@ -5,16 +5,10 @@
  *      Author: lochmann
  *  Copyright 2010 The Collage Project
  */
-#include "IHCharacterGravity.h"
-#include "IHCharacterSteering.h"
-#include "IHCharacterTerrain.h"
 
 enum InteractionType {
-  IT_CHARACTER = 0,
-  IT_ITEM,
-  IT_DOOR,
-  IT_TERRAIN,
-  IT_GRAVITY,
-  IT_STEERING
+  IT_CHARACTER = 1,
+  IT_ITEM = 2,
+  IT_DOOR = 4,
+  IT_TERRAIN = 8
 };
-
