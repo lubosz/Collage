@@ -39,13 +39,9 @@ void LevelGenerator::addDoors() {
       if (cont)
         continue;
       qDebug() << "Door for" << url;
-      Actor *actor = this->simulation->createActor(IT_DOOR, CT_AABB,
-          Ogre::Vector3(i, 0, 0), false);
+      Actor *actor = new Actor();
       Ogre::Entity* door = sceneManager->createEntity("door.mesh");
       actor->getSceneNode()->attachObject(door);
-      // XXX Set size properly
-      static_cast<CSAABB*>(actor->getCollisionShape())->aABB =
-          Ogre::Vector2(0.01, 0.01);
     }
 //  this->simulation->attachInteractionHandler(IT_DOOR, IT_GRAVITY,
 //      new IHCharacterGravity(Ogre::Vector2(0., -9.81)));

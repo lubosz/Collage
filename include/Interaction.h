@@ -4,20 +4,23 @@
 #ifndef INTERACTION_H_
 #define INTERACTION_H_
 
-#include "Actor.h"
+class AbstractInteraction {};
 
-class Interaction {
+template <class T1, class T2>
+class Interaction : public AbstractInteraction {
  public:
-  Interaction(Actor* a, Actor* b);
-  virtual ~Interaction();
+
+  Interaction(T1* a, T2* b) {
+    this->a = a;
+    this->b = b;
+  }
+
+  virtual ~Interaction() {}
+
   bool ok;
 
-  virtual void enter();
-  virtual void leave();
-  virtual void inside(float d_t);
-
  private:
-  Actor* a;
-  Actor* b;
+  T1* a;
+  T2* b;
 };
 #endif /* INTERACTION_H_ */

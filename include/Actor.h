@@ -9,61 +9,23 @@
 #ifndef ACTOR_H_
 #define ACTOR_H_
 #include "OGRE/Ogre.h"
-#include "CSPolygon.h"
-#include "CSAABB.h"
-#include "SimulationEnums.h"
-
-enum CollisionType {
-  CT_GLOBAL = 0,
-  CT_POLYGON = 1,
-  CT_AABB = 2
-};
+#include <QtCore>
 
 #define DEBUG_OUTPUT
 // #define DEBUG_OUTPUT_TRIGGERED
 
 class Actor {
  public:
-  Actor(
-      int actorID,
-      int interactionTypeID,
-      CollisionType collisionTypeID,
-      Ogre::SceneNode *sceneNode);
+  Actor();
 
   virtual ~Actor();
 
-  // Identification
-  int getActorID() const;
-  int getCollisionType() const;
-  InteractionType getInteractionType() const;
-
   // Animation
   Ogre::SceneNode *getSceneNode() const;
-  Ogre::Vector3 getPosition();
-  Ogre::Vector3 getTotalVelocity();
-  void addVelocity(Ogre::Vector3 velocity);
-  void addTranslation(Ogre::Vector3 translation);
-  void addMotionLock(Ogre::Vector2 wallNormal);
-  void update(float d_t);
-
-  // Collision
-  CollisionShape* getCollisionShape();
 
  private:
-  // Identification
-  int actorID;
-  InteractionType interactionType;
-  int collisionType;
-
   // Animation
   Ogre::SceneNode* sceneNode;
-  Ogre::Vector3 velocity;
-  Ogre::Vector3 totalVelocity;
-  Ogre::Vector3 translation;
-  std::queue<Ogre::Vector2> motionLocks;
-
-  // Collision
-  CollisionShape* collisionShape;
 };
 
 inline static Ogre::Vector2 to2D(Ogre::Vector3 in) {

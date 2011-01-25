@@ -14,28 +14,13 @@
 
 class Simulation {
  public:
+  Simulation();
 	Simulation(Ogre::SceneNode *rootSceneNode, float frequency);
 	virtual ~Simulation();
 
 	void update(float timeSinceLastFrame);
 
-	Actor* createActor(
-	    InteractionType actorType,
-	    CollisionType collisionType,
-			Ogre::Vector3 position = Ogre::Vector3::ZERO,
-			bool isStatic = true,
-			float rotation = 0.0,
-			float scale = 1.0
-	);
-
-//  void attachInteractionHandler(
-//    InteractionType actorTypeA,
-//    InteractionType actorTypeB,
-//    InteractionHandler* interactionHandler
-//  );
-
 	bool mDebugVisualization;
-
 
  private:
 	float frequency;
@@ -43,27 +28,6 @@ class Simulation {
 
 	Ogre::SceneNode *rootSceneNode;
 
-	typedef std::vector<Actor*> ActorList;
-  ActorList dynamicActors;
-  ActorList staticActors;
-
-  InteractionHandler* interactionHandler;
-//
-//  typedef std::pair<int, int> InteractionHandlerID;
-//  std::map<InteractionHandlerID, InteractionHandler*> interactionHandlers;
-
-	int currentActorID;
-	int generateActorID();
-
-  int currentInteractionTypeID;
-  int generateInteractionTypeID();
-
-	void sortActorsByActorID(Actor** a, Actor** b);
-
-	void sortActorsByInteractionType(Actor** a, Actor** b);
-
-	void sortActorsByCollisionType(Actor** a, Actor** b);
-
-	void sortInt(int* a, int* b);
+	InteractionHandler<Character, Terrain>* ihCharacterTerrain;
 };
 #endif /* SIMULATION_H_ */
