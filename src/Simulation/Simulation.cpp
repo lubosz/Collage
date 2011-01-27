@@ -22,15 +22,11 @@ Simulation::Simulation(Ogre::SceneNode *rootSceneNode, float frequency) {
 
   ihCharacterTerrain = new InteractionHandler<Character, Terrain>(c, t);
 
-  printf("current(");
   ihCharacterTerrain->print();
-  printf(")\n");
 
   Character* character2 = c->createActor();
 
-  printf("current(");
   ihCharacterTerrain->print();
-  printf(")\n");
 }
 
 Simulation::~Simulation() {}

@@ -21,8 +21,8 @@ class InteractionHandler : AbstractInteractionHandler {
   InteractionHandler(ActorFactory<T1>* factory1, ActorFactory<T2>* factory2) {
     this->factory1 = factory1;
     this->factory2 = factory2;
-    factory1->addInteractionHandler(this);
-    factory2->addInteractionHandler(this);
+    factory1->addInteractionHandler(this, 0);
+    factory2->addInteractionHandler(this, 1);
     createAllInteractions(factory1, factory2);
   }
 
@@ -54,15 +54,27 @@ class InteractionHandler : AbstractInteractionHandler {
     allInteractions.clear();
   }
 
-
-
-//  void pushBackInteraction(T2* actor) {
-//    printf("Actor B added.");
-//  }
+  void pushBackInteraction() {
+    if (!lastPlace) {
+      allInteractions.push_back(std::vector<Interaction<T1, T2>* >());
+      for (int i = 0; i < factory2->actors.size(); i++) {
+        allInteractions[factory1->actors.size() - 1].push_back(
+            new Interaction<T1, T2>(
+                static_cast<T1*>(lastActor),
+                factory2->actors[i]));
+      }
+    } else {
+      for (int i = 0; i < factory1->actors.size(); i++) {
+        allInteractions[i].push_back(
+            new Interaction<T1, T2>(
+                factory1->actors[i],
+                static_cast<T2*>(lastActor)));
+      }
+    }
+  }
 
   void interact(Character* c, Terrain* t) {
   }
-
 
   void print() {
     printf("IH(");

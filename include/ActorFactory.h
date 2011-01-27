@@ -16,33 +16,42 @@ class AbstractInteractionHandler {
  public:
   AbstractInteractionHandler() {}
   virtual ~AbstractInteractionHandler() {}
-  virtual void pushBackInteraction(Actor* actor) {
-    printf("Implementation not found.");
+  Actor* lastActor;
+  bool lastPlace;
+  virtual void pushBackInteraction() = 0;
+  void addInteraction(Actor* actor, bool place) {
+    lastActor = actor;
+    lastPlace = place;
+    pushBackInteraction();
   }
 };
 
 
-class AbstractActorFactory {};
 
+class AbstractActorFactory {};
 
 template <class T> class ActorFactory {
  public:
   ActorFactory() {}
   virtual ~ActorFactory() {}
 
-  void addInteractionHandler(AbstractInteractionHandler* handler);
+  void addInteractionHandler(AbstractInteractionHandler* handler, bool place) {
+    interactionHandlers.push_back(
+        std::pair<AbstractInteractionHandler*, bool>(handler, place));
+  }
 
   T* createActor() {
     T* a = new T();
     actors.push_back(a);
-    foreach(AbstractInteractionHandler* i, interactionHandlers) {
-      i->pushBackInteraction(a);
+    for (int i = 0; i < interactionHandlers.size(); i++) {
+      bool place = interactionHandlers[i].second;
+      interactionHandlers[i].first->addInteraction(a, place);
     }
     return a;
   }
 
   std::vector<T*> actors;
-  std::vector<AbstractInteractionHandler*> interactionHandlers;
+  std::vector<std::pair<AbstractInteractionHandler*, bool>> interactionHandlers;
 };
 
 #endif /* ACTORFACTORY_H_ */
