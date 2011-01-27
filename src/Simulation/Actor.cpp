@@ -18,3 +18,7 @@ Actor::~Actor() {
 Ogre::SceneNode *Actor::getSceneNode() const {
     return sceneNode;
 }
+
+void Actor::print() {
+  printf("empty");
+}

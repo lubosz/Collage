@@ -15,13 +15,22 @@ Simulation::Simulation(Ogre::SceneNode *rootSceneNode, float frequency) {
 	d_t = 0.0;
 
   ActorFactory<Character>* c = new ActorFactory<Character>();
-  c->createActor();
+  Character* character1 = c->createActor();
 
   ActorFactory<Terrain>* t = new ActorFactory<Terrain>();
-  t->createActor();
+  Terrain* terrain1 = t->createActor();
 
-  ihCharacterTerrain = new InteractionHandler<Character, Terrain>();
-  ihCharacterTerrain->syncInteractions(c, t);
+  ihCharacterTerrain = new InteractionHandler<Character, Terrain>(c, t);
+
+  printf("current(");
+  ihCharacterTerrain->print();
+  printf(")\n");
+
+  Character* character2 = c->createActor();
+
+  printf("current(");
+  ihCharacterTerrain->print();
+  printf(")\n");
 }
 
 Simulation::~Simulation() {}

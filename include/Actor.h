@@ -23,6 +23,8 @@ class Actor {
   // Animation
   Ogre::SceneNode *getSceneNode() const;
 
+  virtual void print();
+
  private:
   // Animation
   Ogre::SceneNode* sceneNode;

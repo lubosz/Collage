@@ -13,3 +13,7 @@ Terrain::Terrain() {
 
 Terrain::~Terrain() {
 }
+
+void Terrain::print() {
+  printf("terrain");
+}

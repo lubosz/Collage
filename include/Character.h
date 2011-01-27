@@ -15,6 +15,7 @@ class Character: public Actor {
  public:
   Character();
   virtual ~Character();
+  void print();
 };
 
 #endif /* CHARACTER_H_ */

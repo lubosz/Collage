@@ -19,6 +19,14 @@ class Interaction : public AbstractInteraction {
 
   bool ok;
 
+  void print() {
+    printf("I(");
+    a->print();
+    printf(",");
+    b->print();
+    printf(")");
+  }
+
  private:
   T1* a;
   T2* b;

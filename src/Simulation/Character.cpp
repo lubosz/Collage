@@ -13,3 +13,7 @@ Character::Character() {
 
 Character::~Character() {
 }
+
+void Character::print() {
+  printf("character");
+}

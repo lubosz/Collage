@@ -15,6 +15,7 @@ class Terrain: public Actor {
  public:
   Terrain();
   virtual ~Terrain();
+  void print();
 };
 
 #endif /* TERRAIN_H_ */
