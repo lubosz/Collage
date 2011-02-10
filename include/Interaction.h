@@ -27,7 +27,6 @@ class Interaction : public AbstractInteraction {
     printf(")");
   }
 
- private:
   T1* a;
   T2* b;
 };

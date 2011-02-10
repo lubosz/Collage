@@ -19,6 +19,9 @@ Ogre::SceneNode *Actor::getSceneNode() const {
     return sceneNode;
 }
 
+void Actor::update(float d_t) {
+}
+
 void Actor::print() {
   printf("empty");
 }

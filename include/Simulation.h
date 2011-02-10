@@ -29,5 +29,7 @@ class Simulation {
 	Ogre::SceneNode *rootSceneNode;
 
 	InteractionHandler<Character, Terrain>* ihCharacterTerrain;
+	std::vector<AbstractActorFactory*> actorFactories;
+	std::vector<AbstractInteractionHandler*> interactionHandlers;
 };
 #endif /* SIMULATION_H_ */

@@ -7,6 +7,9 @@
  */
 
 #include "Character.h"
+#include "InteractionHandler.h"
+
+#include "Terrain.h"
 
 Character::Character() {
 }
@@ -16,4 +19,9 @@ Character::~Character() {
 
 void Character::print() {
   printf("character");
+}
+
+InteractionHandler<Character, Terrain>::interact(
+    Character *actor1, Terrain *actor2) {
+  std::cout << "yeah";
 }

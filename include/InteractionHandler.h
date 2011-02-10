@@ -30,6 +30,15 @@ class InteractionHandler : AbstractInteractionHandler {
     deleteAllInteractions();
   }
 
+  void update(float d_t) {
+    for (int i = 0; i < allInteractions.size(); i++) {
+      for (int j = 0; j < allInteractions[i].size(); j++) {
+        Interaction<T1, T2>* inter = allInteractions[i][j];
+        interact(inter->a, inter->b);
+      }
+    }
+  };
+
   void createAllInteractions(
       ActorFactory<T1>* factory1,
       ActorFactory<T2>* factory2) {
@@ -73,8 +82,7 @@ class InteractionHandler : AbstractInteractionHandler {
     }
   }
 
-  void interact(Character* c, Terrain* t) {
-  }
+  void interact(T1* actor1, T2* actor2);
 
   void print() {
     printf("IH(");

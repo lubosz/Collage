@@ -16,6 +16,7 @@ class AbstractInteractionHandler {
  public:
   AbstractInteractionHandler() {}
   virtual ~AbstractInteractionHandler() {}
+  virtual void update(float d_t) = 0;
   Actor* lastActor;
   bool lastPlace;
   virtual void pushBackInteraction() = 0;
@@ -28,7 +29,12 @@ class AbstractInteractionHandler {
 
 
 
-class AbstractActorFactory {};
+class AbstractActorFactory {
+ public:
+  AbstractActorFactory() {}
+  virtual ~AbstractActorFactory() {}
+  virtual void update(float d_t) = 0;
+};
 
 template <class T> class ActorFactory {
  public:
@@ -52,6 +58,12 @@ template <class T> class ActorFactory {
 
   std::vector<T*> actors;
   std::vector<std::pair<AbstractInteractionHandler*, bool>> interactionHandlers;
+
+  void update(float d_t) {
+    for (int i = 0; i < actors.size(); i++) {
+      actors[i]->update(d_t);
+    }
+  }
 };
 
 #endif /* ACTORFACTORY_H_ */
