@@ -24,6 +24,7 @@
 
 CollageApplication::CollageApplication(int& argc, char** argv)  // NOLINT
 : QApplication(argc, argv) {
+	QCoreApplication::setApplicationName("Collage");
 }
 
 CollageApplication::~CollageApplication() {
