@@ -16,6 +16,8 @@ class Terrain: public Actor {
   Terrain();
   virtual ~Terrain();
   void print();
+
+  Ogre::Vector2 collisionShape;
 };
 
 #endif /* TERRAIN_H_ */

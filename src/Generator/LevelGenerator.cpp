@@ -41,7 +41,7 @@ void LevelGenerator::addDoors() {
       qDebug() << "Door for" << url;
       Actor *actor = new Actor();
       Ogre::Entity* door = sceneManager->createEntity("door.mesh");
-      actor->getSceneNode()->attachObject(door);
+      actor->sceneNode->attachObject(door);
     }
 //  this->simulation->attachInteractionHandler(IT_DOOR, IT_GRAVITY,
 //      new IHCharacterGravity(Ogre::Vector2(0., -9.81)));

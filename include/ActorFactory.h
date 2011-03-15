@@ -25,6 +25,7 @@ class AbstractInteractionHandler {
     lastPlace = place;
     pushBackInteraction();
   }
+//  virtual void print();
 };
 
 
@@ -46,8 +47,10 @@ template <class T> class ActorFactory {
         std::pair<AbstractInteractionHandler*, bool>(handler, place));
   }
 
-  T* createActor() {
+  T* createActor(Ogre::SceneNode *n) {
     T* a = new T();
+    a->sceneNode = n;
+
     actors.push_back(a);
     for (int i = 0; i < interactionHandlers.size(); i++) {
       bool place = interactionHandlers[i].second;

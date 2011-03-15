@@ -21,7 +21,9 @@ void Character::print() {
   printf("character");
 }
 
-InteractionHandler<Character, Terrain>::interact(
-    Character *actor1, Terrain *actor2) {
-  std::cout << "yeah";
+template<> void InteractionHandler<Character, Terrain>::interact(
+    Character *c, Terrain *t) {
+  c->print();
+  t->print();
+  c->getPosition();
 }

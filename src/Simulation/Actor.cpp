@@ -15,8 +15,8 @@ Actor::Actor() {
 Actor::~Actor() {
 }
 
-Ogre::SceneNode *Actor::getSceneNode() const {
-    return sceneNode;
+Ogre::Vector2 Actor::getPosition() {
+  return to2D(sceneNode->getPosition());
 }
 
 void Actor::update(float d_t) {

@@ -119,7 +119,7 @@ void DivBoxGenerator::makeElementBoxes(
         Actor *actor = new Actor();
         makeOgreImage(&element, textureName);
         position +=
-            attachNode(&element, actor->getSceneNode(), scale,
+            attachNode(&element, actor->sceneNode, scale,
             textureName, cube, position);
         i++;
       }

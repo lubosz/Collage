@@ -20,15 +20,12 @@ class Actor {
 
   virtual ~Actor();
 
-  // Animation
-  Ogre::SceneNode *getSceneNode() const;
+  Ogre::Vector2 getPosition();
 
   virtual void update(float d_t);
 
   virtual void print();
 
- private:
-  // Animation
   Ogre::SceneNode* sceneNode;
 };
 

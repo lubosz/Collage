@@ -11,7 +11,7 @@
 #include "Terrain.h"
 
 template <class T1, class T2>
-class InteractionHandler : AbstractInteractionHandler {
+class InteractionHandler : public AbstractInteractionHandler {
  public:
   ActorFactory<T1> *factory1;
   ActorFactory<T2> *factory2;

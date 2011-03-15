@@ -31,7 +31,7 @@ void WallPaperLoadingState::createScene() {
   FrameCapture capture;
 //  capture.saveWebRender(QUrl("http://en.wikipedia.org/wiki/Special:Random"),
 //      "../Media/Textures/wall.png");
-  capture.saveWallPaper(url, "../Media/Textures/wall.jpg");
+//  capture.saveWallPaper(url, "../Media/Textures/wall.jpg");
 
   System::Instance().logMessage("Wallpaper downloaded");
 }

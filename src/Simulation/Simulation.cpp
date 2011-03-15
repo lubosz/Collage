@@ -15,35 +15,32 @@ Simulation::Simulation(Ogre::SceneNode *rootSceneNode, float frequency) {
 	d_t = 0.0;
 
   ActorFactory<Character>* c = new ActorFactory<Character>();
-  Character* character1 = c->createActor();
-
   ActorFactory<Terrain>* t = new ActorFactory<Terrain>();
-  Terrain* terrain1 = t->createActor();
+  InteractionHandler<Character, Terrain>* ihCharacterTerrain =
+      new InteractionHandler<Character, Terrain>(c, t);
+  interactionHandlers.push_back(
+      static_cast<AbstractInteractionHandler*>(ihCharacterTerrain));
 
-  ihCharacterTerrain = new InteractionHandler<Character, Terrain>(c, t);
 
-  ihCharacterTerrain->print();
-  std::cout << std::endl;
+  Character* character1 = c->createActor(rootSceneNode->createChildSceneNode());
+  Character* character2 = c->createActor(rootSceneNode->createChildSceneNode());
 
-  Character* character2 = c->createActor();
-
-  Terrain* terrain2 = t->createActor();
-
-  ihCharacterTerrain->print();
-  std::cout << std::endl;
-
-  InteractionHandler<Character, Terrain>*
-  ihCharacterTerrain2 = new InteractionHandler<Character, Terrain>(c, t);
-
-  ihCharacterTerrain2->print();
-  std::cout << std::endl;
-  Terrain* terrain3 = t->createActor();
-  Terrain* terrain4 = t->createActor();
+  Terrain* terrain1 = t->createActor(rootSceneNode->createChildSceneNode());
+  Terrain* terrain2 = t->createActor(rootSceneNode->createChildSceneNode());
 
   ihCharacterTerrain->print();
   std::cout << std::endl;
-  ihCharacterTerrain2->print();
-  std::cout << std::endl;
+
+//  InteractionHandler<Character, Terrain>*
+//  ihCharacterTerrain2 = new InteractionHandler<Character, Terrain>(c, t);
+//
+//  ihCharacterTerrain2->print();
+//  std::cout << std::endl;
+//  Terrain* terrain3 = t->createActor();
+//  Terrain* terrain4 = t->createActor();
+
+//  ihCharacterTerrain2->print();
+//  std::cout << std::endl;
 }
 
 Simulation::~Simulation() {}
@@ -55,6 +52,7 @@ void Simulation::update(float secondsSinceLastFrame) {
       a->update(d_t);
     }
     foreach(AbstractInteractionHandler* a, interactionHandlers) {
+      std::cout << std::endl;
       a->update(d_t);
     }
 
