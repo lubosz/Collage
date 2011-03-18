@@ -21,11 +21,8 @@ class AbstractInteraction {
   }
 
   void print() {
-    printf("I(");
     a->print();
-    printf(",");
     b->print();
-    printf(")");
   }
 };
 

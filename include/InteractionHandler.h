@@ -7,18 +7,6 @@
 #include "Interaction.h"
 #include "ActorFactory.h"
 
-#include "Character.h"
-#include "Terrain.h"
-
-template<> class Interaction<Character, Terrain>
-: public AbstractInteraction<Character, Terrain> {
- public:
-  Interaction() {}
-  virtual ~Interaction() {}
-  float test;
-};
-
-
 template <class T1, class T2>
 class InteractionHandler : public AbstractInteractionHandler {
  public:

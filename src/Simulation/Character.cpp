@@ -17,12 +17,3 @@ Character::~Character() {
 void Character::print() {
   printf("character");
 }
-
-template<> void InteractionHandler<Character, Terrain>::interact(
-    Interaction<Character, Terrain>* interaction) {
-  interaction->a->print();
-  interaction->b->print();
-  interaction->ok = false;
-  interaction->test = 3;
-  std::cout << interaction->test << std::endl;
-}

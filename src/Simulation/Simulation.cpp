@@ -7,6 +7,9 @@
  */
 
 #include "Simulation.h"
+#include "Character.h"
+#include "Terrain.h"
+
 #include <sstream>
 
 Simulation::Simulation(Ogre::SceneNode *rootSceneNode, float frequency) {
