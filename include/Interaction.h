@@ -4,20 +4,15 @@
 #ifndef INTERACTION_H_
 #define INTERACTION_H_
 
-class AbstractInteraction {};
-
 template <class T1, class T2>
-class Interaction : public AbstractInteraction {
+class AbstractInteraction {
  public:
-
-  Interaction(T1* a, T2* b) {
-    this->a = a;
-    this->b = b;
-  }
-
-  virtual ~Interaction() {}
+  AbstractInteraction() {}
+  virtual ~AbstractInteraction() {}
 
   bool ok;
+  T1* a;
+  T2* b;
 
   void print() {
     printf("I(");
@@ -26,8 +21,16 @@ class Interaction : public AbstractInteraction {
     b->print();
     printf(")");
   }
-
-  T1* a;
-  T2* b;
 };
+
+template <class T1, class T2>
+class Interaction : public AbstractInteraction<T1, T2> {
+ public:
+  Interaction(T1* a, T2* b) {
+    this->a = a;
+    this->b = b;
+  }
+  virtual ~Interaction() {}
+};
+
 #endif /* INTERACTION_H_ */

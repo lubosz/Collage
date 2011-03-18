@@ -20,4 +20,7 @@ class Character: public Actor {
   Ogre::Vector2 collisionShape;
 };
 
+#include "InteractionHandler.h"
+#include "Terrain.h"
+
 #endif /* CHARACTER_H_ */
