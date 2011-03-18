@@ -14,6 +14,12 @@ class AbstractInteraction {
   T1* a;
   T2* b;
 
+  void init(T1* a, T2* b) {
+    this->a = a;
+    this->b = b;
+    this->ok = false;
+  }
+
   void print() {
     printf("I(");
     a->print();
@@ -26,10 +32,7 @@ class AbstractInteraction {
 template <class T1, class T2>
 class Interaction : public AbstractInteraction<T1, T2> {
  public:
-  Interaction(T1* a, T2* b) {
-    this->a = a;
-    this->b = b;
-  }
+  Interaction() {}
   virtual ~Interaction() {}
 };
 

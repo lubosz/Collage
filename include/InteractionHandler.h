@@ -13,10 +13,7 @@
 template<> class Interaction<Character, Terrain>
 : public AbstractInteraction<Character, Terrain> {
  public:
-  Interaction(Character* a, Terrain* b) {
-    this->a = a;
-    this->b = b;
-  }
+  Interaction() {}
   virtual ~Interaction() {}
   float test;
 };
@@ -60,11 +57,10 @@ class InteractionHandler : public AbstractInteractionHandler {
       allInteractions.push_back(
               std::vector<AbstractInteraction<T1, T2>* >());
       for (int j = 0; j < factory2->actors.size(); j++) {
+        Interaction<T1, T2>* inter = new Interaction<T1, T2>();
+        inter->init(factory1->actors[i], factory2->actors[j]);
         allInteractions[i].push_back(
-            static_cast<AbstractInteraction<T1, T2>* >(
-            new Interaction<T1, T2>(
-                factory1->actors[i],
-                factory2->actors[j])));
+            static_cast<AbstractInteraction<T1, T2>* >(inter));
       }
     }
   }
@@ -82,19 +78,17 @@ class InteractionHandler : public AbstractInteractionHandler {
     if (!lastPlace) {
       allInteractions.push_back(std::vector<AbstractInteraction<T1, T2>* >());
       for (int i = 0; i < factory2->actors.size(); i++) {
+        Interaction<T1, T2>* inter = new Interaction<T1, T2>();
+        inter->init(static_cast<T1*>(lastActor), factory2->actors[i]);
         allInteractions[factory1->actors.size() - 1].push_back(
-            static_cast<AbstractInteraction<T1, T2>* >(
-            new Interaction<T1, T2>(
-                static_cast<T1*>(lastActor),
-                factory2->actors[i])));
+            static_cast<AbstractInteraction<T1, T2>* >(inter));
       }
     } else {
       for (int i = 0; i < factory1->actors.size(); i++) {
+        Interaction<T1, T2>* inter = new Interaction<T1, T2>();
+        inter->init(factory1->actors[i], static_cast<T2*>(lastActor));
         allInteractions[i].push_back(
-            static_cast<AbstractInteraction<T1, T2>* >(
-            new Interaction<T1, T2>(
-                factory1->actors[i],
-                static_cast<T2*>(lastActor))));
+            static_cast<AbstractInteraction<T1, T2>* >(inter));
       }
     }
   }
