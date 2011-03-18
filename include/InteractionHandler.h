@@ -7,6 +7,30 @@
 #include "Interaction.h"
 #include "ActorFactory.h"
 
+#include "Character.h"
+#include "Terrain.h"
+
+template<> class Interaction<Character, Terrain>
+: public AbstractInteraction<Character, Terrain> {
+ public:
+  float test;
+
+  virtual void init() {
+    a->print();
+    b->print();
+    test = 2;
+    std::cout << test << std::endl;
+    test = 10;
+  }
+
+  virtual void interact() {
+    a->print();
+    b->print();
+    test++;
+    std::cout << test << std::endl;
+  }
+};
+
 template <class T1, class T2>
 class InteractionHandler : public AbstractInteractionHandler {
  public:
@@ -32,7 +56,7 @@ class InteractionHandler : public AbstractInteractionHandler {
       for (int j = 0; j < allInteractions[i].size(); j++) {
         Interaction<T1, T2>* inter =
             static_cast<Interaction<T1, T2>* >(allInteractions[i][j]);
-        interact(inter);
+        inter->interact();
       }
     }
   };
@@ -46,7 +70,7 @@ class InteractionHandler : public AbstractInteractionHandler {
               std::vector<AbstractInteraction<T1, T2>* >());
       for (int j = 0; j < factory2->actors.size(); j++) {
         Interaction<T1, T2>* inter = new Interaction<T1, T2>();
-        inter->init(factory1->actors[i], factory2->actors[j]);
+        inter->initActors(factory1->actors[i], factory2->actors[j]);
         allInteractions[i].push_back(
             static_cast<AbstractInteraction<T1, T2>* >(inter));
       }
@@ -67,21 +91,19 @@ class InteractionHandler : public AbstractInteractionHandler {
       allInteractions.push_back(std::vector<AbstractInteraction<T1, T2>* >());
       for (int i = 0; i < factory2->actors.size(); i++) {
         Interaction<T1, T2>* inter = new Interaction<T1, T2>();
-        inter->init(static_cast<T1*>(lastActor), factory2->actors[i]);
+        inter->initActors(static_cast<T1*>(lastActor), factory2->actors[i]);
         allInteractions[factory1->actors.size() - 1].push_back(
             static_cast<AbstractInteraction<T1, T2>* >(inter));
       }
     } else {
       for (int i = 0; i < factory1->actors.size(); i++) {
         Interaction<T1, T2>* inter = new Interaction<T1, T2>();
-        inter->init(factory1->actors[i], static_cast<T2*>(lastActor));
+        inter->initActors(factory1->actors[i], static_cast<T2*>(lastActor));
         allInteractions[i].push_back(
             static_cast<AbstractInteraction<T1, T2>* >(inter));
       }
     }
   }
-
-  void interact(Interaction<T1, T2>* interaction);
 
   void print() {
     printf("IH(");

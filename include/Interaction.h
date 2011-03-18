@@ -10,17 +10,20 @@ class AbstractInteraction {
   AbstractInteraction() {}
   virtual ~AbstractInteraction() {}
 
-  bool ok;
   T1* a;
   T2* b;
 
-  void init(T1* a, T2* b) {
+  void initActors(T1* a, T2* b) {
     this->a = a;
     this->b = b;
-    this->ok = false;
+    init();
   }
 
-  void print() {
+  virtual void init() = 0;
+
+  virtual void interact() = 0;
+
+  virtual void print() {
     a->print();
     b->print();
   }
@@ -31,6 +34,8 @@ class Interaction : public AbstractInteraction<T1, T2> {
  public:
   Interaction() {}
   virtual ~Interaction() {}
+  void init() {}
+  void interact() {}
 };
 
 #endif /* INTERACTION_H_ */
