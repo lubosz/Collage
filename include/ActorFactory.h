@@ -29,7 +29,6 @@ class AbstractInteractionHandler {
 };
 
 
-
 class AbstractActorFactory {
  public:
   AbstractActorFactory() {}
@@ -37,7 +36,7 @@ class AbstractActorFactory {
   virtual void update(float d_t) = 0;
 };
 
-template <class T> class ActorFactory {
+template <class T> class ActorFactory : public AbstractActorFactory {
  public:
   ActorFactory() {}
   virtual ~ActorFactory() {}

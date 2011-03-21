@@ -63,44 +63,6 @@ void LevelState::enter() {
   // Set up physics simulation with 100 Hz
   simulation = new Simulation(m_pSceneMgr->getRootSceneNode(), 100.0);
 
-  // Character
-
-//  simulation->createActor(IT_STEERING, CT_GLOBAL);
-//
-//  simulation->createActor(
-//      IT_TERRAIN,
-//      CT_AABB,
-//      Ogre::Vector3(0.0, -1.0, 0.0));
-//
-//
-//
-//  Actor* actor = simulation->createActor(
-//      IT_CHARACTER, CT_AABB,
-//      Ogre::Vector3(0.0, 5.0, 0.0),
-//      false);
-//
-//  Ogre::SceneNode *actorNode = actor->getSceneNode();
-//  static_cast<CSAABB*>(actor->getCollisionShape())
-//    ->aABB = Ogre::Vector2(5., 10.);
-//
-//      actorNode->attachObject(charEntity);
-//
-//  simulation->attachInteractionHandler(
-//      IT_CHARACTER,
-//      IT_STEERING,
-//      new IHCharacterSteering());
-//
-//  simulation->attachInteractionHandler(
-//      IT_CHARACTER, IT_TERRAIN, new IHCharacterTerrain());
-//
-//  // Gravity
-//  simulation->createActor(
-//      IT_GRAVITY, CT_GLOBAL);
-//  simulation->attachInteractionHandler(
-//      IT_CHARACTER,
-//      IT_GRAVITY,
-//      new IHCharacterGravity(Ogre::Vector2(0.0, -30.81)));
-
   // Generate Level
   genman.sceneFromUrl(
       "http://www.uni-koblenz.de",

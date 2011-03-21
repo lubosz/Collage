@@ -9,6 +9,7 @@
 #include "Simulation.h"
 #include "Character.h"
 #include "Terrain.h"
+#include "ActorFactory.h"
 
 #include <sstream>
 
@@ -17,12 +18,14 @@ Simulation::Simulation(Ogre::SceneNode *rootSceneNode, float frequency) {
 	this->frequency = frequency;
 	d_t = 0.0;
 
-  ActorFactory<Character>* c = new ActorFactory<Character>();
-  ActorFactory<Terrain>* t = new ActorFactory<Terrain>();
+  ActorFactory<Character> *c = new ActorFactory<Character>();
+  ActorFactory<Terrain> *t = new ActorFactory<Terrain>();
+  actorFactories.push_back(c);
+  actorFactories.push_back(t);
   InteractionHandler<Character, Terrain>* ihCharacterTerrain =
-      new InteractionHandler<Character, Terrain>(c, t);
+    new InteractionHandler<Character, Terrain>(c, t);
   interactionHandlers.push_back(
-      static_cast<AbstractInteractionHandler*>(ihCharacterTerrain));
+    static_cast<AbstractInteractionHandler*>(ihCharacterTerrain));
 
 
   Character* character1 = c->createActor(rootSceneNode->createChildSceneNode());

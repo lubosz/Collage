@@ -11,6 +11,7 @@
 
 #include "OGRE/Ogre.h"
 #include "InteractionHandler.h"
+#include "Actor.h"
 
 class Simulation {
  public:
