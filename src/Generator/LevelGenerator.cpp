@@ -16,19 +16,15 @@ QString LevelGenerator::getName() {
 void LevelGenerator::addDoors() {
   QWebElement document = webpage->mainFrame()->documentElement();
   QWebElementCollection elements = document.findAll("A");
-  int count = elements.count();
 
   Ogre::SceneNode *root = this->sceneManager->getRootSceneNode();
-  int i = 0;
   QStringList blacklist;
   blacklist << ".swf" << ".svg" << ".pdf" << ".png" << ".jpg" << ".jpeg"
             << ".zip" << ".rar" << ".torrent" << ".mp3" << ".avi" << ".mpg"
             << ".mpeg" << ".exe" << ".gz" << ".pls" << ".asx" << ".mov"
             << ".txt" << ".wav";
   foreach(QWebElement element, elements) {
-//      qDebug() << "Adding door";
       QString url = element.attribute("href");
-      i+=3;
       if (url.contains("#"))
         continue;
       bool cont = false;
