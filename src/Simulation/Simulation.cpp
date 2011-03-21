@@ -18,24 +18,39 @@ Simulation::Simulation(Ogre::SceneNode *rootSceneNode, float frequency) {
 	this->frequency = frequency;
 	d_t = 0.0;
 
-  ActorFactory<Character> *c = new ActorFactory<Character>();
-  ActorFactory<Terrain> *t = new ActorFactory<Terrain>();
-  actorFactories.push_back(c);
-  actorFactories.push_back(t);
+  ActorFactory<Character> *characterFactory = new ActorFactory<Character>();
+  actorFactories.push_back(characterFactory);
+
+  ActorFactory<Terrain> *terrainFactory = new ActorFactory<Terrain>();
+  actorFactories.push_back(terrainFactory);
+
+  ActorFactory<Door> *doorFactory = new ActorFactory<Door>();
+  actorFactories.push_back(doorFactory);
+
   InteractionHandler<Character, Terrain>* ihCharacterTerrain =
-    new InteractionHandler<Character, Terrain>(c, t);
+    new InteractionHandler<Character, Terrain>(characterFactory,
+                                               terrainFactory);
   interactionHandlers.push_back(
     static_cast<AbstractInteractionHandler*>(ihCharacterTerrain));
 
+  InteractionHandler<Terrain, Door>* ihTerrainDoor =
+    new InteractionHandler<Terrain, Door>(terrainFactory, doorFactory);
+  interactionHandlers.push_back(
+    static_cast<AbstractInteractionHandler*>(ihTerrainDoor));
 
-  Character* character1 = c->createActor(rootSceneNode->createChildSceneNode());
+  InteractionHandler<Character, Door>* ihCharacterDoor =
+    new InteractionHandler<Character, Door>(characterFactory, doorFactory);
+  interactionHandlers.push_back(
+    static_cast<AbstractInteractionHandler*>(ihCharacterDoor));
+
+  Character* character1 = characterFactory->createActor(
+    rootSceneNode->createChildSceneNode());
   character1->setPosition(Ogre::Vector2(0.0, 0.0));
 
-  Terrain* terrain1 = t->createActor(rootSceneNode->createChildSceneNode());
+  Terrain* terrain1 = terrainFactory->createActor(
+    rootSceneNode->createChildSceneNode());
   terrain1->collisionShape = Ogre::Vector2(1.0, 0.0);
   terrain1->sceneNode->setPosition(-0.5, -0.5, 0.0);
-//  Terrain* terrain2 = t->createActor(rootSceneNode->createChildSceneNode());
-//  Terrain* terrain3 = t->createActor(rootSceneNode->createChildSceneNode());
 }
 
 Simulation::~Simulation() {}
