@@ -12,7 +12,7 @@
 template<> class Interaction<Character, Terrain>
 : public AbstractCollisionInteraction<Character, Terrain> {
  public:
-  bool collisionTest(Character* first, Terrain* second);
+  bool collisionTest();
 
   void onInit();
 
@@ -23,8 +23,5 @@ template<> class Interaction<Character, Terrain>
   void whileInside();
 
   void whileOutside();
-
- private:
-  bool isCrossing(Ogre::Vector2 vec, Ogre::Vector2 pnt1, Ogre::Vector2 pnt2);
 };
 #endif /* INTERACTIONCHARACTERTERRAIN_H_ */

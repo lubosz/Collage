@@ -40,7 +40,7 @@ class AbstractCollisionInteraction : public AbstractInteraction<T1, T2> {
   }
 
   void interact() {
-    if (collisionTest(this->first, this->second)) {
+    if (collisionTest()) {
       if (inside) {
         whileInside();
       } else {
@@ -57,7 +57,7 @@ class AbstractCollisionInteraction : public AbstractInteraction<T1, T2> {
     }
   }
 
-  virtual bool collisionTest(T1* first, T2* second) = 0;
+  virtual bool collisionTest() = 0;
 
   virtual void onInit() {}
 
