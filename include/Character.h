@@ -16,7 +16,8 @@ class Character: public Actor {
   Character();
   virtual ~Character();
   void print();
+  void move(Ogre::Vector2 vec);
 
-  Ogre::Vector2 collisionShape;
+  Ogre::Vector2 oldPosition;
 };
 #endif /* CHARACTER_H_ */

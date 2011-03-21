@@ -21,12 +21,6 @@ Ogre::Vector2 Actor::getPosition() {
 
 void Actor::setPosition(Ogre::Vector2 pos) {
   sceneNode->setPosition(to3D(pos, sceneNode->getPosition().z));
-  oldPosition = to2D(sceneNode->getPosition());
-}
-
-void Actor::move(Ogre::Vector2 vec) {
-  oldPosition = getPosition();
-  sceneNode->setPosition(sceneNode->getPosition() + to3D(vec));
 }
 
 void Actor::update(float d_t) {

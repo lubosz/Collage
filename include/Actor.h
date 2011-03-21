@@ -24,15 +24,11 @@ class Actor {
 
   void setPosition(Ogre::Vector2 pos);
 
-  void move(Ogre::Vector2 vec);
-
   virtual void update(float d_t);
 
   virtual void print();
 
   Ogre::SceneNode* sceneNode;
-
-  Ogre::Vector2 oldPosition;
 };
 
 inline static Ogre::Vector2 to2D(Ogre::Vector3 in) {
