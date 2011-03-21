@@ -35,21 +35,17 @@ void Input::initOis(
     		OIS::ParamList::value_type(
     		    "WINDOW", Ogre::StringConverter::toString(static_cast<int>(hWnd))));
 
-    // TODO(lubosz): Only on debug
+  // TODO(lubosz): Only on debug
 #ifdef WIN32
 	paramList.insert(
-			OIS::ParamList::value_type("w32_mouse", "DISCL_FOREGROUND")
-	);
+    OIS::ParamList::value_type("w32_mouse", "DISCL_FOREGROUND"));
 	paramList.insert(
-			OIS::ParamList::value_type("w32_mouse", "DISCL_NONEXCLUSIVE")
-	);
+    OIS::ParamList::value_type("w32_mouse", "DISCL_NONEXCLUSIVE"));
 #else
-// 	paramList.insert(
-// 			OIS::ParamList::value_type("x11_mouse_grab", "false")
-// 	);
-// 	paramList.insert(
-// 			OIS::ParamList::value_type("x11_keyboard_grab", "false")
-// 	);
+  paramList.insert(
+    OIS::ParamList::value_type("x11_mouse_grab", "false"));
+  paramList.insert(
+    OIS::ParamList::value_type("x11_keyboard_grab", "false"));
 #endif
 
     m_pInputMgr = OIS::InputManager::createInputSystem(paramList);
