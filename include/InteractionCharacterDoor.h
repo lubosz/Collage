@@ -12,7 +12,7 @@
 template<> class Interaction<Character, Door>
 : public AbstractCollisionInteraction<Character, Door> {
  public:
-  bool collisionTest(Character* first, Door* second);
+  bool collisionTest();
 
   void onInit();
 

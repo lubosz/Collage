@@ -4,8 +4,7 @@
 
 #include "InteractionCharacterDoor.h"
 
-bool Interaction<Character, Door>::collisionTest(
-    Character* first, Door* second) {
+bool Interaction<Character, Door>::collisionTest() {
 }
 
 void Interaction<Character, Door>::onInit() {}
