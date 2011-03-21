@@ -26,24 +26,13 @@ Simulation::Simulation(Ogre::SceneNode *rootSceneNode, float frequency) {
 
 
   Character* character1 = c->createActor(rootSceneNode->createChildSceneNode());
+  character1->setPosition(Ogre::Vector2(0.0, 0.0));
 
   Terrain* terrain1 = t->createActor(rootSceneNode->createChildSceneNode());
-  Terrain* terrain2 = t->createActor(rootSceneNode->createChildSceneNode());
-  Terrain* terrain3 = t->createActor(rootSceneNode->createChildSceneNode());
-
-  ihCharacterTerrain->print();
-  std::cout << std::endl;
-
-//  InteractionHandler<Character, Terrain>*
-//  ihCharacterTerrain2 = new InteractionHandler<Character, Terrain>(c, t);
-//
-//  ihCharacterTerrain2->print();
-//  std::cout << std::endl;
-//  Terrain* terrain3 = t->createActor();
-//  Terrain* terrain4 = t->createActor();
-
-//  ihCharacterTerrain2->print();
-//  std::cout << std::endl;
+  terrain1->collisionShape = Ogre::Vector2(1.0, 0.0);
+  terrain1->sceneNode->setPosition(-0.5, -0.5, 0.0);
+//  Terrain* terrain2 = t->createActor(rootSceneNode->createChildSceneNode());
+//  Terrain* terrain3 = t->createActor(rootSceneNode->createChildSceneNode());
 }
 
 Simulation::~Simulation() {}
