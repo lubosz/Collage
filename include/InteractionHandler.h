@@ -6,30 +6,7 @@
 
 #include "Interaction.h"
 #include "ActorFactory.h"
-
-#include "Character.h"
-#include "Terrain.h"
-
-template<> class Interaction<Character, Terrain>
-: public AbstractInteraction<Character, Terrain> {
- public:
-  float test;
-
-  virtual void init() {
-    a->print();
-    b->print();
-    test = 2;
-    std::cout << test << std::endl;
-    test = 10;
-  }
-
-  virtual void interact() {
-    a->print();
-    b->print();
-    test++;
-    std::cout << test << std::endl;
-  }
-};
+#include "InteractionSpecializations.h"
 
 template <class T1, class T2>
 class InteractionHandler : public AbstractInteractionHandler {

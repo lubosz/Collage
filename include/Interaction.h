@@ -10,12 +10,12 @@ class AbstractInteraction {
   AbstractInteraction() {}
   virtual ~AbstractInteraction() {}
 
-  T1* a;
-  T2* b;
+  T1* first;
+  T2* second;
 
-  void initActors(T1* a, T2* b) {
-    this->a = a;
-    this->b = b;
+  void initActors(T1* first, T2* second) {
+    this->first = first;
+    this->second = second;
     init();
   }
 
@@ -24,9 +24,50 @@ class AbstractInteraction {
   virtual void interact() = 0;
 
   virtual void print() {
-    a->print();
-    b->print();
+    first->print();
+    second->print();
   }
+};
+
+template <class T1, class T2>
+class AbstractCollisionInteraction : public AbstractInteraction<T1, T2> {
+ private:
+  bool inside;
+
+  virtual void init() {
+    inside = false;
+    collisionTest = false;
+    onInit();
+  }
+
+  virtual void interact() {
+    if (collisionTest(this->first, this->second)) {
+      if (inside) {
+        whileInside();
+      } else {
+        onEnter();
+      }
+    } else {
+      if (inside) {
+        onLeave();
+      } else {
+        whileOutside();
+      }
+    }
+  }
+
+ public:
+  virtual bool collisionTest(T1* first, T2* second) = 0;
+
+  virtual void onInit() {}
+
+  virtual void onEnter() = 0;
+
+  virtual void onLeave() = 0;
+
+  virtual void whileInside() = 0;
+
+  virtual void whileOutside() = 0;
 };
 
 template <class T1, class T2>

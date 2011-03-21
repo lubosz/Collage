@@ -26,10 +26,10 @@ Simulation::Simulation(Ogre::SceneNode *rootSceneNode, float frequency) {
 
 
   Character* character1 = c->createActor(rootSceneNode->createChildSceneNode());
-  Character* character2 = c->createActor(rootSceneNode->createChildSceneNode());
 
   Terrain* terrain1 = t->createActor(rootSceneNode->createChildSceneNode());
   Terrain* terrain2 = t->createActor(rootSceneNode->createChildSceneNode());
+  Terrain* terrain3 = t->createActor(rootSceneNode->createChildSceneNode());
 
   ihCharacterTerrain->print();
   std::cout << std::endl;
