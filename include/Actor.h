@@ -22,6 +22,8 @@ class Actor {
 
   Ogre::Vector2 getPosition();
 
+  void setPosition(Ogre::Vector2 pos);
+
   virtual void update(float d_t);
 
   virtual void print();

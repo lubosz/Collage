@@ -10,11 +10,21 @@
 #include "Terrain.h"
 
 template<> class Interaction<Character, Terrain>
-: public AbstractInteraction<Character, Terrain> {
+: public AbstractCollisionInteraction<Character, Terrain> {
  public:
-  float test;
+  bool collisionTest(Character* first, Terrain* second);
 
-  virtual void init();
-  virtual void interact();
+  void onInit();
+
+  void onEnter();
+
+  void onLeave();
+
+  void whileInside();
+
+  void whileOutside();
+
+ private:
+  bool isCrossing(Ogre::Vector2 vec, Ogre::Vector2 pnt1, Ogre::Vector2 pnt2);
 };
 #endif /* INTERACTIONCHARACTERTERRAIN_H_ */

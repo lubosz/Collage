@@ -31,43 +31,43 @@ class AbstractInteraction {
 
 template <class T1, class T2>
 class AbstractCollisionInteraction : public AbstractInteraction<T1, T2> {
- private:
+ public:
   bool inside;
 
-  virtual void init() {
+  void init() {
     inside = false;
-    collisionTest = false;
     onInit();
   }
 
-  virtual void interact() {
+  void interact() {
     if (collisionTest(this->first, this->second)) {
       if (inside) {
         whileInside();
       } else {
         onEnter();
       }
+      inside = true;
     } else {
       if (inside) {
         onLeave();
       } else {
         whileOutside();
       }
+      inside = false;
     }
   }
 
- public:
   virtual bool collisionTest(T1* first, T2* second) = 0;
 
   virtual void onInit() {}
 
-  virtual void onEnter() = 0;
+  virtual void onEnter() {}
 
-  virtual void onLeave() = 0;
+  virtual void onLeave() {}
 
-  virtual void whileInside() = 0;
+  virtual void whileInside() {}
 
-  virtual void whileOutside() = 0;
+  virtual void whileOutside() {}
 };
 
 template <class T1, class T2>
