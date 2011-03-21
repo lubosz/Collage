@@ -121,13 +121,10 @@ void DivBoxGenerator::makeElementBoxes(
         Ogre::Real width = element.geometry().width()*scale;
         Ogre::Real height = element.geometry().height()*scale;
 
-        Actor *actor = this->simulation->createActor(IT_TERRAIN, CT_AABB);
-        CSAABB *aabb = static_cast<CSAABB*>(actor->getCollisionShape());
-        aabb->aABB.x = width;
-        aabb->aABB.y = height;
+        Actor *actor = new Actor();
         makeOgreImage(&element, textureName);
         position +=
-            attachNode(&element, actor->getSceneNode(), scale,
+            attachNode(&element, actor->sceneNode, scale,
             textureName, cube, position);
         i++;
       }
