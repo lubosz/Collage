@@ -4,7 +4,6 @@
 #ifndef INTERACTIONHANDLER_H_
 #define INTERACTIONHANDLER_H_
 
-#include "Interaction.h"
 #include "ActorFactory.h"
 #include "InteractionSpecializations.h"
 

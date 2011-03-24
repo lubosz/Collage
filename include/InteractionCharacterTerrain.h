@@ -5,6 +5,7 @@
 #ifndef INTERACTIONCHARACTERTERRAIN_H_
 #define INTERACTIONCHARACTERTERRAIN_H_
 
+#include "CollisionHandler.h"
 #include "Interaction.h"
 #include "Character.h"
 #include "Terrain.h"
@@ -12,6 +13,7 @@
 template<> class Interaction<Character, Terrain>
 : public AbstractCollisionInteraction<Character, Terrain> {
  public:
+
   bool collisionTest();
 
   void onInit();
