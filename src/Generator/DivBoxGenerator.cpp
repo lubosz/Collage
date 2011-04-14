@@ -121,11 +121,11 @@ void DivBoxGenerator::makeElementBoxes(
         Ogre::Real width = element.geometry().width()*scale;
         Ogre::Real height = element.geometry().height()*scale;
 
-        Actor *actor = new Actor();
+//        Actor *actor = new Actor();
         makeOgreImage(&element, textureName);
-        position +=
-            attachNode(&element, actor->sceneNode, scale,
-            textureName, cube, position);
+//        position +=
+//            attachNode(&element, actor->sceneNode, scale,
+//            textureName, cube, position);
         i++;
       }
     }

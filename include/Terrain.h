@@ -11,13 +11,12 @@
 
 #include "Actor.h"
 
-class Terrain: public Actor {
+class Terrain: public CollisionActor {
  public:
   Terrain();
   virtual ~Terrain();
-  void print();
-
-  Ogre::Vector2 collisionShape;
+  void init();
+  void manipulate(float d_t);
 };
 
 #endif /* TERRAIN_H_ */

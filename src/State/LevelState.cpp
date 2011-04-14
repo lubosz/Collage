@@ -61,7 +61,7 @@ void LevelState::enter() {
 	// m_pOgreHeadMatHigh->getTechnique(0)->getPass(0)->setDiffuse(1, 0, 0, 0);
 
   // Set up physics simulation with 100 Hz
-  simulation = new Simulation(m_pSceneMgr->getRootSceneNode(), 100.0);
+  simulation = new Simulation(m_pSceneMgr, 100.0);
 
   // Generate Level
   genman.sceneFromUrl(

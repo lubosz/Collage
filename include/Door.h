@@ -11,13 +11,12 @@
 
 #include "Actor.h"
 
-class Door: public Actor {
+class Door: public CollisionActor {
  public:
   Door();
   virtual ~Door();
-  void print();
-
-  Ogre::Vector2 collisionShape;
+  void init();
+  void manipulate(float d_t);
 };
 
 #endif

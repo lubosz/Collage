@@ -13,18 +13,22 @@
 
 #include <sstream>
 
-Simulation::Simulation(Ogre::SceneNode *rootSceneNode, float frequency) {
-	this->rootSceneNode = rootSceneNode;
+Simulation::Simulation(Ogre::SceneManager *sceneManager, float frequency) {
+  this->sceneManager = sceneManager;
+	this->rootSceneNode = sceneManager->getRootSceneNode();
 	this->frequency = frequency;
 	d_t = 0.0;
 
-  ActorFactory<Character> *characterFactory = new ActorFactory<Character>();
+  ActorFactory<Character> *characterFactory =
+      new ActorFactory<Character>(sceneManager, "character");
   actorFactories.push_back(characterFactory);
 
-  ActorFactory<Terrain> *terrainFactory = new ActorFactory<Terrain>();
+  ActorFactory<Terrain> *terrainFactory =
+      new ActorFactory<Terrain>(sceneManager, "terrain");
   actorFactories.push_back(terrainFactory);
 
-  ActorFactory<Door> *doorFactory = new ActorFactory<Door>();
+  ActorFactory<Door> *doorFactory =
+      new ActorFactory<Door>(sceneManager, "door");
   actorFactories.push_back(doorFactory);
 
   InteractionHandler<Character, Terrain>* ihCharacterTerrain =
@@ -45,12 +49,15 @@ Simulation::Simulation(Ogre::SceneNode *rootSceneNode, float frequency) {
 
   Character* character1 = characterFactory->createActor(
     rootSceneNode->createChildSceneNode());
-  character1->setPosition(Ogre::Vector2(0.0, 0.0));
 
   Terrain* terrain1 = terrainFactory->createActor(
     rootSceneNode->createChildSceneNode());
-  terrain1->collisionShape = Ogre::Vector2(1.0, 0.0);
-  terrain1->sceneNode->setPosition(-0.5, -0.5, 0.0);
+  Terrain* terrain2 = terrainFactory->createActor(
+    rootSceneNode->createChildSceneNode());
+
+  character1->teleport(0.0, 5.0);
+  terrain1->teleport(-0.5, -0.5);
+  terrain2->teleport(-1.5, 0.0);
 }
 
 Simulation::~Simulation() {}
@@ -59,10 +66,12 @@ void Simulation::update(float secondsSinceLastFrame) {
   d_t += secondsSinceLastFrame;
   if (d_t > 1.0 / frequency) {
     foreach(AbstractActorFactory* a, actorFactories) {
-      a->update(d_t);
+      a->manipulate(d_t);
     }
     foreach(AbstractInteractionHandler* a, interactionHandlers) {
-      std::cout << std::endl;
+      a->update(d_t);
+    }
+    foreach(AbstractActorFactory* a, actorFactories) {
       a->update(d_t);
     }
 

@@ -10,22 +10,40 @@
 #include <QtCore>
 
 Actor::Actor() {
-  }
+}
 
 Actor::~Actor() {
 }
 
-Ogre::Vector2 Actor::getPosition() {
-  return to2D(sceneNode->getPosition());
-}
-
-void Actor::setPosition(Ogre::Vector2 pos) {
-  sceneNode->setPosition(to3D(pos, sceneNode->getPosition().z));
-}
-
-void Actor::update(float d_t) {
-}
-
 void Actor::print() {
-  printf("empty");
+  printf("%s", id.c_str());
+}
+
+CollisionActor::CollisionActor() {
+}
+
+CollisionActor::~CollisionActor() {
+}
+
+void CollisionActor::update(float d_t) {
+  sceneNode->translate(to3D(moveVector, sceneNode->getPosition().z));
+  collisionShape.translate(to2D(sceneNode->getPosition()));
+}
+
+void CollisionActor::teleport(float x, float y) {
+  teleport(Ogre::Vector2(x, y));
+}
+
+void CollisionActor::teleport(Ogre::Vector2 to) {
+  this->moveVector = Ogre::Vector2::ZERO;
+  sceneNode->setPosition(to3D(to, sceneNode->getPosition().z));
+  collisionShape.translate(to2D(sceneNode->getPosition()));
+}
+
+void CollisionActor::move(float x, float y) {
+  move(Ogre::Vector2(x, y));
+}
+
+void CollisionActor::move(Ogre::Vector2 by) {
+  this->moveVector = by;
 }

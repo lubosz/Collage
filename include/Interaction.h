@@ -2,7 +2,7 @@
  *  Copyright 2010 The Collage Project
  */
 #ifndef INTERACTION_H_
-#define INTERACTION_H
+#define INTERACTION_H_
 
 template <class T1, class T2>
 class AbstractInteraction {

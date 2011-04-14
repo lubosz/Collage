@@ -35,8 +35,8 @@ void LevelGenerator::addDoors() {
       if (cont)
         continue;
       qDebug() << "Door for" << url;
-      Actor *actor = new Actor();
+//      Actor *actor = new Actor();
       Ogre::Entity* door = sceneManager->createEntity("door.mesh");
-      actor->sceneNode->attachObject(door);
+//      actor->sceneNode->attachObject(door);
     }
 }

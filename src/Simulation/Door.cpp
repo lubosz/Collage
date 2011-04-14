@@ -14,6 +14,8 @@ Door::Door() {
 Door::~Door() {
 }
 
-void Door::print() {
-  printf("door");
+void Door::init() {
+}
+
+void Door::manipulate(float d_t) {
 }

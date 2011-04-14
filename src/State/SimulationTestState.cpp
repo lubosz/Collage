@@ -72,7 +72,7 @@ void SimulationTestState::exit() {
 }
 
 void SimulationTestState::createScene() {
-  simulation = new Simulation(m_pSceneMgr->getRootSceneNode(), 60.0);
+  simulation = new Simulation(m_pSceneMgr, 60.0);
 }
 
 bool SimulationTestState::keyPressed(const OIS::KeyEvent &keyEventRef) {

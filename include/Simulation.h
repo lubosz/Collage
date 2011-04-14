@@ -16,7 +16,7 @@
 class Simulation {
  public:
   Simulation();
-	Simulation(Ogre::SceneNode *rootSceneNode, float frequency);
+	Simulation(Ogre::SceneManager *sceneManager, float frequency);
 	virtual ~Simulation();
 
 	void update(float timeSinceLastFrame);
@@ -27,6 +27,7 @@ class Simulation {
 	float frequency;
 	float d_t;
 
+	Ogre::SceneManager *sceneManager;
 	Ogre::SceneNode *rootSceneNode;
 
 	std::vector<AbstractActorFactory*> actorFactories;

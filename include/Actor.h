@@ -10,6 +10,7 @@
 #define ACTOR_H_
 #include "OGRE/Ogre.h"
 #include <QtCore>
+#include "CollisionShape.h"
 
 #define DEBUG_OUTPUT
 // #define DEBUG_OUTPUT_TRIGGERED
@@ -17,18 +18,34 @@
 class Actor {
  public:
   Actor();
-
   virtual ~Actor();
 
-  Ogre::Vector2 getPosition();
+  std::string id;
 
-  void setPosition(Ogre::Vector2 pos);
+  virtual void init() = 0;
+  virtual void manipulate(float d_t) = 0;
+  virtual void update(float d_t) = 0;
+  void print();
+};
 
-  virtual void update(float d_t);
+class CollisionActor : public Actor {
+ public:
+  CollisionActor();
+  virtual ~CollisionActor();
 
-  virtual void print();
-
+  Ogre::SceneManager* debugRendererSceneManager;
   Ogre::SceneNode* sceneNode;
+  CollisionShape2 collisionShape;
+  Ogre::Vector2 moveVector;
+
+  virtual void init() = 0;
+  virtual void manipulate(float d_t) = 0;
+  void update(float d_t);
+
+  void teleport(float x, float y);
+  void teleport(Ogre::Vector2 to);
+  void move(float x, float y);
+  void move(Ogre::Vector2 by);
 };
 
 inline static Ogre::Vector2 to2D(Ogre::Vector3 in) {
