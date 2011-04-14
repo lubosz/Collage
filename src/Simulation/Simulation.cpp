@@ -54,10 +54,13 @@ Simulation::Simulation(Ogre::SceneManager *sceneManager, float frequency) {
     rootSceneNode->createChildSceneNode());
   Terrain* terrain2 = terrainFactory->createActor(
     rootSceneNode->createChildSceneNode());
+  Terrain* terrain3 = terrainFactory->createActor(
+    rootSceneNode->createChildSceneNode());
 
   character1->teleport(0.0, 5.0);
   terrain1->teleport(-0.5, -0.5);
   terrain2->teleport(-1.5, 0.0);
+  terrain3->teleport(3.5, 1.0);
 }
 
 Simulation::~Simulation() {}

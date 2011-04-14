@@ -11,9 +11,11 @@ Interaction<Character, Terrain>::Interaction() {
 Interaction<Character, Terrain>::~Interaction() {}
 
 bool Interaction<Character, Terrain>::collisionTest() {
+  Ogre::Vector2 moveConstraint = first->moveVector;
   if (CollisionHandler::collisionTestAABB(
       &first->collisionShape, &second->collisionShape,
-      &first->moveVector, true)) {
+      &moveConstraint, true)) {
+    first->moveConstraints.push(moveConstraint);
     return true;
   }
   return false;

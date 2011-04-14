@@ -37,6 +37,7 @@ class CollisionActor : public Actor {
   Ogre::SceneNode* sceneNode;
   CollisionShape2 collisionShape;
   Ogre::Vector2 moveVector;
+  std::queue<Ogre::Vector2> moveConstraints;
 
   virtual void init() = 0;
   virtual void manipulate(float d_t) = 0;

@@ -26,6 +26,15 @@ CollisionActor::~CollisionActor() {
 }
 
 void CollisionActor::update(float d_t) {
+  while (!moveConstraints.empty()) {
+    if (fabs(moveVector.x) > fabs(moveConstraints.front().x)) {
+      moveVector.x = moveConstraints.front().x;
+    }
+    if (fabs(moveVector.y) > fabs(moveConstraints.front().y)) {
+      moveVector.y = moveConstraints.front().y;
+    }
+    moveConstraints.pop();
+  }
   sceneNode->translate(to3D(moveVector, sceneNode->getPosition().z));
   collisionShape.translate(to2D(sceneNode->getPosition()));
 }
