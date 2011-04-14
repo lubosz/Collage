@@ -26,17 +26,10 @@ CollisionActor::~CollisionActor() {
 }
 
 void CollisionActor::update(float d_t) {
-  while (!moveConstraints.empty()) {
-    if (fabs(moveVector.x) > fabs(moveConstraints.front().x)) {
-      moveVector.x = moveConstraints.front().x;
-    }
-    if (fabs(moveVector.y) > fabs(moveConstraints.front().y)) {
-      moveVector.y = moveConstraints.front().y;
-    }
-    moveConstraints.pop();
-  }
   sceneNode->translate(to3D(moveVector, sceneNode->getPosition().z));
   collisionShape.translate(to2D(sceneNode->getPosition()));
+  velocity = moveVector / d_t;
+  moveVector = Ogre::Vector2::ZERO;
 }
 
 void CollisionActor::teleport(float x, float y) {
@@ -55,4 +48,13 @@ void CollisionActor::move(float x, float y) {
 
 void CollisionActor::move(Ogre::Vector2 by) {
   this->moveVector = by;
+}
+
+void CollisionActor::constrainMove(Ogre::Vector2 by) {
+  if (fabs(moveVector.x) > fabs(by.x)) {
+    moveVector.x = by.x;
+  }
+  if (fabs(moveVector.y) > fabs(by.y)) {
+    moveVector.y = by.y;
+  }
 }

@@ -13,6 +13,6 @@ void Interaction<Character, Door>::onEnter() {}
 
 void Interaction<Character, Door>::onLeave() {}
 
-void Interaction<Character, Door>::whileInside() {}
+void Interaction<Character, Door>::whileInside(float d_t) {}
 
-void Interaction<Character, Door>::whileOutside() {}
+void Interaction<Character, Door>::whileOutside(float d_t) {}

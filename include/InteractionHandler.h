@@ -32,7 +32,7 @@ class InteractionHandler : public AbstractInteractionHandler {
       for (int j = 0; j < allInteractions[i].size(); j++) {
         Interaction<T1, T2>* inter =
             static_cast<Interaction<T1, T2>* >(allInteractions[i][j]);
-        inter->interact();
+        inter->interact(d_t);
       }
     }
   };

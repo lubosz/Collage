@@ -37,7 +37,7 @@ class CollisionActor : public Actor {
   Ogre::SceneNode* sceneNode;
   CollisionShape2 collisionShape;
   Ogre::Vector2 moveVector;
-  std::queue<Ogre::Vector2> moveConstraints;
+  Ogre::Vector2 velocity;
 
   virtual void init() = 0;
   virtual void manipulate(float d_t) = 0;
@@ -47,6 +47,7 @@ class CollisionActor : public Actor {
   void teleport(Ogre::Vector2 to);
   void move(float x, float y);
   void move(Ogre::Vector2 by);
+  void constrainMove(Ogre::Vector2 by);
 };
 
 inline static Ogre::Vector2 to2D(Ogre::Vector3 in) {

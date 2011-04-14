@@ -15,7 +15,7 @@ bool Interaction<Character, Terrain>::collisionTest() {
   if (CollisionHandler::collisionTestAABB(
       &first->collisionShape, &second->collisionShape,
       &moveConstraint, true)) {
-    first->moveConstraints.push(moveConstraint);
+    first->constrainMove(moveConstraint);
     return true;
   }
   return false;
@@ -31,8 +31,8 @@ void Interaction<Character, Terrain>::onLeave() {
   std::cout << first->id << " leaving " << second->id << std::endl;
 }
 
-void Interaction<Character, Terrain>::whileInside() {
+void Interaction<Character, Terrain>::whileInside(float d_t) {
 }
 
-void Interaction<Character, Terrain>::whileOutside() {
+void Interaction<Character, Terrain>::whileOutside(float d_t) {
 }

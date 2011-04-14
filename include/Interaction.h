@@ -21,7 +21,7 @@ class AbstractInteraction {
 
   virtual void init() = 0;
 
-  virtual void interact() = 0;
+  virtual void interact(float d_t) = 0;
 
   virtual void print() {
     first->print();
@@ -39,10 +39,10 @@ class AbstractCollisionInteraction : public AbstractInteraction<T1, T2> {
     onInit();
   }
 
-  void interact() {
+  void interact(float d_t) {
     if (collisionTest()) {
       if (inside) {
-        whileInside();
+        whileInside(d_t);
       } else {
         onEnter();
       }
@@ -51,7 +51,7 @@ class AbstractCollisionInteraction : public AbstractInteraction<T1, T2> {
       if (inside) {
         onLeave();
       } else {
-        whileOutside();
+        whileOutside(d_t);
       }
       inside = false;
     }
@@ -65,9 +65,9 @@ class AbstractCollisionInteraction : public AbstractInteraction<T1, T2> {
 
   virtual void onLeave() {}
 
-  virtual void whileInside() {}
+  virtual void whileInside(float d_t) {}
 
-  virtual void whileOutside() {}
+  virtual void whileOutside(float d_t) {}
 };
 
 template <class T1, class T2>
@@ -76,7 +76,7 @@ class Interaction : public AbstractInteraction<T1, T2> {
   Interaction() {}
   virtual ~Interaction() {}
   void init() {}
-  void interact() {}
+  void interact(float d_t) {}
 };
 
 #endif /* INTERACTION_H_ */

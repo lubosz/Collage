@@ -28,6 +28,6 @@ void Character::init() {
 }
 
 void Character::manipulate(float d_t) {
-  move(.5*d_t, -5. * d_t * d_t + this->moveVector.y);  // s=1/2at^2
+  move(0.5 * d_t, -5.0 * d_t * d_t + velocity.y * d_t);  // s = 1/2*a*t^2 + v*t
   collisionShape.updateDebugRendering(CollisionShape2::DEF_AABB);
 }

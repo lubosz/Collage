@@ -20,8 +20,8 @@ template<> class Interaction<Character, Door>
 
   void onLeave();
 
-  void whileInside();
+  void whileInside(float d_t);
 
-  void whileOutside();
+  void whileOutside(float d_t);
 };
 #endif

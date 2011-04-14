@@ -24,8 +24,8 @@ template<> class Interaction<Character, Terrain>
 
   void onLeave();
 
-  void whileInside();
+  void whileInside(float d_t);
 
-  void whileOutside();
+  void whileOutside(float d_t);
 };
 #endif /* INTERACTIONCHARACTERTERRAIN_H_ */
