@@ -32,29 +32,52 @@ void CollisionActor::update(float d_t) {
   moveVector = Ogre::Vector2::ZERO;
 }
 
-void CollisionActor::teleport(float x, float y) {
+CollisionActor* CollisionActor::teleport(float x, float y) {
   teleport(Ogre::Vector2(x, y));
+  return this;
 }
 
-void CollisionActor::teleport(Ogre::Vector2 to) {
+CollisionActor* CollisionActor::teleport(Ogre::Vector2 to) {
   this->moveVector = Ogre::Vector2::ZERO;
   sceneNode->setPosition(to3D(to, sceneNode->getPosition().z));
   collisionShape.translate(to2D(sceneNode->getPosition()));
+  return this;
 }
 
-void CollisionActor::move(float x, float y) {
+CollisionActor* CollisionActor::move(float x, float y) {
   move(Ogre::Vector2(x, y));
+  return this;
 }
 
-void CollisionActor::move(Ogre::Vector2 by) {
+CollisionActor* CollisionActor::move(Ogre::Vector2 by) {
   this->moveVector = by;
+  return this;
 }
 
-void CollisionActor::constrainMove(Ogre::Vector2 by) {
+CollisionActor* CollisionActor::constrainMove(Ogre::Vector2 by) {
   if (fabs(moveVector.x) > fabs(by.x)) {
     moveVector.x = by.x;
   }
   if (fabs(moveVector.y) > fabs(by.y)) {
     moveVector.y = by.y;
   }
+  return this;
+}
+
+CollisionActor* CollisionActor::addPoint(float x, float y) {
+  Ogre::Vector2 point(x, y);
+  addPoint(point);
+  return this;
+}
+
+CollisionActor* CollisionActor::addPoint(Ogre::Vector2 point) {
+  collisionShapePoints.push_back(point);
+  return this;
+}
+
+CollisionActor* CollisionActor::createCollisionShape(
+    CollisionShape2::DefinedBy definedBy) {
+  collisionShape.createShape(collisionShapePoints, definedBy);
+  collisionShapePoints.clear();
+  return this;
 }

@@ -47,20 +47,35 @@ Simulation::Simulation(Ogre::SceneManager *sceneManager, float frequency) {
   interactionHandlers.push_back(
     static_cast<AbstractInteractionHandler*>(ihCharacterDoor));
 
-  Character* character1 = characterFactory->createActor(
-    rootSceneNode->createChildSceneNode());
+  characterFactory->createActor()
+      ->teleport(0.0, 5.0);
 
-  Terrain* terrain1 = terrainFactory->createActor(
-    rootSceneNode->createChildSceneNode());
-  Terrain* terrain2 = terrainFactory->createActor(
-    rootSceneNode->createChildSceneNode());
-  Terrain* terrain3 = terrainFactory->createActor(
-    rootSceneNode->createChildSceneNode());
+  characterFactory->createActor()
+      ->teleport(-3.0, 40.0);
 
-  character1->teleport(0.0, 5.0);
-  terrain1->teleport(-0.5, -0.5);
-  terrain2->teleport(-1.5, 0.0);
-  terrain3->teleport(3.5, 1.0);
+  terrainFactory->createActor()
+      ->teleport(-0.5, -0.5)
+      ->addPoint(1.0, 1.0)
+      ->addPoint(0.0, 0.0)
+      ->createCollisionShape(CollisionShape2::DEF_AABB);
+
+  terrainFactory->createActor()
+      ->teleport(-1.5, 0.0)
+      ->addPoint(1.0, 2.0)
+      ->addPoint(0.0, 0.0)
+      ->createCollisionShape(CollisionShape2::DEF_AABB);
+
+  terrainFactory->createActor()
+      ->teleport(3.5, 1.0)
+      ->addPoint(1.0, 1.0)
+      ->addPoint(0.0, 0.0)
+      ->createCollisionShape(CollisionShape2::DEF_AABB);
+
+  terrainFactory->createActor()
+      ->teleport(-3.5, -1.0)
+      ->addPoint(1.0, 1.0)
+      ->addPoint(0.0, 0.0)
+      ->createCollisionShape(CollisionShape2::DEF_AABB);
 }
 
 Simulation::~Simulation() {}

@@ -41,31 +41,23 @@ template <class T> class ActorFactory : public AbstractActorFactory {
  public:
   ActorFactory() {}
   ActorFactory(
-      Ogre::SceneManager* debugRendererSceneManager,
+      Ogre::SceneManager* sceneManager,
       std::string name) {
     this->id = 0;
     this->name = name;
-    this->debugRendererSceneManager = debugRendererSceneManager;
+    this->sceneManager = sceneManager;
   }
   virtual ~ActorFactory() {}
 
   std::string name;
   int id;
-  Ogre::SceneManager* debugRendererSceneManager;
+  Ogre::SceneManager* sceneManager;
   std::vector<T*> actors;
   std::vector<std::pair<AbstractInteractionHandler*, bool>> interactionHandlers;
 
   void addInteractionHandler(AbstractInteractionHandler* handler, bool place) {
     interactionHandlers.push_back(
         std::pair<AbstractInteractionHandler*, bool>(handler, place));
-  }
-
-  T* createActor(Ogre::SceneNode *n) {
-    T* a = createActor();
-    a->sceneNode = n;
-    a->debugRendererSceneManager = debugRendererSceneManager;
-    a->init();
-    return a;
   }
 
   T* createActor() {
@@ -79,6 +71,9 @@ template <class T> class ActorFactory : public AbstractActorFactory {
       interactionHandlers[i].first->addInteraction(a, place);
     }
     id++;
+    a->sceneManager = sceneManager;
+    a->sceneNode = sceneManager->getRootSceneNode()->createChildSceneNode();
+    a->init();
     return a;
   }
 

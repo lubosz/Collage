@@ -40,7 +40,7 @@ class CollisionShape2 {
 //    float radius;
 //  };
 
-  void addPoints(std::vector<Ogre::Vector2> points);
+  void createShape(std::vector<Ogre::Vector2> points, DefinedBy definedBy);
   void translate(Ogre::Vector2 to);
 
   void intitDebugRendering(Ogre::SceneManager* sceneManager, std::string name);

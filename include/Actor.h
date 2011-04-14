@@ -20,6 +20,8 @@ class Actor {
   Actor();
   virtual ~Actor();
 
+  Ogre::SceneManager* sceneManager;
+  Ogre::SceneNode* sceneNode;
   std::string id;
 
   virtual void init() = 0;
@@ -33,8 +35,7 @@ class CollisionActor : public Actor {
   CollisionActor();
   virtual ~CollisionActor();
 
-  Ogre::SceneManager* debugRendererSceneManager;
-  Ogre::SceneNode* sceneNode;
+  std::vector<Ogre::Vector2> collisionShapePoints;
   CollisionShape2 collisionShape;
   Ogre::Vector2 moveVector;
   Ogre::Vector2 velocity;
@@ -43,11 +44,14 @@ class CollisionActor : public Actor {
   virtual void manipulate(float d_t) = 0;
   void update(float d_t);
 
-  void teleport(float x, float y);
-  void teleport(Ogre::Vector2 to);
-  void move(float x, float y);
-  void move(Ogre::Vector2 by);
-  void constrainMove(Ogre::Vector2 by);
+  CollisionActor* teleport(float x, float y);
+  CollisionActor* teleport(Ogre::Vector2 to);
+  CollisionActor* move(float x, float y);
+  CollisionActor* move(Ogre::Vector2 by);
+  CollisionActor* constrainMove(Ogre::Vector2 by);
+  CollisionActor* addPoint(float x, float y);
+  CollisionActor* addPoint(Ogre::Vector2 point);
+  CollisionActor* createCollisionShape(CollisionShape2::DefinedBy definedBy);
 };
 
 inline static Ogre::Vector2 to2D(Ogre::Vector3 in) {

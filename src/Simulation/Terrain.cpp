@@ -15,11 +15,7 @@ Terrain::~Terrain() {
 }
 
 void Terrain::init() {
-  std::vector<Ogre::Vector2> points;
-  points.push_back(Ogre::Vector2(1.0, 1.0));
-  points.push_back(Ogre::Vector2(0.0, 0.0));
-  collisionShape.addPoints(points);
-  collisionShape.intitDebugRendering(debugRendererSceneManager, id);
+  collisionShape.intitDebugRendering(sceneManager, id);
 }
 
 void Terrain::manipulate(float d_t) {

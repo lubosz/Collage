@@ -10,12 +10,14 @@ CollisionShape2::CollisionShape2() {
 CollisionShape2::~CollisionShape2() {
 }
 
-void CollisionShape2::addPoints(std::vector<Ogre::Vector2> points) {
+void CollisionShape2::createShape(
+    std::vector<Ogre::Vector2> points,
+    DefinedBy definedBy) {
   for (int i = 0; i < points.size(); i++) {
     this->relativePoints.push_back(points[i]);
     this->absolutePoints.push_back(points[i]);
   }
-  this->definedBy = DEF_POINTS;
+  this->definedBy = definedBy;
   calculateShapeRepresentations();
 }
 
