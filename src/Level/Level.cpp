@@ -2,12 +2,14 @@
  *  Copyright 2010 The Collage Project
  */
 #include "Level.h"
+#include "DefaultSimulation.h"
 #include <QDebug>
 
 Level::Level(QObject *parent)
   :
     QObject(parent) {
-      //this->simulation = DefaultSimulation();
+      this->simulation =
+          static_cast<Simulation*>(new DefaultSimulation(this->sceneManager));
     }
 
 QString Level::getName() {
