@@ -50,31 +50,25 @@ Simulation::Simulation(Ogre::SceneManager *sceneManager, float frequency) {
   characterFactory->createActor()
       ->teleport(0.0, 5.0);
 
-  characterFactory->createActor()
-      ->teleport(-3.0, 40.0);
-
-  terrainFactory->createActor()
-      ->teleport(-0.5, -0.5)
-      ->addPoint(1.0, 1.0)
-      ->addPoint(0.0, 0.0)
-      ->createCollisionShape(CollisionShape2::DEF_AABB);
-
   terrainFactory->createActor()
       ->teleport(-1.5, 0.0)
-      ->addPoint(1.0, 2.0)
+      ->addPoint(1.0, 1.0)
       ->addPoint(0.0, 0.0)
+      ->addPoint(2.0, 0.0)
       ->createCollisionShape(CollisionShape2::DEF_AABB);
 
   terrainFactory->createActor()
       ->teleport(3.5, 1.0)
       ->addPoint(1.0, 1.0)
       ->addPoint(0.0, 0.0)
+      ->addPoint(2.0, 0.0)
       ->createCollisionShape(CollisionShape2::DEF_AABB);
 
   terrainFactory->createActor()
       ->teleport(-3.5, -1.0)
       ->addPoint(1.0, 1.0)
       ->addPoint(0.0, 0.0)
+      ->addPoint(2.0, 0.0)
       ->createCollisionShape(CollisionShape2::DEF_AABB);
 }
 

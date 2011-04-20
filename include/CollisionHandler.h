@@ -115,16 +115,16 @@ class CollisionHandler {
 
   static inline void projectConvex(
     Ogre::Vector2* axis,
-    std::vector<Ogre::Vector2*>* convex,
+    CollisionShape2::Convex* convex,
     float* retMin,
     float* retMax) {
     // To project a point on an axis use the dot product
 
-    float dotProduct = axis->dotProduct(*convex->at(0));
+    float dotProduct = axis->dotProduct(*convex->points[0]);
     *retMin = dotProduct;
     *retMax = dotProduct;
-    for (int i = 0; i < convex->size(); i++) {
-      dotProduct = convex->at(0)->dotProduct(*axis);
+    for (int i = 0; i < convex->points.size(); i++) {
+      dotProduct = convex->points[i]->dotProduct(*axis);
       if (dotProduct < *retMin) {
         *retMin = dotProduct;
       } else {
@@ -135,269 +135,61 @@ class CollisionHandler {
     }
   }
 
-  static inline float intervalDistance(
-      float* minA,
-      float* maxA,
-      float* minB,
-      float* maxB) {
-    if (*minA < *minB) {
-      return *minB - *maxA;
-    } else {
-      return *minA - *maxB;
+  static inline bool collisionTestConvex(
+       CollisionShape2 *a,
+       CollisionShape2 *b,
+       Ogre::Vector2 *relativeTranslation,
+       bool constrainTranslation = true) {
+    Ogre::Vector2 minDistAxis;
+    float minDist = 100.0;
+    // Loop through all the edges of both polygons
+    Ogre::Vector2* currentEdge;
+    for (int i = 0; i < a->convex.edges.size() + b->convex.edges.size(); i++) {
+      if (i < a->convex.edges.size()) {
+       currentEdge = &a->convex.edges[i];
+      } else {
+       currentEdge = &b->convex.edges[i - a->convex.edges.size()];
+      }
+
+      Ogre::Vector2 axis(-currentEdge->y, currentEdge->x);
+      axis.normalise();
+
+      float minA = 0.0;
+      float minB = 0.0;
+      float maxA = 0.0;
+      float maxB = 0.0;
+      projectConvex(&axis, &a->convex, &minA, &maxA);
+      projectConvex(&axis, &b->convex, &minB, &maxB);
+
+      float velocityProjection = axis.dotProduct(*relativeTranslation);
+
+      if (velocityProjection < 0.0) {
+          minA += velocityProjection;
+      } else {
+          maxA += velocityProjection;
+      }
+
+      float dist;
+      if (minA < minB) {
+        dist = minB - maxA;
+        if (dist > 0.0) return false;
+      } else {
+        dist = minA - maxB;
+        if (dist > 0.0) return false;
+      }
+
+      if (constrainTranslation) {
+        if (fabsf(dist) < fabsf(minDist)) {
+            minDist = dist;
+            minDistAxis = axis;
+        }
+      }
     }
+    std::cout << minDistAxis.x << ", " << minDistAxis.y << " * " << minDist <<
+        std::endl;
+    *relativeTranslation = minDistAxis * minDist * 0.999;
+    return true;
   }
-//
-// public PolygonCollisionResult PolygonCollision(Polygon polygonA,
-//                               Polygon polygonB, Vector velocity) {
-//     PolygonCollisionResult result = new PolygonCollisionResult();
-//     result.Intersect = true;
-//     result.WillIntersect = true;
-//
-//     int edgeCountA = polygonA.Edges.Count;
-//     int edgeCountB = polygonB.Edges.Count;
-//     float minIntervalDistance = float.PositiveInfinity;
-//     Vector translationAxis = new Vector();
-//     Vector edge;
-//
-//     // Loop through all the edges of both polygons
-//
-//     for (int edgeIndex = 0; edgeIndex <
-// edgeCountA + edgeCountB; edgeIndex++) {
-//         if (edgeIndex < edgeCountA) {
-//             edge = polygonA.Edges[edgeIndex];
-//         } else {
-//             edge = polygonB.Edges[edgeIndex - edgeCountA];
-//         }
-//
-//         // ===== 1. Find if the polygons are currently intersecting =====
-//
-//
-//         // Find the axis perpendicular to the current edge
-//
-//         Vector axis = new Vector(-edge.Y, edge.X);
-//         axis.Normalize();
-//
-//         // Find the projection of the polygon on the current axis
-//
-//         float minA = 0; float minB = 0; float maxA = 0; float maxB = 0;
-//         ProjectPolygon(axis, polygonA, ref minA, ref maxA);
-//         ProjectPolygon(axis, polygonB, ref minB, ref maxB);
-//
-//         // Check if the polygon projections are currentlty intersecting
-//
-//         if (IntervalDistance(minA, maxA, minB, maxB) > 0)\
-//             result.Intersect = false;
-//
-//         // ===== 2. Now find if the polygons *will* intersect =====
-//
-//
-//         // Project the velocity on the current axis
-//
-//         float velocityProjection = axis.DotProduct(velocity);
-//
-//         // Get the projection of polygon A during the movement
-//
-//         if (velocityProjection < 0) {
-//             minA += velocityProjection;
-//         } else {
-//             maxA += velocityProjection;
-//         }
-//
-//         // Do the same test as above for the new projection
-//
-//         float intervalDistance = IntervalDistance(minA, maxA, minB, maxB);
-//         if (intervalDistance > 0) result.WillIntersect = false;
-//
-//         // If the polygons are not
-//         // intersecting and won't intersect, exit the loop
-//
-//         if (!result.Intersect && !result.WillIntersect) break;
-//
-//         // Check if the current interval distance is the minimum one.
-//         // If so store
-//
-//         // the interval distance and the current distance.
-//
-//         // This will be used to calculate the minimum translation vector
-//
-//         intervalDistance = Math.Abs(intervalDistance);
-//         if (intervalDistance < minIntervalDistance) {
-//             minIntervalDistance = intervalDistance;
-//             translationAxis = axis;
-//
-//             Vector d = polygonA.Center - polygonB.Center;
-//             if (d.DotProduct(translationAxis) < 0)
-//                 translationAxis = -translationAxis;
-//         }
-//     }
-//
-//     // The minimum translation vector
-//
-//     // can be used to push the polygons appart.
-//
-//     if (result.WillIntersect)
-//         result.MinimumTranslationVector =
-//                translationAxis * minIntervalDistance;
-//
-//     return result;
-// }
-
-  // Check if polygon A is going to collide with polygon B.
-
-  // The last parameter is the *relative* velocity
-
-  // of the polygons (i.e. velocityA - velocityB)
-
-//  public PolygonCollisionResult PolygonCollision(Polygon polygonA,
-//                                Polygon polygonB, Vector velocity) {
-//      PolygonCollisionResult result = new PolygonCollisionResult();
-//      result.Intersect = true;
-//      result.WillIntersect = true;
-//
-//      int edgeCountA = polygonA.Edges.Count;
-//      int edgeCountB = polygonB.Edges.Count;
-//      float minIntervalDistance = float.PositiveInfinity;
-//      Vector translationAxis = new Vector();
-//      Vector edge;
-//
-//      // Loop through all the edges of both polygons
-//
-//  for (int edgeIndex = 0; edgeIndex < edgeCountA + edgeCountB; edgeIndex++) {
-//          if (edgeIndex < edgeCountA) {
-//              edge = polygonA.Edges[edgeIndex];
-//          } else {
-//              edge = polygonB.Edges[edgeIndex - edgeCountA];
-//          }
-//
-//          // ===== 1. Find if the polygons are currently intersecting =====
-//
-//
-//          // Find the axis perpendicular to the current edge
-//
-//          Vector axis = new Vector(-edge.Y, edge.X);
-//          axis.Normalize();
-//
-//          // Find the projection of the polygon on the current axis
-//
-//          float minA = 0; float minB = 0; float maxA = 0; float maxB = 0;
-//          ProjectPolygon(axis, polygonA, ref minA, ref maxA);
-//          ProjectPolygon(axis, polygonB, ref minB, ref maxB);
-//
-//          // Check if the polygon projections are currentlty intersecting
-//
-//          if (IntervalDistance(minA, maxA, minB, maxB) > 0)\
-//              result.Intersect = false;
-//
-//          // ===== 2. Now find if the polygons *will* intersect =====
-//
-//
-//          // Project the velocity on the current axis
-//
-//          float velocityProjection = axis.DotProduct(velocity);
-//
-//          // Get the projection of polygon A during the movement
-//
-//          if (velocityProjection < 0) {
-//              minA += velocityProjection;
-//          } else {
-//              maxA += velocityProjection;
-//          }
-//
-//          // Do the same test as above for the new projection
-//
-//          float intervalDistance = IntervalDistance(minA, maxA, minB, maxB);
-//          if (intervalDistance > 0) result.WillIntersect = false;
-//
-//  // If the polygons are not intersecting and won't intersect, exit the loop
-//
-//          if (!result.Intersect && !result.WillIntersect) break;
-//
-//  // Check if the current interval distance is the minimum one. If so store
-//
-//          // the interval distance and the current distance.
-//
-//          // This will be used to calculate the minimum translation vector
-//
-//          intervalDistance = Math.Abs(intervalDistance);
-//          if (intervalDistance < minIntervalDistance) {
-//              minIntervalDistance = intervalDistance;
-//              translationAxis = axis;
-//
-//              Vector d = polygonA.Center - polygonB.Center;
-//              if (d.DotProduct(translationAxis) < 0)
-//                  translationAxis = -translationAxis;
-//          }
-//      }
-//
-//      // The minimum translation vector
-//
-//      // can be used to push the polygons appart.
-//
-//      if (result.WillIntersect)
-//          result.MinimumTranslationVector =
-//                 translationAxis * minIntervalDistance;
-//
-//      return result;
-//  }
-
-//  static inline int testConvexLine(
-//      Ogre::Vector2* pos1,
-//      std::vector<Ogre::Vector2*>* convex1,
-//      Ogre::Vector2* pos2,
-//      Ogre::Vector2* dir2,
-//      Ogre::Vector2* intersection1,
-//      Ogre::Vector2* intersection2) {
-//    Ogre::Vector2 relPos2 = *pos2 - *pos1;
-//    convex1.push_back(convex1[0]);
-//    bool bothInside = true;
-//    Ogre::Vector2* currentReturnPoint = intersection1;
-//
-//    for (int i = 0; i < convex1.size()-1; i++) {
-//      Ogre::Vector2 currentVertex =  pos1 + convex1[i];
-//      Ogre::Vector2 currentDirection = convex1[i+1] - convex1[i];
-//
-//      if (isVertexRightToLine(pos2, currentVertex, currentDirection)) {
-//        if (!isVertexRightToLine(
-//            pos2 + dir2, currentVertex, currentDirection)) {
-//          bothInside = false;
-//          if (testLineLine(
-//              pos2, dir2,
-//              currentVertex, currentDirection, currentReturnPoint)) {
-//            currentReturnPoint = intersection2;
-//          }
-//        }
-//
-//      } else {
-//        bothInside = false;
-//        if (isVertexRightToLine(
-//            pos2 + dir2, currentVertex, currentDirection)) {
-//          if (testLineLine(
-//              pos2, dir2, currentVertex,
-//              currentDirection, currentReturnPoint)) {
-//            currentReturnPoint = intersection2;
-//          }
-//        } else {
-//          return 0;
-//        }
-//      }
-//
-//      if (bothInside) return -1;
-//      if (currentReturnPoint == intersection1) {
-//        return 1;
-//      } else {
-//        return 2;
-//      }
-//    }
-//  }
-
-//  static inline bool testConvexLine(
-//      Ogre::Vector2 pos1,
-//      std::vector<Ogre::Vector2> convex1,
-//      Ogre::Vector2 pos2,
-//      Ogre::Vector2 dir2,
-//      Ogre::Vector2* collisionPoint) {
-//
-//  }
 };
 
 #endif /* COLLISIONHANDLER_H_ */
