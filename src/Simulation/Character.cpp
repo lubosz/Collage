@@ -15,14 +15,6 @@ Character::~Character() {
 }
 
 void Character::init() {
-  this->addPoint(-1.1, -1.1);
-  this->addPoint(-1.1, 1.1);
-  this->addPoint(1.1, 1.1);
-  this->addPoint(1.1, -1.1);
-  this->addPoint(1.0, -1.0);
-  this->addPoint(-2.0, 0.0);
-  this->addPoint(0.0, 1.2);
-  this->createCollisionShape(CollisionShape2::DEF_AABB);
   collisionShape.intitDebugRendering(sceneManager, id);
 }
 

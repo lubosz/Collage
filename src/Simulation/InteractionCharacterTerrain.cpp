@@ -15,8 +15,8 @@ bool Interaction<Character, Terrain>::collisionTest() {
   if (CollisionHandler::collisionTestAABB(
       &first->collisionShape, &second->collisionShape,
       &moveConstraint, true)) {
-    std::cout << moveConstraint.x << " " << moveConstraint.y << std::endl;
-    first->constrainMove(moveConstraint);
+//    std::cout << moveConstraint.x << " " << moveConstraint.y << std::endl;
+//    first->constrainMove(moveConstraint);
     return true;
   }
   return false;

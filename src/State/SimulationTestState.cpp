@@ -72,7 +72,34 @@ void SimulationTestState::exit() {
 }
 
 void SimulationTestState::createScene() {
-  simulation = new Simulation(m_pSceneMgr, 60.0);
+  simulation = new DefaultSimulation(m_pSceneMgr);
+
+  simulation->characterFactory->createActor()
+      ->teleport(-4.0, 5.0)
+      ->addPoint(0.5, 0.5)
+      ->addPoint(0.0, 0.0)
+      ->createCollisionShape(CollisionShape2::DEF_AABB);
+
+  simulation->terrainFactory->createActor()
+      ->teleport(-1.5, 0.0)
+      ->addPoint(1.0, 1.0)
+      ->addPoint(0.0, 0.0)
+      ->addPoint(2.0, 0.0)
+      ->createCollisionShape(CollisionShape2::DEF_AABB);
+
+  simulation->terrainFactory->createActor()
+      ->teleport(3.5, 1.0)
+      ->addPoint(1.0, 1.0)
+      ->addPoint(0.0, 0.0)
+      ->addPoint(2.0, 0.0)
+      ->createCollisionShape(CollisionShape2::DEF_AABB);
+
+  simulation->terrainFactory->createActor()
+      ->teleport(-3.5, -1.0)
+      ->addPoint(1.0, 1.0)
+      ->addPoint(0.0, 0.0)
+      ->addPoint(2.0, 0.0)
+      ->createCollisionShape(CollisionShape2::DEF_AABB);
 }
 
 bool SimulationTestState::keyPressed(const OIS::KeyEvent &keyEventRef) {
