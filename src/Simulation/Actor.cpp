@@ -20,6 +20,7 @@ void Actor::print() {
 }
 
 CollisionActor::CollisionActor() {
+  velocity = Ogre::Vector2::ZERO;
 }
 
 CollisionActor::~CollisionActor() {
