@@ -23,7 +23,7 @@ LevelState::LevelState() {
 
   this->level = NULL;
 
-  connect(&genman, SIGNAL(levelGenerated(Level*)),
+  connect(&levelman, SIGNAL(levelGenerated(Level*)),
           this, SLOT(levelGenerated(Level*)));
 }
 
@@ -63,7 +63,7 @@ void LevelState::enter() {
 	// m_pOgreHeadMatHigh->getTechnique(0)->getPass(0)->setDiffuse(1, 0, 0, 0);
 
   // Generate Level
-  genman.sceneFromUrl(
+  levelman.sceneFromUrl(
 //      "http://www.uni-koblenz.de",
 //      "http://www.youtube.com/watch?v=urAyOKlgGDk",
 //      "http://www.randomwebsite.com/cgi-bin/random.pl",
@@ -107,7 +107,7 @@ void LevelState::exit() {
 
 void LevelState::levelGenerated(Level *level) {
   this->level = level;
-  System::Instance().logMessage("Received level from generator...");
+  System::Instance().logMessage("Generated level...");
 }
 
 bool LevelState::keyPressed(const OIS::KeyEvent &keyEventRef) {

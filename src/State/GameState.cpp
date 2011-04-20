@@ -9,7 +9,7 @@
 #include "GameState.h"
 #include <QUrl>
 #include <string>
-#include "LevelGeneratorManager.h"
+#include "LevelManager.h"
 
 using std::string;
 

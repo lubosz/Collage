@@ -15,7 +15,7 @@
 
 #include "AppState.h"
 #include "Simulation.h"
-#include "LevelGeneratorManager.h"
+#include "LevelManager.h"
 
 class LevelState : public AppState {
     Q_OBJECT
@@ -40,7 +40,7 @@ class LevelState : public AppState {
   bool mouseReleased(const OIS::MouseEvent &arg, OIS::MouseButtonID id);
 
   void update(double timeSinceLastFrame);
-  LevelGeneratorManager genman;
+  LevelManager levelman;
 
   public slots:
   void levelGenerated(Level *level);

@@ -17,7 +17,7 @@ IF(COLLAGE_RELEASE)
 ELSE()
     set(CMAKE_BUILD_TYPE Debug)
     set(CMAKE_CXX_FLAGS "-O0 -g3 -ggdb") #Debug
-    
+
 ENDIF()
 
 #Set c++0x
@@ -49,7 +49,7 @@ set(QT_USE_QTWEBKIT true)
 set(QT_USE_QTTEST true)
 set(QT_USE_PHONON true)
 
-#set includes    
+#set includes
 INCLUDE(${QT_USE_FILE})
 include_directories(
     include
@@ -58,7 +58,7 @@ include_directories(
     ${QT_INCLUDE_DIRS}
 )
 
-set(GLOB_DIRS Core Generator State Simulation)
+set(GLOB_DIRS Core Level State Simulation)
 file(GLOB_RECURSE INCLUDES include/*.h)
 
 foreach(GLOB_DIR ${GLOB_DIRS})
@@ -67,7 +67,7 @@ foreach(GLOB_DIR ${GLOB_DIRS})
 endforeach(GLOB_DIR)
 
 #moc qt stuff
-set(MOC_CLASSES AppState FrameCapture CollageApplication LevelGeneratorManager GeneralLevelGenerator TagNestingToTerrainGenerator LevelGenerator GameState LevelState)
+set(MOC_CLASSES AppState FrameCapture CollageApplication LevelManager GeneralLevel TagNestingToTerrainLevel Level GameState LevelState)
 foreach(MOC_CLASS ${MOC_CLASSES})
     SET(MOC_INFILES ${MOC_INFILES} include/${MOC_CLASS}.h)
 endforeach(MOC_CLASS)
@@ -154,15 +154,15 @@ elseif (WIN32)
     copy_plugins_config($ENV{OGRE_HOME}/bin/plugins.cfg)
 
     #SET(OGRE_DDLS
-    #    
+    #
     #    libboost_date_time-mgw45-mt-1_44.dll
-    #    libboost_thread-mgw45-mt-1_44.dll  
-    #    libOIS.dll     
+    #    libboost_thread-mgw45-mt-1_44.dll
+    #    libOIS.dll
     #    OgreMain.dll
     #    OgrePaging.dll
     #    OgreProperty.dll
     #    RenderSystem_GL.dll
-    #    
+    #
     #)
     #foreach(dll ${OGRE_DDLS})
     #    add_custom_command(

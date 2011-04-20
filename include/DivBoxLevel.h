@@ -3,11 +3,11 @@
  */
 #pragma once
 
-#include "LevelGenerator.h"
+#include "Level.h"
 
-class DivBoxGenerator : public LevelGenerator {
+class DivBoxLevel : public Level {
  public:
-    DivBoxGenerator();
+    DivBoxLevel();
     void makeOgreImage(
         QWebElement * element, const Ogre::String & textureName,
         unsigned faces = 1);
@@ -20,7 +20,7 @@ class DivBoxGenerator : public LevelGenerator {
         Ogre::Vector3 position);
     bool fits(QWebElement * element, int min, int max);
     float getScore(QWebPage *webpage);
-    Level* generate(Ogre::SceneManager *sceneManager);
+    void generate(Ogre::SceneManager *sceneManager);
     void makeElementBoxes(
         const QWebElement& document,
         Ogre::Real scale,

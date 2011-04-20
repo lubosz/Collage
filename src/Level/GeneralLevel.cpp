@@ -2,22 +2,22 @@
  *  Copyright 2010 The Collage Project
  */
 #include <QDebug>
-#include "GeneralLevelGenerator.h"
+#include "GeneralLevel.h"
 
 #include "RenderEngine.h"
 
-GeneralLevelGenerator::GeneralLevelGenerator(QObject *parent)
+GeneralLevel::GeneralLevel(QObject *parent)
   :
-    LevelGenerator(parent) {
-      this->name = "GeneralLevelGenerator";
+    Level(parent) {
+      this->name = "GeneralLevel";
     }
 
-float GeneralLevelGenerator::getScore(QWebPage *webpage) {
+float GeneralLevel::getScore(QWebPage *webpage) {
   this->webpage = webpage;
   return 100.0;
 }
 
-Level* GeneralLevelGenerator::generate(Ogre::SceneManager *sceneManager) {
+void GeneralLevel::generate(Ogre::SceneManager *sceneManager) {
   this->sceneManager = sceneManager;
   sceneManager->createLight("Light")->setPosition(75, 75, 75);
 
@@ -39,7 +39,4 @@ Level* GeneralLevelGenerator::generate(Ogre::SceneManager *sceneManager) {
   m_pOgreHeadMatHigh->getTechnique(0)->getPass(0)->setDiffuse(1, 0, 0, 0);
 
   this->addDoors();
-
-  Level *level = new Level();
-  return level;
 }

@@ -1,8 +1,8 @@
 /*
  *  Copyright 2010 The Collage Project
  */
-#ifndef LEVELGENERATORMANAGER_H
-#define LEVELGENERATORMANAGER_H
+#ifndef LEVELMANAGER_H
+#define LEVELMANAGER_H
 
 #include <QObject>
 #include <QUrl>
@@ -12,28 +12,28 @@
 
 #include <vector>
 
-#include "LevelGenerator.h"
-#include "GeneralLevelGenerator.h"
-#include "DivBoxGenerator.h"
-#include "TagNestingToTerrainGenerator.h"
+#include "Level.h"
+#include "GeneralLevel.h"
+#include "DivBoxLevel.h"
+#include "TagNestingToTerrainLevel.h"
 
 const float MAX_SCORE = 100.0;
 
-class LevelGeneratorManager : public QObject {
+class LevelManager : public QObject {
     Q_OBJECT
  public:
-    explicit LevelGeneratorManager(QObject *parent = 0);
+    explicit LevelManager(QObject *parent = 0);
 
-    void addGenerator(LevelGenerator *generator);
+    void addLevel(Level *level);
     void requestWebpage(QString url);
     void sceneFromUrl(QString _url, Ogre::SceneManager *sceneManager);
     QWebPage webpage;
     Ogre::SceneManager * sceneManager;
 
  private:
-    std::vector<LevelGenerator*> generators;
+    std::vector<Level*> levels;
     bool requestLock;
-		int percent;
+    int percent;
     bool waitForSignal(QObject* obj, const char* signal, int timeout = 10000);
 
  signals:
@@ -41,7 +41,7 @@ class LevelGeneratorManager : public QObject {
 
  private slots:
     void printProgress(int percent);
-    void getMatchingGenerator(bool ok);
+    void getMatchingLevel(bool ok);
 };
 
 #endif

@@ -6,20 +6,20 @@
 #include <QWebPage>
 #include <QPainter>
 #include "System.h"
-#include "DivBoxGenerator.h"
+#include "DivBoxLevel.h"
 
 #include "RenderEngine.h"
 
-DivBoxGenerator::DivBoxGenerator() {
-  this->name = "Deiner Mudder ihr Generator";
+DivBoxLevel::DivBoxLevel() {
+  this->name = "Deiner Mudder ihr Level";
 }
 
-float DivBoxGenerator::getScore(QWebPage *webpage) {
+float DivBoxLevel::getScore(QWebPage *webpage) {
     this->webpage = webpage;
     return 4.0;
 }
 
-void DivBoxGenerator::makeOgreImage(QWebElement * element,
+void DivBoxLevel::makeOgreImage(QWebElement * element,
     const Ogre::String & textureName, unsigned faces) {
   QSize renderSize = QSize(2048, 2048);
   if (element->geometry().size().width() != 0 &&
@@ -47,7 +47,7 @@ void DivBoxGenerator::makeOgreImage(QWebElement * element,
           image.height(), faces, Ogre::PF_A8R8G8B8));
 }
 
-Ogre::MaterialPtr DivBoxGenerator::makeMaterial(
+Ogre::MaterialPtr DivBoxLevel::makeMaterial(
     Ogre::String name, Ogre::String textureName) {
   Ogre::MaterialPtr material = Ogre::MaterialManager::getSingleton().create(
       name, Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
@@ -56,7 +56,7 @@ Ogre::MaterialPtr DivBoxGenerator::makeMaterial(
   return material;
 }
 
-Ogre::Vector3 DivBoxGenerator::attachNode(
+Ogre::Vector3 DivBoxLevel::attachNode(
     QWebElement * element,
     Ogre::SceneNode * node,
     Ogre::Real scale,
@@ -92,7 +92,7 @@ Ogre::Vector3 DivBoxGenerator::attachNode(
   return move;
 }
 
-void DivBoxGenerator::makeElementBoxes(
+void DivBoxLevel::makeElementBoxes(
     const QWebElement &document,
     Ogre::Real scale,
     Ogre::Real step,
@@ -131,7 +131,7 @@ void DivBoxGenerator::makeElementBoxes(
     }
 }
 
-bool DivBoxGenerator::fits(QWebElement * element, int min, int max) {
+bool DivBoxLevel::fits(QWebElement * element, int min, int max) {
   if (element->geometry().width() > min &&
       element->geometry().height() > min &&
       element->geometry().width() < max &&
@@ -141,7 +141,7 @@ bool DivBoxGenerator::fits(QWebElement * element, int min, int max) {
     return false;
 }
 
-void DivBoxGenerator::setPageRendering(const QSize& siteResolution) {
+void DivBoxLevel::setPageRendering(const QSize& siteResolution) {
   webpage->mainFrame()->setScrollBarPolicy(
       Qt::Vertical, Qt::ScrollBarAlwaysOff);
   webpage->mainFrame()->setScrollBarPolicy(
@@ -149,7 +149,7 @@ void DivBoxGenerator::setPageRendering(const QSize& siteResolution) {
   webpage->setViewportSize(siteResolution);
 }
 
-Level* DivBoxGenerator::generate(Ogre::SceneManager *sceneManager) {
+void DivBoxLevel::generate(Ogre::SceneManager *sceneManager) {
   this->sceneManager = sceneManager;
 
 //  QSize siteResolution = document.geometry().size();
@@ -172,6 +172,4 @@ Level* DivBoxGenerator::generate(Ogre::SceneManager *sceneManager) {
   sceneManager->createLight("Light")->setPosition(75, 75, 75);
 
   this->addDoors();
-
-  return new Level();
 }

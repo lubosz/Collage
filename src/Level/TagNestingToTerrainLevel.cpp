@@ -2,21 +2,21 @@
  *  Copyright 2010 The Collage Project
  */
 #include <QDebug>
-#include "TagNestingToTerrainGenerator.h"
+#include "TagNestingToTerrainLevel.h"
 
 #include "RenderEngine.h"
 
-TagNestingToTerrainGenerator::TagNestingToTerrainGenerator(QObject *parent)
-	:	LevelGenerator(parent) {
-			this->name = "TagNestingToTerrainGenerator";
+TagNestingToTerrainLevel::TagNestingToTerrainLevel(QObject *parent)
+	: Level(parent) {
+			this->name = "TagNestingToTerrainLevel";
 		}
 
-float TagNestingToTerrainGenerator::getScore(QWebPage *webpage) {
+float TagNestingToTerrainLevel::getScore(QWebPage *webpage) {
 	this->webpage = webpage;
-	return 2.0;
+	return 0.0;
 }
 
-void TagNestingToTerrainGenerator::addBox(
+void TagNestingToTerrainLevel::addBox(
     unsigned height, unsigned count, Ogre::ManualObject *manual) {
 
   // for (unsigned i = 0; i < height; i++)
@@ -35,7 +35,7 @@ void TagNestingToTerrainGenerator::addBox(
   manual->position(count, height, -radz);
 }
 
-Level* TagNestingToTerrainGenerator::generate(
+void TagNestingToTerrainLevel::generate(
     Ogre::SceneManager *sceneManager) {
 
   this->sceneManager = sceneManager;
@@ -45,7 +45,7 @@ Level* TagNestingToTerrainGenerator::generate(
   manual->begin("BaseWhiteNoLighting",
                 Ogre::RenderOperation::OT_TRIANGLE_STRIP);
 
-	qDebug() << "Beginning generation... TagNestingToTerrainGenerator";
+	qDebug() << "Beginning generation... TagNestingToTerrainLevel";
 	QWebFrame *frame = this->webpage->mainFrame();
 	QWebElement document = frame->documentElement();
 
@@ -83,7 +83,4 @@ Level* TagNestingToTerrainGenerator::generate(
             createChildSceneNode()->attachObject(manual);
 
   this->addDoors();
-
-  Level *level = new Level();
-  return level;
 }

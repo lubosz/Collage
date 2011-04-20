@@ -4,15 +4,15 @@
 
 #pragma once
 
-#include "LevelGenerator.h"
+#include "Level.h"
 
-class TagNestingToTerrainGenerator : public LevelGenerator {
+class TagNestingToTerrainLevel : public Level {
 	Q_OBJECT
  public:
-		explicit TagNestingToTerrainGenerator(QObject *parent = 0);
+		explicit TagNestingToTerrainLevel(QObject *parent = 0);
 
 		float getScore(QWebPage *webpage);
-		Level* generate(Ogre::SceneManager *sceneManager);
+		void generate(Ogre::SceneManager *sceneManager);
 
     void addBox(unsigned height, unsigned count,
                 Ogre::ManualObject *manual);

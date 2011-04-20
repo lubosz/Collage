@@ -1,24 +1,24 @@
 /*
  *  Copyright 2010 The Collage Project
  */
-#include "LevelGenerator.h"
+#include "Level.h"
 #include <QDebug>
 
-LevelGenerator::LevelGenerator(QObject *parent)
+Level::Level(QObject *parent)
   :
     QObject(parent) {
-      this->simulation = DefaultSimulation();
+      //this->simulation = DefaultSimulation();
     }
 
-QString LevelGenerator::getName() {
+QString Level::getName() {
   return this->name;
 }
 
-void LevelGenerator::update(double timeSinceLastFrame) {
+void Level::update(double timeSinceLastFrame) {
   this->simulation->update(timeSinceLastFrame);
 }
 
-void LevelGenerator::addDoors() {
+void Level::addDoors() {
   QWebElement document = webpage->mainFrame()->documentElement();
   QWebElementCollection elements = document.findAll("A");
 

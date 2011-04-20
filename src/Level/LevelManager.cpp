@@ -9,28 +9,28 @@
 #include <QtCore>
 
 #include "System.h"
-#include "LevelGeneratorManager.h"
+#include "LevelManager.h"
 
-LevelGeneratorManager::LevelGeneratorManager(QObject *parent)
+LevelManager::LevelManager(QObject *parent)
 :
 	QObject(parent) {
 	connect(&webpage, SIGNAL(loadProgress(int)),
 			this, SLOT(printProgress(int)));
 	connect(&webpage, SIGNAL(loadFinished(bool)),
-			this, SLOT(getMatchingGenerator(bool)));
+			this, SLOT(getMatchingLevel(bool)));
 	this->requestLock = false;
-	// Add all the different generators to our list of generators,
+	// Add all the different levels to our list,
 	// most general LAST!
-	this->addGenerator(new TagNestingToTerrainGenerator());
-	this->addGenerator(new DivBoxGenerator());
-	this->addGenerator(new GeneralLevelGenerator());
+	this->addLevel(new TagNestingToTerrainLevel());
+	this->addLevel(new DivBoxLevel());
+	this->addLevel(new GeneralLevel());
 }
 
-void LevelGeneratorManager::addGenerator(LevelGenerator *generator) {
-	this->generators.push_back(generator);
+void LevelManager::addLevel(Level *level) {
+	this->levels.push_back(level);
 }
 
-bool LevelGeneratorManager::waitForSignal(
+bool LevelManager::waitForSignal(
 				QObject* obj, const char* signal, int timeout) {
 	QEventLoop loop;
 	QObject::connect(obj, signal, &loop, SLOT(quit()));
@@ -45,13 +45,13 @@ bool LevelGeneratorManager::waitForSignal(
 	return timeoutSpy.isEmpty();
 }
 
-void LevelGeneratorManager::sceneFromUrl(
+void LevelManager::sceneFromUrl(
     QString _url, Ogre::SceneManager *sceneManager) {
   this->sceneManager = sceneManager;
   requestWebpage(_url);
 }
 
-void LevelGeneratorManager::requestWebpage(QString _url) {
+void LevelManager::requestWebpage(QString _url) {
 	QUrl url(_url);
 	if (this->requestLock) {
 		qDebug() << "Webpage request already in progress.";
@@ -68,17 +68,17 @@ void LevelGeneratorManager::requestWebpage(QString _url) {
   webpage.settings()->setAttribute(QWebSettings::PluginsEnabled, false);
   webpage.settings()->setAttribute(QWebSettings::PrivateBrowsingEnabled, true);
   webpage.settings()->setAttribute(
-      QWebSettings::JavascriptCanOpenWindows, false);
-	webpage.mainFrame()->load(url);
-	waitForSignal(webpage.mainFrame(), SIGNAL(loadFinished(bool)), 10000);
-	webpage.mainFrame()->setScrollBarPolicy(
-			Qt::Vertical, Qt::ScrollBarAlwaysOff);
-	webpage.mainFrame()->setScrollBarPolicy(
-			Qt::Horizontal, Qt::ScrollBarAlwaysOff);
-	webpage.setViewportSize(QSize(1024, 768));
+  QWebSettings::JavascriptCanOpenWindows, false);
+  webpage.mainFrame()->load(url);
+  waitForSignal(webpage.mainFrame(), SIGNAL(loadFinished(bool)), 10000);
+  webpage.mainFrame()->setScrollBarPolicy(
+    Qt::Vertical, Qt::ScrollBarAlwaysOff);
+  webpage.mainFrame()->setScrollBarPolicy(
+    Qt::Horizontal, Qt::ScrollBarAlwaysOff);
+  webpage.setViewportSize(QSize(1024, 768));
 }
 
-void LevelGeneratorManager::printProgress(int percent) {
+void LevelManager::printProgress(int percent) {
 	if (this->percent >= percent)
 		return;
 
@@ -86,7 +86,7 @@ void LevelGeneratorManager::printProgress(int percent) {
 		std::cout << "@" << std::flush;
 }
 
-void LevelGeneratorManager::getMatchingGenerator(bool ok) {
+void LevelManager::getMatchingLevel(bool ok) {
 	std::cout << std::endl;
 	if (!ok) {
 		qDebug() << "Request failed.";
@@ -95,25 +95,25 @@ void LevelGeneratorManager::getMatchingGenerator(bool ok) {
 	}
 	qDebug() << "Finished loading webpage";
 	qDebug() << this->webpage.viewportSize();
-	LevelGenerator *gen = NULL, *best_gen = NULL;
+	Level *lev = NULL, *best_lev = NULL;
 	float score, best_score = MAX_SCORE + 1.;
-	foreach(gen, this->generators) {
-		score = gen->getScore(&this->webpage);
+	foreach(lev, this->levels) {
+		score = lev->getScore(&this->webpage);
 		if (score < best_score) {
 			best_score = score;
-			best_gen = gen;
+			best_lev = lev;
 		}
 	}
-	if (best_gen == NULL) {
-		qDebug() << "No suitable generator found.";
+	if (best_lev == NULL) {
+		qDebug() << "No suitable level found.";
 		return;
 	}	else {
-		qDebug() << "Found generator " <<
-		    best_gen->getName() << " with score " << best_score;
+		qDebug() << "Found Level " <<
+		    best_lev->getName() << " with score " << best_score;
 	}
 
-	// No need to pass the webpage, the generator still has it from getScore()
-	Level *level = best_gen->generate(sceneManager);
-	emit levelGenerated(level);
+	// No need to pass the webpage, the level still has it from getScore()
+	best_lev->generate(sceneManager);
+	emit levelGenerated(best_lev);
 	this->requestLock = false;
 }

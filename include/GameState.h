@@ -16,7 +16,7 @@
 
 #include <OgreSubEntity.h>
 #include <OgreMaterialManager.h>
-#include <LevelGeneratorManager.h>
+#include <LevelManager.h>
 
 enum QueryFlags {
     OGRE_HEAD_MASK	= 1<<0,
@@ -51,7 +51,7 @@ class GameState : public AppState {
     void itemSelected(OgreBites::SelectMenu* menu);
 
 	void update(double timeSinceLastFrame);
-	LevelGeneratorManager genman;
+	LevelManager genman;
   public slots:
 	void levelGenerated(Level *level);
 
