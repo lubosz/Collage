@@ -12,7 +12,7 @@
 
 #include "DotSceneLoader.h"
 
-#include "Simulation.h"
+#include "DefaultSimulation.h"
 
 #include <OGRE/OgreSubEntity.h>
 #include <OGRE/OgreMaterialManager.h>
@@ -44,8 +44,7 @@ class SimulationTestState : public AppState {
 	void buttonHit(OgreBites::Button* button);
 
  private:
-
-	Simulation *simulation;
+	DefaultSimulation *simulation;
 
 	bool m_bQuit;
 

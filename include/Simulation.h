@@ -23,7 +23,6 @@ class Simulation {
 
 	bool mDebugVisualization;
 
- private:
 	float frequency;
 	float d_t;
 
