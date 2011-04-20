@@ -2,12 +2,14 @@
  *  Copyright 2010 The Collage Project
  */
 #include "LevelGenerator.h"
+#include "DefaultSimulation.h"
 #include <QDebug>
 
 LevelGenerator::LevelGenerator(QObject *parent)
   :
     QObject(parent) {
-      this->simulation = DefaultSimulation();
+      this->simulation =
+          static_cast<Simulation*>(new DefaultSimulation(this->sceneManager));
     }
 
 QString LevelGenerator::getName() {
