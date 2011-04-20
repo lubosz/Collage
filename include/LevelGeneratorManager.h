@@ -26,11 +26,9 @@ class LevelGeneratorManager : public QObject {
 
     void addGenerator(LevelGenerator *generator);
     void requestWebpage(QString url);
-    void sceneFromUrl(QString _url, Ogre::SceneManager *sceneManager,
-      Simulation *simulation);
+    void sceneFromUrl(QString _url, Ogre::SceneManager *sceneManager);
     QWebPage webpage;
     Ogre::SceneManager * sceneManager;
-    Simulation *simulation;
 
  private:
     std::vector<LevelGenerator*> generators;

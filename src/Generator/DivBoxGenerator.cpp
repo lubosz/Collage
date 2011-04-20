@@ -149,10 +149,8 @@ void DivBoxGenerator::setPageRendering(const QSize& siteResolution) {
   webpage->setViewportSize(siteResolution);
 }
 
-Level* DivBoxGenerator::generate(Ogre::SceneManager *sceneManager,
-    Simulation *simulation) {
+Level* DivBoxGenerator::generate(Ogre::SceneManager *sceneManager) {
   this->sceneManager = sceneManager;
-  this->simulation = simulation;
 
 //  QSize siteResolution = document.geometry().size();
 //  qDebug() << "Whole Page " << webpage->mainFrame()->geometry();

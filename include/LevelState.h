@@ -41,13 +41,14 @@ class LevelState : public AppState {
 
   void update(double timeSinceLastFrame);
   LevelGeneratorManager genman;
+
   public slots:
   void levelGenerated(Level *level);
 
  private:
 
-  Simulation *simulation;
   bool quit;
+  Level *level;
 
   Ogre::Vector3 translateVector;
   Ogre::Real moveSpeed;

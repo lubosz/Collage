@@ -21,6 +21,8 @@ LevelState::LevelState() {
   rMouseDown = false;
   quit = false;
 
+  this->level = NULL;
+
   connect(&genman, SIGNAL(levelGenerated(Level*)),
           this, SLOT(levelGenerated(Level*)));
 }
@@ -60,9 +62,6 @@ void LevelState::enter() {
 	// m_pOgreHeadMatHigh->getTechnique(0)->getPass(0)->setAmbient(1, 0, 0);
 	// m_pOgreHeadMatHigh->getTechnique(0)->getPass(0)->setDiffuse(1, 0, 0, 0);
 
-  // Set up physics simulation with 100 Hz
-  simulation = new Simulation(m_pSceneMgr, 100.0);
-
   // Generate Level
   genman.sceneFromUrl(
 //      "http://www.uni-koblenz.de",
@@ -74,7 +73,7 @@ void LevelState::enter() {
         "http://the-space-station.com",
 // 		"http://www.uni-koblenz.de/~lohoff/",
 // 		"http://www.lubosz.de",
-      m_pSceneMgr, simulation);
+      m_pSceneMgr);
 
   // Build gui (surprise!)
   buildGUI();
@@ -107,7 +106,8 @@ void LevelState::exit() {
 }
 
 void LevelState::levelGenerated(Level *level) {
-       System::Instance().logMessage("Received level from generator...");
+  this->level = level;
+  System::Instance().logMessage("Received level from generator...");
 }
 
 bool LevelState::keyPressed(const OIS::KeyEvent &keyEventRef) {
@@ -185,7 +185,10 @@ void LevelState::getInput() {
 
 void LevelState::update(double timeSinceLastFrame) {
   m_FrameEvent.timeSinceLastFrame = timeSinceLastFrame;
-  simulation->update(timeSinceLastFrame*0.000001);
+
+  if (this->level != NULL)
+    this->level->update(timeSinceLastFrame * 0.000001);
+
   UserInterface::Instance().m_pTrayMgr->frameRenderingQueued(
       m_FrameEvent);
 

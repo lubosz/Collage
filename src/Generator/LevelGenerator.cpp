@@ -7,10 +7,15 @@
 LevelGenerator::LevelGenerator(QObject *parent)
   :
     QObject(parent) {
+      this->simulation = DefaultSimulation();
     }
 
 QString LevelGenerator::getName() {
   return this->name;
+}
+
+void LevelGenerator::update(double timeSinceLastFrame) {
+  this->simulation->update(timeSinceLastFrame);
 }
 
 void LevelGenerator::addDoors() {
@@ -35,8 +40,6 @@ void LevelGenerator::addDoors() {
       if (cont)
         continue;
       qDebug() << "Door for" << url;
-//      Actor *actor = new Actor();
       Ogre::Entity* door = sceneManager->createEntity("door.mesh");
-//      actor->sceneNode->attachObject(door);
     }
 }

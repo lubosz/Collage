@@ -12,8 +12,7 @@ class GeneralLevelGenerator : public LevelGenerator {
     explicit GeneralLevelGenerator(QObject *parent = 0);
 
     float getScore(QWebPage *webpage);
-    Level* generate(Ogre::SceneManager * sceneManager,
-      Simulation *simulation);
+    Level* generate(Ogre::SceneManager *sceneManager);
 
  signals:
 

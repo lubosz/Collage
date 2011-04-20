@@ -46,9 +46,8 @@ bool LevelGeneratorManager::waitForSignal(
 }
 
 void LevelGeneratorManager::sceneFromUrl(
-    QString _url, Ogre::SceneManager *sceneManager, Simulation *simulation) {
+    QString _url, Ogre::SceneManager *sceneManager) {
   this->sceneManager = sceneManager;
-  this->simulation = simulation;
   requestWebpage(_url);
 }
 
@@ -114,7 +113,7 @@ void LevelGeneratorManager::getMatchingGenerator(bool ok) {
 	}
 
 	// No need to pass the webpage, the generator still has it from getScore()
-	Level *level = best_gen->generate(sceneManager, simulation);
+	Level *level = best_gen->generate(sceneManager);
 	emit levelGenerated(level);
 	this->requestLock = false;
 }
