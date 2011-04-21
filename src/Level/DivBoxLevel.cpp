@@ -12,7 +12,6 @@
 
 DivBoxLevel::DivBoxLevel(Ogre::SceneManager *sceneManager)
   : Level(sceneManager) {
-  this->sceneManager = sceneManager;
   this->name = "DivBoxLevel";
 }
 
@@ -178,5 +177,9 @@ void DivBoxLevel::generate() {
   this->addDoors();
 }
 
-void DivBoxLevel::placeDoor(Door *door) {
+void DivBoxLevel::placeDoor(Door *door, QRect geom) {
+  Ogre::Entity* doorEntity = sceneManager->createEntity("door.mesh");
+//  door->sceneNode->attachObject(doorEntity);
+//  door->sceneNode->setPosition(0, 0, 0);
+//  door->sceneNode->setScale(100, 10, 50);
 }

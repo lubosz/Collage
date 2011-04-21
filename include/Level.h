@@ -16,7 +16,7 @@ class Level : public QObject {
   Q_OBJECT
   public:
     explicit Level(QObject *parent = 0);
-	explicit Level(Ogre::SceneManager *sceneManager);
+	  explicit Level(Ogre::SceneManager *sceneManager);
 
     virtual float getScore(QWebPage *webpage) = 0;
     virtual void generate() = 0;
@@ -28,10 +28,9 @@ class Level : public QObject {
     QWebPage *webpage;
     Ogre::SceneManager *sceneManager;
     Simulation *simulation;
-    Ogre::Entity* doorEntity;
 
     virtual void addDoors();
-    virtual void placeDoor(Door *doorActor) = 0;
+    virtual void placeDoor(Door *doorActor, QRect geom) = 0;
 
   signals:
 

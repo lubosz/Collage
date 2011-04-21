@@ -13,7 +13,6 @@ GeneralLevel::GeneralLevel(QObject *parent)
 
 GeneralLevel::GeneralLevel(Ogre::SceneManager *sceneManager)
   : Level(sceneManager) {
-  this->sceneManager = sceneManager;
   this->name = "GeneralLevel";
 }
 
@@ -46,5 +45,5 @@ void GeneralLevel::generate() {
   this->addDoors();
 }
 
-void GeneralLevel::placeDoor(Door *doorActor) {
+void GeneralLevel::placeDoor(Door *doorActor, QRect geom) {
 }

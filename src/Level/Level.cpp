@@ -11,9 +11,9 @@ Level::Level(QObject *parent)
     }
 
 Level::Level(Ogre::SceneManager *sceneManager) {
+  this->sceneManager = sceneManager;
   this->simulation =
     static_cast<Simulation*>(new DefaultSimulation(sceneManager));
-  this->doorEntity = sceneManager->createEntity("door.mesh");
 }
 
 QString Level::getName() {
@@ -50,9 +50,9 @@ void Level::addDoors() {
       DefaultSimulation *simulation =
         static_cast<DefaultSimulation*>(this->simulation);
       Door *doorActor = simulation->doorFactory->createActor();
-      this->placeDoor(doorActor);
+      this->placeDoor(doorActor, element.geometry());
     }
 }
 
-void Level::placeDoor(Door *doorActor) {
+void Level::placeDoor(Door *doorActor, QRect geom) {
 }

@@ -8,7 +8,6 @@
 
 TagNestingToTerrainLevel::TagNestingToTerrainLevel(
   Ogre::SceneManager *sceneManager) : Level(sceneManager) {
-    this->sceneManager = sceneManager;
     this->name = "TagNestingToTerrainLevel";
 }
 
@@ -84,5 +83,5 @@ void TagNestingToTerrainLevel::generate() {
   this->addDoors();
 }
 
-void TagNestingToTerrainLevel::placeDoor(Door *door) {
+void TagNestingToTerrainLevel::placeDoor(Door *door, QRect geom) {
 }
