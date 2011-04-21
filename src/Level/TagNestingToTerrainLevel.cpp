@@ -37,7 +37,6 @@ void TagNestingToTerrainLevel::addBox(
 }
 
 void TagNestingToTerrainLevel::generate() {
-
   this->sceneManager = sceneManager;
 
   sceneManager->createLight("Light")->setPosition(75, 75, 75);

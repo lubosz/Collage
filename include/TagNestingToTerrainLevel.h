@@ -8,7 +8,7 @@
 
 class TagNestingToTerrainLevel : public Level {
  public:
-  TagNestingToTerrainLevel(Ogre::SceneManager *sceneManager);
+  explicit TagNestingToTerrainLevel(Ogre::SceneManager *sceneManager);
 
   float getScore(QWebPage *webpage);
   void generate();

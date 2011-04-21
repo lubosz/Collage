@@ -7,7 +7,7 @@
 
 class DivBoxLevel : public Level {
  public:
-    DivBoxLevel(Ogre::SceneManager *sceneManager);
+    explicit DivBoxLevel(Ogre::SceneManager *sceneManager);
     void makeOgreImage(
         QWebElement * element, const Ogre::String & textureName,
         unsigned faces = 1);

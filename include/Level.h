@@ -16,7 +16,7 @@ class Level : public QObject {
   Q_OBJECT
   public:
     explicit Level(QObject *parent = 0);
-	Level(Ogre::SceneManager *sceneManager);
+	explicit Level(Ogre::SceneManager *sceneManager);
 
     virtual float getScore(QWebPage *webpage) = 0;
     virtual void generate() = 0;

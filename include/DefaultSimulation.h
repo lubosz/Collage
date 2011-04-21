@@ -9,14 +9,14 @@
 #include "Character.h"
 #include "Terrain.h"
 
-class DefaultSimulation : public Simulation{
-public:
-  DefaultSimulation(Ogre::SceneManager* sceneManager);
-  virtual ~DefaultSimulation();
+class DefaultSimulation : public Simulation {
+  public:
+    explicit DefaultSimulation(Ogre::SceneManager* sceneManager);
+    virtual ~DefaultSimulation();
 
-  ActorFactory<Terrain> *terrainFactory;
-  ActorFactory<Character> *characterFactory;
-  ActorFactory<Door> *doorFactory;
+    ActorFactory<Terrain> *terrainFactory;
+    ActorFactory<Character> *characterFactory;
+    ActorFactory<Door> *doorFactory;
 };
 
 #endif /* DEFAULTSIMULATION_H_ */

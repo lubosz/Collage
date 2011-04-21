@@ -23,7 +23,7 @@ class LevelManager : public QObject {
     Q_OBJECT
  public:
     explicit LevelManager(QObject *parent = 0);
-    LevelManager(Ogre::SceneManager *scMgr);
+    explicit LevelManager(Ogre::SceneManager *scMgr);
 
     void addLevel(Level *level);
     void requestWebpage(QString url);
