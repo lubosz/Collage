@@ -45,3 +45,6 @@ void GeneralLevel::generate() {
 
   this->addDoors();
 }
+
+void GeneralLevel::placeDoor(Door *doorActor) {
+}

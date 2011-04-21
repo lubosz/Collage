@@ -106,11 +106,11 @@ void DivBoxLevel::makeElementBoxes(
   QWebElementCollection elements;
   foreach(QString tag, tags)
     elements.append(document.findAll(tag));
-  Ogre::Vector3 position = Ogre::Vector3();
+  Ogre::Vector3 position = Ogre::Vector3::ZERO;
   int i = 0;
 
   foreach(QWebElement element, elements) {
-      if (fits(&element, 0, 4096)) {
+      if (fits(&element, 10, 4096)) {
 //        qDebug() << "Some " << tagName << " " << element.geometry();
         Ogre::Entity* cube = sceneManager->createEntity(meshName);
         Ogre::String textureName =
@@ -193,4 +193,7 @@ void DivBoxLevel::generate() {
 //    charnode->attachObject(characterEntity);
 
   this->addDoors();
+}
+
+void DivBoxLevel::placeDoor(Door *door) {
 }
