@@ -22,9 +22,6 @@ LevelState::LevelState() {
   quit = false;
 
   this->level = NULL;
-
-  connect(&levelman, SIGNAL(levelGenerated(Level*)),
-          this, SLOT(levelGenerated(Level*)));
 }
 
 void LevelState::enter() {
@@ -35,6 +32,11 @@ void LevelState::enter() {
 
   m_pSceneMgr = RenderEngine::Instance().m_pRoot->createSceneManager(
           Ogre::ST_GENERIC, "LevelSceneManager");
+
+  LevelManager levelman(m_pSceneMgr);
+  connect(&levelman, SIGNAL(levelGenerated(Level*)),
+    this, SLOT(levelGenerated(Level*)));
+
   m_pSceneMgr->setAmbientLight(Ogre::ColourValue(0.7f, 0.7f, 0.7f));
 
   m_pCamera = m_pSceneMgr->createCamera("GameCamera");
@@ -47,20 +49,6 @@ void LevelState::enter() {
       getActualHeight()));
 
   RenderEngine::Instance().m_pViewport->setCamera(m_pCamera);
-
-
-  // Set up character geometry
-	Ogre::Entity *charEntity = m_pSceneMgr->createEntity("Char", "character.mesh");
-	Ogre::Entity *doorEntity = m_pSceneMgr->createEntity("door.mesh");
-  m_pSceneMgr->getRootSceneNode()->createChildSceneNode("Door");
-  // const float rad = 90. * (3.145 / 180.);
-  // charNode->rotate(Ogre::UNIT_Z, rad, Ogre::relativeTo);
-	// m_pOgreHeadNode->setPosition(Vector3(0, 0, -25));
-
-	// m_pOgreHeadMat = m_pOgreHeadEntity->getSubEntity(1)->getMaterial();
-	// m_pOgreHeadMatHigh = m_pOgreHeadMat->clone("OgreHeadMatHigh");
-	// m_pOgreHeadMatHigh->getTechnique(0)->getPass(0)->setAmbient(1, 0, 0);
-	// m_pOgreHeadMatHigh->getTechnique(0)->getPass(0)->setDiffuse(1, 0, 0, 0);
 
   // Generate Level
   levelman.sceneFromUrl(
@@ -75,7 +63,6 @@ void LevelState::enter() {
 // 		"http://www.lubosz.de",
       m_pSceneMgr);
 
-  // Build gui (surprise!)
   buildGUI();
 }
 

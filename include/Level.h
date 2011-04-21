@@ -16,9 +16,10 @@ class Level : public QObject {
   Q_OBJECT
   public:
     explicit Level(QObject *parent = 0);
+	Level(Ogre::SceneManager *sceneManager);
 
     virtual float getScore(QWebPage *webpage) = 0;
-    virtual void generate(Ogre::SceneManager *sceneManager) = 0;
+    virtual void generate() = 0;
     QString getName();
     virtual void update(double timeSinceLastFrame);
 

@@ -10,8 +10,10 @@
 
 #include "RenderEngine.h"
 
-DivBoxLevel::DivBoxLevel() {
-  this->name = "Deiner Mudder ihr Level";
+DivBoxLevel::DivBoxLevel(Ogre::SceneManager *sceneManager)
+  : Level(sceneManager) {
+  this->sceneManager = sceneManager;
+  this->name = "DivBoxLevel";
 }
 
 float DivBoxLevel::getScore(QWebPage *webpage) {
@@ -149,7 +151,7 @@ void DivBoxLevel::setPageRendering(const QSize& siteResolution) {
   webpage->setViewportSize(siteResolution);
 }
 
-void DivBoxLevel::generate(Ogre::SceneManager *sceneManager) {
+void DivBoxLevel::generate() {
   this->sceneManager = sceneManager;
 
 //  QSize siteResolution = document.geometry().size();

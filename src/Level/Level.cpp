@@ -8,9 +8,12 @@
 Level::Level(QObject *parent)
   :
     QObject(parent) {
-      this->simulation =
-          static_cast<Simulation*>(new DefaultSimulation(this->sceneManager));
     }
+
+Level::Level(Ogre::SceneManager *sceneManager) {
+  this->simulation =
+    static_cast<Simulation*>(new DefaultSimulation(sceneManager));
+}
 
 QString Level::getName() {
   return this->name;

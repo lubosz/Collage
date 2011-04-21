@@ -40,7 +40,6 @@ class LevelState : public AppState {
   bool mouseReleased(const OIS::MouseEvent &arg, OIS::MouseButtonID id);
 
   void update(double timeSinceLastFrame);
-  LevelManager levelman;
 
   public slots:
   void levelGenerated(Level *level);

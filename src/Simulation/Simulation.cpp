@@ -12,9 +12,9 @@
 
 Simulation::Simulation(Ogre::SceneManager *sceneManager, float frequency) {
   this->sceneManager = sceneManager;
-	this->rootSceneNode = sceneManager->getRootSceneNode();
-	this->frequency = frequency;
-	d_t = 0.0;
+  this->rootSceneNode = sceneManager->getRootSceneNode();
+  this->frequency = frequency;
+  d_t = 0.0;
 }
 
 Simulation::~Simulation() {}

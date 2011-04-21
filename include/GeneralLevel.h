@@ -10,9 +10,10 @@ class GeneralLevel : public Level {
     Q_OBJECT
  public:
     explicit GeneralLevel(QObject *parent = 0);
+	GeneralLevel(Ogre::SceneManager *sceneManager);
 
     float getScore(QWebPage *webpage);
-    void generate(Ogre::SceneManager *sceneManager);
+    void generate();
 
  signals:
 

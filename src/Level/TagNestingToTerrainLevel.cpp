@@ -6,14 +6,15 @@
 
 #include "RenderEngine.h"
 
-TagNestingToTerrainLevel::TagNestingToTerrainLevel(QObject *parent)
-	: Level(parent) {
-			this->name = "TagNestingToTerrainLevel";
-		}
+TagNestingToTerrainLevel::TagNestingToTerrainLevel(
+  Ogre::SceneManager *sceneManager) : Level(sceneManager) {
+    this->sceneManager = sceneManager;
+    this->name = "TagNestingToTerrainLevel";
+}
 
 float TagNestingToTerrainLevel::getScore(QWebPage *webpage) {
 	this->webpage = webpage;
-	return 0.0;
+	return 9.0;
 }
 
 void TagNestingToTerrainLevel::addBox(
@@ -35,8 +36,7 @@ void TagNestingToTerrainLevel::addBox(
   manual->position(count, height, -radz);
 }
 
-void TagNestingToTerrainLevel::generate(
-    Ogre::SceneManager *sceneManager) {
+void TagNestingToTerrainLevel::generate() {
 
   this->sceneManager = sceneManager;
 

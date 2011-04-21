@@ -9,15 +9,20 @@
 GeneralLevel::GeneralLevel(QObject *parent)
   :
     Level(parent) {
-      this->name = "GeneralLevel";
     }
+
+GeneralLevel::GeneralLevel(Ogre::SceneManager *sceneManager)
+  : Level(sceneManager) {
+  this->sceneManager = sceneManager;
+  this->name = "GeneralLevel";
+}
 
 float GeneralLevel::getScore(QWebPage *webpage) {
   this->webpage = webpage;
   return 100.0;
 }
 
-void GeneralLevel::generate(Ogre::SceneManager *sceneManager) {
+void GeneralLevel::generate() {
   this->sceneManager = sceneManager;
   sceneManager->createLight("Light")->setPosition(75, 75, 75);
 

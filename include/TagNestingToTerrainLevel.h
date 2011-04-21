@@ -7,14 +7,13 @@
 #include "Level.h"
 
 class TagNestingToTerrainLevel : public Level {
-	Q_OBJECT
  public:
-		explicit TagNestingToTerrainLevel(QObject *parent = 0);
+  TagNestingToTerrainLevel(Ogre::SceneManager *sceneManager);
 
-		float getScore(QWebPage *webpage);
-		void generate(Ogre::SceneManager *sceneManager);
+  float getScore(QWebPage *webpage);
+  void generate();
 
-    void addBox(unsigned height, unsigned count,
-                Ogre::ManualObject *manual);
+  void addBox(unsigned height, unsigned count,
+    Ogre::ManualObject *manual);
 };
 

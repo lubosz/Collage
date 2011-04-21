@@ -14,6 +14,9 @@
 LevelManager::LevelManager(QObject *parent)
 :
 	QObject(parent) {
+}
+
+LevelManager::LevelManager(Ogre::SceneManager *scMgr) {
 	connect(&webpage, SIGNAL(loadProgress(int)),
 			this, SLOT(printProgress(int)));
 	connect(&webpage, SIGNAL(loadFinished(bool)),
@@ -21,9 +24,9 @@ LevelManager::LevelManager(QObject *parent)
 	this->requestLock = false;
 	// Add all the different levels to our list,
 	// most general LAST!
-	this->addLevel(new TagNestingToTerrainLevel());
-	this->addLevel(new DivBoxLevel());
-	this->addLevel(new GeneralLevel());
+	this->addLevel(new TagNestingToTerrainLevel(scMgr));
+	this->addLevel(new DivBoxLevel(scMgr));
+	this->addLevel(new GeneralLevel(scMgr));
 }
 
 void LevelManager::addLevel(Level *level) {
@@ -113,7 +116,7 @@ void LevelManager::getMatchingLevel(bool ok) {
 	}
 
 	// No need to pass the webpage, the level still has it from getScore()
-	best_lev->generate(sceneManager);
+	best_lev->generate();
 	emit levelGenerated(best_lev);
 	this->requestLock = false;
 }
