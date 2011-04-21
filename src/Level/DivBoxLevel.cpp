@@ -193,7 +193,6 @@ void DivBoxLevel::generate() {
 //      for( unsigned short i=0; i<skeletonInstance->getNumAnimations(); ++i )
 //      {
 //        Ogre::Animation *animation = skeletonInstance->getAnimation(i);
-//        m_animations->Append( wxString( animation->getName().c_str(), wxConvUTF8 ) );
 //      }
 //    }
 
