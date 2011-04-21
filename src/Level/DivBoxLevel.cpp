@@ -105,7 +105,7 @@ void DivBoxLevel::makeElementBoxes(
   QWebElementCollection elements;
   foreach(QString tag, tags)
     elements.append(document.findAll(tag));
-  Ogre::Vector3 position = Ogre::Vector3();
+  Ogre::Vector3 position = Ogre::Vector3::ZERO;
   int i = 0;
 
   foreach(QWebElement element, elements) {
