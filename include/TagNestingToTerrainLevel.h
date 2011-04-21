@@ -15,5 +15,7 @@ class TagNestingToTerrainLevel : public Level {
 
   void addBox(unsigned height, unsigned count,
     Ogre::ManualObject *manual);
+
+  void placeDoor(Door *doorActor, QRect geom);
 };
 

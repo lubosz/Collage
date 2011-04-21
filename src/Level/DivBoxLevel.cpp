@@ -7,12 +7,12 @@
 #include <QPainter>
 #include "System.h"
 #include "DivBoxLevel.h"
+#include "DotSceneLoader.h"
 
 #include "RenderEngine.h"
 
 DivBoxLevel::DivBoxLevel(Ogre::SceneManager *sceneManager)
   : Level(sceneManager) {
-  this->sceneManager = sceneManager;
   this->name = "DivBoxLevel";
 }
 
@@ -105,11 +105,11 @@ void DivBoxLevel::makeElementBoxes(
   QWebElementCollection elements;
   foreach(QString tag, tags)
     elements.append(document.findAll(tag));
-  Ogre::Vector3 position = Ogre::Vector3();
+  Ogre::Vector3 position = Ogre::Vector3::ZERO;
   int i = 0;
 
   foreach(QWebElement element, elements) {
-      if (fits(&element, 0, 4096)) {
+      if (fits(&element, 10, 4096)) {
 //        qDebug() << "Some " << tagName << " " << element.geometry();
         Ogre::Entity* cube = sceneManager->createEntity(meshName);
         Ogre::String textureName =
@@ -174,6 +174,22 @@ void DivBoxLevel::generate() {
       "Cube.mesh", sceneManager);
 
   sceneManager->createLight("Light")->setPosition(75, 75, 75);
+  sceneManager->createLight("Light1")->setPosition(-75, 100, -75);
+  sceneManager->createLight("Light2")->setPosition(-75, 120, 75);
+  sceneManager->createLight("Light3")->setPosition(75, 130, -75);
+
+  DotSceneLoader* pDotSceneLoader = new DotSceneLoader();
+  pDotSceneLoader->parseDotScene(
+      "papercraft_man_line_running.scene",
+      "General", sceneManager, sceneManager->getRootSceneNode());
+    delete pDotSceneLoader;
 
   this->addDoors();
+}
+
+void DivBoxLevel::placeDoor(Door *door, QRect geom) {
+  Ogre::Entity* doorEntity = sceneManager->createEntity("door.mesh");
+  door->sceneNode->attachObject(doorEntity);
+  door->sceneNode->setPosition(0, 0, 0);
+  door->sceneNode->setScale(100, 10, 50);
 }

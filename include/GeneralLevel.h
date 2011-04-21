@@ -14,6 +14,7 @@ class GeneralLevel : public Level {
 
     float getScore(QWebPage *webpage);
     void generate();
+    void placeDoor(Door *doorActor, QRect geom);
 
  signals:
 

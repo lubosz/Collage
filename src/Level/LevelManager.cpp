@@ -92,7 +92,8 @@ void LevelManager::printProgress(int percent) {
 void LevelManager::getMatchingLevel(bool ok) {
 	std::cout << std::endl;
 	if (!ok) {
-		qDebug() << "Request failed.";
+		qDebug() << "\n\n\n\nRequest failed.\n\n\n\n";
+    return;
 		// TODO(dennda)
 		// ERROR HANDLING!
 	}

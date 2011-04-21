@@ -11,6 +11,7 @@ Level::Level(QObject *parent)
     }
 
 Level::Level(Ogre::SceneManager *sceneManager) {
+  this->sceneManager = sceneManager;
   this->simulation =
     static_cast<Simulation*>(new DefaultSimulation(sceneManager));
 }
@@ -33,6 +34,7 @@ void Level::addDoors() {
             << ".zip" << ".rar" << ".torrent" << ".mp3" << ".avi" << ".mpg"
             << ".mpeg" << ".exe" << ".gz" << ".pls" << ".asx" << ".mov"
             << ".txt" << ".wav";
+
   foreach(QWebElement element, elements) {
       QString url = element.attribute("href");
       if (url.contains("#"))
@@ -45,6 +47,12 @@ void Level::addDoors() {
       if (cont)
         continue;
       qDebug() << "Door for" << url;
-      Ogre::Entity* door = sceneManager->createEntity("door.mesh");
+      DefaultSimulation *simulation =
+        static_cast<DefaultSimulation*>(this->simulation);
+      Door *doorActor = simulation->doorFactory->createActor();
+      this->placeDoor(doorActor, element.geometry());
     }
+}
+
+void Level::placeDoor(Door *doorActor, QRect geom) {
 }
