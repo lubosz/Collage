@@ -75,31 +75,31 @@ void SimulationTestState::createScene() {
   simulation = new DefaultSimulation(m_pSceneMgr);
 
   simulation->characterFactory->createActor()
-      ->teleport(-4.0, 5.0)
-      ->addPoint(0.5, 0.5)
+      ->teleport(-4.0, 2.0)
+      ->addPoint(0.5, 0.8)
       ->addPoint(0.0, 0.0)
       ->createCollisionShape(CollisionShape2::DEF_AABB);
 
-  simulation->terrainFactory->createActor()
-      ->teleport(-1.5, 0.0)
-      ->addPoint(1.0, 1.0)
-      ->addPoint(0.0, 0.0)
-      ->addPoint(2.0, 0.0)
-      ->createCollisionShape(CollisionShape2::DEF_AABB);
+//  simulation->terrainFactory->createActor()
+//      ->teleport(-1.5, 0.0)
+//      ->addPoint(1.0, 1.0)
+//      ->addPoint(0.0, 0.0)
+//      ->addPoint(2.0, 0.0)
+//      ->createCollisionShape(CollisionShape2::DEF_AABB);
+
+//  simulation->terrainFactory->createActor()
+//      ->teleport(3.5, 1.0)
+//      ->addPoint(1.0, 1.0)
+//      ->addPoint(0.0, 0.0)
+//      ->addPoint(2.0, 0.0)
+//      ->createCollisionShape(CollisionShape2::DEF_AABB);
 
   simulation->terrainFactory->createActor()
-      ->teleport(3.5, 1.0)
-      ->addPoint(1.0, 1.0)
+      ->teleport(-3.5, 0.0)
       ->addPoint(0.0, 0.0)
-      ->addPoint(2.0, 0.0)
-      ->createCollisionShape(CollisionShape2::DEF_AABB);
-
-  simulation->terrainFactory->createActor()
-      ->teleport(-3.5, -1.0)
       ->addPoint(1.0, 1.0)
-      ->addPoint(0.0, 0.0)
-      ->addPoint(2.0, 0.0)
-      ->createCollisionShape(CollisionShape2::DEF_AABB);
+      ->addPoint(3.0, 0.0)
+      ->createCollisionShape(CollisionShape2::DEF_LINESTRIP);
 }
 
 bool SimulationTestState::keyPressed(const OIS::KeyEvent &keyEventRef) {

@@ -17,13 +17,18 @@ class CollisionShape2 {
     DEF_POINTS,
     DEF_CONVEX,
     DEF_AABB,
-    DEF_BOUNDINGSPHERE
+    DEF_BOUNDINGSPHERE,
+    DEF_LINESTRIP
   };
 
 //  struct Polygon{
 //    std::vector<Ogre::Vector2> points;
 //    std::vector<Ogre::Vector2> edges;
 //  };
+  struct Linestrip {
+    std::vector<Ogre::Vector2*> points;
+    std::vector<Ogre::Vector2> edges;
+  };
 
   struct Convex {
     std::vector<Ogre::Vector2*> points;
@@ -33,6 +38,18 @@ class CollisionShape2 {
   struct AABB {
     Ogre::Vector2 *top, *bottom, *left, *right;
     float *minX, *maxX, *minY, *maxY;
+    Ogre::Vector2 topLeft() {
+      return Ogre::Vector2(*minX, *maxY);
+    }
+    Ogre::Vector2 topRight() {
+      return Ogre::Vector2(*maxX, *maxY);
+    }
+    Ogre::Vector2 bottomLeft() {
+      return Ogre::Vector2(*minX, *minY);
+    }
+    Ogre::Vector2 bottomRight() {
+      return Ogre::Vector2(*maxX, *minY);
+    }
   };
 
 //  struct BoundingSphere {
@@ -53,6 +70,7 @@ class CollisionShape2 {
   std::vector<Ogre::Vector2> relativePoints;
   std::vector<Ogre::Vector2> absolutePoints;
 //  Polygon polygon;
+  Linestrip linestrip;
   Convex convex;
   AABB aabb;
 //  BoundingSphere boundingSphere;

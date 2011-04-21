@@ -74,6 +74,13 @@ void CollisionShape2::calculateShapeRepresentations() {
   for (int i = 0; i < convex.points.size()-1; i++) {
     convex.edges.push_back(*(convex.points[i+1]) - *(convex.points[i]));
   }
+
+  // linestrip stuff
+  for (int i = 0; i < absolutePoints.size()-1; i++) {
+    linestrip.points.push_back(&absolutePoints[i]);
+    linestrip.edges.push_back(absolutePoints[i+1] - absolutePoints[i]);
+  }
+  linestrip.points.push_back(&absolutePoints[absolutePoints.size()-1]);
 }
 
 void CollisionShape2::quickHullRecursion(
@@ -146,6 +153,11 @@ void CollisionShape2::updateDebugRendering(
       debugRendering->position(*aabb.maxX, *aabb.minY, 0.0);
       debugRendering->position(*aabb.maxX, *aabb.maxY, 0.0);
       break;
+    case DEF_LINESTRIP:
+      for (int i = 0; i < linestrip.points.size(); i++) {
+        debugRendering->position(
+            linestrip.points[i]->x, linestrip.points[i]->y, 0.0);
+      }
   }
 
 
