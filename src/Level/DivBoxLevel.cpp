@@ -184,6 +184,20 @@ void DivBoxLevel::generate() {
       "General", sceneManager, sceneManager->getRootSceneNode());
     delete pDotSceneLoader;
 
+//    Ogre::AnimationState  *m_currentAnimationState;
+//    Ogre::Entity chest = sceneManager->getEntity("chest");
+//    Ogre::SkeletonInstance *skeletonInstance = chest->getSkeleton();
+//
+//    if( skeletonInstance )
+//    {
+//      for( unsigned short i=0; i<skeletonInstance->getNumAnimations(); ++i )
+//      {
+//        Ogre::Animation *animation = skeletonInstance->getAnimation(i);
+//        m_animations->Append( wxString( animation->getName().c_str(), wxConvUTF8 ) );
+//      }
+//    }
+
+
   this->addDoors();
 }
 
