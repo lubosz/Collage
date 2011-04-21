@@ -457,6 +457,8 @@ void DotSceneLoader::processNode(rapidxml::xml_node<>* XMLNode,
 			pNode = mAttachNode->createChildSceneNode(name);
 	}
 
+	std::cout << pNode->getName();
+
 	// Process other attributes
 	Ogre::String id = getAttrib(XMLNode, "id");
 	bool isTarget = getAttribBool(XMLNode, "isTarget");
