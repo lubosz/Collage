@@ -12,6 +12,8 @@
 #include "Level.h"
 #include "Simulation.h"
 
+using std::string;
+
 class Level : public QObject {
   Q_OBJECT
   public:
@@ -30,6 +32,7 @@ class Level : public QObject {
     Simulation *simulation;
 
     virtual void addDoors();
+    virtual void addCharacter();
     virtual void placeDoor(Door *doorActor, QRect geom) = 0;
 
   signals:

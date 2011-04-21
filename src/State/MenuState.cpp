@@ -47,8 +47,6 @@ void MenuState::enter() {
 		OgreBites::TL_BOTTOMLEFT, "SimulationDemo", "SimulationDemo", 250);
 	trayManager->createButton(
 		OgreBites::TL_BOTTOMLEFT, "LevelState", "LevelState", 250);
-
-
 	trayManager->createButton(
 	    OgreBites::TL_BOTTOMLEFT, "Settings", "Settings", 250);
 	trayManager->createButton(

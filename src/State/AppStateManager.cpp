@@ -6,14 +6,15 @@
  *  Copyright 2010 The Collage Project
  */
 
-#include "AppStateManager.h"
 #include <OgreWindowEventUtilities.h>
+#include <QApplication>
+#include "AppStateManager.h"
 #include "RenderEngine.h"
 #include "System.h"
 #include "Input.h"
 #include "UserInterface.h"
 #include "AppState.h"
-#include <QApplication>
+#include "Animation.h"
 
 AppStateManager::AppStateManager() {
 	m_bShutdown = false;
@@ -70,16 +71,15 @@ void AppStateManager::start(AppState* state) {
 		Ogre::WindowEventUtilities::messagePump();
 #endif
 		if (RenderEngine::Instance().m_pRenderWnd->isActive()) {
-			startTime
-					= System::Instance().m_pTimer->getMicroseconds();
-
+		  startTime	= System::Instance().m_pTimer->getMicroseconds();
 			Input::Instance().m_pKeyboard->capture();
 			Input::Instance().m_pMouse->capture();
 
-			m_ActiveStateStack.back()->update(timeSinceLastFrame);
-
-			RenderEngine::Instance().updateOgre(timeSinceLastFrame);
 			RenderEngine::Instance().m_pRoot->renderOneFrame();
+
+			m_ActiveStateStack.back()->update(timeSinceLastFrame);
+			RenderEngine::Instance().updateOgre(timeSinceLastFrame);
+			Animation::Instance().update(timeSinceLastFrame * 0.000001);
 
 			timeSinceLastFrame
 					= System::Instance().m_pTimer->getMicroseconds()
