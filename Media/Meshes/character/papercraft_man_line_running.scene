@@ -1,10 +1,10 @@
 <?xml version="1.0" ?>
-<scene export_time="1303397489.426086" exported_by="bmonkey" previous_export_time="1303397451.465">
+<scene export_time="1303402871.895909" exported_by="bmonkey" previous_export_time="1303402475.055196">
 	<nodes>
 		<node name="Armature" uuid="fd0422396581637bd4ac100b69e135f3">
 			<position x="-0.000000" y="0.752653" z="-0.029021"/>
 			<quaternion w="1.000000" x="-0.000000" y="0.000000" z="0.000000"/>
-			<scale x="30.389172" y="30.389172" z="30.389172"/>
+			<scale x="3.389172" y="3.389172" z="3.389172"/>
 			<game>
 				<sensors/>
 				<actuators/>
@@ -80,37 +80,10 @@
 				<entity actor="False" anisotropic_friction="False" damping_rot="0.10000000149011612" damping_trans="0.03999999910593033" friction_x="1.0" friction_y="1.0" friction_z="1.0" ghost="False" inertia_tensor="0.4000000059604645" lock_rot_x="False" lock_rot_y="False" lock_rot_z="False" lock_trans_x="False" lock_trans_y="False" lock_trans_z="False" mass="1.0" mass_radius="1.0" meshFile="pants.mesh" name="pants" physics_type="STATIC" velocity_max="0.0" velocity_min="0.0"/>
 			</node>
 		</node>
-		<node name="Camera" uuid="c195d4c0e8e36cf5bfe311dbc0106639">
-			<position x="-7.481132" y="5.343665" z="-6.507640"/>
-			<quaternion w="0.781600" x="-0.481707" y="0.334251" z="0.212922"/>
-			<scale x="1.000000" y="1.000000" z="1.000000"/>
-			<game>
-				<sensors/>
-				<actuators/>
-			</game>
-			<camera fov="28.841546255021967" name="Camera" projectionType="perspective">
-				<clipping farPlaneDist="100.0" nearPlaneDist="0.10000000149011612"/>
-			</camera>
-		</node>
-		<node name="Lamp" uuid="7a0af284d3c32d42e29e8f6202e8a4a4">
-			<position x="-4.076245" y="5.903862" z="1.005454"/>
-			<quaternion w="0.570947" x="-0.169076" y="0.755880" z="0.272171"/>
-			<scale x="1.000000" y="1.000000" z="1.000000"/>
-			<game>
-				<sensors/>
-				<actuators/>
-			</game>
-			<light name="Lamp" shadow="true" type="point">
-				<lightAttenuation constant="1.0" linear="0.03333335240683057" quadratic="0.0" range="5000"/>
-				<colorDiffuse b="1.0" g="1.0" r="1.0"/>
-				<colorSpecular b="1.0" g="1.0" r="1.0"/>
-				<colorShadow b="1.0" g="1.0" r="1.0"/>
-			</light>
-		</node>
 	</nodes>
 	<externals>
 		<item type="material">
-			<file name="Scene.material"/>
+			<file name="Character.material"/>
 		</item>
 	</externals>
 	<environment>

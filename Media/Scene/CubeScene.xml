@@ -39,7 +39,7 @@
 				<entity actor="False" anisotropic_friction="False" damping_rot="0.10000000149011612" damping_trans="0.03999999910593033" friction_x="1.0" friction_y="1.0" friction_z="1.0" ghost="False" inertia_tensor="0.4000000059604645" lock_rot_x="False" lock_rot_y="False" lock_rot_z="False" lock_trans_x="False" lock_trans_y="False" lock_trans_z="False" mass="1.0" mass_radius="1.0" meshFile="chest.mesh" name="chest" physics_type="STATIC" velocity_max="0.0" velocity_min="0.0"/>
 			</node>
 			<node name="head" uuid="6b8a62be2f51994a3f9c6f8cf351c9d8">
-				<position x="0.017995" y="1.279203" z="-0.722777"/>
+				<position x="0.017995" y="-1.279203" z="-6.722777"/>
 				<quaternion w="0.957316" x="-0.154160" y="-0.232345" z="0.076135"/>
 				<scale x="0.276387" y="0.276387" z="0.276387"/>
 				<game>

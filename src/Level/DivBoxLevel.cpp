@@ -181,8 +181,8 @@ void DivBoxLevel::generate() {
 
   DotSceneLoader* pDotSceneLoader = new DotSceneLoader();
   pDotSceneLoader->parseDotScene(
-//      "papercraft_man_line_running.scene",
-      "CubeScene.xml",
+      "papercraft_man_line_running.scene",
+//      "CubeScene.xml",
       "General", sceneManager, sceneManager->getRootSceneNode());
     delete pDotSceneLoader;
 

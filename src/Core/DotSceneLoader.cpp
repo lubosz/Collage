@@ -78,14 +78,6 @@ void DotSceneLoader::parseDotScene(const Ogre::String &SceneName,
 	// Grab the scene node
 	XMLRoot = XMLDoc.first_node("scene");
 
-	// Validate the File
-	if (getAttrib(XMLRoot, "formatVersion", "") == "") {
-		Ogre::LogManager::getSingleton().logMessage(
-				"[DotSceneLoader] Error: Invalid .scene File. Missing <scene>");
-		delete scene;
-		return;
-	}
-
 	// figure out where to attach any nodes we create
 	mAttachNode = pAttachNode;
 	if (!mAttachNode)
