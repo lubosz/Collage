@@ -109,7 +109,7 @@ void DivBoxLevel::makeElementBoxes(
   int i = 0;
 
   foreach(QWebElement element, elements) {
-      if (fits(&element, 0, 4096)) {
+      if (fits(&element, 10, 4096)) {
 //        qDebug() << "Some " << tagName << " " << element.geometry();
         Ogre::Entity* cube = sceneManager->createEntity(meshName);
         Ogre::String textureName =
