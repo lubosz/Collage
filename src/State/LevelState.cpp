@@ -175,6 +175,8 @@ void LevelState::update(double timeSinceLastFrame) {
 
   if (this->level != NULL)
     this->level->update(timeSinceLastFrame * 0.000001);
+  else
+    qDebug() << "ERROR! No Level";
 
   UserInterface::Instance().m_pTrayMgr->frameRenderingQueued(
       m_FrameEvent);

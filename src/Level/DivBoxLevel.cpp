@@ -123,11 +123,13 @@ void DivBoxLevel::makeElementBoxes(
         Ogre::Real width = element.geometry().width()*scale;
         Ogre::Real height = element.geometry().height()*scale;
 
+        Ogre::SceneNode * boxNode = (Ogre::SceneNode*) sceneManager->
+            getRootSceneNode()->createChild(textureName);
 //        Actor *actor = new Actor();
         makeOgreImage(&element, textureName);
-//        position +=
-//            attachNode(&element, actor->sceneNode, scale,
-//            textureName, cube, position);
+        position +=
+            attachNode(&element, boxNode, scale,
+            textureName, cube, position);
         i++;
       }
     }
@@ -168,7 +170,7 @@ void DivBoxLevel::generate() {
   std::vector<QString> tags = {"div", "p", "img", "h2", "h1", "h3", "table"};
 
   makeElementBoxes(
-      page, .01, 1, tags,
+      page, .1, 1, tags,
       "Cube.mesh", sceneManager);
 
   sceneManager->createLight("Light")->setPosition(75, 75, 75);
