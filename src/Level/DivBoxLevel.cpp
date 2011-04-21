@@ -7,6 +7,7 @@
 #include <QPainter>
 #include "System.h"
 #include "DivBoxLevel.h"
+#include "DotSceneLoader.h"
 
 #include "RenderEngine.h"
 
@@ -173,6 +174,15 @@ void DivBoxLevel::generate() {
       "Cube.mesh", sceneManager);
 
   sceneManager->createLight("Light")->setPosition(75, 75, 75);
+  sceneManager->createLight("Light1")->setPosition(-75, 100, -75);
+  sceneManager->createLight("Light2")->setPosition(-75, 120, 75);
+  sceneManager->createLight("Light3")->setPosition(75, 130, -75);
+
+  DotSceneLoader* pDotSceneLoader = new DotSceneLoader();
+  pDotSceneLoader->parseDotScene(
+      "papercraft_man_line_running.scene",
+      "General", sceneManager, sceneManager->getRootSceneNode());
+    delete pDotSceneLoader;
 
   this->addDoors();
 }
