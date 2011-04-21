@@ -184,17 +184,16 @@ void DivBoxLevel::generate() {
       "General", sceneManager, sceneManager->getRootSceneNode());
     delete pDotSceneLoader;
 
-//    Ogre::AnimationState  *m_currentAnimationState;
-//    Ogre::Entity chest = sceneManager->getEntity("chest");
-//    Ogre::SkeletonInstance *skeletonInstance = chest->getSkeleton();
-//
-//    if( skeletonInstance )
-//    {
-//      for( unsigned short i=0; i<skeletonInstance->getNumAnimations(); ++i )
-//      {
-//        Ogre::Animation *animation = skeletonInstance->getAnimation(i);
-//      }
-//    }
+    Ogre::AnimationState  *m_currentAnimationState;
+    Ogre::Entity * chest = sceneManager->getEntity("chest");
+    Ogre::SkeletonInstance *skeletonInstance = chest->getSkeleton();
+
+    if (skeletonInstance) {
+    for (unsigned i = 0; i < skeletonInstance->getNumAnimations(); ++i) {
+      Ogre::Animation *animation = skeletonInstance->getAnimation(i);
+      std::cout << "Animationname " << animation->getName();
+    }
+  }
 
 
   this->addDoors();
