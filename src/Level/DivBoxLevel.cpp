@@ -179,5 +179,4 @@ void DivBoxLevel::generate() {
 }
 
 void DivBoxLevel::placeDoor(Door *door) {
-
 }

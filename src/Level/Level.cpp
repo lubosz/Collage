@@ -47,12 +47,12 @@ void Level::addDoors() {
       if (cont)
         continue;
       qDebug() << "Door for" << url;
-      DefaultSimulation *simulation = static_cast<DefaultSimulation*>(this->simulation);
+      DefaultSimulation *simulation =
+        static_cast<DefaultSimulation*>(this->simulation);
       Door *doorActor = simulation->doorFactory->createActor();
       this->placeDoor(doorActor);
     }
 }
 
 void Level::placeDoor(Door *doorActor) {
-
 }

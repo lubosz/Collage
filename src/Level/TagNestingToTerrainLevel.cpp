@@ -85,5 +85,4 @@ void TagNestingToTerrainLevel::generate() {
 }
 
 void TagNestingToTerrainLevel::placeDoor(Door *door) {
-
 }
