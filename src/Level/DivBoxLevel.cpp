@@ -182,15 +182,8 @@ void DivBoxLevel::generate() {
   DotSceneLoader* pDotSceneLoader = new DotSceneLoader();
   pDotSceneLoader->parseDotScene(
       "papercraft_man_line_running.scene",
-//      "CubeScene.xml",
       "General", sceneManager, sceneManager->getRootSceneNode());
     delete pDotSceneLoader;
-
-//    Ogre::Entity* characterEntity =
-//    sceneManager->createEntity("arm_left.mesh");
-//    Ogre::SceneNode * charnode =
-//        sceneManager->getRootSceneNode()->createChildSceneNode();
-//    charnode->attachObject(characterEntity);
 
   this->addDoors();
 }
