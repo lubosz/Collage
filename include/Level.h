@@ -28,8 +28,10 @@ class Level : public QObject {
     QWebPage *webpage;
     Ogre::SceneManager *sceneManager;
     Simulation *simulation;
+    Ogre::Entity* doorEntity;
 
     virtual void addDoors();
+    virtual void placeDoor(Door *doorActor) = 0;
 
   signals:
 

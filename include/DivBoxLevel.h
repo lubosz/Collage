@@ -30,4 +30,5 @@ class DivBoxLevel : public Level {
         Ogre::SceneManager * sceneManager);
     void setPageRendering(const QSize & siteResolution);
     Ogre::MaterialPtr makeMaterial(Ogre::String name, Ogre::String textureName);
+    void placeDoor(Door *door);
 };

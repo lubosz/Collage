@@ -177,3 +177,7 @@ void DivBoxLevel::generate() {
 
   this->addDoors();
 }
+
+void DivBoxLevel::placeDoor(Door *door) {
+
+}
