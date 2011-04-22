@@ -209,11 +209,13 @@ class CollisionHandler {
     bool intersects = false;
     float maximumRatio = 0.0;
 
-    for (int i = 0; i < a->linestrip.edges.size(); i++) {
-      Ogre::Vector2 currentLine = a->linestrip.edges[i].perpendicular();
+    for (int i = 0; i < b->linestrip.edges.size(); i++) {
+//      std::cout << "line " << b->linestrip.edges[i] << std::endl;
+      Ogre::Vector2 currentLine = b->linestrip.edges[i].perpendicular();
       currentLine.normalise();
 
       float translProj = currentLine.dotProduct(*relativeTranslation);
+//      std::cout << "dis1 " << translProj << " (translProj)"<< std::endl;
 
       float current = currentLine.dotProduct(a->aabb.bottomLeft());
       float max = current;
@@ -234,28 +236,43 @@ class CollisionHandler {
       if (current < min)
         min = current;
 
-      if (translProj < 0.0)
+      if (translProj < 0.0) {
         min += translProj;
-      if (translProj > 0.0)
+      } else {
         max += translProj;
-      std::cout << "point " << *a->linestrip.points[i] << std::endl;
-      std::cout << "line " << currentLine << std::endl;
-      float pivot = currentLine.dotProduct(*a->linestrip.points[i]);
+      }
+//      std::cout << "lineBetween " << currentLine << std::endl;
+      float pivot = currentLine.dotProduct(*b->linestrip.points[i]);
+//      std::cout << min << " " << pivot << " " << max << std::endl;
       if (min < pivot && max > pivot) {
-        std::cout << min << " " << pivot << " " << max << std::endl;
         intersects = true;
         float ratio;
         if (translProj < 0.0) {
-          ratio = translProj + pivot - min;
+          ratio = pivot - min + 2*translProj;
         } else {
-          ratio = translProj + pivot - max;
+          ratio = pivot - max + 2*translProj;
         }
+//        std::cout << "ratio " << ratio << std::endl;
         ratio = ratio / fabsf(translProj);
         if (ratio > maximumRatio)
           maximumRatio = ratio;
       }
+//      std::cout << "dis2 "
+//          << currentLine.dotProduct(*relativeTranslation * maximumRatio)
+//          << std::endl;
+//      std::cout << "dis3 "
+//          << currentLine.dotProduct(
+//              *relativeTranslation - *relativeTranslation * maximumRatio)
+//          << std::endl;
+//      std::cout << "transl1 "
+//          << *relativeTranslation
+//          << std::endl;
+//      std::cout << "transl2 "
+//          << *relativeTranslation - *relativeTranslation * maximumRatio
+//          << std::endl;
     }
     if (intersects) {
+//      std::cout << "---------TRUE--------" << std::endl;
       *relativeTranslation -= *relativeTranslation * maximumRatio;
       return true;
     } else {

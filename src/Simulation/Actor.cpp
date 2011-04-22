@@ -56,6 +56,7 @@ CollisionActor* CollisionActor::move(Ogre::Vector2 by) {
 }
 
 CollisionActor* CollisionActor::constrainMove(Ogre::Vector2 by) {
+  std::cout << by << moveVector << std::endl;
   if (fabs(moveVector.x) > fabs(by.x)) {
     moveVector.x = by.x;
   }

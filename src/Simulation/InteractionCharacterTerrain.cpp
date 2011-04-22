@@ -12,7 +12,7 @@ Interaction<Character, Terrain>::~Interaction() {}
 
 bool Interaction<Character, Terrain>::collisionTest() {
   Ogre::Vector2 moveConstraint = first->moveVector;
-  if (CollisionHandler::collisionTestAABBLinestrip(
+  if (CollisionHandler::collisionTestAABB(
       &first->collisionShape, &second->collisionShape,
       &moveConstraint, true)) {
 //    std::cout << moveConstraint.x << " " << moveConstraint.y << std::endl;
@@ -33,7 +33,7 @@ void Interaction<Character, Terrain>::onLeave() {
 }
 
 void Interaction<Character, Terrain>::whileInside(float d_t) {
-  first->move(0., 2. * d_t);
+//  first->move(0., 2. * d_t);
 //  second->move(0., -0.2 * d_t);
 }
 
