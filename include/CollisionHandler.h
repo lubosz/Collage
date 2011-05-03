@@ -124,7 +124,7 @@ class CollisionHandler {
       Ogre::Vector2* pos2,
       Ogre::Vector2* dir2) {
     Ogre::Vector2 newPos1 = *pos1 - *pos2;
-    return (newPos1.x * dir2->y - newPos1.y * dir2->y) > 0.0;
+    return (newPos1.x * dir2->y - newPos1.y * dir2->x) > 0.0;
   }
 
   static inline bool testLineLine(
@@ -263,7 +263,7 @@ class CollisionHandler {
         Ogre::Vector2 currentCollNormal;
 
         if (collisionTestConvexLine(
-            &aabbConvex, linestrip->points[i], &linestrip->edges[i],
+            &aabbConvex, linestrip->points[i], linestrip->points[i+1],
             relativeTranslation, ratio, &currentCollNormal)) {
           intersects = true;
           *minCollNormal = currentCollNormal;
@@ -416,50 +416,67 @@ class CollisionHandler {
 
   static inline bool collisionTestConvexLine(
        CollisionShape2::Convex *convex,
-       Ogre::Vector2 *pos,
-       Ogre::Vector2 *dir,
+       Ogre::Vector2 *linePt1,
+       Ogre::Vector2 *linePt2,
        Ogre::Vector2 *relativeTranslation,
        float *ratio,
        Ogre::Vector2 *collisionNormal) {
-    Ogre::Vector2 currentLine = dir->perpendicular();
-    currentLine.normalise();
+    Ogre::Vector2 dir = *linePt2 - *linePt1;
+    Ogre::Vector2 shiftedLinePt1 = *linePt1 - *relativeTranslation;
+    Ogre::Vector2 shiftedLinePt2 = *linePt2 - *relativeTranslation;
 
+    bool linePt1InsideConvex = true;
+    bool linePt2InsideConvex = true;
+
+
+    Ogre::Vector2 currentLine = dir.perpendicular();
+    currentLine.normalise();
     float translProj = currentLine.dotProduct(*relativeTranslation);
 
-    float current = currentLine.dotProduct(*convex->points[0]);
-    float max = current;
-    float min = current;
-    std::cout << *convex->points[0];
-    for (int i = 1; i < convex->points.size()-1; i++) {
-      std::cout << *convex->points[i];
-      current = currentLine.dotProduct(*convex->points[i]);
+//    float current = currentLine.dotProduct(*convex->points[0]);
+    float max = -std::numeric_limits<float>::infinity();
+    float min = std::numeric_limits<float>::infinity();
+    for (int i = 0; i < convex->edges.size(); i++) {
+      float current = currentLine.dotProduct(*convex->points[i]);
       if (current > max)
         max = current;
       if (current < min)
         min = current;
-    }
-    std::cout << std::endl;
 
-    if (translProj < 0.0) {
-      min += translProj;
-    } else {
-      max += translProj;
+      if (isVertexRightToLine(
+          &shiftedLinePt1, convex->points[i], &convex->edges[i])) {
+        linePt1InsideConvex = false;
+      }
+      if (isVertexRightToLine(
+          &shiftedLinePt2, convex->points[i], &convex->edges[i])) {
+        linePt2InsideConvex = false;
+      }
     }
-    float pivot = currentLine.dotProduct(*pos);
-    if (min < pivot + 0.001 && max > pivot - 0.001) {
-      float dist;
+    if (linePt1InsideConvex || linePt2InsideConvex) {
+      std::cout << "true" << std::endl;
+    } else {
       if (translProj < 0.0) {
-        dist = fabsf(pivot - min);
+        min += translProj;
       } else {
-        dist = fabsf(pivot - max);
+        max += translProj;
       }
-      if (greaterZero(dist) && greaterZero(fabsf(translProj))) {
-        *ratio = 1.0 - dist / fabsf(translProj);
-      } else {
-        *ratio = 1.0;
+      float pivot = currentLine.dotProduct(*linePt1);
+      if (min < pivot + 0.001 && max > pivot - 0.001) {
+//      if (min < pivot && max > pivot) {
+        float dist;
+        if (translProj < 0.0) {
+          dist = fabsf(pivot - min);
+        } else {
+          dist = fabsf(pivot - max);
+        }
+        if (greaterZero(dist) && greaterZero(fabsf(translProj))) {
+          *ratio = 1.0 - dist / fabsf(translProj);
+        } else {
+          *ratio = 1.0;
+        }
+        *collisionNormal = currentLine;
+        return true;
       }
-      *collisionNormal = currentLine;
-      return true;
     }
     return false;
   }
