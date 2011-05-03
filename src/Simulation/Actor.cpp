@@ -21,9 +21,18 @@ void Actor::print() {
 
 CollisionActor::CollisionActor() {
   velocity = Ogre::Vector2::ZERO;
+  moveConstraintMin = Ogre::Vector2::ZERO;
+  moveConstraintMax = Ogre::Vector2::ZERO;
 }
 
 CollisionActor::~CollisionActor() {
+}
+
+void CollisionActor::setValues(float d_t) {
+  manipulate(d_t);
+  moveConstraintAngle = 0.0;
+  moveConstraintMin = Ogre::Vector2::ZERO;
+  moveConstraintMax = Ogre::Vector2::ZERO;
 }
 
 void CollisionActor::update(float d_t) {
@@ -56,12 +65,24 @@ CollisionActor* CollisionActor::move(Ogre::Vector2 by) {
 }
 
 CollisionActor* CollisionActor::constrainMove(Ogre::Vector2 by) {
-  std::cout << by << moveVector << std::endl;
-  if (fabs(moveVector.x) > fabs(by.x)) {
-    moveVector.x = by.x;
-  }
-  if (fabs(moveVector.y) > fabs(by.y)) {
-    moveVector.y = by.y;
+  by.normalise();
+  if (moveConstraintMin.isZeroLength()) {
+    moveConstraintAngle = 0.0;
+    moveConstraintMin = by;
+    moveConstraintMax = by;
+  } else {
+// TODO(Gerrit) more then one constraint
+//    float angleA = acosf(moveConstraintMin.dotProduct(by));
+//    float angleB = acosf(moveConstraintMax.dotProduct(by));
+//    if (angleA > angleB) {
+//
+//    }
+//    if (angle > moveConstraintAngle) {
+//      moveConstraintAngle = angle;
+//      if (moveConstraintMin.x * by.x - moveConstraintMin.y * by.y > 0.0) {
+//        moveConstraintMax
+//      }
+//    }
   }
   return this;
 }

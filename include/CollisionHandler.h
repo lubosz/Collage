@@ -19,57 +19,88 @@ class CollisionHandler {
       CollisionShape2 *b,
       Ogre::Vector2 *relativeTranslation,
       bool constrainTranslation = true) {
-    if (!collisionTestAABB(a, b, relativeTranslation, false))
-      return false;
+//    if (!collisionTestAABB(a, b, relativeTranslation, false))
+//      return false;
 // TODO(Gerrit) add further complexity levels
     return true;
+  }
+
+  static inline bool CollisionTestAABB(
+      CollisionShape2::AABB *a,
+      CollisionShape2::AABB *b,
+      Ogre::Vector2 *relativeTranslation,
+      float *distLeft,
+      float *distRight,
+      float *distTop,
+      float *distBottom) {
+    if (relativeTranslation->x < 0.0) {
+      *distRight = *a->minX + relativeTranslation->x - *b->maxX;
+      *distLeft = *a->maxX - *b->minX;
+    } else {
+      *distRight = *a->minX - *b->maxX;
+      *distLeft = *a->maxX + relativeTranslation->x - *b->minX;
+    }
+    if (relativeTranslation->y < 0.0) {
+      *distBottom = *a->minY + relativeTranslation->y - *b->maxY;
+      *distTop = *a->maxY - *b->minY;
+    } else {
+      *distBottom = *a->minY - *b->maxY;
+      *distTop = *a->maxY + relativeTranslation->y - *b->minY;
+    }
+    if ((*distRight > 0.001 || *distLeft < -0.001)
+        || (*distBottom > 0.001 || *distTop < -0.001))
+      return false;
+    return true;
+  }
+
+  static inline bool CollisionTestAABB(
+        CollisionShape2::AABB *a,
+        CollisionShape2::AABB *b,
+        Ogre::Vector2 *relativeTranslation) {
+      float distRight, distLeft, distBottom, distTop;
+      return CollisionTestAABB(a, b, relativeTranslation,
+          &distLeft, &distRight, &distTop, &distBottom);
   }
 
   static inline bool collisionTestAABB(
       CollisionShape2 *a,
       CollisionShape2 *b,
       Ogre::Vector2 *relativeTranslation,
-      bool constrainTranslation = true) {
-    float distLeft, distRight, distTop, distBottom;
-    if (relativeTranslation->x < 0.0) {
-      distLeft = *a->aabb.minX + relativeTranslation->x - *b->aabb.maxX;
-      distRight = *a->aabb.maxX - *b->aabb.minX;
-    } else {
-      distLeft = *a->aabb.minX - *b->aabb.maxX;
-      distRight = *a->aabb.maxX + relativeTranslation->x - *b->aabb.minX;
-    }
-    if (relativeTranslation->y < 0.0) {
-      distTop = *a->aabb.minY + relativeTranslation->y - *b->aabb.maxY;
-      distBottom = *a->aabb.maxY - *b->aabb.minY;
-    } else {
-      distTop = *a->aabb.minY - *b->aabb.maxY;
-      distBottom = *a->aabb.maxY + relativeTranslation->y - *b->aabb.minY;
-    }
-//    float distLeft, distRight, distTop, distBottom;
-//      distLeft = *a->aabb.minX + relativeTranslation->x - *b->aabb.maxX;
-//      distRight = *a->aabb.maxX + relativeTranslation->x - *b->aabb.minX;
-//      distTop = *a->aabb.minY + relativeTranslation->x - *b->aabb.maxY;
-//      distBottom = *a->aabb.maxY + relativeTranslation->y - *b->aabb.minY;
-    if ((distLeft > 0.0 || distRight < 0.0)
-        || (distTop > 0.0 || distBottom < 0.0)) {
+      float *possibleTranslationScale,
+      Ogre::Vector2 *collisionNormal) {
+    float distRight, distLeft, distBottom, distTop;
+    if (CollisionTestAABB(
+        &a->aabb,
+        &b->aabb,
+        relativeTranslation,
+        &distLeft, &distRight, &distTop, &distBottom)) {
       return false;
     } else {
-      if (constrainTranslation) {
-        if (relativeTranslation->x < 0.0) {
-          if (relativeTranslation->x < distLeft)
-            relativeTranslation->x -= distLeft * 1.001;
-        } else {
-          if (relativeTranslation->x > distRight)
-            relativeTranslation->x -= distRight * 1.001;
+      float ratio = 1.0;
+      *possibleTranslationScale = ratio;
+      if (relativeTranslation->x < 0.0) {
+        if (relativeTranslation->x <= distRight) {
+          ratio -= distRight / relativeTranslation->x;
+          *collisionNormal = Ogre::Vector2(-1.0, 0.0);
         }
-        if (relativeTranslation->y < 0.0) {
-          if (relativeTranslation->y < distTop)
-            relativeTranslation->y -= distTop * 1.001;
-        } else {
-          if (relativeTranslation->y > distLeft)
-            relativeTranslation->y -= distBottom * 1.001;
+      } else {
+        if (relativeTranslation->x >= distLeft) {
+          ratio -= distLeft / relativeTranslation->x;
+          *collisionNormal = Ogre::Vector2(1.0, 0.0);
         }
       }
+      if (relativeTranslation->y < 0.0) {
+        if (relativeTranslation->y <= distBottom) {
+          ratio -= distBottom / relativeTranslation->y;
+          *collisionNormal = Ogre::Vector2(0.0, 1.0);
+        }
+      } else {
+        if (relativeTranslation->y >= distTop) {
+          ratio -= distTop / relativeTranslation->y;
+          *collisionNormal = Ogre::Vector2(0.0, -1.0);
+        }
+      }
+      if (fabsf(ratio) < 1.0) *possibleTranslationScale = ratio;
     }
     return true;
   }
@@ -202,82 +233,239 @@ class CollisionHandler {
   }
 
   static inline bool collisionTestAABBLinestrip(
-       CollisionShape2 *a,
-       CollisionShape2 *b,
+       CollisionShape2::AABB *aabb,
+       CollisionShape2::Linestrip *linestrip,
        Ogre::Vector2 *relativeTranslation,
-       bool constrainTranslation = true) {
+       float *ratio,
+       Ogre::Vector2 *minCollNormal,
+       Ogre::Vector2 *maxCollNormal) {
     bool intersects = false;
-    float maximumRatio = 0.0;
 
-    for (int i = 0; i < b->linestrip.edges.size(); i++) {
-//      std::cout << "line " << b->linestrip.edges[i] << std::endl;
-      Ogre::Vector2 currentLine = b->linestrip.edges[i].perpendicular();
-      currentLine.normalise();
+    Ogre::Vector2 topRight = aabb->topRight();
+    Ogre::Vector2 topLeft = aabb->topLeft();
+    Ogre::Vector2 bottomLeft = aabb->bottomLeft();
+    Ogre::Vector2 bottomRight = aabb->bottomRight();
+    CollisionShape2::Convex aabbConvex;
+    aabbConvex.points.push_back(&topRight);
+    aabbConvex.points.push_back(&topLeft);
+    aabbConvex.points.push_back(&bottomLeft);
+    aabbConvex.points.push_back(&bottomRight);
+    aabbConvex.points.push_back(&topRight);
+    for (int i = 0; i <  aabbConvex.points.size()-1; i++) {
+      aabbConvex.edges.push_back(
+          *aabbConvex.points[i+1] - *aabbConvex.points[i]);
+    }
 
-      float translProj = currentLine.dotProduct(*relativeTranslation);
-//      std::cout << "dis1 " << translProj << " (translProj)"<< std::endl;
+    for (int i = 0; i < linestrip->edges.size(); i++) {
+      CollisionShape2::AABB *currentAABB = &linestrip->edgeAABBs[i];
+      if (CollisionTestAABB(
+          aabb, currentAABB, relativeTranslation)) {
+        Ogre::Vector2 currentCollNormal;
 
-      float current = currentLine.dotProduct(a->aabb.bottomLeft());
-      float max = current;
-      float min = current;
-      current = currentLine.dotProduct(a->aabb.bottomRight());
-      if (current > max)
-        max = current;
-      if (current < min)
-        min = current;
-      current = currentLine.dotProduct(a->aabb.topRight());
-      if (current > max)
-        max = current;
-      if (current < min)
-        min = current;
-      current = currentLine.dotProduct(a->aabb.topLeft());
-      if (current > max)
-        max = current;
-      if (current < min)
-        min = current;
-
-      if (translProj < 0.0) {
-        min += translProj;
-      } else {
-        max += translProj;
-      }
-//      std::cout << "lineBetween " << currentLine << std::endl;
-      float pivot = currentLine.dotProduct(*b->linestrip.points[i]);
-//      std::cout << min << " " << pivot << " " << max << std::endl;
-      if (min < pivot && max > pivot) {
-        intersects = true;
-        float ratio;
-        if (translProj < 0.0) {
-          ratio = pivot - min + 2*translProj;
-        } else {
-          ratio = pivot - max + 2*translProj;
+        if (collisionTestConvexLine(
+            &aabbConvex, linestrip->points[i], &linestrip->edges[i],
+            relativeTranslation, ratio, &currentCollNormal)) {
+          intersects = true;
+          *minCollNormal = currentCollNormal;
         }
-//        std::cout << "ratio " << ratio << std::endl;
-        ratio = ratio / fabsf(translProj);
-        if (ratio > maximumRatio)
-          maximumRatio = ratio;
       }
-//      std::cout << "dis2 "
-//          << currentLine.dotProduct(*relativeTranslation * maximumRatio)
-//          << std::endl;
-//      std::cout << "dis3 "
-//          << currentLine.dotProduct(
-//              *relativeTranslation - *relativeTranslation * maximumRatio)
-//          << std::endl;
-//      std::cout << "transl1 "
-//          << *relativeTranslation
-//          << std::endl;
-//      std::cout << "transl2 "
-//          << *relativeTranslation - *relativeTranslation * maximumRatio
-//          << std::endl;
     }
-    if (intersects) {
-//      std::cout << "---------TRUE--------" << std::endl;
-      *relativeTranslation -= *relativeTranslation * maximumRatio;
-      return true;
+    return intersects;
+  }
+
+//  static inline bool collisionTestAABBLine(
+//       CollisionShape2::AABB *aabb,
+//       Ogre::Vector2 *pos,
+//       Ogre::Vector2 *dir,
+//       Ogre::Vector2 *relativeTranslation,
+//       float *ratio,
+//       Ogre::Vector2 *collisionNormal) {
+//    Ogre::Vector2 currentLine = dir->perpendicular();
+//    currentLine.normalise();
+//
+//    float translProj = currentLine.dotProduct(*relativeTranslation);
+//
+//    float current = currentLine.dotProduct(aabb->bottomLeft());
+//    float max = current;
+//    float min = current;
+//    current = currentLine.dotProduct(aabb->bottomRight());
+//    if (current > max)
+//      max = current;
+//    if (current < min)
+//      min = current;
+//    current = currentLine.dotProduct(aabb->topRight());
+//    if (current > max)
+//      max = current;
+//    if (current < min)
+//      min = current;
+//    current = currentLine.dotProduct(aabb->topLeft());
+//    if (current > max)
+//      max = current;
+//    if (current < min)
+//      min = current;
+//
+//    if (translProj < 0.0) {
+//      min += translProj;
+//    } else {
+//      max += translProj;
+//    }
+//    float pivot = currentLine.dotProduct(*pos);
+//    if (min < pivot + 0.001 && max > pivot - 0.001) {
+//      float dist;
+//      if (translProj < 0.0) {
+//        dist = fabsf(pivot - min);
+//      } else {
+//        dist = fabsf(pivot - max);
+//      }
+//      if (greaterZero(dist) && greaterZero(fabsf(translProj))) {
+//        *ratio = 1.0 - dist / fabsf(translProj);
+//      } else {
+//        *ratio = 1.0;
+//      }
+//      *collisionNormal = currentLine;
+//      return true;
+//    }
+//    return false;
+//  }
+//
+//  static inline bool testPointsLine(
+//      std::vector<Ogre::Vector2*> *points,
+//      Ogre::Vector2 *pos,
+//      Ogre::Vector2 *dir,
+//      Ogre::Vector2 *relativeTranslation,
+//      float *dist,
+//      float *translProj) {
+//    Ogre::Vector2 currentLine = dir->perpendicular();
+//    currentLine.normalise();
+//
+//    *translProj = currentLine.dotProduct(*relativeTranslation);
+//
+//    float current = currentLine.dotProduct(*(*points)[0]);
+//    float max = current;
+//    float min = current;
+//    for (int i = 1; i < points->size(); i++) {
+//      current = currentLine.dotProduct(*(*points)[i]);
+//      if (current > max)
+//        max = current;
+//      if (current < min)
+//        min = current;
+//    }
+//
+//    if (*translProj < 0.0) {
+//      min += *translProj;
+//    } else {
+//      max += *translProj;
+//    }
+//    float pivot = currentLine.dotProduct(*pos);
+//    if (min < pivot + 0.001 && max > pivot - 0.001) {
+//      if (*translProj < 0.0) {
+//        *dist = fabsf(pivot - min);
+//      } else {
+//        *dist = fabsf(pivot - max);
+//      }
+//      return true;
+//    }
+//    return false;
+//  }
+//
+//  static inline bool collisionTestConvexLine(
+//       CollisionShape2::Convex *convex,
+//       Ogre::Vector2 *pos1,
+//       Ogre::Vector2 *dir,
+//       Ogre::Vector2 *relativeTranslation,
+//       float *ratio,
+//       Ogre::Vector2 *collisionNormal) {
+//    float minDist = 99999.0;
+//    float minTranslProj = 0.0;
+//    Ogre::Vector2 pos2 = *pos1 + *dir;
+//    std::vector<Ogre::Vector2*> points;
+//    points.push_back(pos1);
+//    points.push_back(&pos2);
+//    float dist;
+//    float translProj;
+//    bool intersect = false;
+//    for (int i = 0; i < convex->edges.size(); i++) {
+//      if (testPointsLine(&points, convex->points[i], &convex->edges[i],
+//          relativeTranslation, &dist, &translProj)) {
+//        intersect = true;
+//        if (dist < minDist) {
+//          minDist = dist;
+//          minTranslProj = translProj;
+//          *collisionNormal = convex->edges[i];
+//        }
+//      }
+//    }
+//    if (testPointsLine(&convex->points, pos1, dir,
+//        relativeTranslation, &dist, &translProj)) {
+//      intersect = true;
+//      if (dist < minDist) {
+//        minDist = dist;
+//        minTranslProj = translProj;
+//        *collisionNormal = *dir;
+//      }
+//    }
+//    *collisionNormal = collisionNormal->perpendicular();
+//    collisionNormal->normalise();
+//    if (greaterZero(dist) && greaterZero(fabsf(minTranslProj))) {
+//      *ratio = 1.0 - dist / fabsf(minTranslProj);
+//    } else {
+//      *ratio = 1.0;
+//    }
+//    return intersect;
+//  }
+
+  static inline bool collisionTestConvexLine(
+       CollisionShape2::Convex *convex,
+       Ogre::Vector2 *pos,
+       Ogre::Vector2 *dir,
+       Ogre::Vector2 *relativeTranslation,
+       float *ratio,
+       Ogre::Vector2 *collisionNormal) {
+    Ogre::Vector2 currentLine = dir->perpendicular();
+    currentLine.normalise();
+
+    float translProj = currentLine.dotProduct(*relativeTranslation);
+
+    float current = currentLine.dotProduct(*convex->points[0]);
+    float max = current;
+    float min = current;
+    std::cout << *convex->points[0];
+    for (int i = 1; i < convex->points.size()-1; i++) {
+      std::cout << *convex->points[i];
+      current = currentLine.dotProduct(*convex->points[i]);
+      if (current > max)
+        max = current;
+      if (current < min)
+        min = current;
+    }
+    std::cout << std::endl;
+
+    if (translProj < 0.0) {
+      min += translProj;
     } else {
-      return false;
+      max += translProj;
     }
+    float pivot = currentLine.dotProduct(*pos);
+    if (min < pivot + 0.001 && max > pivot - 0.001) {
+      float dist;
+      if (translProj < 0.0) {
+        dist = fabsf(pivot - min);
+      } else {
+        dist = fabsf(pivot - max);
+      }
+      if (greaterZero(dist) && greaterZero(fabsf(translProj))) {
+        *ratio = 1.0 - dist / fabsf(translProj);
+      } else {
+        *ratio = 1.0;
+      }
+      *collisionNormal = currentLine;
+      return true;
+    }
+    return false;
+  }
+
+  static inline bool greaterZero(float value) {
+    return value > 0.001;
   }
 };
 

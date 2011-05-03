@@ -33,7 +33,7 @@ class AbstractActorFactory {
  public:
   AbstractActorFactory() {}
   virtual ~AbstractActorFactory() {}
-  virtual void manipulate(float d_t) = 0;
+  virtual void setValues(float d_t) = 0;
   virtual void update(float d_t) = 0;
 };
 
@@ -77,9 +77,9 @@ template <class T> class ActorFactory : public AbstractActorFactory {
     return a;
   }
 
-  void manipulate(float d_t) {
+  void setValues(float d_t) {
     for (int i = 0; i < actors.size(); i++) {
-      actors[i]->manipulate(d_t);
+      actors[i]->setValues(d_t);
     }
   }
 

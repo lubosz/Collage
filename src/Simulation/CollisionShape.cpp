@@ -58,6 +58,20 @@ void CollisionShape2::calculateShapeRepresentations() {
   aabb.maxX = &aabb.right->x;
   aabb.minX = &aabb.left->x;
 
+//  aabb.topLeft = Ogre::Vector2(*minX, *maxY);
+//  aabb.topRight = Ogre::Vector2(*maxX, *maxY);
+//  aabb.bottomLeft = Ogre::Vector2(*minX, *minY);
+//  aabb.bottomRight = Ogre::Vector2(*maxX, *minY);
+//  aabb.aabbConvex.points.push_back(&topRight);
+//  aabb.aabbConvex.points.push_back(&topLeft);
+//  aabb.aabbConvex.points.push_back(&bottomLeft);
+//  aabb.aabbConvex.points.push_back(&bottomRight);
+//  aabb.aabbConvex.points.push_back(&topRight);
+//  for (int i = 0; i <  aabbConvex.points.size()-1; i++) {
+//    aabbConvex.edges.push_back(
+//        *aabbConvex.points[i+1] - *aabbConvex.points[i]);
+//  }
+
   // convex stuff
   convex.points.clear();
   if (aabb.right != aabb.top)
@@ -70,7 +84,6 @@ void CollisionShape2::calculateShapeRepresentations() {
     quickHullRecursion(&convexTestPoints, aabb.bottom, aabb.right);
 
   convex.points.push_back(convex.points[0]);
-
   for (int i = 0; i < convex.points.size()-1; i++) {
     convex.edges.push_back(*(convex.points[i+1]) - *(convex.points[i]));
   }
@@ -78,7 +91,28 @@ void CollisionShape2::calculateShapeRepresentations() {
   // linestrip stuff
   for (int i = 0; i < absolutePoints.size()-1; i++) {
     linestrip.points.push_back(&absolutePoints[i]);
-    linestrip.edges.push_back(absolutePoints[i+1] - absolutePoints[i]);
+    Ogre::Vector2 edge = absolutePoints[i+1] - absolutePoints[i];
+    linestrip.edges.push_back(edge);
+    AABB edgeAABB;
+    if (edge.y < 0.0) {
+      edgeAABB.top = &absolutePoints[i];
+      edgeAABB.bottom = &absolutePoints[i+1];
+    } else {
+      edgeAABB.top = &absolutePoints[i+1];
+      edgeAABB.bottom = &absolutePoints[i];
+    }
+    if (edge.x < 0.0) {
+      edgeAABB.right = &absolutePoints[i];
+      edgeAABB.left = &absolutePoints[i+1];
+    } else {
+      edgeAABB.right = &absolutePoints[i+1];
+      edgeAABB.left = &absolutePoints[i];
+    }
+    edgeAABB.maxY = &edgeAABB.top->y;
+    edgeAABB.minY = &edgeAABB.bottom->y;
+    edgeAABB.maxX = &edgeAABB.right->x;
+    edgeAABB.minX = &edgeAABB.left->x;
+    linestrip.edgeAABBs.push_back(edgeAABB);
   }
   linestrip.points.push_back(&absolutePoints[absolutePoints.size()-1]);
 }

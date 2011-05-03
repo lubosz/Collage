@@ -11,12 +11,27 @@ Interaction<Character, Terrain>::Interaction() {
 Interaction<Character, Terrain>::~Interaction() {}
 
 bool Interaction<Character, Terrain>::collisionTest() {
-  Ogre::Vector2 moveConstraint = first->moveVector;
-  if (CollisionHandler::collisionTestAABB(
-      &first->collisionShape, &second->collisionShape,
-      &moveConstraint, true)) {
-//    std::cout << moveConstraint.x << " " << moveConstraint.y << std::endl;
-    first->constrainMove(moveConstraint);
+  float ratio;
+  Ogre::Vector2 minCollisionNormal;
+  Ogre::Vector2 maxCollisionNormal;
+//  if (CollisionHandler::collisionTestAABB(
+//      &first->collisionShape, &second->collisionShape,
+//      &first->moveVector, &ratio, &collisionNormal)) {
+//    first->moveVector *= ratio;
+//    first->constrainMove(collisionNormal);
+//    return true;
+//  }
+//  if (CollisionHandler::collisionTestAABBLine(
+//      &first->collisionShape.aabb,
+//      second->collisionShape.linestrip.points[0],
+//      &second->collisionShape.linestrip.edges[0],
+//      &first->moveVector, &ratio, &collisionNormal)) {
+  if (CollisionHandler::collisionTestAABBLinestrip(
+      &first->collisionShape.aabb,
+      &second->collisionShape.linestrip,
+      &first->moveVector, &ratio, &minCollisionNormal, &maxCollisionNormal)) {
+    first->moveVector *= ratio;
+    first->constrainMove(minCollisionNormal);
     return true;
   }
   return false;
@@ -33,8 +48,6 @@ void Interaction<Character, Terrain>::onLeave() {
 }
 
 void Interaction<Character, Terrain>::whileInside(float d_t) {
-//  first->move(0., 2. * d_t);
-//  second->move(0., -0.2 * d_t);
 }
 
 void Interaction<Character, Terrain>::whileOutside(float d_t) {

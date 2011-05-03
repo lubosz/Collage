@@ -25,7 +25,7 @@ class Actor {
   std::string id;
 
   virtual void init() = 0;
-  virtual void manipulate(float d_t) = 0;
+  virtual void setValues(float d_t) = 0;
   virtual void update(float d_t) = 0;
   void print();
 };
@@ -39,9 +39,13 @@ class CollisionActor : public Actor {
   CollisionShape2 collisionShape;
   Ogre::Vector2 moveVector;
   Ogre::Vector2 velocity;
+  Ogre::Vector2 moveConstraintMin;
+  Ogre::Vector2 moveConstraintMax;
+  float moveConstraintAngle;
 
   virtual void init() = 0;
   virtual void manipulate(float d_t) = 0;
+  virtual void setValues(float d_t);
   void update(float d_t);
 
   CollisionActor* teleport(float x, float y);

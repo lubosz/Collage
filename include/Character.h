@@ -17,5 +17,7 @@ class Character: public CollisionActor {
   virtual ~Character();
   void init();
   void manipulate(float d_t);
+
+  bool test;
 };
 #endif /* CHARACTER_H_ */
