@@ -35,7 +35,11 @@ STRING(REGEX REPLACE "\\\\" "/" OGREFOLDER "$ENV{OGRE_HOME}")
 if(EXISTS $ENV{OGRE_HOME})
     set(CMAKE_MODULE_PATH ${OGREFOLDER}/CMake)
 else()
+  if(EXISTS "/usr/local/lib/OGRE/cmake")
+    set(CMAKE_MODULE_PATH /usr/local/lib/OGRE/cmake)
+  else()
     set(CMAKE_MODULE_PATH /usr/lib/OGRE/cmake)
+  endif()
 endif()
 
 #set cmake macro flags
