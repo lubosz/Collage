@@ -33,14 +33,15 @@ STRING(REGEX REPLACE "\\\\" "/" OGREFOLDER "$ENV{OGRE_HOME}")
 
 #find ogre cmake macro
 if(EXISTS $ENV{OGRE_HOME})
-    set(CMAKE_MODULE_PATH ${OGREFOLDER}/CMake)
+    set(CMAKE_MODULE_PATH "${CMAKE_MODULE_PATH};${OGREFOLDER}/CMake")
 else()
   if(EXISTS "/usr/local/lib/OGRE/cmake")
-    set(CMAKE_MODULE_PATH /usr/local/lib/OGRE/cmake)
+    set(CMAKE_MODULE_PATH "${CMAKE_MODULE_PATH};/usr/local/lib/OGRE/cmake")
   else()
-    set(CMAKE_MODULE_PATH /usr/lib/OGRE/cmake)
+    set(CMAKE_MODULE_PATH "${CMAKE_MODULE_PATH};/usr/lib/OGRE/cmake")
   endif()
 endif()
+message(STATUS "CMake Module Path: ${CMAKE_MODULE_PATH}")
 
 #set cmake macro flags
 FIND_PACKAGE(Qt4 REQUIRED)
