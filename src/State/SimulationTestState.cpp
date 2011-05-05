@@ -78,7 +78,7 @@ void SimulationTestState::createScene() {
       ->addPoint(-0.3, -0.4)
       ->addPoint(0.3, 0.4)
       ->createCollisionShape(CollisionShape2::DEF_AABB)
-      ->teleport(3.0, 1.0);
+      ->teleport(0.0, 1.0);
 
   simulation->terrainFactory->createActor()
       ->addPoint(0.0, 0.0)

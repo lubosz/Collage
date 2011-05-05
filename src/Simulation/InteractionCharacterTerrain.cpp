@@ -30,6 +30,7 @@ bool Interaction<Character, Terrain>::collisionTest() {
       &first->collisionShape.aabb,
       &second->collisionShape.linestrip,
       &first->moveVector, &ratio, &minCollisionNormal, &maxCollisionNormal)) {
+    std::cout << ratio << std::endl;
     first->moveVector *= ratio;
     first->constrainMove(minCollisionNormal);
     return true;
@@ -40,6 +41,7 @@ bool Interaction<Character, Terrain>::collisionTest() {
 void Interaction<Character, Terrain>::onInit() {}
 
 void Interaction<Character, Terrain>::onEnter() {
+  std::cout << first->moveConstraintMin << std::endl;
   std::cout << first->id << " entering " << second->id << std::endl;
 }
 
