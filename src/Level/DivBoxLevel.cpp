@@ -166,7 +166,14 @@ void DivBoxLevel::generate() {
 //  sceneManager->setSkyBox(true, "skyBox");
   sceneManager->setSkyDome(true, "skydome", 50, 2);
 
-  std::vector<QString> tags = {"div", "p", "img", "h2", "h1", "h3", "table"};
+  std::vector<QString> tags;
+  tags.push_back("div");
+  tags.push_back("p");
+  tags.push_back("img");
+  tags.push_back("h2");
+  tags.push_back("h1");
+  tags.push_back("h3");
+  tags.push_back("table");
 
   makeElementBoxes(
       page, .1, 1, tags,

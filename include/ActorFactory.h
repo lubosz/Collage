@@ -53,7 +53,8 @@ template <class T> class ActorFactory : public AbstractActorFactory {
   int id;
   Ogre::SceneManager* sceneManager;
   std::vector<T*> actors;
-  std::vector<std::pair<AbstractInteractionHandler*, bool>> interactionHandlers;
+  std::vector<std::pair<AbstractInteractionHandler*, bool> >
+    interactionHandlers;
 
   void addInteractionHandler(AbstractInteractionHandler* handler, bool place) {
     interactionHandlers.push_back(
