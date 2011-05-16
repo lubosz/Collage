@@ -20,9 +20,6 @@ ELSE()
 
 ENDIF()
 
-#Set c++0x
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=gnu++0x")
-
 function(copy_plugins_config FROM_PLUGINS_CFG)
     message(STATUS "Copy from ${FROM_PLUGINS_CFG}")
     execute_process(
@@ -36,10 +33,15 @@ STRING(REGEX REPLACE "\\\\" "/" OGREFOLDER "$ENV{OGRE_HOME}")
 
 #find ogre cmake macro
 if(EXISTS $ENV{OGRE_HOME})
-    set(CMAKE_MODULE_PATH ${OGREFOLDER}/CMake)
+    set(CMAKE_MODULE_PATH "${CMAKE_MODULE_PATH};${OGREFOLDER}/CMake")
 else()
-    set(CMAKE_MODULE_PATH /usr/lib/OGRE/cmake)
+  if(EXISTS "/usr/local/lib/OGRE/cmake")
+    set(CMAKE_MODULE_PATH "${CMAKE_MODULE_PATH};/usr/local/lib/OGRE/cmake")
+  else()
+    set(CMAKE_MODULE_PATH "${CMAKE_MODULE_PATH};/usr/lib/OGRE/cmake")
+  endif()
 endif()
+message(STATUS "CMake Module Path: ${CMAKE_MODULE_PATH}")
 
 #set cmake macro flags
 FIND_PACKAGE(Qt4 REQUIRED)

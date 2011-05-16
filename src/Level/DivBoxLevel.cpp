@@ -7,7 +7,6 @@
 #include <QPainter>
 #include "System.h"
 #include "DivBoxLevel.h"
-#include "DotSceneLoader.h"
 
 #include "RenderEngine.h"
 
@@ -167,24 +166,20 @@ void DivBoxLevel::generate() {
 //  sceneManager->setSkyBox(true, "skyBox");
   sceneManager->setSkyDome(true, "skydome", 50, 2);
 
-  std::vector<QString> tags = {"div", "p", "img", "h2", "h1", "h3", "table"};
+  std::vector<QString> tags;
+  tags.push_back("div");
+  tags.push_back("p");
+  tags.push_back("img");
+  tags.push_back("h2");
+  tags.push_back("h1");
+  tags.push_back("h3");
+  tags.push_back("table");
 
   makeElementBoxes(
       page, .1, 1, tags,
       "Cube.mesh", sceneManager);
-
-  sceneManager->createLight("Light")->setPosition(75, 75, 75);
-  sceneManager->createLight("Light1")->setPosition(-75, 100, -75);
-  sceneManager->createLight("Light2")->setPosition(-75, 120, 75);
-  sceneManager->createLight("Light3")->setPosition(75, 130, -75);
-
-  DotSceneLoader* pDotSceneLoader = new DotSceneLoader();
-  pDotSceneLoader->parseDotScene(
-      "papercraft_man_line_running.scene",
-      "General", sceneManager, sceneManager->getRootSceneNode());
-    delete pDotSceneLoader;
-
-  this->addDoors();
+  addCharacter();
+//  this->addDoors();
 }
 
 void DivBoxLevel::placeDoor(Door *door, QRect geom) {

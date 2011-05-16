@@ -39,17 +39,18 @@ void MenuState::enter() {
 	OgreBites::SdkTrayManager* trayManager = UserInterface::Instance().m_pTrayMgr;
 	trayManager->destroyAllWidgets();
 
-	trayManager->createButton(OgreBites::TL_CENTER, "BrowserDemo", "Browser", 250);
-	trayManager->createButton(OgreBites::TL_CENTER, "OgreDemo", "Ogre Scene", 250);
 	trayManager->createButton(
-		OgreBites::TL_CENTER, "SimulationDemo", "SimulationDemo", 250);
+	    OgreBites::TL_BOTTOMLEFT, "BrowserDemo", "Browser", 250);
 	trayManager->createButton(
-		OgreBites::TL_CENTER, "LevelState", "LevelState", 250);
-
-
-	trayManager->createButton(OgreBites::TL_CENTER, "Settings", "Settings", 250);
+	    OgreBites::TL_BOTTOMLEFT, "OgreDemo", "Ogre Scene", 250);
 	trayManager->createButton(
-	    OgreBites::TL_CENTER, "ExitBtn", "Exit Collage", 250);
+		OgreBites::TL_BOTTOMLEFT, "SimulationDemo", "SimulationDemo", 250);
+	trayManager->createButton(
+		OgreBites::TL_BOTTOMLEFT, "LevelState", "LevelState", 250);
+	trayManager->createButton(
+	    OgreBites::TL_BOTTOMLEFT, "Settings", "Settings", 250);
+	trayManager->createButton(
+	    OgreBites::TL_BOTTOMLEFT, "ExitBtn", "Exit Collage", 250);
 
 
 	trayManager->showBackdrop("SdkTrays/Wallpaper");

@@ -60,8 +60,10 @@ bool FrameCapture::saveToDisk(const QString &filename, QIODevice *data) {
 }
 
 void FrameCapture::downloadFinished(QNetworkReply *reply) {
-  QString fileName = "../Media/Textures/wall.jpg";
   QUrl url = reply->url();
+  QString extension = url.toString().right(4);
+  QString fileName = "../Media/Textures/wall" + extension;
+
   if (reply->error()) {
     fprintf(stderr, "Download of %s failed: %s\n", url.toEncoded().constData(),
         qPrintable(reply->errorString()));
@@ -99,7 +101,7 @@ void FrameCapture::saveWallPaper(
 
   waitForSignal(m_page.mainFrame(), SIGNAL(loadFinished(bool)), timeout);
 
-  loadUrl(getFirstAttribute("a", "href", "http://wallbase.net/wallpaper/"));
+  loadUrl(getFirstAttribute("a", "href", "http://wallbase.cc/wallpaper/"));
 
   waitForSignal(m_page.mainFrame(), SIGNAL(loadFinished(bool)), timeout);
 
@@ -171,11 +173,9 @@ QString FrameCapture::getFirstAttribute(const QString & tag,
     printf("\nNo match for %s.\n", qPrintable(match));
     foreach(QWebElement element, elements)
         printf("%s\n", qPrintable(element.attribute(attrib)));
-    exit(0);
   } else {
     printf("\nNo <%s> tags found in %s\n", qPrintable(tag),
         qPrintable(m_page.mainFrame()->baseUrl().toString()));
-    exit(0);
   }
 }
 

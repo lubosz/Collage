@@ -27,7 +27,7 @@ void WallPaperLoadingState::enter() {
 void WallPaperLoadingState::createScene() {
   // nsfw
 //  QUrl url = QUrl("http://wallbase.net/random/all/eqeq/1920x1200/1.60/001/20");
-  QUrl url = QUrl("http://wallbase.net/random");
+  QUrl url = QUrl("http://wallbase.cc/index.php/random/index");
   FrameCapture capture;
 //  capture.saveWebRender(QUrl("http://en.wikipedia.org/wiki/Special:Random"),
 //      "../Media/Textures/wall.png");
