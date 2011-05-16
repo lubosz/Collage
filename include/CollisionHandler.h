@@ -127,6 +127,12 @@ class CollisionHandler {
     return (newPos1.x * dir2->y - newPos1.y * dir2->x) > 0.0;
   }
 
+  static inline bool isVecRightToVec(
+      Ogre::Vector2* dir1,
+      Ogre::Vector2* dir2) {
+    return (dir1->x * dir2->y - dir1->y * dir2->x) > 0.0;
+  }
+
   static inline bool testLineLine(
       Ogre::Vector2* pos1,
       Ogre::Vector2* dir1,
@@ -233,7 +239,7 @@ class CollisionHandler {
   }
 
   static inline bool collisionTestAABBLinestrip(
-       CollisionShape2::AABB *aabb,
+       CollisionShape2 *a,
        CollisionShape2::Linestrip *linestrip,
        Ogre::Vector2 *relativeTranslation,
        float *ratio,
@@ -241,6 +247,7 @@ class CollisionHandler {
        Ogre::Vector2 *maxCollNormal) {
     bool intersects = false;
 
+    CollisionShape2::AABB *aabb = &a->aabb;
     Ogre::Vector2 topRight = aabb->topRight();
     Ogre::Vector2 topLeft = aabb->topLeft();
     Ogre::Vector2 bottomLeft = aabb->bottomLeft();
@@ -258,17 +265,18 @@ class CollisionHandler {
 
     for (int i = 0; i < linestrip->edges.size(); i++) {
       CollisionShape2::AABB *currentAABB = &linestrip->edgeAABBs[i];
-//      if (CollisionTestAABB(
-//          aabb, currentAABB, relativeTranslation)) {
+      if (CollisionTestAABB(
+          aabb, currentAABB, relativeTranslation)) {
         Ogre::Vector2 currentCollNormal;
 
         if (collisionTestConvexLine(
-            &aabbConvex, linestrip->points[i], linestrip->points[i+1],
+            &a->convex, linestrip->points[i], linestrip->points[i+1],
             relativeTranslation, ratio, &currentCollNormal)) {
           intersects = true;
+//          std::cout << "collNor " << currentCollNormal << std::endl;
           *minCollNormal = currentCollNormal;
         }
-//      }
+      }
     }
     return intersects;
   }
@@ -415,40 +423,169 @@ class CollisionHandler {
 //  }
 
   static inline bool learlyZero(float *value) {
-    return fabsf(value) < 0.0001;
+    return fabsf(*value) < 0.0001;
   }
 
   static inline bool intersection(
-      float *pivot,
+      float pivot,
       float *min,
       float *max,
       float *translProj,
-      float *dist){
-    if (nearlyZero(translProj)) {
-      if (*min < *pivot && *max > *pivot) {
-        *dist = 0.0;
-        return true;
-      }
-      return false;
-    }
+      float *dist) {
+//    if (nearlyZero(translProj)) {
+//      if (*min < *pivot && *max > *pivot) {
+//        *dist = 0.0;
+//        return true;
+//      }
+//      return false;
+//    }
     if (*translProj < 0.0) {
       *min += *translProj;
-      if (*min < *pivot && *max > *pivot) {
-        std::cout << "TRUE----- "
-            << *min << " < " << *pivot << " < " << *max << " ?" << std::endl;
-        *dist = *pivot - *min;
+      if (*min < pivot && *max > pivot) {
+//        std::cout << "TRUE----- "
+//            << *min << " < " << pivot << " < " << *max << " ?" << std::endl;
+        *dist = pivot - *min;
         return true;
+      }
     } else {
       *max += *translProj;
-      if (*min < *pivot && *max > *pivot) {
-        std::cout << "TRUE----- "
-            << *min << " < " << *pivot << " < " << *max << " ?" << std::endl;
-        *dist = *max - *pivot;
+      if (*min < pivot && *max > pivot) {
+//        std::cout << "TRUE----- "
+//            << *min << " < " << pivot << " < " << *max << " ?" << std::endl;
+        *dist = *max - pivot;
         return true;
       }
     }
-    std::cout << "FALSE---- "
-        << *min << " < " << *pivot << " < " << *max << " ?" << std::endl;
+//    std::cout << "FALSE---- "
+//        << *min << " < " << pivot << " < " << *max << " ?" << std::endl;
+    return false;
+  }
+
+  static inline bool intersection(
+      float *minA,
+      float *maxA,
+      float *minB,
+      float *maxB,
+      float *translProj,
+      float *dist) {
+    if (*translProj <= epsilon()) {
+      float newMinA = *minA + *translProj;
+      if (newMinA <= *maxB + epsilon() && *maxA + epsilon() >= *minB) {
+        *dist = fabsf(*maxB - newMinA);
+//        std::cout << "TRUE----- " << "translProj: " << *translProj << " | "
+//            << *minA << " < " << *maxA  << " && " << *minB << " < " << *maxB
+//            << " dist: " << *dist << std::endl;
+        return true;
+      }
+    } else {
+//      if (minA >= minB && minA <= maxB) {
+      float newMaxA = *maxA + *translProj;
+      if (*minA <= *maxB + epsilon() && newMaxA + epsilon() >= *minB) {
+        if (fabsf(fabsf(*minA) - *maxB) < *translProj) {
+          return false;
+        }
+        *dist = fabsf(newMaxA - *minB);
+//        std::cout << "TRUE-2--- " << "translProj: " << *translProj << " | "
+//            << *minA << " < " << *maxA  << " && " << *minB << " < " << *maxB
+//            << " dist: " << *dist << std::endl;
+        return true;
+      }
+    }
+//    std::cout << "FALSE---- " << "translProj: " << *translProj << " | "
+//        << *minA << " < " << *maxA  << " && " << *minB << " < " << *maxB
+//        << " dist: " << *dist << std::endl;
+    return false;
+  }
+
+  static inline void replaceMinMax(float value, float *min, float *max) {
+    if (value <= *min)
+      *min = value;
+    if (value >= *max)
+      *max = value;
+  }
+
+  static inline void replaceMin(float value, float *min) {
+    if (value <= *min) {
+      *min = value;
+    }
+  }
+
+  static inline bool calculateMinimumTranslation(
+      Ogre::Vector2* currentLine,
+      std::vector<Ogre::Vector2*>* pointsA,
+      std::vector<Ogre::Vector2*>* pointsB,
+      Ogre::Vector2 *relativeTranslation,
+      float *minRatio,
+      float *minDist,
+      float *minTranslProj,
+      Ogre::Vector2 *collisionNormal
+      ) {
+    currentLine->normalise();
+//    std::cout << *currentLine << *relativeTranslation << std::endl;
+    float translProj = currentLine->dotProduct(*relativeTranslation);
+    float dist = 0.0;  // -std::numeric_limits<float>::infinity();
+    float minA = std::numeric_limits<float>::infinity();
+    float maxA = -std::numeric_limits<float>::infinity();
+    float minB = std::numeric_limits<float>::infinity();
+    float maxB = -std::numeric_limits<float>::infinity();
+
+    for (int i = 0; i < pointsA->size(); i++) {
+//      std::cout << *(*pointsA)[i] << currentLine->dotProduct(*(*pointsA)[i])
+//          << "  |  ";
+      replaceMinMax(currentLine->dotProduct(*(*pointsA)[i]), &minA, &maxA);
+    }
+//    std::cout << std::endl;
+    for (int i = 0; i < pointsB->size(); i++) {
+//      std::cout << *(*pointsB)[i] << currentLine->dotProduct(*(*pointsB)[i])
+//          << "  |  ";
+      replaceMinMax(currentLine->dotProduct(*(*pointsB)[i]), &minB, &maxB);
+    }
+//    std::cout << std::endl;
+    if (intersection(&minA, &maxA, &minB, &maxB, &translProj, &dist)) {
+//      if (fabsf(translProj) < epsilon())
+//        translProj = epsilon();
+      float newRatio = fabsf(dist / translProj);
+//      printf("ratio: %f > newRatio: %f minDist: %f > dist: %f ? \n",
+//          *minRatio, newRatio, *minDist, dist);
+      if (newRatio < 1.0) {
+        if (*minRatio > newRatio) {
+          *minRatio = newRatio;
+          *minDist = 0.0;
+//          std::cout << "set1" << std::endl;
+          *collisionNormal = *currentLine;
+        }
+      } else {
+        if (*minDist > dist) {
+          *minDist = dist;
+//          std::cout << "set2" << std::endl;
+          *collisionNormal = *currentLine;
+        }
+      }
+
+//      if (relativeTranslation->length() != 0.0) {
+//        if (translProj == 0.0) {
+//          *collisionNormal = currentLine;
+//        } else {
+//          fabsf(dist / translProj);
+//        }
+//      }
+//      if (translProj == 0.0 && relativeTranslation->length() != 0.0) {
+//        *collisionNormal = currentLine;
+//      } else {
+//
+//      }
+//      if (translProj != 0.0) {
+//        *newRatio = fabsf(dist / translProj);
+//      } else {
+//        *newRatio = fabsf(dist);
+//      }
+//      if (newRatio <= *ratio) {
+//        *collisionNormal = currentLine;
+//        *ratio = newRatio;
+//      }
+      return true;
+    }
+//    printf("%f / %f = %f \n", dist, translProj, fabsf(dist / translProj));
     return false;
   }
 
@@ -460,101 +597,65 @@ class CollisionHandler {
        float *ratio,
        Ogre::Vector2 *collisionNormal) {
     Ogre::Vector2 dir = *linePt2 - *linePt1;
+    float newRatio = 1.0;
 
-    bool intersect = true;
+    *collisionNormal = Ogre::Vector2::ZERO;
+    std::vector<Ogre::Vector2*> linePoints;
+    linePoints.push_back(linePt1);
+    linePoints.push_back(linePt2);
 
-    float minimumDist = std::numeric_limits<float>::infinity();
-    float minimumTranslProj;
 
-    std::cout << "===============================" << std::endl;
-    for (int i = 0; i < convex->edges.size(); i++) {
-      Ogre::Vector2 currentLine = convex->edges[i].perpendicular();
-      currentLine.normalise();
-      float translProj = currentLine.dotProduct(*relativeTranslation);
-
-      float min = currentLine.dotProduct(*linePt1);
-      float max = currentLine.dotProduct(*linePt2);
-      if (min > max) {
-        float h = min;
-        min = max;
-        max = h;
-      }
-
-      float pivot = currentLine.dotProduct(*convex->points[i]);
-      float dist;
-      if (min < pivot && max > pivot) {
-        std::cout << "TRUE----- " << i << ": " << currentLine;
-        if (translProj < 0.0) {
-          min += translProj;
-          dist = pivot - min;
-        } else {
-          max += translProj;
-          dist = max - pivot;
-        }
-      } else {
-        std::cout << "FALSE---- " << i << ": " << currentLine;
-        intersect = false;
-      }
-      std::cout << min << " < " << pivot << " < " << max << " ?" << std::endl;
-
-      if (intersect && dist < minimumDist) {
-        minimumDist = dist;
-        minimumTranslProj = fabsf(translProj);
-        *collisionNormal = currentLine;
-      }
+    float minDist = std::numeric_limits<float>::infinity();
+    float minTranslProj = std::numeric_limits<float>::infinity();
+    Ogre::Vector2 currentLine;
+    currentLine = dir;
+//      printf("DIR \n");
+    if (!calculateMinimumTranslation(&currentLine, &convex->points,
+        &linePoints, relativeTranslation,
+        &newRatio, &minDist, &minTranslProj, collisionNormal)) {
+      return false;
     }
+//    std::cout << *collisionNormal << std::endl;
 
-//    if (minimumTranslProj == 0.0) {
-//      *ratio = 0.5;
-//    } else {
-//      *ratio = 1.0 - minimumDist / minimumTranslProj;
-//    }
+    currentLine = dir.perpendicular();
+//      printf("DIR PERP \n");
+    if (!calculateMinimumTranslation(&currentLine, &convex->points,
+        &linePoints, relativeTranslation,
+        &newRatio, &minDist, &minTranslProj, collisionNormal)) {
+      return false;
+    }
+//    std::cout << *collisionNormal << std::endl;
 
-    return intersect;
-
-//
-//
-//    Ogre::Vector2 currentLine = dir.perpendicular();
-//    currentLine.normalise();
-//    float translProj = currentLine.dotProduct(*relativeTranslation);
-//
-//    float max = -std::numeric_limits<float>::infinity();
-//    float min = std::numeric_limits<float>::infinity();
-//    for (int i = 0; i < convex->edges.size(); i++) {
-//      float current = currentLine.dotProduct(*convex->points[i]);
-//      if (current > max)
-//        max = current;
-//      if (current < min)
-//        min = current;
-//    }
-//    if (translProj < 0.0) {
-//      min += translProj;
-//    } else {
-//      max += translProj;
-//    }
-//    float pivot = currentLine.dotProduct(*linePt1);
-//
-//    if (min < pivot + 0.001 && max > pivot - 0.001) {
-//      float dist;
-//      if (translProj < 0.0) {
-//        dist = fabsf(pivot - min);
-//      } else {
-//        dist = fabsf(pivot - max);
-//      }
-//      if (greaterZero(dist) && greaterZero(fabsf(translProj))) {
-//        *ratio = 1.0 - dist / fabsf(translProj);
-//      } else {
-//        *ratio = 1.0;
-//      }
-//      *collisionNormal = currentLine;
-//      return true;
-//    }
-//
-//    return false;
+    for (int i = 0; i < convex->edges.size(); i++) {
+      currentLine = convex->edges[i].perpendicular();
+//        printf("CONVEX %i ", i);
+//        std::cout << convex->edges[i] << std::endl;
+      if (!calculateMinimumTranslation(&currentLine, &convex->points,
+          &linePoints, relativeTranslation,
+          &newRatio, &minDist, &minTranslProj, collisionNormal)) {
+        return false;
+      }
+//      std::cout << *collisionNormal << std::endl;
+    }
+    if (newRatio < 1.0 && newRatio > 0.0) {
+      newRatio = 1.0 - newRatio;
+    }
+    if (newRatio < *ratio) {
+      *ratio = newRatio;
+    }
+    return true;
   }
 
   static inline bool greaterZero(float value) {
-    return value > 0.001;
+    return value > 0.00001;
+  }
+
+  static inline bool nearlyZero(float value) {
+    return fabsf(value) < 0.00001;
+  }
+
+  static inline float epsilon() {
+    return 0.0001;
   }
 };
 

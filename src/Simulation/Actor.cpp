@@ -21,6 +21,7 @@ void Actor::print() {
 
 CollisionActor::CollisionActor() {
   velocity = Ogre::Vector2::ZERO;
+  possibleMoveRatio = 1.0;
   moveConstraintMin = Ogre::Vector2::ZERO;
   moveConstraintMax = Ogre::Vector2::ZERO;
 }
@@ -30,16 +31,17 @@ CollisionActor::~CollisionActor() {
 
 void CollisionActor::setValues(float d_t) {
   manipulate(d_t);
-  moveConstraintAngle = 0.0;
   moveConstraintMin = Ogre::Vector2::ZERO;
   moveConstraintMax = Ogre::Vector2::ZERO;
 }
 
 void CollisionActor::update(float d_t) {
+  moveVector *= possibleMoveRatio;
   sceneNode->translate(to3D(moveVector, sceneNode->getPosition().z));
   collisionShape.translate(to2D(sceneNode->getPosition()));
   velocity = moveVector / d_t;
   moveVector = Ogre::Vector2::ZERO;
+  possibleMoveRatio = 1.0;
 }
 
 CollisionActor* CollisionActor::teleport(float x, float y) {
@@ -67,23 +69,34 @@ CollisionActor* CollisionActor::move(Ogre::Vector2 by) {
 CollisionActor* CollisionActor::constrainMove(Ogre::Vector2 by) {
   by.normalise();
   if (moveConstraintMin.isZeroLength()) {
-    moveConstraintAngle = 0.0;
     moveConstraintMin = by;
     moveConstraintMax = by;
   } else {
-// TODO(Gerrit) more then one constraint
-//    float angleA = acosf(moveConstraintMin.dotProduct(by));
-//    float angleB = acosf(moveConstraintMax.dotProduct(by));
-//    if (angleA > angleB) {
-//
-//    }
-//    if (angle > moveConstraintAngle) {
-//      moveConstraintAngle = angle;
-//      if (moveConstraintMin.x * by.x - moveConstraintMin.y * by.y > 0.0) {
-//        moveConstraintMax
-//      }
-//    }
+  // TODO(Gerrit) more then one constraint
+  //    set min
+  //    if v.rightTo(min)
+  //      if v.rightTo(max)
+  //        min = v
+  //      else
+  //        close
+  //    else
+  //      if v.rightTo(max)
+  //        max = v
+  //      else
+  //        doNothing
+    if (by.x * moveConstraintMin.y - by.y * moveConstraintMin.x > 0.0) {
+      if (by.x * moveConstraintMax.y - by.y * moveConstraintMax.x > 0.0) {
+        moveConstraintMin = by;
+      } else {
+        possibleMoveRatio = 0.0;
+      }
+    } else {
+      if (by.x * moveConstraintMax.y - by.y * moveConstraintMax.x < 0.0) {
+        moveConstraintMax = by;
+      }
+    }
   }
+//  std::cout << moveConstraintMin << moveConstraintMax << std::endl;
   return this;
 }
 

@@ -11,9 +11,8 @@ Interaction<Character, Terrain>::Interaction() {
 Interaction<Character, Terrain>::~Interaction() {}
 
 bool Interaction<Character, Terrain>::collisionTest() {
-  float ratio;
-  Ogre::Vector2 minCollisionNormal;
-  Ogre::Vector2 maxCollisionNormal;
+  Ogre::Vector2 minCollisionNormal = Ogre::Vector2::ZERO;
+  Ogre::Vector2 maxCollisionNormal = Ogre::Vector2::ZERO;
 //  if (CollisionHandler::collisionTestAABB(
 //      &first->collisionShape, &second->collisionShape,
 //      &first->moveVector, &ratio, &collisionNormal)) {
@@ -27,11 +26,14 @@ bool Interaction<Character, Terrain>::collisionTest() {
 //      &second->collisionShape.linestrip.edges[0],
 //      &first->moveVector, &ratio, &collisionNormal)) {
   if (CollisionHandler::collisionTestAABBLinestrip(
-      &first->collisionShape.aabb,
+      &first->collisionShape,
       &second->collisionShape.linestrip,
-      &first->moveVector, &ratio, &minCollisionNormal, &maxCollisionNormal)) {
-    std::cout << ratio << std::endl;
-    first->moveVector *= ratio;
+      &first->moveVector,
+      &first->possibleMoveRatio,
+      &minCollisionNormal,
+      &maxCollisionNormal)) {
+//    std::cout << second->id;
+//    printf(" RATIO: %f \n", first->possibleMoveRatio);
     first->constrainMove(minCollisionNormal);
     return true;
   }
@@ -41,7 +43,6 @@ bool Interaction<Character, Terrain>::collisionTest() {
 void Interaction<Character, Terrain>::onInit() {}
 
 void Interaction<Character, Terrain>::onEnter() {
-  std::cout << first->moveConstraintMin << std::endl;
   std::cout << first->id << " entering " << second->id << std::endl;
 }
 

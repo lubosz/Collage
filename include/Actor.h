@@ -38,10 +38,10 @@ class CollisionActor : public Actor {
   std::vector<Ogre::Vector2> collisionShapePoints;
   CollisionShape2 collisionShape;
   Ogre::Vector2 moveVector;
+  float possibleMoveRatio;
   Ogre::Vector2 velocity;
   Ogre::Vector2 moveConstraintMin;
   Ogre::Vector2 moveConstraintMax;
-  float moveConstraintAngle;
 
   virtual void init() = 0;
   virtual void manipulate(float d_t) = 0;
