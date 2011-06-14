@@ -27,10 +27,6 @@ void Level::update(double timeSinceLastFrame) {
 
 
 void Level::addCharacter() {
-  sceneManager->createLight("Light")->setPosition(75, 75, 75);
-  sceneManager->createLight("Light1")->setPosition(-75, 100, -75);
-  sceneManager->createLight("Light2")->setPosition(-75, 120, 75);
-  sceneManager->createLight("Light3")->setPosition(75, 130, -75);
 }
 
 void Level::generateDoors() {

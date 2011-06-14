@@ -60,7 +60,7 @@ int CollageApplication::exec() {
   LevelState::create(m_pAppStateManager, "LevelState");
 
   System::Instance().logMessage("Appstates initialized");
-  m_pAppStateManager->start(m_pAppStateManager->findByName("LoadingState"));
+  m_pAppStateManager->start(m_pAppStateManager->findByName("LevelState"));
 }
 
 
