@@ -17,6 +17,7 @@ class Door: public CollisionActor {
   virtual ~Door();
   void init();
   void manipulate(float d_t);
+  QRect geometry;
 };
 
 #endif

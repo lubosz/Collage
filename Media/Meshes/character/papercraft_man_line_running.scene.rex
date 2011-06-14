@@ -14,7 +14,7 @@
 			<attribute name="user-defined" value="false"/>
 		</component>
 		<component sync="1" type="EC_Placeable">
-			<attribute name="Transform" value="-0.066762,1.945234,-3.582602,0.000000,-0.000000,0.000000,3.389172,3.389172,3.389172"/>
+			<attribute name="Transform" value="0.000000,-0.013494,0.564798,0.000000,-0.000000,0.000000,3.389172,3.389172,3.389172"/>
 			<attribute name="Show bounding box" value="false"/>
 		</component>
 	</entity>
@@ -32,7 +32,7 @@
 			<attribute name="user-defined" value="false"/>
 		</component>
 		<component sync="1" type="EC_Placeable">
-			<attribute name="Transform" value="-0.066762,1.902564,-3.289823,0.000000,-0.000000,0.000000,3.389172,3.389172,3.389172"/>
+			<attribute name="Transform" value="0.000000,-0.013494,0.564798,0.000000,-0.000000,0.000000,3.389172,3.389172,3.389172"/>
 			<attribute name="Show bounding box" value="false"/>
 		</component>
 	</entity>
@@ -50,7 +50,7 @@
 			<attribute name="user-defined" value="false"/>
 		</component>
 		<component sync="1" type="EC_Placeable">
-			<attribute name="Transform" value="-0.066762,1.902564,-3.289823,0.000000,-0.000000,0.000000,3.389172,3.389172,3.389172"/>
+			<attribute name="Transform" value="0.000000,-0.013494,0.564798,0.000000,-0.000000,0.000000,3.389172,3.389172,3.389172"/>
 			<attribute name="Show bounding box" value="false"/>
 		</component>
 	</entity>
@@ -68,7 +68,7 @@
 			<attribute name="user-defined" value="false"/>
 		</component>
 		<component sync="1" type="EC_Placeable">
-			<attribute name="Transform" value="-0.066762,1.902564,-3.289823,0.000000,-0.000000,0.000000,3.389172,3.389172,3.389172"/>
+			<attribute name="Transform" value="0.000000,-0.013494,0.564798,0.000000,-0.000000,0.000000,3.389172,3.389172,3.389172"/>
 			<attribute name="Show bounding box" value="false"/>
 		</component>
 	</entity>
@@ -86,7 +86,7 @@
 			<attribute name="user-defined" value="false"/>
 		</component>
 		<component sync="1" type="EC_Placeable">
-			<attribute name="Transform" value="-0.066762,1.902564,-3.289823,0.000000,-0.000000,0.000000,3.389172,3.389172,3.389172"/>
+			<attribute name="Transform" value="0.000000,-0.013494,0.564798,0.000000,-0.000000,0.000000,3.389172,3.389172,3.389172"/>
 			<attribute name="Show bounding box" value="false"/>
 		</component>
 	</entity>
@@ -104,7 +104,7 @@
 			<attribute name="user-defined" value="false"/>
 		</component>
 		<component sync="1" type="EC_Placeable">
-			<attribute name="Transform" value="-0.066762,1.902564,-3.289823,0.000000,-0.000000,0.000000,3.389172,3.389172,3.389172"/>
+			<attribute name="Transform" value="0.000000,-0.013494,0.564798,0.000000,-0.000000,0.000000,3.389172,3.389172,3.389172"/>
 			<attribute name="Show bounding box" value="false"/>
 		</component>
 	</entity>

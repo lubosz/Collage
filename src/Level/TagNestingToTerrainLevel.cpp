@@ -80,8 +80,6 @@ void TagNestingToTerrainLevel::generate() {
   sceneManager->getRootSceneNode()->
             createChildSceneNode()->attachObject(manual);
 
-  this->addDoors();
+  this->generateDoors();
 }
 
-void TagNestingToTerrainLevel::placeDoor(Door *door, QRect geom) {
-}

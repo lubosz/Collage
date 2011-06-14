@@ -31,24 +31,9 @@ void Level::addCharacter() {
   sceneManager->createLight("Light1")->setPosition(-75, 100, -75);
   sceneManager->createLight("Light2")->setPosition(-75, 120, 75);
   sceneManager->createLight("Light3")->setPosition(75, 130, -75);
-
-//  DotSceneLoader* pDotSceneLoader = new DotSceneLoader();
-//  pDotSceneLoader->parseDotScene(
-//       "papercraft_man_line_running.scene",
-////      "multitrack-advanced.scene",
-//      "General", sceneManager, sceneManager->getRootSceneNode());
-//    delete pDotSceneLoader;
-//
-////    Animation::Instance().activate(sceneManager, "wurst");
-//  Animation::Instance().activate(sceneManager, "arm_left");
-//  Animation::Instance().activate(sceneManager, "arm_right");
-//  Animation::Instance().activate(sceneManager, "chest");
-//  Animation::Instance().activate(sceneManager, "leg_left");
-//  Animation::Instance().activate(sceneManager, "leg_right");
-//  Animation::Instance().activate(sceneManager, "pants");
 }
 
-void Level::addDoors() {
+void Level::generateDoors() {
   QWebElement document = webpage->mainFrame()->documentElement();
   QWebElementCollection elements = document.findAll("A");
 
@@ -61,22 +46,25 @@ void Level::addDoors() {
 
   foreach(QWebElement element, elements) {
       QString url = element.attribute("href");
-      if (url.contains("#"))
+      if (url.contains("#") || url.contains("http"))
         continue;
-      bool cont = false;
       foreach(QString entry, blacklist) {
         if (url.contains(entry, Qt::CaseInsensitive))
-          cont = true;
+		  continue;
       }
-      if (cont)
-        continue;
       qDebug() << "Door for" << url;
-      DefaultSimulation *simulation =
-        static_cast<DefaultSimulation*>(this->simulation);
-      Door *doorActor = simulation->doorFactory->createActor();
-      this->placeDoor(doorActor, element.geometry());
+	  qDebug() << "DOOR GEOMETRY:" << element.geometry();
+	  if ((element.geometry().width() > 0) && (element.geometry().height() > 0)) {
+        DefaultSimulation *simulation =
+          static_cast<DefaultSimulation*>(this->simulation);
+        Door *doorActor = simulation->doorFactory->createActor();
+	    doorActor->geometry = element.geometry();
+		doors.push_back(doorActor);
+	  }
+	  else
+		qDebug() << "Door REJECTED!";
+
     }
+	qDebug() << "\n";
 }
 
-void Level::placeDoor(Door *doorActor, QRect geom) {
-}

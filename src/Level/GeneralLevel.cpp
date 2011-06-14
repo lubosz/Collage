@@ -42,8 +42,6 @@ void GeneralLevel::generate() {
   m_pOgreHeadMatHigh->getTechnique(0)->getPass(0)->setAmbient(1, 0, 0);
   m_pOgreHeadMatHigh->getTechnique(0)->getPass(0)->setDiffuse(1, 0, 0, 0);
 
-  this->addDoors();
+  this->generateDoors();
 }
 
-void GeneralLevel::placeDoor(Door *doorActor, QRect geom) {
-}
