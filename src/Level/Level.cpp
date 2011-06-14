@@ -46,7 +46,7 @@ void Level::addCharacter() {
   Animation::Instance().activate(sceneManager, "pants");
 }
 
-void Level::addDoors() {
+void Level::generateDoors() {
   QWebElement document = webpage->mainFrame()->documentElement();
   QWebElementCollection elements = document.findAll("A");
 
@@ -59,22 +59,25 @@ void Level::addDoors() {
 
   foreach(QWebElement element, elements) {
       QString url = element.attribute("href");
-      if (url.contains("#"))
+      if (url.contains("#") || url.contains("http"))
         continue;
-      bool cont = false;
       foreach(QString entry, blacklist) {
         if (url.contains(entry, Qt::CaseInsensitive))
-          cont = true;
+		  continue;
       }
-      if (cont)
-        continue;
       qDebug() << "Door for" << url;
-      DefaultSimulation *simulation =
-        static_cast<DefaultSimulation*>(this->simulation);
-      Door *doorActor = simulation->doorFactory->createActor();
-      this->placeDoor(doorActor, element.geometry());
+	  qDebug() << "DOOR GEOMETRY:" << element.geometry();
+	  if ((element.geometry().width() > 0) && (element.geometry().height() > 0)) {
+        DefaultSimulation *simulation =
+          static_cast<DefaultSimulation*>(this->simulation);
+        Door *doorActor = simulation->doorFactory->createActor();
+	    doorActor->geometry = element.geometry();
+		doors.push_back(doorActor);
+	  }
+	  else
+		qDebug() << "Door REJECTED!";
+
     }
+	qDebug() << "\n";
 }
 
-void Level::placeDoor(Door *doorActor, QRect geom) {
-}

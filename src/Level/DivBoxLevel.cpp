@@ -133,15 +133,26 @@ void DivBoxLevel::makeElementBoxes(
             attachNode(&element, boxNode, scale,
             textureName, cube, position);
 
-         Ogre::Vector3 current = simulation->terrainFactory->createActor()
-            ->addPoint(-width, -height)
-            ->addPoint(-width, height)
-            ->addPoint(width, height)
-            ->addPoint(width, -height)
-            ->addPoint(-width, -height)
-            ->createCollisionShape(CollisionShape2::DEF_LINESTRIP)
-            ->teleport(position.x, position.y)
-            ->sceneNode->_getDerivedPosition();
+        Ogre::Vector3 current = simulation->terrainFactory->createActor()
+           ->addPoint(-width, -height)
+           ->addPoint(-width, height)
+           ->addPoint(width, height)
+           ->addPoint(width, -height)
+           ->addPoint(-width, -height)
+           ->createCollisionShape(CollisionShape2::DEF_LINESTRIP)
+           ->teleport(position.x, position.y)
+           ->sceneNode->_getDerivedPosition();
+
+		if (i <= this->doors.size()) {
+		  QRect geom = this->doors[i]->geometry;
+		  this->doors[i]
+		    ->addPoint(0, 0)
+		    ->addPoint(geom.width(), 0)
+		    ->addPoint(0, geom.height())
+		    ->addPoint(geom.width(), geom.height())
+		    ->createCollisionShape(CollisionShape2::DEF_AABB)
+		    ->teleport(position.x - geom.width()/2., position.y + height);
+		}
 
         if (i == 3) {
           characterSceneNode = simulation->characterFactory->createActor()
@@ -206,16 +217,9 @@ void DivBoxLevel::generate() {
   tags.push_back("h3");
   tags.push_back("table");
 
+  this->generateDoors();
   makeElementBoxes(
       page, .1, 1, tags,
       "Cube.mesh", sceneManager);
-//  addCharacter();
-//  this->addDoors();
 }
 
-void DivBoxLevel::placeDoor(Door *door, QRect geom) {
-  Ogre::Entity* doorEntity = sceneManager->createEntity("door.mesh");
-  door->sceneNode->attachObject(doorEntity);
-  door->sceneNode->setPosition(0, 0, 0);
-  door->sceneNode->setScale(100, 10, 50);
-}
