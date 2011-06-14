@@ -51,6 +51,11 @@ void LevelState::enter() {
 
   RenderEngine::Instance().m_pViewport->setCamera(m_pCamera);
 
+  m_pSceneMgr->createLight("Light")->setPosition(75, 75, 75);
+  m_pSceneMgr->createLight("Light1")->setPosition(-75, 100, -75);
+  m_pSceneMgr->createLight("Light2")->setPosition(-75, 120, 75);
+  m_pSceneMgr->createLight("Light3")->setPosition(75, 130, -75);
+
   // Generate Level
   levelman.sceneFromUrl(
 //      "http://www.uni-koblenz.de",
