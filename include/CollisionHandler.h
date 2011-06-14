@@ -69,7 +69,7 @@ class CollisionHandler {
       float *possibleTranslationScale,
       Ogre::Vector2 *collisionNormal) {
     float distRight, distLeft, distBottom, distTop;
-    if (CollisionTestAABB(
+    if (!CollisionTestAABB(
         &a->aabb,
         &b->aabb,
         relativeTranslation,
@@ -78,17 +78,25 @@ class CollisionHandler {
     } else {
       float ratio = 1.0;
       *possibleTranslationScale = ratio;
+      if (distLeft > 0.001)
+        *collisionNormal = Ogre::Vector2(-1.0, 0.0);
+      if (distRight < 0.001)
+        *collisionNormal = Ogre::Vector2(1.0, 0.0);
       if (relativeTranslation->x < 0.0) {
         if (relativeTranslation->x <= distRight) {
           ratio -= distRight / relativeTranslation->x;
-          *collisionNormal = Ogre::Vector2(-1.0, 0.0);
+          *collisionNormal = Ogre::Vector2(1.0, 0.0);
         }
       } else {
         if (relativeTranslation->x >= distLeft) {
           ratio -= distLeft / relativeTranslation->x;
-          *collisionNormal = Ogre::Vector2(1.0, 0.0);
+          *collisionNormal = Ogre::Vector2(-1.0, 0.0);
         }
       }
+      if (distTop > 0.001)
+        *collisionNormal = Ogre::Vector2(0.0, -1.0);
+      if (distBottom < 0.001)
+        *collisionNormal = Ogre::Vector2(0.0, 1.0);
       if (relativeTranslation->y < 0.0) {
         if (relativeTranslation->y <= distBottom) {
           ratio -= distBottom / relativeTranslation->y;
@@ -100,7 +108,10 @@ class CollisionHandler {
           *collisionNormal = Ogre::Vector2(0.0, -1.0);
         }
       }
-      if (fabsf(ratio) < 1.0) *possibleTranslationScale = ratio;
+      if (fabsf(ratio) < 1.0) {
+        *possibleTranslationScale = ratio;
+//        std::cout << ratio;
+      }
     }
     return true;
   }

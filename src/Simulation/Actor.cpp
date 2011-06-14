@@ -39,7 +39,9 @@ void CollisionActor::update(float d_t) {
   moveVector *= possibleMoveRatio;
   sceneNode->translate(to3D(moveVector, sceneNode->getPosition().z));
   collisionShape.translate(to2D(sceneNode->getPosition()));
+
   moveVector = Ogre::Vector2::ZERO;
+
   possibleMoveRatio = 1.0;
 }
 

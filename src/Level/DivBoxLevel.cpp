@@ -7,7 +7,8 @@
 #include <QPainter>
 #include "System.h"
 #include "DivBoxLevel.h"
-
+#include "DotSceneLoader.h"
+#include "Animation.h"
 #include "RenderEngine.h"
 
 DivBoxLevel::DivBoxLevel(Ogre::SceneManager *sceneManager)
@@ -103,6 +104,18 @@ void DivBoxLevel::makeElementBoxes(
     Ogre::String meshName,
     Ogre::SceneManager * sceneManager) {
 
+  DotSceneLoader* pDotSceneLoader = new DotSceneLoader();
+  pDotSceneLoader->parseDotScene("papercraft_man_line_running.scene",
+      "General", sceneManager, sceneManager->getRootSceneNode());
+  delete pDotSceneLoader;
+
+  Animation::Instance().activate(sceneManager, "arm_left");
+  Animation::Instance().activate(sceneManager, "arm_right");
+  Animation::Instance().activate(sceneManager, "chest");
+  Animation::Instance().activate(sceneManager, "leg_left");
+  Animation::Instance().activate(sceneManager, "leg_right");
+  Animation::Instance().activate(sceneManager, "pants");
+
   QWebElementCollection elements;
   foreach(QString tag, tags)
     elements.append(document.findAll(tag));
@@ -144,8 +157,24 @@ void DivBoxLevel::makeElementBoxes(
            ->sceneNode->_getDerivedPosition();
 
 		if (i <= this->doors.size()) {
+		  Door* door = this->doors[i];
+
+          Ogre::SceneNode* child = door->sceneNode->createChildSceneNode();
+
+          Ogre::Entity* doorEntity = sceneManager->createEntity("door.mesh");
+          //door->sceneNode->attachObject(doorEntity);
+          //door->sceneNode->setOrientation(
+		  //  Ogre::Quaternion(Ogre::Degree(180.0), Ogre::Vector3::UNIT_Y));
+          //door->sceneNode->setScale(20, 30, 20);
+
+          child->attachObject(doorEntity);
+          child->setOrientation(
+		    Ogre::Quaternion(Ogre::Degree(180.0), Ogre::Vector3::UNIT_Y));
+          child->setScale(20, 30, 20);
+		  child->translate(0, 0, -5);
+
 		  QRect geom = this->doors[i]->geometry;
-		  this->doors[i]
+		  door
 		    ->addPoint(0, 0)
 		    ->addPoint(geom.width(), 0)
 		    ->addPoint(0, geom.height())
@@ -164,12 +193,14 @@ void DivBoxLevel::makeElementBoxes(
               ->createCollisionShape(CollisionShape2::DEF_CONVEX)
               ->teleport(current.x, current.y + height + 50.0)
               ->sceneNode;
-          Ogre::SceneNode* sn = characterSceneNode->createChildSceneNode();
-          sn->scale(0.2, 0.2, 0.2);
-          sn->rotate(
+
+          Ogre::SceneNode* sn = sceneManager->getSceneNode("Armature");
+          sceneManager->getRootSceneNode()->removeChild(sn);
+          characterSceneNode->addChild(sn);
+          sn->scale(0.4, 0.4, 0.4);
+          sn->translate(0, 10, 0);
+          sn->setOrientation(
               Ogre::Quaternion(Ogre::Degree(90.0), Ogre::Vector3::UNIT_Y));
-          sn->attachObject(
-              this->sceneManager->createEntity("Cube", "ogrehead.mesh"));
         }
 
         i++;

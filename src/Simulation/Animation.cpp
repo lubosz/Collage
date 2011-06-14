@@ -10,6 +10,7 @@
 #include "Animation.h"
 
 Animation::Animation() {
+  isactive = false;
 }
 
 Animation::~Animation() {
@@ -26,8 +27,26 @@ void Animation::activate(Ogre::SceneManager *sceneManager, string entityName) {
     }
     Ogre::AnimationState* animationState = entity->getAnimationState("run");
     animationState->setLoop(true);
-    animationState->setEnabled(true);
+//    animationState->setEnabled(true);
     animationStates.push_back(animationState);
+  }
+}
+
+void Animation::activate() {
+  if (!isactive) {
+    foreach(Ogre::AnimationState* animationState, animationStates) {
+      animationState->setEnabled(true);
+    }
+    isactive = true;
+  }
+}
+
+void Animation::deactivate() {
+  if (isactive) {
+    foreach(Ogre::AnimationState* animationState, animationStates) {
+      animationState->setEnabled(false);
+    }
+    isactive = false;
   }
 }
 
