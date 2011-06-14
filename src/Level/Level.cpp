@@ -31,21 +31,6 @@ void Level::addCharacter() {
   sceneManager->createLight("Light1")->setPosition(-75, 100, -75);
   sceneManager->createLight("Light2")->setPosition(-75, 120, 75);
   sceneManager->createLight("Light3")->setPosition(75, 130, -75);
-
-//  DotSceneLoader* pDotSceneLoader = new DotSceneLoader();
-//  pDotSceneLoader->parseDotScene(
-//       "papercraft_man_line_running.scene",
-////      "multitrack-advanced.scene",
-//      "General", sceneManager, sceneManager->getRootSceneNode());
-//    delete pDotSceneLoader;
-//
-////    Animation::Instance().activate(sceneManager, "wurst");
-//  Animation::Instance().activate(sceneManager, "arm_left");
-//  Animation::Instance().activate(sceneManager, "arm_right");
-//  Animation::Instance().activate(sceneManager, "chest");
-//  Animation::Instance().activate(sceneManager, "leg_left");
-//  Animation::Instance().activate(sceneManager, "leg_right");
-//  Animation::Instance().activate(sceneManager, "pants");
 }
 
 void Level::addDoors() {

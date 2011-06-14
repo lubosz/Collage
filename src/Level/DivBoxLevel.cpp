@@ -104,18 +104,17 @@ void DivBoxLevel::makeElementBoxes(
     Ogre::String meshName,
     Ogre::SceneManager * sceneManager) {
 
-          DotSceneLoader* pDotSceneLoader = new DotSceneLoader();
-          pDotSceneLoader->parseDotScene(
-               "papercraft_man_line_running.scene",
-              "General", sceneManager, sceneManager->getRootSceneNode());
-            delete pDotSceneLoader;
+  DotSceneLoader* pDotSceneLoader = new DotSceneLoader();
+  pDotSceneLoader->parseDotScene("papercraft_man_line_running.scene",
+      "General", sceneManager, sceneManager->getRootSceneNode());
+  delete pDotSceneLoader;
 
-          Animation::Instance().activate(sceneManager, "arm_left");
-          Animation::Instance().activate(sceneManager, "arm_right");
-          Animation::Instance().activate(sceneManager, "chest");
-          Animation::Instance().activate(sceneManager, "leg_left");
-          Animation::Instance().activate(sceneManager, "leg_right");
-          Animation::Instance().activate(sceneManager, "pants");
+  Animation::Instance().activate(sceneManager, "arm_left");
+  Animation::Instance().activate(sceneManager, "arm_right");
+  Animation::Instance().activate(sceneManager, "chest");
+  Animation::Instance().activate(sceneManager, "leg_left");
+  Animation::Instance().activate(sceneManager, "leg_right");
+  Animation::Instance().activate(sceneManager, "pants");
 
   QWebElementCollection elements;
   foreach(QString tag, tags)
@@ -226,12 +225,14 @@ void DivBoxLevel::generate() {
       page, .1, 1, tags,
       "Cube.mesh", sceneManager);
   addCharacter();
-//  this->addDoors();
+  this->addDoors();
 }
 
 void DivBoxLevel::placeDoor(Door *door, QRect geom) {
   Ogre::Entity* doorEntity = sceneManager->createEntity("door.mesh");
   door->sceneNode->attachObject(doorEntity);
-  door->sceneNode->setPosition(0, 0, 0);
-  door->sceneNode->setScale(100, 10, 50);
+  door->sceneNode->setOrientation(
+      Ogre::Quaternion(Ogre::Degree(180.0), Ogre::Vector3::UNIT_Y));
+  door->sceneNode->setScale(20, 30, 20);
+//  door->sceneNode->setPosition(50, 0, 0);
 }
