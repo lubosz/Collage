@@ -146,15 +146,42 @@ void DivBoxLevel::makeElementBoxes(
             attachNode(&element, boxNode, scale,
             textureName, cube, position);
 
-         Ogre::Vector3 current = simulation->terrainFactory->createActor()
-            ->addPoint(-width, -height)
-            ->addPoint(-width, height)
-            ->addPoint(width, height)
-            ->addPoint(width, -height)
-            ->addPoint(-width, -height)
-            ->createCollisionShape(CollisionShape2::DEF_LINESTRIP)
-            ->teleport(position.x, position.y)
-            ->sceneNode->_getDerivedPosition();
+        Ogre::Vector3 current = simulation->terrainFactory->createActor()
+           ->addPoint(-width, -height)
+           ->addPoint(-width, height)
+           ->addPoint(width, height)
+           ->addPoint(width, -height)
+           ->addPoint(-width, -height)
+           ->createCollisionShape(CollisionShape2::DEF_LINESTRIP)
+           ->teleport(position.x, position.y)
+           ->sceneNode->_getDerivedPosition();
+
+		if (i <= this->doors.size()) {
+		  Door* door = this->doors[i];
+
+          Ogre::SceneNode* child = door->sceneNode->createChildSceneNode();
+
+          Ogre::Entity* doorEntity = sceneManager->createEntity("door.mesh");
+          //door->sceneNode->attachObject(doorEntity);
+          //door->sceneNode->setOrientation(
+		  //  Ogre::Quaternion(Ogre::Degree(180.0), Ogre::Vector3::UNIT_Y));
+          //door->sceneNode->setScale(20, 30, 20);
+
+          child->attachObject(doorEntity);
+          child->setOrientation(
+		    Ogre::Quaternion(Ogre::Degree(180.0), Ogre::Vector3::UNIT_Y));
+          child->setScale(20, 30, 20);
+		  child->translate(0, 0, -5);
+
+		  QRect geom = this->doors[i]->geometry;
+		  door
+		    ->addPoint(0, 0)
+		    ->addPoint(geom.width(), 0)
+		    ->addPoint(0, geom.height())
+		    ->addPoint(geom.width(), geom.height())
+		    ->createCollisionShape(CollisionShape2::DEF_AABB)
+		    ->teleport(position.x - geom.width()/2., position.y + height);
+		}
 
         if (i == 3) {
           characterSceneNode = simulation->characterFactory->createActor()
@@ -221,18 +248,9 @@ void DivBoxLevel::generate() {
   tags.push_back("h3");
   tags.push_back("table");
 
+  this->generateDoors();
   makeElementBoxes(
       page, .1, 1, tags,
       "Cube.mesh", sceneManager);
-  addCharacter();
-  this->addDoors();
 }
 
-void DivBoxLevel::placeDoor(Door *door, QRect geom) {
-  Ogre::Entity* doorEntity = sceneManager->createEntity("door.mesh");
-  door->sceneNode->attachObject(doorEntity);
-  door->sceneNode->setOrientation(
-      Ogre::Quaternion(Ogre::Degree(180.0), Ogre::Vector3::UNIT_Y));
-  door->sceneNode->setScale(20, 30, 20);
-//  door->sceneNode->setPosition(50, 0, 0);
-}

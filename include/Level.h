@@ -26,6 +26,7 @@ class Level : public QObject {
     virtual void update(double timeSinceLastFrame);
 
     Ogre::SceneNode* characterSceneNode;
+	std::vector<Door*> doors;
 
   protected:
     QString name;
@@ -33,9 +34,8 @@ class Level : public QObject {
     Ogre::SceneManager *sceneManager;
     DefaultSimulation *simulation;
 
-    virtual void addDoors();
+    virtual void generateDoors();
     virtual void addCharacter();
-    virtual void placeDoor(Door *doorActor, QRect geom) = 0;
 
   signals:
 
