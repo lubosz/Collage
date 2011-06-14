@@ -55,9 +55,16 @@ void Character::manipulate(float d_t) {
     velocity.x = -1.0;
     std::cout << "two" << std::endl;
   }
+
+  if (!Animation::Instance().move && !moveConstraintMax.isZeroLength()) {
+    // character lands after jump
+    Animation::Instance().move = true;
+  }
+
   if (Input::Instance().m_pKeyboard->isKeyDown(OIS::KC_UP)
       && (moveConstraintMin.y == 1.0 || moveConstraintMax.y == 1.0)) {
     velocity.y = 200.0;
+    Animation::Instance().move = false;
   }
   move(velocity.x * d_t, velocity.y * d_t);
 

@@ -11,6 +11,7 @@
 
 Animation::Animation() {
   isactive = false;
+  move = true;
 }
 
 Animation::~Animation() {
@@ -27,6 +28,8 @@ void Animation::activate(Ogre::SceneManager *sceneManager, string entityName) {
     }
     Ogre::AnimationState* animationState = entity->getAnimationState("run");
     animationState->setLoop(true);
+    animationState->setLength(5.0);
+    animationState->setWeight(5.0);
 //    animationState->setEnabled(true);
     animationStates.push_back(animationState);
   }
@@ -51,7 +54,8 @@ void Animation::deactivate() {
 }
 
 void Animation::update(double timeSinceLastFrame) {
-  foreach(Ogre::AnimationState* animationState, animationStates) {
-    animationState->addTime(timeSinceLastFrame);
-  }
+  if (move)
+    foreach(Ogre::AnimationState* animationState, animationStates) {
+      animationState->addTime(timeSinceLastFrame);
+    }
 }
