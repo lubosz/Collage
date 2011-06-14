@@ -162,16 +162,16 @@ void DivBoxLevel::makeElementBoxes(
           Ogre::SceneNode* child = door->sceneNode->createChildSceneNode();
 
           Ogre::Entity* doorEntity = sceneManager->createEntity("door.mesh");
-          //door->sceneNode->attachObject(doorEntity);
-          //door->sceneNode->setOrientation(
-		  //  Ogre::Quaternion(Ogre::Degree(180.0), Ogre::Vector3::UNIT_Y));
-          //door->sceneNode->setScale(20, 30, 20);
+          // door->sceneNode->attachObject(doorEntity);
+          // door->sceneNode->setOrientation(
+		  //   Ogre::Quaternion(Ogre::Degree(180.0), Ogre::Vector3::UNIT_Y));
+          // door->sceneNode->setScale(20, 30, 20);
 
           child->attachObject(doorEntity);
           child->setOrientation(
 		    Ogre::Quaternion(Ogre::Degree(180.0), Ogre::Vector3::UNIT_Y));
           child->setScale(20, 30, 20);
-		  child->translate(0, 0, -5);
+		  // child->translate(0, 0, -5);
 
 		  QRect geom = this->doors[i]->geometry;
 		  door

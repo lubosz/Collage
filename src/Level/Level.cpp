@@ -60,10 +60,9 @@ void Level::generateDoors() {
         Door *doorActor = simulation->doorFactory->createActor();
 	    doorActor->geometry = element.geometry();
 		doors.push_back(doorActor);
-	  }
-	  else
+	  } else {
 		qDebug() << "Door REJECTED!";
-
+	  }
     }
 	qDebug() << "\n";
 }
