@@ -39,10 +39,7 @@ void Character::manipulate(float d_t) {
   if (Input::Instance().m_pKeyboard->isKeyDown(OIS::KC_A)) {
     std::cout << moveConstraintMin << " " << moveConstraintMax << std::endl;
   }
-  if (moveConstraintMin.y == 1.0 || moveConstraintMax.y == 1.0) {
-    jumpAbility = 0;
-    jumpTime = 0.0;
-  }
+
   velocity.y -= 200.0 * d_t;
   velocity.x = 0.0;
   if (Input::Instance().m_pKeyboard->isKeyDown(OIS::KC_LEFT)) {
@@ -63,12 +60,24 @@ void Character::manipulate(float d_t) {
     Animation::Instance().move = true;
   }
 
-  if (Input::Instance().m_pKeyboard->isKeyDown(OIS::KC_UP)
-      && ((jumpAbility == 0) || (jumpAbility == 1 && jumpTime > 0.5))) {
-    velocity.y = 100.0;
-    jumpAbility++;
+  if (moveConstraintMin.y == 1.0 || moveConstraintMax.y == 1.0) {
+    if (jumpAbility > 1) {
+      jumpAbility = 0;
+    }
+    jumpTime = 0.0;
+  } else {
     jumpTime += d_t;
-    Animation::Instance().move = false;
+  }
+  if (Input::Instance().m_pKeyboard->isKeyDown(OIS::KC_UP)) {
+    if ((jumpAbility == 1) || (jumpAbility == 2 && jumpTime > 0.2)) {
+      velocity.y = 100.0;
+      jumpAbility++;
+      Animation::Instance().move = false;
+    }
+  } else {
+    if (jumpAbility == 0) {
+      jumpAbility = 1;
+    }
   }
 
 //  velocity = Ogre::Vector2::ZERO;
