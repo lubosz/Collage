@@ -1,8 +1,8 @@
 <?xml version="1.0" ?>
-<scene export_time="1308051311.419202" exported_by="bmonkey" previous_export_time="1308051079.86609">
+<scene export_time="1308058520.334326" exported_by="bmonkey" previous_export_time="1308058474.579399">
 	<nodes>
 		<node name="Armature" uuid="fd0422396581637bd4ac100b69e135f3">
-			<position x="0.000000" y="0.272018" z="-0.029176"/>
+			<position x="0.000000" y="0.564798" z="0.013494"/>
 			<quaternion w="1.000000" x="0.000000" y="0.000000" z="-0.000000"/>
 			<scale x="3.389172" y="3.389172" z="3.389172"/>
 			<game>
@@ -10,9 +10,9 @@
 				<actuators/>
 			</game>
 			<node name="arm_left" uuid="855e7d868ec2ff30afac2f7e0ba34893">
-				<position x="-0.066762" y="-3.582602" z="-1.945234"/>
+				<position x="-0.000000" y="0.000000" z="-0.000000"/>
 				<quaternion w="1.000000" x="0.000000" y="0.000000" z="-0.000000"/>
-				<scale x="3.389172" y="3.389172" z="3.389172"/>
+				<scale x="1.000000" y="1.000000" z="1.000000"/>
 				<game>
 					<sensors/>
 					<actuators/>
@@ -20,9 +20,9 @@
 				<entity actor="False" anisotropic_friction="False" damping_rot="0.10000000149011612" damping_trans="0.03999999910593033" friction_x="1.0" friction_y="1.0" friction_z="1.0" ghost="False" inertia_tensor="0.4000000059604645" lock_rot_x="False" lock_rot_y="False" lock_rot_z="False" lock_trans_x="False" lock_trans_y="False" lock_trans_z="False" mass="1.0" mass_radius="1.0" meshFile="arm_left.mesh" name="arm_left" physics_type="STATIC" velocity_max="0.0" velocity_min="0.0"/>
 			</node>
 			<node name="arm_right" uuid="b28532907e40ecd2c79426031a24723c">
-				<position x="-0.066762" y="-3.289823" z="-1.902564"/>
+				<position x="-0.000000" y="0.000000" z="-0.000000"/>
 				<quaternion w="1.000000" x="0.000000" y="0.000000" z="-0.000000"/>
-				<scale x="3.389172" y="3.389172" z="3.389172"/>
+				<scale x="1.000000" y="1.000000" z="1.000000"/>
 				<game>
 					<sensors/>
 					<actuators/>
@@ -30,9 +30,9 @@
 				<entity actor="False" anisotropic_friction="False" damping_rot="0.10000000149011612" damping_trans="0.03999999910593033" friction_x="1.0" friction_y="1.0" friction_z="1.0" ghost="False" inertia_tensor="0.4000000059604645" lock_rot_x="False" lock_rot_y="False" lock_rot_z="False" lock_trans_x="False" lock_trans_y="False" lock_trans_z="False" mass="1.0" mass_radius="1.0" meshFile="arm_right.mesh" name="arm_right" physics_type="STATIC" velocity_max="0.0" velocity_min="0.0"/>
 			</node>
 			<node name="body" uuid="5027df6932ea544ce8709219bb4a5eac">
-				<position x="-0.066762" y="-3.289823" z="-1.902564"/>
+				<position x="-0.000000" y="0.000000" z="-0.000000"/>
 				<quaternion w="1.000000" x="0.000000" y="0.000000" z="-0.000000"/>
-				<scale x="3.389172" y="3.389172" z="3.389172"/>
+				<scale x="1.000000" y="1.000000" z="1.000000"/>
 				<game>
 					<sensors/>
 					<actuators/>
@@ -40,9 +40,9 @@
 				<entity actor="False" anisotropic_friction="False" damping_rot="0.10000000149011612" damping_trans="0.03999999910593033" friction_x="1.0" friction_y="1.0" friction_z="1.0" ghost="False" inertia_tensor="0.4000000059604645" lock_rot_x="False" lock_rot_y="False" lock_rot_z="False" lock_trans_x="False" lock_trans_y="False" lock_trans_z="False" mass="1.0" mass_radius="1.0" meshFile="chest.mesh" name="chest" physics_type="STATIC" velocity_max="0.0" velocity_min="0.0"/>
 			</node>
 			<node name="leg_left" uuid="da84cd4ec52dda4b9d8baf2b87b482e7">
-				<position x="-0.066762" y="-3.289823" z="-1.902564"/>
+				<position x="-0.000000" y="0.000000" z="-0.000000"/>
 				<quaternion w="1.000000" x="0.000000" y="0.000000" z="-0.000000"/>
-				<scale x="3.389172" y="3.389172" z="3.389172"/>
+				<scale x="1.000000" y="1.000000" z="1.000000"/>
 				<game>
 					<sensors/>
 					<actuators/>
@@ -50,9 +50,9 @@
 				<entity actor="False" anisotropic_friction="False" damping_rot="0.10000000149011612" damping_trans="0.03999999910593033" friction_x="1.0" friction_y="1.0" friction_z="1.0" ghost="False" inertia_tensor="0.4000000059604645" lock_rot_x="False" lock_rot_y="False" lock_rot_z="False" lock_trans_x="False" lock_trans_y="False" lock_trans_z="False" mass="1.0" mass_radius="1.0" meshFile="leg_left.mesh" name="leg_left" physics_type="STATIC" velocity_max="0.0" velocity_min="0.0"/>
 			</node>
 			<node name="leg_right" uuid="c021c6a86335695058662d8c21e079b8">
-				<position x="-0.066762" y="-3.289823" z="-1.902564"/>
+				<position x="-0.000000" y="0.000000" z="-0.000000"/>
 				<quaternion w="1.000000" x="0.000000" y="0.000000" z="-0.000000"/>
-				<scale x="3.389172" y="3.389172" z="3.389172"/>
+				<scale x="1.000000" y="1.000000" z="1.000000"/>
 				<game>
 					<sensors/>
 					<actuators/>
@@ -60,9 +60,9 @@
 				<entity actor="False" anisotropic_friction="False" damping_rot="0.10000000149011612" damping_trans="0.03999999910593033" friction_x="1.0" friction_y="1.0" friction_z="1.0" ghost="False" inertia_tensor="0.4000000059604645" lock_rot_x="False" lock_rot_y="False" lock_rot_z="False" lock_trans_x="False" lock_trans_y="False" lock_trans_z="False" mass="1.0" mass_radius="1.0" meshFile="leg_right.mesh" name="leg_right" physics_type="STATIC" velocity_max="0.0" velocity_min="0.0"/>
 			</node>
 			<node name="pants" uuid="23c973c7df6091ea0d2ce6a1b008fee9">
-				<position x="-0.066762" y="-3.289823" z="-1.902564"/>
+				<position x="-0.000000" y="0.000000" z="-0.000000"/>
 				<quaternion w="1.000000" x="0.000000" y="0.000000" z="-0.000000"/>
-				<scale x="3.389172" y="3.389172" z="3.389172"/>
+				<scale x="1.000000" y="1.000000" z="1.000000"/>
 				<game>
 					<sensors/>
 					<actuators/>
