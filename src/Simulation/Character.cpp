@@ -8,6 +8,7 @@
 
 #include "Character.h"
 #include "Input.h"
+#include "Animation.h"
 
 Character::Character() {
   test = true;
@@ -36,10 +37,16 @@ void Character::manipulate(float d_t) {
     if (Input::Instance().m_pKeyboard->isKeyDown(OIS::KC_LEFT)) {
       velocity.x = 40.0 * -moveConstraintMin.y;
       velocity.y = 40.0 * moveConstraintMin.x;
+      Animation::Instance().activate();
+      sceneManager->getSceneNode("Armature")->setOrientation(
+          Ogre::Quaternion(Ogre::Degree(-90.0), Ogre::Vector3::UNIT_Y));
     }
     if (Input::Instance().m_pKeyboard->isKeyDown(OIS::KC_RIGHT)) {
       velocity.x = 40.0 * moveConstraintMax.y;
       velocity.y = 40.0 * -moveConstraintMax.x;
+      Animation::Instance().activate();
+      sceneManager->getSceneNode("Armature")->setOrientation(
+          Ogre::Quaternion(Ogre::Degree(90.0), Ogre::Vector3::UNIT_Y));
     }
 //    if (-moveConstraintMax.y < moveConstraintMax.x)
 //      velocity = moveConstraintMax;

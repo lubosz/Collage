@@ -10,6 +10,7 @@
 
 #include "LevelState.h"
 #include "System.h"
+#include "Animation.h"
 
 using std::string;
 
@@ -102,12 +103,14 @@ bool LevelState::keyPressed(const OIS::KeyEvent &keyEventRef) {
     pushAppState(findByName("PauseState"));
     return true;
   }
-
   return true;
 }
 
 bool LevelState::keyReleased(const OIS::KeyEvent &keyEventRef) {
   Input::Instance().keyPressed(keyEventRef);
+
+  if (keyEventRef.key == OIS::KC_LEFT || keyEventRef.key == OIS::KC_RIGHT)
+    Animation::Instance().deactivate();
   return true;
 }
 

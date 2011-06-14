@@ -88,7 +88,6 @@ bool Input::keyPressed(const OIS::KeyEvent &keyEventRef) {
         			showLogo(OgreBites::TL_BOTTOMRIGHT);
         }
     }
-
     return true;
 }
 

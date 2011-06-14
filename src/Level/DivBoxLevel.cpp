@@ -171,9 +171,11 @@ void DivBoxLevel::makeElementBoxes(
           Ogre::SceneNode* sn = sceneManager->getSceneNode("Armature");
           sceneManager->getRootSceneNode()->removeChild(sn);
           characterSceneNode->addChild(sn);
-          sn->scale(0.5, 0.5, 0.5);
-          sn->rotate(
+          sn->scale(0.4, 0.4, 0.4);
+          sn->setOrientation(
               Ogre::Quaternion(Ogre::Degree(90.0), Ogre::Vector3::UNIT_Y));
+//          sn->rotate(
+//              Ogre::Quaternion(Ogre::Degree(90.0), Ogre::Vector3::UNIT_Y));
         }
 
         i++;
