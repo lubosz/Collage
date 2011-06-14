@@ -168,18 +168,12 @@ void DivBoxLevel::makeElementBoxes(
               ->teleport(current.x, current.y + height + 50.0)
               ->sceneNode;
 
-
-
           Ogre::SceneNode* sn = sceneManager->getSceneNode("Armature");
           sceneManager->getRootSceneNode()->removeChild(sn);
           characterSceneNode->addChild(sn);
-//          Ogre::SceneNode* sn = characterSceneNode->createChildSceneNode();
-//          sn->scale(0.2, 0.2, 0.2);
-//          sn->translate(200, 0, 0);
+          sn->scale(0.5, 0.5, 0.5);
           sn->rotate(
               Ogre::Quaternion(Ogre::Degree(90.0), Ogre::Vector3::UNIT_Y));
-//          sn->attachObject(
-//              this->sceneManager->createEntity("Cube", "ogrehead.mesh"));
         }
 
         i++;
