@@ -35,6 +35,7 @@ bool Interaction<Character, Terrain>::collisionTest() {
 //    std::cout << second->id;
 //    printf(" RATIO: %f \n", first->possibleMoveRatio);
     first->constrainMove(minCollisionNormal);
+    first->constrainMove(maxCollisionNormal);
     return true;
   }
   return false;
@@ -43,7 +44,11 @@ bool Interaction<Character, Terrain>::collisionTest() {
 void Interaction<Character, Terrain>::onInit() {}
 
 void Interaction<Character, Terrain>::onEnter() {
-  std::cout << first->id << " entering " << second->id << std::endl;
+  std::cout << first->id << " entering " << second->id
+      << "mcMin: " << first->moveConstraintMin
+      << "mcMax: " << first->moveConstraintMax
+      << "ratio: " << first->possibleMoveRatio
+      << std::endl;
 }
 
 void Interaction<Character, Terrain>::onLeave() {

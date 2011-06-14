@@ -19,6 +19,5 @@ void Terrain::init() {
 }
 
 void Terrain::manipulate(float d_t) {
-  move(velocity * d_t);
   collisionShape.updateDebugRendering(CollisionShape2::DEF_LINESTRIP);
 }

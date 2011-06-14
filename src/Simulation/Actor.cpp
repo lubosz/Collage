@@ -7,6 +7,7 @@
  */
 
 #include "Actor.h"
+#include "CollisionHandler.h"
 #include <QtCore>
 
 Actor::Actor() {
@@ -20,7 +21,6 @@ void Actor::print() {
 }
 
 CollisionActor::CollisionActor() {
-  velocity = Ogre::Vector2::ZERO;
   possibleMoveRatio = 1.0;
   moveConstraintMin = Ogre::Vector2::ZERO;
   moveConstraintMax = Ogre::Vector2::ZERO;
@@ -39,7 +39,6 @@ void CollisionActor::update(float d_t) {
   moveVector *= possibleMoveRatio;
   sceneNode->translate(to3D(moveVector, sceneNode->getPosition().z));
   collisionShape.translate(to2D(sceneNode->getPosition()));
-  velocity = moveVector / d_t;
   moveVector = Ogre::Vector2::ZERO;
   possibleMoveRatio = 1.0;
 }
@@ -67,36 +66,10 @@ CollisionActor* CollisionActor::move(Ogre::Vector2 by) {
 }
 
 CollisionActor* CollisionActor::constrainMove(Ogre::Vector2 by) {
-  by.normalise();
-  if (moveConstraintMin.isZeroLength()) {
-    moveConstraintMin = by;
-    moveConstraintMax = by;
-  } else {
-  // TODO(Gerrit) more then one constraint
-  //    set min
-  //    if v.rightTo(min)
-  //      if v.rightTo(max)
-  //        min = v
-  //      else
-  //        close
-  //    else
-  //      if v.rightTo(max)
-  //        max = v
-  //      else
-  //        doNothing
-    if (by.x * moveConstraintMin.y - by.y * moveConstraintMin.x > 0.0) {
-      if (by.x * moveConstraintMax.y - by.y * moveConstraintMax.x > 0.0) {
-        moveConstraintMin = by;
-      } else {
-        possibleMoveRatio = 0.0;
-      }
-    } else {
-      if (by.x * moveConstraintMax.y - by.y * moveConstraintMax.x < 0.0) {
-        moveConstraintMax = by;
-      }
-    }
+  if (CollisionHandler::constrainMove(
+      &by, &moveConstraintMin, &moveConstraintMax)) {
+    possibleMoveRatio = 0.0;
   }
-//  std::cout << moveConstraintMin << moveConstraintMax << std::endl;
   return this;
 }
 

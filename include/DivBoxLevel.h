@@ -29,6 +29,7 @@ class DivBoxLevel : public Level {
         Ogre::String meshName,
         Ogre::SceneManager * sceneManager);
     void setPageRendering(const QSize & siteResolution);
-    Ogre::MaterialPtr makeMaterial(Ogre::String name, Ogre::String textureName);
+    Ogre::MaterialPtr makeMaterial(Ogre::String name, Ogre::String textureName,
+        float intensity);
     void placeDoor(Door *door, QRect geom);
 };

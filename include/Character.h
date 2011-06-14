@@ -19,5 +19,6 @@ class Character: public CollisionActor {
   void manipulate(float d_t);
 
   bool test;
+  Ogre::Vector2 velocity;
 };
 #endif /* CHARACTER_H_ */

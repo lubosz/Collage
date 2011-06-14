@@ -39,7 +39,6 @@ class CollisionActor : public Actor {
   CollisionShape2 collisionShape;
   Ogre::Vector2 moveVector;
   float possibleMoveRatio;
-  Ogre::Vector2 velocity;
   Ogre::Vector2 moveConstraintMin;
   Ogre::Vector2 moveConstraintMax;
 

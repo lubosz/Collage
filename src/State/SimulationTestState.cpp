@@ -81,43 +81,114 @@ void SimulationTestState::createScene() {
 //      ->addPoint(-0.4, 0.0)
 //      ->createCollisionShape(CollisionShape2::DEF_AABB)
 //      ->teleport(0.0, 5.0);
-
-  simulation->characterFactory->createActor()
-      ->addPoint(-0.3, 0.4)
-      ->addPoint(0.3, 0.4)
-      ->addPoint(0.4, 0.0)
-      ->addPoint(-0.4, 0.0)
-      ->createCollisionShape(CollisionShape2::DEF_CONVEX)
-      ->teleport(1.0, 1.5);
+//
+//  simulation->characterFactory->createActor()
+//      ->addPoint(-0.3, 0.4)
+//      ->addPoint(0.3, 0.4)
+//      ->addPoint(0.4, 0.0)
+//      ->addPoint(-0.4, 0.0)
+//      ->createCollisionShape(CollisionShape2::DEF_CONVEX)
+//      ->teleport(1.0, 1.5);
+//
+//  simulation->characterFactory->createActor()
+//      ->addPoint(-0.3, 0.4)
+//      ->addPoint(0.3, 0.4)
+//      ->addPoint(0.4, 0.0)
+//      ->addPoint(-0.4, 0.0)
+//      ->createCollisionShape(CollisionShape2::DEF_CONVEX)
+//      ->teleport(1.1, 1.5);
+//
+//  simulation->characterFactory->createActor()
+//      ->addPoint(-0.3, 0.4)
+//      ->addPoint(0.3, 0.4)
+//      ->addPoint(0.4, 0.0)
+//      ->addPoint(-0.4, 0.0)
+//      ->createCollisionShape(CollisionShape2::DEF_CONVEX)
+//      ->teleport(1.2, 1.5);
+//
+//  simulation->characterFactory->createActor()
+//      ->addPoint(-0.3, 0.4)
+//      ->addPoint(0.3, 0.4)
+//      ->addPoint(0.4, 0.0)
+//      ->addPoint(-0.4, 0.0)
+//      ->createCollisionShape(CollisionShape2::DEF_CONVEX)
+//      ->teleport(1.3, 1.5);
+//
+//  simulation->characterFactory->createActor()
+//      ->addPoint(-0.3, 0.4)
+//      ->addPoint(0.3, 0.4)
+//      ->addPoint(0.4, 0.0)
+//      ->addPoint(-0.4, 0.0)
+//      ->createCollisionShape(CollisionShape2::DEF_CONVEX)
+//      ->teleport(1.4, 1.5);
+//
+//  simulation->characterFactory->createActor()
+//      ->addPoint(-0.3, 0.4)
+//      ->addPoint(0.3, 0.4)
+//      ->addPoint(0.4, 0.0)
+//      ->addPoint(-0.4, 0.0)
+//      ->createCollisionShape(CollisionShape2::DEF_CONVEX)
+//      ->teleport(1.5, 1.5);
 
   simulation->characterFactory->createActor()
       ->addPoint(-0.2, 0.3)
       ->addPoint(0.2, 0.3)
+      ->addPoint(0.3, 0.1)
       ->addPoint(0.2, -0.1)
       ->addPoint(-0.2, -0.1)
+      ->addPoint(-0.3, 0.1)
       ->createCollisionShape(CollisionShape2::DEF_CONVEX)
-      ->teleport(2.0, 1.5);
+      ->teleport(-1.0, 1.5);
+
+  simulation->characterFactory->createActor()
+      ->addPoint(-0.1, 0.4)
+      ->addPoint(0.1, 0.4)
+      ->addPoint(0.1, -0.2)
+      ->addPoint(-0.1, -0.2)
+      ->createCollisionShape(CollisionShape2::DEF_CONVEX)
+      ->teleport(1.0, 1.5);
 
   simulation->terrainFactory->createActor()
       ->addPoint(0.0, 0.0)
-      ->addPoint(2.0, -1.0)
-      ->createCollisionShape(CollisionShape2::DEF_LINESTRIP)
-      ->teleport(0.0, 0.0);
-
-  simulation->terrainFactory->createActor()
-      ->addPoint(2.0, -1.0)
-      ->addPoint(4.0, 0.0)
-      ->addPoint(5.0, -0.5)
+      ->addPoint(2.0, -2.0)
+      ->addPoint(3.0, -2.0)
+      ->addPoint(3.0, -1.0)
+      ->addPoint(5.0, -1.0)
+      ->addPoint(6.0, 0.0)
+      ->addPoint(6.0, 2.0)
       ->addPoint(5.0, 2.0)
+      ->addPoint(5.0, 3.0)
+      ->addPoint(7.0, 3.0)
+      ->addPoint(7.0, 0.0)
+      ->addPoint(8.0, 0.0)
+      ->addPoint(8.0, 5.0)
+      ->addPoint(1.0, 5.0)
+      ->addPoint(0.0, 4.0)
+      ->addPoint(0.0, 0.0)
       ->createCollisionShape(CollisionShape2::DEF_LINESTRIP)
-      ->teleport(0.0, 0.0);
+      ->teleport(-4.0, -2.0);
 
-  simulation->terrainFactory->createActor()
-      ->addPoint(5.0, 2.0)
-      ->addPoint(1.0, 2.5)
-      ->addPoint(0.0, 2.0)
-      ->createCollisionShape(CollisionShape2::DEF_LINESTRIP)
-      ->teleport(0.0, 0.0);
+//  simulation->terrainFactory->createActor()
+//      ->addPoint(2.0, -1.0)
+//      ->addPoint(4.0, 0.0)
+//      ->addPoint(5.0, -0.5)
+//      ->addPoint(5.0, 2.0)
+//      ->createCollisionShape(CollisionShape2::DEF_LINESTRIP)
+//      ->teleport(0.0, 0.0);
+//
+//  simulation->terrainFactory->createActor()
+//      ->addPoint(5.0, 2.0)
+//      ->addPoint(1.0, 2.5)
+//      ->addPoint(0.0, 2.0)
+//      ->createCollisionShape(CollisionShape2::DEF_LINESTRIP)
+//      ->teleport(0.0, 0.0);
+//
+//  simulation->terrainFactory->createActor()
+//      ->addPoint(5.0, 2.0)
+//      ->addPoint(1.0, 2.5)
+//      ->addPoint(0.0, 2.0)
+//      ->createCollisionShape(CollisionShape2::DEF_LINESTRIP)
+//      ->teleport(0.0, 0.0);
 }
 
 bool SimulationTestState::keyPressed(const OIS::KeyEvent &keyEventRef) {
@@ -135,13 +206,12 @@ bool SimulationTestState::keyReleased(const OIS::KeyEvent &keyEventRef) {
 
 
 bool SimulationTestState::mouseMoved(const OIS::MouseEvent &evt) {
-	if (UserInterface::Instance().m_pTrayMgr->injectMouseMove(evt))
-		return true;
-
-	if (m_bRMouseDown) {
-		m_pCamera->yaw(Degree(evt.state.X.rel * -0.1f));
-		m_pCamera->pitch(Degree(evt.state.Y.rel * -0.1f));
-	}
+//  if (UserInterface::Instance().m_pTrayMgr->injectMouseMove(evt))
+//    return true;
+//  if (m_bRMouseDown) {
+//    m_pCamera->yaw(Degree(evt.state.X.rel * -0.1f));
+//    m_pCamera->pitch(Degree(evt.state.Y.rel * -0.1f));
+//  }
 
 	return true;
 }
@@ -179,17 +249,14 @@ bool SimulationTestState::mouseReleased(
 }
 
 void SimulationTestState::getInput() {
-		if (Input::Instance().m_pKeyboard->isKeyDown(OIS::KC_UP))
-			m_TranslateVector.y = m_MoveScale;
-
-		if (Input::Instance().m_pKeyboard->isKeyDown(OIS::KC_DOWN))
-			m_TranslateVector.y = -m_MoveScale;
-
-		if (Input::Instance().m_pKeyboard->isKeyDown(OIS::KC_LEFT))
-			m_TranslateVector.x = -m_MoveScale;
-
-		if (Input::Instance().m_pKeyboard->isKeyDown(OIS::KC_RIGHT))
-			m_TranslateVector.x = m_MoveScale;
+//  if (Input::Instance().m_pKeyboard->isKeyDown(OIS::KC_UP))
+//    m_TranslateVector.y = m_MoveScale;
+//  if (Input::Instance().m_pKeyboard->isKeyDown(OIS::KC_DOWN))
+//    m_TranslateVector.y = -m_MoveScale;
+//  if (Input::Instance().m_pKeyboard->isKeyDown(OIS::KC_LEFT))
+//    m_TranslateVector.x = -m_MoveScale;
+//  if (Input::Instance().m_pKeyboard->isKeyDown(OIS::KC_RIGHT))
+//    m_TranslateVector.x = m_MoveScale;
 }
 
 void SimulationTestState::update(double timeSinceLastFrame) {

@@ -10,7 +10,7 @@
 #include <QString>
 #include <QWebElement>
 #include "Level.h"
-#include "Simulation.h"
+#include "DefaultSimulation.h"
 
 using std::string;
 
@@ -25,11 +25,13 @@ class Level : public QObject {
     QString getName();
     virtual void update(double timeSinceLastFrame);
 
+    Ogre::SceneNode* characterSceneNode;
+
   protected:
     QString name;
     QWebPage *webpage;
     Ogre::SceneManager *sceneManager;
-    Simulation *simulation;
+    DefaultSimulation *simulation;
 
     virtual void addDoors();
     virtual void addCharacter();

@@ -274,7 +274,10 @@ class CollisionHandler {
             relativeTranslation, ratio, &currentCollNormal)) {
           intersects = true;
 //          std::cout << "collNor " << currentCollNormal << std::endl;
-          *minCollNormal = currentCollNormal;
+          if (constrainMove(&currentCollNormal, minCollNormal, maxCollNormal)) {
+            *ratio = 0.0;
+          }
+//          *minCollNormal = currentCollNormal;
         }
       }
     }
@@ -627,7 +630,7 @@ class CollisionHandler {
 //    std::cout << *collisionNormal << std::endl;
 
     for (int i = 0; i < convex->edges.size(); i++) {
-      currentLine = convex->edges[i].perpendicular();
+      currentLine = -convex->edges[i].perpendicular();
 //        printf("CONVEX %i ", i);
 //        std::cout << convex->edges[i] << std::endl;
       if (!calculateMinimumTranslation(&currentLine, &convex->points,
@@ -656,6 +659,33 @@ class CollisionHandler {
 
   static inline float epsilon() {
     return 0.0001;
+  }
+
+  static inline bool constrainMove(
+      Ogre::Vector2 *by,
+      Ogre::Vector2 *moveConstraintMin,
+      Ogre::Vector2 *moveConstraintMax) {
+    Ogre::Vector2 newBy = by->normalisedCopy();
+    if (moveConstraintMin->isZeroLength()) {
+      *moveConstraintMin = newBy;
+      *moveConstraintMax = newBy;
+    } else {
+      if (newBy.x * moveConstraintMin->y - newBy.y * moveConstraintMin->x
+          > 0.0) {
+        if (newBy.x * moveConstraintMax->y - newBy.y * moveConstraintMax->x
+            > 0.0) {
+          *moveConstraintMin = newBy;
+        } else {
+          return true;  // no move possible anymore
+        }
+      } else {
+        if (newBy.x * moveConstraintMax->y - newBy.y * moveConstraintMax->x
+            < 0.0) {
+          *moveConstraintMax = newBy;
+        }
+      }
+    }
+    return false;
   }
 };
 

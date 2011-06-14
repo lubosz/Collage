@@ -49,11 +49,13 @@ void DivBoxLevel::makeOgreImage(QWebElement * element,
 }
 
 Ogre::MaterialPtr DivBoxLevel::makeMaterial(
-    Ogre::String name, Ogre::String textureName) {
+    Ogre::String name, Ogre::String textureName, float intensity) {
   Ogre::MaterialPtr material = Ogre::MaterialManager::getSingleton().create(
       name, Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
   material.get()->getTechnique(0)-> getPass(0)->createTextureUnitState(
       textureName);
+  material.get()->getTechnique(0)-> getPass(0)->setAmbient(
+      intensity, intensity, intensity);
   return material;
 }
 
@@ -67,7 +69,7 @@ Ogre::Vector3 DivBoxLevel::attachNode(
 
   Ogre::MaterialPtr material =
       makeMaterial("PageMat" + Ogre::StringConverter::toString(position),
-      textureName);
+      textureName, 1.3);
 //  material.get()->setSceneBlending(
 //      Ogre::SBF_SOURCE_ALPHA, Ogre::SBF_DEST_ALPHA);
 //  material.get()->getTechnique(0)->getPass(0)->setSceneBlending(
@@ -126,9 +128,39 @@ void DivBoxLevel::makeElementBoxes(
             getRootSceneNode()->createChild(textureName);
 //        Actor *actor = new Actor();
         makeOgreImage(&element, textureName);
+
         position +=
             attachNode(&element, boxNode, scale,
             textureName, cube, position);
+
+         Ogre::Vector3 current = simulation->terrainFactory->createActor()
+            ->addPoint(-width, -height)
+            ->addPoint(-width, height)
+            ->addPoint(width, height)
+            ->addPoint(width, -height)
+            ->addPoint(-width, -height)
+            ->createCollisionShape(CollisionShape2::DEF_LINESTRIP)
+            ->teleport(position.x, position.y)
+            ->sceneNode->_getDerivedPosition();
+
+        if (i == 3) {
+          characterSceneNode = simulation->characterFactory->createActor()
+              ->addPoint(2.0, 0.0)
+              ->addPoint(-2.0, 0.0)
+              ->addPoint(4.0, -3.0)
+              ->addPoint(-4.0, -3.0)
+              ->addPoint(0.0, -10.0)
+              ->createCollisionShape(CollisionShape2::DEF_CONVEX)
+              ->teleport(current.x, current.y + height + 50.0)
+              ->sceneNode;
+          Ogre::SceneNode* sn = characterSceneNode->createChildSceneNode();
+          sn->scale(0.2, 0.2, 0.2);
+          sn->rotate(
+              Ogre::Quaternion(Ogre::Degree(90.0), Ogre::Vector3::UNIT_Y));
+          sn->attachObject(
+              this->sceneManager->createEntity("Cube", "ogrehead.mesh"));
+        }
+
         i++;
       }
     }
@@ -160,9 +192,8 @@ void DivBoxLevel::generate() {
   setPageRendering(QSize(1440, 800));
 
   QWebElement page = webpage->mainFrame()->documentElement();
-
   makeOgreImage(&page, "skytex", 1);
-  makeMaterial("skydome", "skytex");
+  makeMaterial("skydome", "skytex", 0.7);
 //  sceneManager->setSkyBox(true, "skyBox");
   sceneManager->setSkyDome(true, "skydome", 50, 2);
 
@@ -178,7 +209,7 @@ void DivBoxLevel::generate() {
   makeElementBoxes(
       page, .1, 1, tags,
       "Cube.mesh", sceneManager);
-  addCharacter();
+//  addCharacter();
 //  this->addDoors();
 }
 

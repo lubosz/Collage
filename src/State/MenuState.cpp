@@ -39,16 +39,16 @@ void MenuState::enter() {
 	OgreBites::SdkTrayManager* trayManager = UserInterface::Instance().m_pTrayMgr;
 	trayManager->destroyAllWidgets();
 
+//  trayManager->createButton(
+//    OgreBites::TL_BOTTOMLEFT, "BrowserDemo", "Browser", 250);
+//  trayManager->createButton(
+//    OgreBites::TL_BOTTOMLEFT, "OgreDemo", "Ogre Scene", 250);
+//  trayManager->createButton(
+//    OgreBites::TL_BOTTOMLEFT, "SimulationDemo", "SimulationDemo", 250);
 	trayManager->createButton(
-	    OgreBites::TL_BOTTOMLEFT, "BrowserDemo", "Browser", 250);
-	trayManager->createButton(
-	    OgreBites::TL_BOTTOMLEFT, "OgreDemo", "Ogre Scene", 250);
-	trayManager->createButton(
-		OgreBites::TL_BOTTOMLEFT, "SimulationDemo", "SimulationDemo", 250);
-	trayManager->createButton(
-		OgreBites::TL_BOTTOMLEFT, "LevelState", "LevelState", 250);
-	trayManager->createButton(
-	    OgreBites::TL_BOTTOMLEFT, "Settings", "Settings", 250);
+		OgreBites::TL_BOTTOMLEFT, "LevelState", "Start Game", 250);
+//  trayManager->createButton(
+//    OgreBites::TL_BOTTOMLEFT, "Settings", "Settings", 250);
 	trayManager->createButton(
 	    OgreBites::TL_BOTTOMLEFT, "ExitBtn", "Exit Collage", 250);
 
