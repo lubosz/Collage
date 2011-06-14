@@ -40,8 +40,6 @@ void MenuState::enter() {
 	trayManager->destroyAllWidgets();
 
 //  trayManager->createButton(
-//    OgreBites::TL_BOTTOMLEFT, "BrowserDemo", "Browser", 250);
-//  trayManager->createButton(
 //    OgreBites::TL_BOTTOMLEFT, "OgreDemo", "Ogre Scene", 250);
 //  trayManager->createButton(
 //    OgreBites::TL_BOTTOMLEFT, "SimulationDemo", "SimulationDemo", 250);
@@ -153,8 +151,6 @@ void MenuState::buttonHit(OgreBites::Button* button) {
 		m_bQuit = true;
 	else if (button->getName() == "OgreDemo")
 		popAllAndPushAppState(findByName("GameState"));
-	else if (button->getName() == "BrowserDemo")
-		popAllAndPushAppState(findByName("WikiCubeState"));
 	else if (button->getName() == "SimulationDemo")
 		popAllAndPushAppState(findByName("SimulationTestState"));
 	else if (button->getName() == "LevelState")
