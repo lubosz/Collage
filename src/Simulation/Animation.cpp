@@ -25,6 +25,8 @@ void Animation::activate(Ogre::SceneManager *sceneManager, string entityName) {
       std::cout << "Animationname " << animation->getName();
     }
     Ogre::AnimationState* animationState = entity->getAnimationState("run");
+//    Ogre::AnimationState* animationState =
+//        entity->getAnimationState("NlaTrack");
     animationState->setLoop(true);
     animationState->setEnabled(true);
     animationStates.push_back(animationState);

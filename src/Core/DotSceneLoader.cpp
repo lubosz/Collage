@@ -403,7 +403,8 @@ void DotSceneLoader::processCamera(rapidxml::xml_node<>* XMLNode,
 	pElement = XMLNode->first_node("clipping");
 	if (pElement) {
 		Ogre::Real nearDist = getAttribReal(pElement, "near");
-		pCamera->setNearClipDistance(nearDist);
+		if (nearDist > 0)
+		  pCamera->setNearClipDistance(nearDist);
 
 		Ogre::Real farDist = getAttribReal(pElement, "far");
 		pCamera->setFarClipDistance(farDist);

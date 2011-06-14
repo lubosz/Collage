@@ -55,10 +55,10 @@ void LevelState::enter() {
 //      "http://www.uni-koblenz.de",
 //      "http://www.youtube.com/watch?v=urAyOKlgGDk",
 //      "http://www.randomwebsite.com/cgi-bin/random.pl",
-//      "http://en.wikipedia.org/wiki/Special:Random",
+      "http://en.wikipedia.org/wiki/Special:Random",
 //      "http://www.libpng.org/pub/png/png-rgba32.html",
 //      "http://webkit.org/",
-        "the-space-station/index.html",
+//        "the-space-station/index.html",
 // 		"http://www.uni-koblenz.de/~lohoff/",
 // 		"http://www.lubosz.de",
       m_pSceneMgr);
@@ -163,29 +163,29 @@ void LevelState::moveCamera() {
 }
 
 void LevelState::getInput() {
-//    if (Input::Instance().m_pKeyboard->isKeyDown(OIS::KC_A))
-//      translateVector.x = -moveSpeed;
+//  if (Input::Instance().m_pKeyboard->isKeyDown(OIS::KC_A))
+//    translateVector.x = -moveSpeed;
 //
-//    if (Input::Instance().m_pKeyboard->isKeyDown(OIS::KC_D))
-//      translateVector.x = moveSpeed;
+//  if (Input::Instance().m_pKeyboard->isKeyDown(OIS::KC_D))
+//    translateVector.x = moveSpeed;
 //
-//    if (Input::Instance().m_pKeyboard->isKeyDown(OIS::KC_W))
-//      translateVector.z = -moveSpeed;
+//  if (Input::Instance().m_pKeyboard->isKeyDown(OIS::KC_W))
+//    translateVector.z = -moveSpeed;
 //
-//    if (Input::Instance().m_pKeyboard->isKeyDown(OIS::KC_S))
-//      translateVector.z = moveSpeed;
+//  if (Input::Instance().m_pKeyboard->isKeyDown(OIS::KC_S))
+//    translateVector.z = moveSpeed;
 
-//    if (Input::Instance().m_pKeyboard->isKeyDown(OIS::KC_RIGHT))
-//      m_pCamera->move(Ogre::Vector3(moveSpeed * 20.0, 0.0, 0.0));
+//  if (Input::Instance().m_pKeyboard->isKeyDown(OIS::KC_RIGHT))
+//    m_pCamera->move(Ogre::Vector3(moveSpeed * 20.0, 0.0, 0.0));
 //
-//    if (Input::Instance().m_pKeyboard->isKeyDown(OIS::KC_LEFT))
-//      m_pCamera->move(Ogre::Vector3(-moveSpeed * 20.0, 0.0, 0.0));
+//  if (Input::Instance().m_pKeyboard->isKeyDown(OIS::KC_LEFT))
+//    m_pCamera->move(Ogre::Vector3(-moveSpeed * 20.0, 0.0, 0.0));
 //
-//    if (Input::Instance().m_pKeyboard->isKeyDown(OIS::KC_UP))
-//      m_pCamera->move(Ogre::Vector3(0.0, moveSpeed * 5.0, 0.0));
+//  if (Input::Instance().m_pKeyboard->isKeyDown(OIS::KC_UP))
+//    m_pCamera->move(Ogre::Vector3(0.0, moveSpeed * 5.0, 0.0));
 //
-//    if (Input::Instance().m_pKeyboard->isKeyDown(OIS::KC_DOWN))
-//      m_pCamera->move(Ogre::Vector3(0.0, -moveSpeed * 5.0, 0.0));
+//  if (Input::Instance().m_pKeyboard->isKeyDown(OIS::KC_DOWN))
+//    m_pCamera->move(Ogre::Vector3(0.0, -moveSpeed * 5.0, 0.0));
 }
 
 void LevelState::update(double timeSinceLastFrame) {

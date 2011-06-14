@@ -48,7 +48,7 @@ void Character::manipulate(float d_t) {
     if (Input::Instance().m_pKeyboard->isKeyDown(OIS::KC_UP)
         && moveConstraintMin.y > 0.0
         && moveConstraintMax.y > 0.0) {
-      velocity.y = 80.0;
+      velocity.y = 200.0;
     }
     if (Input::Instance().m_pKeyboard->isKeyDown(OIS::KC_DOWN)
         && moveConstraintMin.y < 0.0
