@@ -7,7 +7,8 @@
  */
 
 #include "Character.h"
-#include "input.h"
+#include "Input.h"
+#include "Animation.h"
 
 Character::Character() {
   test = true;
@@ -29,10 +30,16 @@ void Character::manipulate(float d_t) {
   velocity.y -= 200.0 * d_t;
   velocity.x = 0.0;
   if (Input::Instance().m_pKeyboard->isKeyDown(OIS::KC_LEFT)) {
-    velocity.x = -40.0;
+    velocity.x = -60.0;
+    Animation::Instance().activate();
+    sceneManager->getSceneNode("Armature")->setOrientation(
+        Ogre::Quaternion(Ogre::Degree(-90.0), Ogre::Vector3::UNIT_Y));
   }
   if (Input::Instance().m_pKeyboard->isKeyDown(OIS::KC_RIGHT)) {
-    velocity.x = 40.0;
+    velocity.x = 60.0;
+    Animation::Instance().activate();
+    sceneManager->getSceneNode("Armature")->setOrientation(
+        Ogre::Quaternion(Ogre::Degree(90.0), Ogre::Vector3::UNIT_Y));
   }
   if (moveConstraintMin.y == 1.0 || moveConstraintMax.y == 1.0) {
     velocity.y = 0.0;
@@ -50,7 +57,7 @@ void Character::manipulate(float d_t) {
   }
   if (Input::Instance().m_pKeyboard->isKeyDown(OIS::KC_UP)
       && (moveConstraintMin.y == 1.0 || moveConstraintMax.y == 1.0)) {
-    velocity.y = 80.0;
+    velocity.y = 200.0;
   }
   move(velocity.x * d_t, velocity.y * d_t);
 

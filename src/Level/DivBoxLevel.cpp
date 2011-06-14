@@ -7,7 +7,8 @@
 #include <QPainter>
 #include "System.h"
 #include "DivBoxLevel.h"
-
+#include "DotSceneLoader.h"
+#include "Animation.h"
 #include "RenderEngine.h"
 
 DivBoxLevel::DivBoxLevel(Ogre::SceneManager *sceneManager)
@@ -103,6 +104,19 @@ void DivBoxLevel::makeElementBoxes(
     Ogre::String meshName,
     Ogre::SceneManager * sceneManager) {
 
+          DotSceneLoader* pDotSceneLoader = new DotSceneLoader();
+          pDotSceneLoader->parseDotScene(
+               "papercraft_man_line_running.scene",
+              "General", sceneManager, sceneManager->getRootSceneNode());
+            delete pDotSceneLoader;
+
+          Animation::Instance().activate(sceneManager, "arm_left");
+          Animation::Instance().activate(sceneManager, "arm_right");
+          Animation::Instance().activate(sceneManager, "chest");
+          Animation::Instance().activate(sceneManager, "leg_left");
+          Animation::Instance().activate(sceneManager, "leg_right");
+          Animation::Instance().activate(sceneManager, "pants");
+
   QWebElementCollection elements;
   foreach(QString tag, tags)
     elements.append(document.findAll(tag));
@@ -153,12 +167,15 @@ void DivBoxLevel::makeElementBoxes(
               ->createCollisionShape(CollisionShape2::DEF_CONVEX)
               ->teleport(current.x, current.y + height + 50.0)
               ->sceneNode;
-          Ogre::SceneNode* sn = characterSceneNode->createChildSceneNode();
-          sn->scale(0.2, 0.2, 0.2);
-          sn->rotate(
+
+          Ogre::SceneNode* sn = sceneManager->getSceneNode("Armature");
+          sceneManager->getRootSceneNode()->removeChild(sn);
+          characterSceneNode->addChild(sn);
+          sn->scale(0.4, 0.4, 0.4);
+          sn->setOrientation(
               Ogre::Quaternion(Ogre::Degree(90.0), Ogre::Vector3::UNIT_Y));
-          sn->attachObject(
-              this->sceneManager->createEntity("Cube", "ogrehead.mesh"));
+//          sn->rotate(
+//              Ogre::Quaternion(Ogre::Degree(90.0), Ogre::Vector3::UNIT_Y));
         }
 
         i++;
@@ -209,7 +226,7 @@ void DivBoxLevel::generate() {
   makeElementBoxes(
       page, .1, 1, tags,
       "Cube.mesh", sceneManager);
-//  addCharacter();
+  addCharacter();
 //  this->addDoors();
 }
 

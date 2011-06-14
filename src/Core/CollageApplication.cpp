@@ -13,10 +13,8 @@
 #include "UserInterface.h"
 #include "System.h"
 #include "MenuState.h"
-#include "GameState.h"
 #include "PauseState.h"
 #include "LoadingState.h"
-#include "WikiCubeState.h"
 #include "SimulationTestState.h"
 #include "LevelState.h"
 #include <phonon/audiooutput.h>
@@ -55,11 +53,9 @@ int CollageApplication::exec() {
   m_pAppStateManager = new AppStateManager();
 
   MenuState::create(m_pAppStateManager, "MenuState");
-  GameState::create(m_pAppStateManager, "GameState");
   PauseState::create(m_pAppStateManager, "PauseState");
   LoadingState::create(m_pAppStateManager, "LoadingState");
   WallPaperLoadingState::create(m_pAppStateManager, "WallPaperLoadingState");
-  WikiCubeState::create(m_pAppStateManager, "WikiCubeState");
   SimulationTestState::create(m_pAppStateManager, "SimulationTestState");
   LevelState::create(m_pAppStateManager, "LevelState");
 

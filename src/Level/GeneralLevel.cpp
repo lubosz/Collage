@@ -35,7 +35,7 @@ void GeneralLevel::generate() {
   m_pOgreHeadNode = sceneManager->getRootSceneNode()->createChildSceneNode(
       "CubeNode");
   m_pOgreHeadNode->attachObject(m_pOgreHeadEntity);
-  m_pOgreHeadNode->setPosition(Ogre::Vector3(0, 0, -25));
+//  m_pOgreHeadNode->setPosition(Ogre::Vector3(0, 0, -25));
 
   m_pOgreHeadMat = m_pOgreHeadEntity->getSubEntity(1)->getMaterial();
   m_pOgreHeadMatHigh = m_pOgreHeadMat->clone("OgreHeadMatHigh");

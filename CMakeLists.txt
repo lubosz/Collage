@@ -11,14 +11,14 @@ OPTION(COLLAGE_FREEIMAGE_BUG "Free Image Conflict" OFF)
 OPTION(COLLAGE_AUDIO "AUDIO" OFF)
 
 #Optimization / Debug
-#IF(COLLAGE_RELEASE)
- #   set(CMAKE_CXX_FLAGS "-O3 -msse4 -mssse3") #Optimized
-  #  set(CMAKE_BUILD_TYPE Release)
-#ELSE()
-set(CMAKE_BUILD_TYPE Debug)
-set(CMAKE_CXX_FLAGS "-O0 -g3 -ggdb") #Debug
+IF(COLLAGE_RELEASE)
+    set(CMAKE_CXX_FLAGS "-O3 -msse4 -mssse3") #Optimized
+    set(CMAKE_BUILD_TYPE Release)
+ELSE()
+    set(CMAKE_BUILD_TYPE Debug)
+    set(CMAKE_CXX_FLAGS "-O0 -g3 -ggdb") #Debug
 
-#ENDIF()
+ENDIF()
 
 function(copy_plugins_config FROM_PLUGINS_CFG)
     message(STATUS "Copy from ${FROM_PLUGINS_CFG}")
@@ -69,7 +69,7 @@ foreach(GLOB_DIR ${GLOB_DIRS})
 endforeach(GLOB_DIR)
 
 #moc qt stuff
-set(MOC_CLASSES AppState FrameCapture CollageApplication LevelManager GeneralLevel TagNestingToTerrainLevel Level GameState LevelState)
+set(MOC_CLASSES AppState FrameCapture CollageApplication LevelManager GeneralLevel Level LevelState)
 foreach(MOC_CLASS ${MOC_CLASSES})
     SET(MOC_INFILES ${MOC_INFILES} include/${MOC_CLASS}.h)
 endforeach(MOC_CLASS)
