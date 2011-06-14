@@ -11,6 +11,8 @@
 
 Animation::Animation() {
   isactive = false;
+  move = true;
+  moveSpeed = 2.0;
 }
 
 Animation::~Animation() {
@@ -51,7 +53,8 @@ void Animation::deactivate() {
 }
 
 void Animation::update(double timeSinceLastFrame) {
-  foreach(Ogre::AnimationState* animationState, animationStates) {
-    animationState->addTime(timeSinceLastFrame);
-  }
+  if (move)
+    foreach(Ogre::AnimationState* animationState, animationStates) {
+      animationState->addTime(timeSinceLastFrame*0.5*moveSpeed);
+    }
 }
