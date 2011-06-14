@@ -24,19 +24,29 @@ void Character::init() {
 
 void Character::manipulate(float d_t) {
   if (d_t > 0.1) return;
+
+  if (Animation::Instance().move) {
+    // change speed when not in the air
+    if (Input::Instance().m_pKeyboard->isKeyDown(OIS::KC_LSHIFT)) {
+      Animation::Instance().moveSpeed = 4.0;
+    } else {
+      Animation::Instance().moveSpeed = 2.0;
+    }
+  }
+
   if (Input::Instance().m_pKeyboard->isKeyDown(OIS::KC_A)) {
     std::cout << moveConstraintMin << " " << moveConstraintMax << std::endl;
   }
   velocity.y -= 200.0 * d_t;
   velocity.x = 0.0;
   if (Input::Instance().m_pKeyboard->isKeyDown(OIS::KC_LEFT)) {
-    velocity.x = -60.0;
+    velocity.x = -60.0 * Animation::Instance().moveSpeed;
     Animation::Instance().activate();
     sceneManager->getSceneNode("Armature")->setOrientation(
         Ogre::Quaternion(Ogre::Degree(-90.0), Ogre::Vector3::UNIT_Y));
   }
   if (Input::Instance().m_pKeyboard->isKeyDown(OIS::KC_RIGHT)) {
-    velocity.x = 60.0;
+    velocity.x = 60.0 * Animation::Instance().moveSpeed;
     Animation::Instance().activate();
     sceneManager->getSceneNode("Armature")->setOrientation(
         Ogre::Quaternion(Ogre::Degree(90.0), Ogre::Vector3::UNIT_Y));
