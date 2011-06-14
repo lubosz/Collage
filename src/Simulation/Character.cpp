@@ -7,7 +7,7 @@
  */
 
 #include "Character.h"
-#include "input.h"
+#include "Input.h"
 
 Character::Character() {
   test = true;
