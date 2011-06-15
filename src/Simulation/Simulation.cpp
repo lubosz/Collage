@@ -17,7 +17,14 @@ Simulation::Simulation(Ogre::SceneManager *sceneManager, float frequency) {
   d_t = 0.0;
 }
 
-Simulation::~Simulation() {}
+Simulation::~Simulation() {
+  foreach(AbstractInteractionHandler* a, interactionHandlers) {
+    delete a;
+  }
+  foreach(AbstractActorFactory* a, actorFactories) {
+    delete a;
+  }
+}
 
 void Simulation::update(float secondsSinceLastFrame) {
   d_t += secondsSinceLastFrame;
