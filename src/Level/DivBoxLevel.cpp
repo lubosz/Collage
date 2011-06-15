@@ -205,7 +205,6 @@ void DivBoxLevel::makeElementBoxes(
           hoverplane->sceneNode->addChild(smallBoxes[smallBoxIndex].sceneNode);
           smallBoxIndex++;
         } else {
-
           if (i%3 == 2 && smallBoxes.size() - 1 - smallBoxIndex > 3) {
             actor->teleport(lX + lW + cW +
                 smallBoxes[smallBoxIndex].sceneNode
