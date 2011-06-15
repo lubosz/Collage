@@ -218,6 +218,8 @@ void LevelState::update(double timeSinceLastFrame) {
   m_pSceneMgr->getSkyDomeNode()->setOrientation(rotation);
 
   getInput();
+
+
   moveCamera();
 
 //  OIS::MouseState &mutableMouseState =

@@ -15,6 +15,7 @@ DivBoxLevel::DivBoxLevel(Ogre::SceneManager *sceneManager)
   : Level(sceneManager) {
   this->name = "DivBoxLevel";
   qDebug() << "Creating " << this->name;
+  characterSceneNode = NULL;
 }
 
 float DivBoxLevel::getScore(QWebPage *webpage) {
@@ -123,6 +124,7 @@ void DivBoxLevel::makeElementBoxes(
   }
 
   int smallBoxIndex = 0;
+
   for (int i = 0; i < bigBoxes.size(); i++) {
     CollisionActor* actor = simulation->terrainFactory->createActor()
        ->addPoint(bigBoxes[i].width, bigBoxes[i].height)
@@ -203,6 +205,7 @@ void DivBoxLevel::makeElementBoxes(
           hoverplane->sceneNode->addChild(smallBoxes[smallBoxIndex].sceneNode);
           smallBoxIndex++;
         } else {
+
           if (i%3 == 2 && smallBoxes.size() - 1 - smallBoxIndex > 3) {
             actor->teleport(lX + lW + cW +
                 smallBoxes[smallBoxIndex].sceneNode
@@ -282,16 +285,21 @@ void DivBoxLevel::makeElementBoxes(
       }
     }
     actor->sceneNode->addChild(bigBoxes[i].sceneNode);
+    qDebug() << "dooors" << doors.size() << "\n\n";
     if ((i == (bigBoxes.size()-1) / 2 || i == bigBoxes.size()-1)
-        && this->doors.size() > 1) {
+        && this->doors.size() >= 1) {
       CollisionActor* door;
-      if (i == (bigBoxes.size()-1) / 2)
+
+      if (i == (bigBoxes.size()-1) / 2) {
         door = this->doors[0];
-      else
-        door = this->doors[1];
+        qDebug() << "dooors0\n\n\n\n\n";
+      } else {
+        door = this->doors[0];
+        qDebug() << "dooors1\n\n\n\n\n";
+      }
       door
           ->addPoint(0.0, 0.0)
-          ->addPoint(40, 60)
+          ->addPoint(40., 60.)
           ->createCollisionShape(CollisionShape2::DEF_AABB)
           ->teleport(
               bigBoxes[i].sceneNode->_getDerivedPosition().x,
