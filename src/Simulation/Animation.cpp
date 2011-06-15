@@ -29,7 +29,6 @@ void Animation::activate(Ogre::SceneManager *sceneManager, string entityName) {
     }
     Ogre::AnimationState* animationState = entity->getAnimationState("run");
     animationState->setLoop(true);
-//    animationState->setEnabled(true);
     animationStates.push_back(animationState);
   }
 }
