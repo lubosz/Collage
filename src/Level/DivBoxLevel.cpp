@@ -14,6 +14,7 @@
 DivBoxLevel::DivBoxLevel(Ogre::SceneManager *sceneManager)
   : Level(sceneManager) {
   this->name = "DivBoxLevel";
+  qDebug() << "Creating " << this->name;
 }
 
 float DivBoxLevel::getScore(QWebPage *webpage) {
@@ -182,7 +183,7 @@ void DivBoxLevel::makeElementBoxes(
 		    ->addPoint(w, 0)
 		    ->addPoint(0, h)
 		    ->addPoint(w, h)
-		    ->createCollisionShape(CollisionShape2::DEF_AABB)
+		    ->createCollisionShape(CollisionShape2::DEF_LINESTRIP)
 		    ->teleport(position.x - w/2., position.y + height);
 		}
 
@@ -194,7 +195,7 @@ void DivBoxLevel::makeElementBoxes(
               ->addPoint(-4.0, -3.0)
               ->addPoint(0.0, -10.0)
               ->createCollisionShape(CollisionShape2::DEF_CONVEX)
-              ->teleport(current.x, current.y + height + 50.0)
+              ->teleport(current.x, current.y + height + 300.0)
               ->sceneNode;
 
           CollisionActor *hoverplane = simulation->hoverplaneFactory

@@ -51,18 +51,18 @@ int CollageApplication::exec() {
 
   System::Instance().logMessage("Collage initialized");
 
-  m_pAppStateManager = new AppStateManager();
+  AppStateManager::Instance();
 
-  MenuState::create(m_pAppStateManager, "MenuState");
-  LostState::create(m_pAppStateManager, "LostState");
-  PauseState::create(m_pAppStateManager, "PauseState");
-  LoadingState::create(m_pAppStateManager, "LoadingState");
-  WallPaperLoadingState::create(m_pAppStateManager, "WallPaperLoadingState");
-  SimulationTestState::create(m_pAppStateManager, "SimulationTestState");
-  LevelState::create(m_pAppStateManager, "LevelState");
+  MenuState::create("MenuState");
+  LostState::create("LostState");
+  PauseState::create("PauseState");
+  LoadingState::create("LoadingState");
+  WallPaperLoadingState::create("WallPaperLoadingState");
+  SimulationTestState::create("SimulationTestState");
+  LevelState::create("LevelState");
 
   System::Instance().logMessage("Appstates initialized");
-  m_pAppStateManager->start(m_pAppStateManager->findByName("LevelState"));
+  AppStateManager::Instance().start("LevelState");
 }
 
 

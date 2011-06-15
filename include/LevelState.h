@@ -41,6 +41,8 @@ class LevelState : public AppState {
 
   void update(double timeSinceLastFrame);
 
+  std::string url;
+
   public slots:
   void levelGenerated(Level *level);
 

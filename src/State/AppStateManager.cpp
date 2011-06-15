@@ -57,7 +57,8 @@ AppState* AppStateManager::findByName(Ogre::String stateName) {
 	return 0;
 }
 
-void AppStateManager::start(AppState* state) {
+void AppStateManager::start(std::string _state) {
+	AppState *state = findByName(_state);
 	changeAppState(state);
 
 	int timeSinceLastFrame = 1;

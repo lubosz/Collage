@@ -23,6 +23,7 @@ LevelState::LevelState() {
   quit = false;
 
   this->level = NULL;
+  this->url = "wikidump4/index.html";
 }
 
 void LevelState::enter() {
@@ -61,15 +62,16 @@ void LevelState::enter() {
 //      "http://www.uni-koblenz.de",
 //      "http://www.youtube.com/watch?v=urAyOKlgGDk",
 //      "http://www.randomwebsite.com/cgi-bin/random.pl",
-      "http://en.wikipedia.org/wiki/Special:Random",
+//      "http://en.wikipedia.org/wiki/Special:Random",
 //      "http://www.libpng.org/pub/png/png-rgba32.html",
 //      "http://webkit.org/",
 //      "the-space-station/index.html",
 // 		"http://www.uni-koblenz.de/~lohoff/",
 // 		"http://www.lubosz.de",
-      m_pSceneMgr);
+		this->url.c_str(),
+        m_pSceneMgr);
 
-  buildGUI();
+  //buildGUI();
 }
 
 bool LevelState::pause() {
@@ -82,7 +84,7 @@ void LevelState::resume() {
   System::Instance().logMessage(
       "Resuming LevelState...");
 
-  buildGUI();
+  //buildGUI();
 
   RenderEngine::Instance().m_pViewport->setCamera(m_pCamera);
   quit = false;
