@@ -79,7 +79,6 @@ void AppStateManager::start(std::string _state) {
 			RenderEngine::Instance().m_pRoot->renderOneFrame();
 
 			m_ActiveStateStack.back()->update(timeSinceLastFrame);
-			RenderEngine::Instance().updateOgre(timeSinceLastFrame);
 			Animation::Instance().update(timeSinceLastFrame * 0.000001);
 
 			timeSinceLastFrame
@@ -156,5 +155,3 @@ void AppStateManager::init(AppState* state) {
 	RenderEngine::Instance().m_pRenderWnd->resetStatistics();
 }
 
-void AppStateManager::pauseAppState(AppState* state) {
-}

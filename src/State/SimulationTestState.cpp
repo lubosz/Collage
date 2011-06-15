@@ -200,7 +200,7 @@ bool SimulationTestState::keyPressed(const OIS::KeyEvent &keyEventRef) {
 }
 
 bool SimulationTestState::keyReleased(const OIS::KeyEvent &keyEventRef) {
-	Input::Instance().keyPressed(keyEventRef);
+	Input::Instance().keyPressed();
 	return true;
 }
 

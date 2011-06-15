@@ -26,7 +26,7 @@ void TagNestingToTerrainLevel::addBox(
 
   // 'radius', half the width
   float radz = 5.;
-  float radx = 1.;
+//  float radx = 1.;
   // Front
   manual->normal(0, 1, 0);
   manual->position(count, height,  radz);

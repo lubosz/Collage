@@ -31,7 +31,7 @@ class AppState
 	public OgreBites::SdkTrayListener {
 	Q_OBJECT
  public:
-	//static void create(const Ogre::String name) {}
+	// static void create(const Ogre::String name) {}
 
 	void destroy() {delete this;}
 

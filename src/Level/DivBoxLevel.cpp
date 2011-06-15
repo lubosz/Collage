@@ -100,7 +100,6 @@ Ogre::Vector3 DivBoxLevel::attachNode(
 void DivBoxLevel::makeElementBoxes(
     const QWebElement &document,
     Ogre::Real scale,
-    Ogre::Real step,
     std::vector<QString> tags,
     Ogre::String meshName,
     Ogre::SceneManager * sceneManager) {
@@ -122,7 +121,7 @@ void DivBoxLevel::makeElementBoxes(
   foreach(QString tag, tags)
     elements.append(document.findAll(tag));
   Ogre::Vector3 position = Ogre::Vector3::ZERO;
-  int i = 0;
+  unsigned i = 0;
 
   foreach(QWebElement element, elements) {
       if (fits(&element, 10, 4096)) {
@@ -265,7 +264,7 @@ void DivBoxLevel::generate() {
 
   this->generateDoors();
   makeElementBoxes(
-      page, .1, 1, tags,
+      page, .1, tags,
       "Cube.mesh", sceneManager);
 }
 

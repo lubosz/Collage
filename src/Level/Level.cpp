@@ -34,7 +34,7 @@ void Level::generateDoors() {
   QWebElement document = webpage->mainFrame()->documentElement();
   QWebElementCollection elements = document.findAll("A");
 
-  Ogre::SceneNode *root = this->sceneManager->getRootSceneNode();
+//  Ogre::SceneNode *root = this->sceneManager->getRootSceneNode();
   QStringList blacklist;
   blacklist << ".swf" << ".svg" << ".pdf" << ".png" << ".jpg" << ".jpeg"
             << ".zip" << ".rar" << ".torrent" << ".mp3" << ".avi" << ".mpg"
