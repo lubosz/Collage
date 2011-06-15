@@ -33,8 +33,14 @@ void LevelState::enter() {
   // Set up Camera
   System::Instance().logMessage("Entering LevelState...");
 
-  m_pSceneMgr = RenderEngine::Instance().m_pRoot->createSceneManager(
-          Ogre::ST_GENERIC, "LevelSceneManager");
+  if (!RenderEngine::Instance().m_pRoot->hasSceneManager("LevelSceneManager")) {
+    m_pSceneMgr = RenderEngine::Instance().m_pRoot->createSceneManager(
+            Ogre::ST_GENERIC, "LevelSceneManager");
+  } else {
+    m_pSceneMgr =
+        RenderEngine::Instance().m_pRoot->getSceneManager("LevelSceneManager");
+    m_pSceneMgr->clearScene();
+  }
 
   LevelManager levelman(m_pSceneMgr);
   connect(&levelman, SIGNAL(levelGenerated(Level*)),
@@ -96,9 +102,10 @@ void LevelState::exit() {
   System::Instance().logMessage("Leaving LevelState...");
 
   m_pSceneMgr->destroyCamera(m_pCamera);
-  if (m_pSceneMgr)
-    RenderEngine::Instance().m_pRoot->destroySceneManager(
-        m_pSceneMgr);
+//  if (m_pSceneMgr) {
+//    RenderEngine::Instance().m_pRoot->destroySceneManager(
+//        m_pSceneMgr);
+//  }
 }
 
 void LevelState::levelGenerated(Level *level) {
