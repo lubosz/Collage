@@ -24,7 +24,7 @@ LevelState::LevelState() {
   quit = false;
 
   this->level = NULL;
-  this->url = "http://en.wikipedia.org/wiki/Special:Random";
+  this->url = "wikidump4/index.html";
 }
 
 void LevelState::enter() {
@@ -69,7 +69,7 @@ void LevelState::enter() {
 //      "the-space-station/index.html",
 // 		"http://www.uni-koblenz.de/~lohoff/",
 // 		"http://www.lubosz.de",
-		this->url.c_str(),
+		this->url,
         m_pSceneMgr);
 
   // buildGUI();

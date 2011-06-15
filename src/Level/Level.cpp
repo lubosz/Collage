@@ -49,16 +49,13 @@ void Level::generateDoors() {
         if (url.contains(entry, Qt::CaseInsensitive))
 		  continue;
       }
-      qDebug() << "Door for" << url;
-	  qDebug() << "DOOR GEOMETRY:" << element.geometry();
 	  if ((element.geometry().width() > 0) && (element.geometry().height() > 0)) {
         DefaultSimulation *simulation =
           static_cast<DefaultSimulation*>(this->simulation);
         Door *doorActor = simulation->doorFactory->createActor();
 	    doorActor->geometry = element.geometry();
+		doorActor->url = url;
 		doors.push_back(doorActor);
-	  } else {
-		qDebug() << "Door REJECTED!";
 	  }
     }
 	qDebug() << "\n";

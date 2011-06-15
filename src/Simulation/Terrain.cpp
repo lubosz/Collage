@@ -15,9 +15,9 @@ Terrain::~Terrain() {
 }
 
 void Terrain::init() {
-  collisionShape.intitDebugRendering(sceneManager, id);
+  // collisionShape.intitDebugRendering(sceneManager, id);
 }
 
 void Terrain::manipulate(float d_t) {
-  collisionShape.updateDebugRendering(CollisionShape2::DEF_LINESTRIP);
+  // collisionShape.updateDebugRendering(CollisionShape2::DEF_LINESTRIP);
 }
