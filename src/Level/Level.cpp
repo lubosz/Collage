@@ -43,7 +43,7 @@ void Level::generateDoors() {
 
   foreach(QWebElement element, elements) {
       QString url = element.attribute("href");
-      if (url.contains("#") || url.contains("http"))
+      if (url.contains("#") || url.contains("http") || url.contains("%"))
         continue;
       foreach(QString entry, blacklist) {
         if (url.contains(entry, Qt::CaseInsensitive))
@@ -54,7 +54,9 @@ void Level::generateDoors() {
           static_cast<DefaultSimulation*>(this->simulation);
         Door *doorActor = simulation->doorFactory->createActor();
 	    doorActor->geometry = element.geometry();
-		doorActor->url = url;
+	    QString pagePath = webpage->mainFrame()->url().path();
+	    int absolutePathBegin = pagePath.lastIndexOf("/");
+		doorActor->url = pagePath.left(absolutePathBegin+1) + url;
 		doors.push_back(doorActor);
 	  }
     }
