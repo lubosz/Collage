@@ -52,6 +52,7 @@ void DivBoxLevel::makeOgreImage(QWebElement * element,
 
 Ogre::MaterialPtr DivBoxLevel::makeMaterial(
     Ogre::String name, Ogre::String textureName, float intensity) {
+  Ogre::MaterialManager::getSingleton().unload(name);
   Ogre::MaterialPtr material = Ogre::MaterialManager::getSingleton().create(
       name, Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
   material.get()->getTechnique(0)-> getPass(0)->createTextureUnitState(
@@ -61,22 +62,9 @@ Ogre::MaterialPtr DivBoxLevel::makeMaterial(
   return material;
 }
 
-Ogre::Vector3 DivBoxLevel::attachNode(
-    QWebElement * element,
-    Ogre::SceneNode * node,
-    Ogre::Real scale,
-    const Ogre::String & textureName,
-    Ogre::Entity* cube,
-    Ogre::Vector3 position) {
-// dead
-
-  return Ogre::Vector3::ZERO;
-}
-
 void DivBoxLevel::makeElementBoxes(
     const QWebElement &document,
     Ogre::Real scale,
-    Ogre::Real step,
     std::vector<QString> tags,
     Ogre::String meshName,
     Ogre::SceneManager * sceneManager) {
@@ -97,6 +85,7 @@ void DivBoxLevel::makeElementBoxes(
   QWebElementCollection elements;
   foreach(QString tag, tags)
     elements.append(document.findAll(tag));
+
   Ogre::Vector3 position = Ogre::Vector3(0.0, 100.0, 0.0);
 
   int elementCount = 0;
@@ -200,6 +189,7 @@ void DivBoxLevel::makeElementBoxes(
               _getDerivedPosition().y;
           float sW = smallBoxes[smallBoxIndex].width;
           float sH = smallBoxes[smallBoxIndex].height;
+
           CollisionActor* hoverplane = simulation->hoverplaneFactory
               ->createActor()
               ->addPoint(sW, sH)
@@ -453,7 +443,7 @@ void DivBoxLevel::generate() {
 
   this->generateDoors();
   makeElementBoxes(
-      page, .1, 1, tags,
+      page, .1, tags,
       "Cube.mesh", sceneManager);
 }
 

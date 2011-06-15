@@ -70,13 +70,10 @@ bool LoadingState::keyPressed(const OIS::KeyEvent &keyEventRef) {
 		m_bQuit = true;
 		return true;
 	}
-
-	Input::Instance().keyPressed(keyEventRef);
 	return true;
 }
 
 bool LoadingState::keyReleased(const OIS::KeyEvent &keyEventRef) {
-	Input::Instance().keyReleased(keyEventRef);
 	return true;
 }
 

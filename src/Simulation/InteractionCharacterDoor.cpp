@@ -29,12 +29,14 @@ void Interaction<Character, Door>::onEnter() {}
 void Interaction<Character, Door>::onLeave() {}
 
 void Interaction<Character, Door>::whileInside(float d_t) {
-  if (Input::Instance().m_pKeyboard->isKeyDown(OIS::KC_SPACE)) {
+  if (Input::Instance().m_pKeyboard->isKeyDown(OIS::KC_UP)) {
 	qDebug() << "Standing in front of door!";
 	LevelState *levelState =
 	    static_cast<LevelState*>(
 	        AppStateManager::Instance().findByName("LevelState"));
-	levelState->url = "http://en.wikipedia.org/wiki/Special:Random";
+	levelState->url = second->url;
+	levelState->level = NULL;
+	qDebug() << "trying to load" << levelState->url;
     AppStateManager::Instance().popAllAndPushAppState(levelState);
   }
 }

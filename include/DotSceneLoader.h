@@ -103,8 +103,7 @@ class DotSceneLoader {
 	void processBillboardSet(rapidxml::xml_node<>* XMLNode,
 			Ogre::SceneNode *pParent);
 	void processPlane(rapidxml::xml_node<>* XMLNode, Ogre::SceneNode *pParent);
-	void processPagedGeometry(rapidxml::xml_node<>* XMLNode,
-			Ogre::SceneNode *pParent);
+	void processPagedGeometry(rapidxml::xml_node<>* XMLNode);
 
 	void processFog(rapidxml::xml_node<>* XMLNode);
 	void processSkyBox(rapidxml::xml_node<>* XMLNode);

@@ -20,6 +20,17 @@ ELSE()
 
 ENDIF()
 
+#Warnings
+#set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -Woverloaded-virtual -Wuninitialized -Wno-error=unused-parameter")
+
+execute_process(COMMAND ${CMAKE_C_COMPILER} -dumpversion OUTPUT_VARIABLE GCC_VERSION)
+if (GCC_VERSION VERSION_GREATER 4.6 OR GCC_VERSION VERSION_EQUAL 4.6)
+    message(STATUS "GCC Version >= 4.6")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wsuggest-attribute=const")
+else()
+    message(STATUS "GCC Version < 4.6, try to upgrade")      
+endif()
+
 function(copy_plugins_config FROM_PLUGINS_CFG)
     message(STATUS "Copy from ${FROM_PLUGINS_CFG}")
     execute_process(

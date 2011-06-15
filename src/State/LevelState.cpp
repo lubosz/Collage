@@ -15,6 +15,7 @@
 using std::string;
 
 LevelState::LevelState() {
+  rotatedome = 0;
   moveSpeed = 0.5f;
   rotateSpeed = -0.5f;
 
@@ -23,7 +24,8 @@ LevelState::LevelState() {
   quit = false;
 
   this->level = NULL;
-  this->url = "http://en.wikipedia.org/wiki/Special:Random";
+  this->url = "wikidump4/index.html";
+//  this->url = "wikidump4/de.wikipedia.org/wiki/Land_(Deutschland).html";
 }
 
 void LevelState::enter() {
@@ -32,8 +34,16 @@ void LevelState::enter() {
   // Set up Camera
   System::Instance().logMessage("Entering LevelState...");
 
-  m_pSceneMgr = RenderEngine::Instance().m_pRoot->createSceneManager(
-          Ogre::ST_GENERIC, "LevelSceneManager");
+  if (!RenderEngine::Instance().m_pRoot->
+      hasSceneManager(this->url.toStdString())) {
+    m_pSceneMgr = RenderEngine::Instance().m_pRoot->createSceneManager(
+            Ogre::ST_GENERIC, this->url.toStdString());
+  } else {
+    m_pSceneMgr =
+        RenderEngine::Instance().m_pRoot->
+        getSceneManager(this->url.toStdString());
+    m_pSceneMgr->clearScene();
+  }
 
   LevelManager levelman(m_pSceneMgr);
   connect(&levelman, SIGNAL(levelGenerated(Level*)),
@@ -68,7 +78,7 @@ void LevelState::enter() {
 //      "the-space-station/index.html",
 // 		"http://www.uni-koblenz.de/~lohoff/",
 // 		"http://www.lubosz.de",
-		this->url.c_str(),
+		this->url,
         m_pSceneMgr);
 
   // buildGUI();
@@ -95,9 +105,10 @@ void LevelState::exit() {
   System::Instance().logMessage("Leaving LevelState...");
 
   m_pSceneMgr->destroyCamera(m_pCamera);
-  if (m_pSceneMgr)
-    RenderEngine::Instance().m_pRoot->destroySceneManager(
-        m_pSceneMgr);
+//  if (m_pSceneMgr) {
+//    RenderEngine::Instance().m_pRoot->destroySceneManager(
+//        m_pSceneMgr);
+//  }
 }
 
 void LevelState::levelGenerated(Level *level) {
@@ -110,14 +121,14 @@ bool LevelState::keyPressed(const OIS::KeyEvent &keyEventRef) {
     pushAppState(findByName("PauseState"));
     return true;
   }
+  Input::Instance().keyPressed();
   return true;
 }
 
 bool LevelState::keyReleased(const OIS::KeyEvent &keyEventRef) {
-  Input::Instance().keyPressed(keyEventRef);
-
   if (keyEventRef.key == OIS::KC_LEFT || keyEventRef.key == OIS::KC_RIGHT)
     Animation::Instance().deactivate();
+  Input::Instance().keyReleased();
   return true;
 }
 
@@ -200,14 +211,20 @@ void LevelState::update(double timeSinceLastFrame) {
 
   translateVector = Vector3::ZERO;
 
+  rotatedome += timeSinceLastFrame* 0.0000001;
+  Ogre::Quaternion rotation = Ogre::Quaternion(
+      Ogre::Radian(rotatedome), Ogre::Vector3::UNIT_Y);
+
+  m_pSceneMgr->getSkyDomeNode()->setOrientation(rotation);
+
   getInput();
   moveCamera();
 
-  OIS::MouseState &mutableMouseState =
-      const_cast<OIS::MouseState &>(
-          Input::Instance().m_pMouse->getMouseState());
-  m_pCamera->yaw(Degree(mutableMouseState.X.rel * rotateSpeed));
-  m_pCamera->pitch(Degree(mutableMouseState.Y.rel * rotateSpeed));
+//  OIS::MouseState &mutableMouseState =
+//      const_cast<OIS::MouseState &>(
+//          Input::Instance().m_pMouse->getMouseState());
+//  m_pCamera->yaw(Degree(mutableMouseState.X.rel * rotateSpeed));
+//  m_pCamera->pitch(Degree(mutableMouseState.Y.rel * rotateSpeed));
 }
 
 void LevelState::buildGUI() {

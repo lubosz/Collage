@@ -16,6 +16,7 @@ class Terrain: public CollisionActor {
   Terrain();
   virtual ~Terrain();
   void init();
+  void update(float d_t) {}
   void manipulate(float d_t);
 };
 

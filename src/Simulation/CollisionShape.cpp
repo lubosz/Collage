@@ -17,7 +17,7 @@ CollisionShape2::~CollisionShape2() {
 void CollisionShape2::createShape(
     std::vector<Ogre::Vector2> points,
     DefinedBy definedBy) {
-  for (int i = 0; i < points.size(); i++) {
+  for (unsigned i = 0; i < points.size(); i++) {
     this->relativePoints.push_back(points[i]);
     this->absolutePoints.push_back(points[i]);
   }
@@ -26,7 +26,7 @@ void CollisionShape2::createShape(
 }
 
 void CollisionShape2::translate(Ogre::Vector2 to) {
-  for (int i = 0; i < absolutePoints.size(); i++) {
+  for (unsigned i = 0; i < absolutePoints.size(); i++) {
     absolutePoints[i] = relativePoints[i] + to;
   }
 //  boundingSphere.center += dir;
@@ -41,7 +41,7 @@ void CollisionShape2::calculateShapeRepresentations() {
   aabb.right = &absolutePoints[0];
   std::vector<Ogre::Vector2*> convexTestPoints;
 
-  for (int i = 0; i < absolutePoints.size(); i++) {
+  for (unsigned i = 0; i < absolutePoints.size(); i++) {
     if (absolutePoints[i].y > aabb.top->y) {
       aabb.top = &absolutePoints[i];
     }
@@ -88,12 +88,12 @@ void CollisionShape2::calculateShapeRepresentations() {
     quickHullRecursion(&convexTestPoints, aabb.bottom, aabb.right);
 
   convex.points.push_back(convex.points[0]);
-  for (int i = 0; i < convex.points.size()-1; i++) {
+  for (unsigned i = 0; i < convex.points.size()-1; i++) {
     convex.edges.push_back(*(convex.points[i+1]) - *(convex.points[i]));
   }
 
   // linestrip stuff
-  for (int i = 0; i < absolutePoints.size()-1; i++) {
+  for (unsigned i = 0; i < absolutePoints.size()-1; i++) {
     linestrip.points.push_back(&absolutePoints[i]);
     Ogre::Vector2 edge = absolutePoints[i+1] - absolutePoints[i];
     linestrip.edges.push_back(edge);
@@ -136,7 +136,7 @@ void CollisionShape2::quickHullRecursion(
   Ogre::Vector2* thirdPoint = a;
   std::vector<Ogre::Vector2*> nextPoints;
 
-  for (int i = 0; i < inputPoints->size(); i++) {
+  for (unsigned i = 0; i < inputPoints->size(); i++) {
     if ((*inputPoints)[i] != a && (*inputPoints)[i] != b) {
       // compute the distance between all given points and the line
       float d = (lx * (*inputPoints)[i]->x) + (ly * (*inputPoints)[i]->y) + lz;
@@ -180,7 +180,7 @@ void CollisionShape2::updateDebugRendering(
 
   switch (defBy) {
     case DEF_CONVEX:
-      for (int i = 0; i < convex.points.size(); i++) {
+      for (unsigned i = 0; i < convex.points.size(); i++) {
         debugRendering->position(convex.points[i]->x, convex.points[i]->y, 0.0);
       }
       break;
@@ -192,10 +192,12 @@ void CollisionShape2::updateDebugRendering(
       debugRendering->position(*aabb.maxX, *aabb.maxY, 0.0);
       break;
     case DEF_LINESTRIP:
-      for (int i = 0; i < linestrip.points.size(); i++) {
+      for (unsigned i = 0; i < linestrip.points.size(); i++) {
         debugRendering->position(
             linestrip.points[i]->x, linestrip.points[i]->y, 0.0);
       }
+    default:
+      break;
   }
 
 

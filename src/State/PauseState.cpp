@@ -7,6 +7,7 @@
  */
 
 #include "PauseState.h"
+#include "LevelState.h"
 
 
 PauseState::PauseState() {
@@ -48,15 +49,12 @@ bool PauseState::keyPressed(const OIS::KeyEvent &keyEventRef) {
 		m_bQuit = true;
 		return true;
 	}
-
-	Input::Instance().keyPressed(keyEventRef);
-
+	Input::Instance().keyPressed();
 	return true;
 }
 
 bool PauseState::keyReleased(const OIS::KeyEvent &keyEventRef) {
-	Input::Instance().keyReleased(keyEventRef);
-
+	Input::Instance().keyReleased();
 	return true;
 }
 
@@ -94,15 +92,18 @@ void PauseState::update(double timeSinceLastFrame) {
 }
 
 void PauseState::buttonHit(OgreBites::Button *button) {
-	if (button->getName() == "ExitBtn")
+	if (button->getName() == "ExitBtn") {
 		UserInterface::Instance().m_pTrayMgr->showYesNoDialog("Sure?",
 				"Really leave?");
-	else if (button->getName() == "BackToGameBtn")
+	}	else if (button->getName() == "BackToGameBtn") {
 		m_bQuit = true;
-  else if (button->getName() == "RestartGameBtn")
+	} else if (button->getName() == "RestartGameBtn") {
+    LevelState* foo = reinterpret_cast<LevelState*>(findByName("LevelState"));
+    foo->url = "wikidump4/index.html";
     popAllAndPushAppState(findByName("LevelState"));
-	else if (button->getName() == "BackToMenuBtn")
+  }	else if (button->getName() == "BackToMenuBtn") {
 		popAllAndPushAppState(findByName("MenuState"));
+  }
 }
 
 void PauseState::yesNoDialogClosed(const Ogre::DisplayString& question,

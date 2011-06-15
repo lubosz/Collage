@@ -21,7 +21,7 @@ Character::~Character() {
 }
 
 void Character::init() {
-  collisionShape.intitDebugRendering(sceneManager, id);
+  // collisionShape.intitDebugRendering(sceneManager, id);
 }
 
 void Character::manipulate(float d_t) {
@@ -67,10 +67,11 @@ void Character::manipulate(float d_t) {
     jumpTime = 0.0;
   } else {
     jumpTime += d_t;
+    Animation::Instance().isrunning = false;
   }
-  if (Input::Instance().m_pKeyboard->isKeyDown(OIS::KC_UP)) {
+  if (Input::Instance().m_pKeyboard->isKeyDown(OIS::KC_SPACE)) {
     if ((jumpAbility == 1) || (jumpAbility == 2 && jumpTime > 0.2)) {
-      velocity.y = 100.0;
+      velocity.y = 60.0* sqrt(Animation::Instance().moveSpeed);
       jumpAbility++;
       Animation::Instance().isrunning = false;
     }
@@ -112,5 +113,5 @@ void Character::manipulate(float d_t) {
 //    velocity = moveConstraintMax * velocity.length();
 //  }
 
-  collisionShape.updateDebugRendering(CollisionShape2::DEF_AABB);
+  // collisionShape.updateDebugRendering(CollisionShape2::DEF_CONVEX);
 }

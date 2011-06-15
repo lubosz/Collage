@@ -20,6 +20,7 @@
 class LevelState : public AppState {
     Q_OBJECT
  public:
+  Level *level;
   LevelState();
 
   DECLARE_APPSTATE_CLASS(LevelState)
@@ -41,7 +42,7 @@ class LevelState : public AppState {
 
   void update(double timeSinceLastFrame);
 
-  std::string url;
+  QString url;
 
   public slots:
   void levelGenerated(Level *level);
@@ -49,7 +50,7 @@ class LevelState : public AppState {
  private:
 
   bool quit;
-  Level *level;
+  float rotatedome;
 
   Ogre::Vector3 translateVector;
   Ogre::Real moveSpeed;

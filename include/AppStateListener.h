@@ -22,7 +22,6 @@ class AppStateListener {
 	virtual void changeAppState(AppState *state) = 0;
 	virtual bool pushAppState(AppState* state) = 0;
 	virtual void popAppState() = 0;
-	virtual void pauseAppState(AppState* state) = 0;
 	virtual void shutdown() = 0;
 	virtual void popAllAndPushAppState(AppState* state) = 0;
 };

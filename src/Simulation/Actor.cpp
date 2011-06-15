@@ -39,6 +39,7 @@ void CollisionActor::update(float d_t) {
   // qDebug() << "Actor.update()" << this->id.c_str();
   assert(sceneNode != NULL);
   moveVector *= possibleMoveRatio;
+  sceneNode = (Ogre::SceneNode*) sceneNode;
   sceneNode->translate(to3D(moveVector, sceneNode->getPosition().z));
   collisionShape.translate(to2D(sceneNode->getPosition()));
 

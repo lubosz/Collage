@@ -63,6 +63,7 @@ int CollageApplication::exec() {
 
   System::Instance().logMessage("Appstates initialized");
   AppStateManager::Instance().start("LevelState");
+  return 0;
 }
 
 

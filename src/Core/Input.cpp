@@ -70,7 +70,7 @@ void Input::initOis(
     m_pMouse->setEventCallback(pMouseListener);
 }
 
-bool Input::keyPressed(const OIS::KeyEvent &keyEventRef) {
+bool Input::keyPressed() {
     if (m_pKeyboard->isKeyDown(OIS::KC_SYSRQ)) {
         RenderEngine::Instance().m_pRenderWnd->
         		writeContentsToTimestampedFile("AOF_Screenshot_", ".jpg");
@@ -92,20 +92,20 @@ bool Input::keyPressed(const OIS::KeyEvent &keyEventRef) {
 }
 
 
-bool Input::keyReleased(const OIS::KeyEvent &keyEventRef) {
+bool Input::keyReleased() {
     return true;
 }
 
-bool Input::mouseMoved(const OIS::MouseEvent &evt) {
-    return true;
-}
-
-
-bool Input::mousePressed(const OIS::MouseEvent &evt, OIS::MouseButtonID id) {
+bool Input::mouseMoved() {
     return true;
 }
 
 
-bool Input::mouseReleased(const OIS::MouseEvent &evt, OIS::MouseButtonID id) {
+bool Input::mousePressed() {
+    return true;
+}
+
+
+bool Input::mouseReleased() {
     return true;
 }

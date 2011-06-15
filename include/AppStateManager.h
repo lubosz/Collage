@@ -32,7 +32,6 @@ class AppStateManager : public AppStateListener,
 	void changeAppState(AppState* state);
 	bool pushAppState(AppState* state);
 	void popAppState(void);
-	void pauseAppState(AppState* state);
 	void shutdown(void);
 	void popAllAndPushAppState(AppState* state);
 
