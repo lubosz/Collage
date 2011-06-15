@@ -68,33 +68,9 @@ Ogre::Vector3 DivBoxLevel::attachNode(
     const Ogre::String & textureName,
     Ogre::Entity* cube,
     Ogre::Vector3 position) {
+// dead
 
-  Ogre::MaterialPtr material =
-      makeMaterial("PageMat" + Ogre::StringConverter::toString(position),
-      textureName, 1.3);
-//  material.get()->setSceneBlending(
-//      Ogre::SBF_SOURCE_ALPHA, Ogre::SBF_DEST_ALPHA);
-//  material.get()->getTechnique(0)->getPass(0)->setSceneBlending(
-//      Ogre::SBT_TRANSPARENT_COLOUR);
-
-  Ogre::Real width = element->geometry().width()*scale;
-  Ogre::Real height = element->geometry().height()*scale;
-
-  cube->getSubEntity(1)->setMaterial(material);
-  Ogre::Real x, y, z;
-  x = width*2;
-  y = -height/3.0;
-  z = 0;
-
-  Ogre::Vector3 move(x, y, z);
-
-  qDebug() << "Position:" << x << y << z
-      << "Size:" << width << height << "Scale:" << scale;
-  node->attachObject(cube);
-  node->setPosition(move + position);
-  node->setScale(width, height, width);
-
-  return move;
+  return Ogre::Vector3::ZERO;
 }
 
 void DivBoxLevel::makeElementBoxes(
@@ -121,107 +97,319 @@ void DivBoxLevel::makeElementBoxes(
   QWebElementCollection elements;
   foreach(QString tag, tags)
     elements.append(document.findAll(tag));
-  Ogre::Vector3 position = Ogre::Vector3::ZERO;
-  int i = 0;
+  Ogre::Vector3 position = Ogre::Vector3(0.0, 100.0, 0.0);
 
+  int elementCount = 0;
   foreach(QWebElement element, elements) {
       if (fits(&element, 10, 4096)) {
-//        qDebug() << "Some " << tagName << " " << element.geometry();
-        Ogre::Entity* cube = sceneManager->createEntity(meshName);
         Ogre::String textureName =
             "PageTex"  + element.tagName().toStdString()
-            + Ogre::StringConverter::toString(i);
+            + Ogre::StringConverter::toString(elementCount);
 
-//  qDebug() << "\n\nStyle" << webpage->mainFrame()->documentElement().
-//      styleProperty("#background-color", QWebElement::ComputedStyle);
+        Box box;
+        box.width = element.geometry().width()*scale;
+        box.height = element.geometry().height()*scale;
+
+        box.sceneNode = sceneManager->createSceneNode(textureName);
+
         element.setStyleProperty("background-color", "white");
 
-        Ogre::Real width = element.geometry().width()*scale;
-        Ogre::Real height = element.geometry().height()*scale;
+        Ogre::Entity* cube = sceneManager->createEntity(meshName);
 
-        Ogre::SceneNode * boxNode = (Ogre::SceneNode*) sceneManager->
-            getRootSceneNode()->createChild(textureName);
-//        Actor *actor = new Actor();
         makeOgreImage(&element, textureName);
+        Ogre::MaterialPtr material =
+            makeMaterial("PageMat" + Ogre::StringConverter::toString(position),
+            textureName, 1.3);
+        cube->getSubEntity(1)->setMaterial(material);
+        box.sceneNode->attachObject(cube);
+        box.sceneNode->setScale(box.width, box.height, box.width);
 
-        position +=
-            attachNode(&element, boxNode, scale,
-            textureName, cube, position);
+        if (box.width > 50)
+          bigBoxes.push_back(box);
+        else
+          smallBoxes.push_back(box);
 
-        Ogre::Vector3 current = simulation->terrainFactory->createActor()
-           ->addPoint(-width, -height)
-           ->addPoint(-width, height)
-           ->addPoint(width, height)
-           ->addPoint(width, -height)
-           ->addPoint(-width, -height)
-           ->createCollisionShape(CollisionShape2::DEF_LINESTRIP)
-           ->teleport(position.x, position.y)
-           ->sceneNode->_getDerivedPosition();
+        elementCount++;
+      }
+  }
 
-		if ((i < this->doors.size()) && ((i % 3) == 0)) {
-		  Door* door = this->doors[i];
+  int smallBoxIndex = 0;
+  for (int i = 0; i < bigBoxes.size(); i++) {
+    CollisionActor* actor = simulation->terrainFactory->createActor()
+       ->addPoint(bigBoxes[i].width, bigBoxes[i].height)
+       ->addPoint(-bigBoxes[i].width, -bigBoxes[i].height)
+       ->createCollisionShape(CollisionShape2::DEF_AABB);
 
-          Ogre::SceneNode* child = door->sceneNode->createChildSceneNode();
+    if (i == 0) {
+// FIRST PLANE-----------------------
+      actor->teleport(100.0, 100.0);
 
-          Ogre::Entity* doorEntity = sceneManager->createEntity("door.mesh");
-          // door->sceneNode->attachObject(doorEntity);
-          // door->sceneNode->setOrientation(
-		  //   Ogre::Quaternion(Ogre::Degree(180.0), Ogre::Vector3::UNIT_Y));
-          // door->sceneNode->setScale(20, 30, 20);
+      characterSceneNode = simulation->characterFactory->createActor()
+          ->addPoint(4.0, 30.0)
+          ->addPoint(-4.0, -10.0)
+          ->createCollisionShape(CollisionShape2::DEF_CONVEX)
+          ->teleport(100.0, bigBoxes[i].height * 2 + 200.0)
+          ->sceneNode;
 
-          child->attachObject(doorEntity);
-          child->setOrientation(
-		    Ogre::Quaternion(Ogre::Degree(180.0), Ogre::Vector3::UNIT_Y));
-          child->setScale(20, 30, 20);
-		  // child->translate(0, 0, -5);
+      Ogre::SceneNode* sn = sceneManager->getSceneNode("Armature");
+      sceneManager->getRootSceneNode()->removeChild(sn);
+      characterSceneNode->addChild(sn);
+      sn->scale(0.4, 0.4, 0.4);
+      sn->translate(0, 10, 0);
+      sn->setOrientation(
+          Ogre::Quaternion(Ogre::Degree(90.0), Ogre::Vector3::UNIT_Y));
 
-		  // FIXME figure this out based on the door mesh
-		  double w = 40;
-		  double h = 60;
-		  door
-		    ->addPoint(0, 0)
-		    ->addPoint(w, 0)
-		    ->addPoint(0, h)
-		    ->addPoint(w, h)
-		    ->createCollisionShape(CollisionShape2::DEF_LINESTRIP)
-		    ->teleport(position.x - w/2., position.y + height);
-		}
+    } else {
+// FURTHER PLANES--------------------
+      float lX = bigBoxes[i - 1].sceneNode->_getDerivedPosition().x;
+      float lY = bigBoxes[i - 1].sceneNode->_getDerivedPosition().y;
+      float lW = bigBoxes[i - 1].width;
+      float lH = bigBoxes[i - 1].height;
+      float cX = bigBoxes[i].sceneNode->_getDerivedPosition().x;
+      float cY = bigBoxes[i].sceneNode->_getDerivedPosition().y;
+      float cW = bigBoxes[i].width;
+      float cH = bigBoxes[i].height;
 
-        if (i == 0) {
-          characterSceneNode = simulation->characterFactory->createActor()
-              ->addPoint(2.0, 0.0)
-              ->addPoint(-2.0, 0.0)
-              ->addPoint(4.0, -3.0)
-              ->addPoint(-4.0, -3.0)
-              ->addPoint(0.0, -10.0)
-              ->createCollisionShape(CollisionShape2::DEF_CONVEX)
-              ->teleport(current.x, current.y + height + 300.0)
-              ->sceneNode;
+      if (cH - lH > 50.0 && smallBoxes.size() - 1 - smallBoxIndex > 1) {
+        // current is mutch higher then last
+        actor->teleport(lX + lW + cW, 100.0);
 
-          CollisionActor *hoverplane = simulation->hoverplaneFactory
+        float sX = smallBoxes[smallBoxIndex].sceneNode->_getDerivedPosition().x;
+        float sY = smallBoxes[smallBoxIndex].sceneNode->_getDerivedPosition().y;
+        float sW = smallBoxes[smallBoxIndex].width;
+        float sH = smallBoxes[smallBoxIndex].height;
+        CollisionActor* hoverplane = simulation->hoverplaneFactory
+            ->createActor()
+            ->addPoint(sW, sH)
+            ->addPoint(-sW, -sH)
+            ->createCollisionShape(CollisionShape2::DEF_AABB);
+        static_cast<Hoverplane*>(hoverplane)
+                      ->setSpeed(0.2 + static_cast<float>
+                  (static_cast<int>(lX * cX * cW) % 5) * 0.1)
+            ->setPath(lX + lW - sW - 100.0, lY + lH - sH + 10.0,
+                lX + lW - sW - 100.0, lY + lH - sH + cH - lH);
+        hoverplane->sceneNode->addChild(smallBoxes[smallBoxIndex].sceneNode);
+        smallBoxIndex++;
+      } else {
+        if (lH - cH > 50.0 && smallBoxes.size() - 1 - smallBoxIndex > 1) {
+          actor->teleport(lX + lW + cW, 100.0);
+
+          float sX = smallBoxes[smallBoxIndex].sceneNode->
+              _getDerivedPosition().x;
+          float sY = smallBoxes[smallBoxIndex].sceneNode->
+              _getDerivedPosition().y;
+          float sW = smallBoxes[smallBoxIndex].width;
+          float sH = smallBoxes[smallBoxIndex].height;
+          CollisionActor* hoverplane = simulation->hoverplaneFactory
               ->createActor()
-              ->addPoint(-20.0, -2.0)
-              ->addPoint(20.0, 2.0)
+              ->addPoint(sW, sH)
+              ->addPoint(-sW, -sH)
               ->createCollisionShape(CollisionShape2::DEF_AABB);
           static_cast<Hoverplane*>(hoverplane)
-              ->setSpeed(0.5)
-              ->setPath(current.x, current.y + height + 100.0,
-                  current.x, current.y + height + 10.0);
+                      ->setSpeed(0.2 + static_cast<float>
+                  (static_cast<int>(lX * cX * cW) % 5) * 0.1)
+              ->setPath(cX, cY + cH + sH + 10.0,
+                  cX, cY + cH + sH + lH);
+          hoverplane->sceneNode->addChild(smallBoxes[smallBoxIndex].sceneNode);
+          smallBoxIndex++;
+        } else {
+          if (i%3 == 2 && smallBoxes.size() - 1 - smallBoxIndex > 3) {
+            actor->teleport(lX + lW + cW +
+                smallBoxes[smallBoxIndex].sceneNode
+                ->_getDerivedPosition().x +
+                smallBoxes[smallBoxIndex+1].sceneNode
+                ->_getDerivedPosition().x +
+                smallBoxes[smallBoxIndex+2].sceneNode
+                ->_getDerivedPosition().x
+                + 400.0,
+                100.0);
+            {
+              float sX = smallBoxes[smallBoxIndex].sceneNode->
+                  _getDerivedPosition().x;
+              float sY = smallBoxes[smallBoxIndex].sceneNode->
+                  _getDerivedPosition().y;
+              float sW = smallBoxes[smallBoxIndex].width;
+              float sH = smallBoxes[smallBoxIndex].height;
+              CollisionActor* hoverplane = simulation->hoverplaneFactory
+                  ->createActor()
+                  ->addPoint(sW, sH)
+                  ->addPoint(-sW, -sH)
+                  ->createCollisionShape(CollisionShape2::DEF_AABB);
+              static_cast<Hoverplane*>(hoverplane)
+                      ->setSpeed(0.1 + static_cast<float>
+                  (static_cast<int>(lX * cX * sW) % 5) * 0.1)
+                  ->setPath(lX + lW + 100.0, lY + lH - sH,
+                      lX + lW + 100.0, lY + lH + cH + 200.0);
+              hoverplane->sceneNode
+              ->addChild(smallBoxes[smallBoxIndex].sceneNode);
+            }
+            {
+              float sX = smallBoxes[smallBoxIndex+1].sceneNode->
+                  _getDerivedPosition().x;
+              float sY = smallBoxes[smallBoxIndex+1].sceneNode->
+                  _getDerivedPosition().y;
+              float sW = smallBoxes[smallBoxIndex+1].width;
+              float sH = smallBoxes[smallBoxIndex+1].height;
+              CollisionActor* hoverplane = simulation->hoverplaneFactory
+                  ->createActor()
+                  ->addPoint(sW, sH)
+                  ->addPoint(-sW, -sH)
+                  ->createCollisionShape(CollisionShape2::DEF_AABB);
+              static_cast<Hoverplane*>(hoverplane)
+                      ->setSpeed(0.2 + static_cast<float>
+                  (static_cast<int>(lX * cX * sW) % 5) * 0.1)
+                  ->setPath(lX + lW + 200.0, lY + lH - sH,
+                      lX + lW + 200.0, lY + lH + cH + 200.0);
+              hoverplane->sceneNode
+              ->addChild(smallBoxes[smallBoxIndex+1].sceneNode);
+            }
+            {
+              float sX = smallBoxes[smallBoxIndex+2].sceneNode->
+                  _getDerivedPosition().x;
+              float sY = smallBoxes[smallBoxIndex+2].sceneNode->
+                  _getDerivedPosition().y;
+              float sW = smallBoxes[smallBoxIndex+2].width;
+              float sH = smallBoxes[smallBoxIndex+2].height;
+              CollisionActor* hoverplane = simulation->hoverplaneFactory
+                  ->createActor()
+                  ->addPoint(sW, sH)
+                  ->addPoint(-sW, -sH)
+                  ->createCollisionShape(CollisionShape2::DEF_AABB);
+              static_cast<Hoverplane*>(hoverplane)
+                  ->setSpeed(0.15 + static_cast<float>
+              (static_cast<int>(lX * cX * sW) % 5) * 0.1)
+                  ->setPath(lX + lW + 300.0, lY + lH - sH,
+                      lX + lW + 300.0, lY + lH + cH + 200.0);
+              hoverplane->sceneNode
+              ->addChild(smallBoxes[smallBoxIndex+2].sceneNode);
+            }
 
-
-          Ogre::SceneNode* sn = sceneManager->getSceneNode("Armature");
-          sceneManager->getRootSceneNode()->removeChild(sn);
-          characterSceneNode->addChild(sn);
-          sn->scale(0.4, 0.4, 0.4);
-          sn->translate(0, 10, 0);
-          sn->setOrientation(
-              Ogre::Quaternion(Ogre::Degree(90.0), Ogre::Vector3::UNIT_Y));
+            smallBoxIndex += 3;
+          } else {
+            actor->teleport(lX + lW + cW + 100.0, 100.0);
+          }
         }
-
-        i++;
       }
     }
+    actor->sceneNode->addChild(bigBoxes[i].sceneNode);
+    if ((i == (bigBoxes.size()-1) / 2 || i == bigBoxes.size()-1)
+        && this->doors.size() > 1) {
+      CollisionActor* door;
+      if (i == (bigBoxes.size()-1) / 2)
+        door = this->doors[0];
+      else
+        door = this->doors[1];
+      door
+          ->addPoint(0.0, 0.0)
+          ->addPoint(40, 60)
+          ->createCollisionShape(CollisionShape2::DEF_AABB)
+          ->teleport(
+              bigBoxes[i].sceneNode->_getDerivedPosition().x,
+              bigBoxes[i].sceneNode->_getDerivedPosition().y
+              + bigBoxes[i].height);
+
+      Ogre::Entity* doorEntity = sceneManager->createEntity("door.mesh");
+      door->sceneNode->attachObject(doorEntity);
+      door->sceneNode->setScale(20, 30, 20);
+      door->sceneNode->setOrientation(
+              Ogre::Quaternion(Ogre::Degree(180.0), Ogre::Vector3::UNIT_Y));
+    }
+  }
 }
+//        position += Ogre::Vector3(
+//            width * 2.0 + 2.0 * static_cast<float>(
+//                static_cast<int>(width * height) % 1000),
+//            -height/3.0, 0);
+//
+//        Ogre::SceneNode* currentSceneNode;
+//        if (width > 40.0) {
+//          currentSceneNode = simulation->terrainFactory->createActor()
+//             ->addPoint(-width, -height)
+//             ->addPoint(width, height)
+//             ->createCollisionShape(CollisionShape2::DEF_AABB)
+//             ->teleport(position.x, position.y)
+//             ->sceneNode;
+//        } else {
+//          CollisionActor* hoverplane = simulation->hoverplaneFactory
+//              ->createActor()
+//              ->addPoint(-width, -height)
+//              ->addPoint(width, height)
+//              ->createCollisionShape(CollisionShape2::DEF_AABB)
+//              ->teleport(position.x, position.y);
+//          static_cast<Hoverplane*>(hoverplane)
+//              ->setSpeed(0.2 +
+//                  static_cast<float>(static_cast<int>(width * height) % 5)
+//                  * 0.1)
+//              ->setPath(position.x, position.y,
+//                  position.x, position.y + 150.0 + width);
+//          currentSceneNode = hoverplane->sceneNode;
+//        }
+//        Ogre::Vector3 current = currentSceneNode->_getDerivedPosition();
+//
+//        attachNode(&element, currentSceneNode, scale,
+//        textureName, cube, position) + width;
+//
+//  	if ((i < this->doors.size()) && ((i % 3) == 0)) {
+//  	  Door* door = this->doors[i];
+//
+//          Ogre::SceneNode* child = door->sceneNode->createChildSceneNode();
+//
+//          Ogre::Entity* doorEntity = sceneManager->createEntity("door.mesh");
+//          // door->sceneNode->attachObject(doorEntity);
+//          // door->sceneNode->setOrientation(
+//  	  //   Ogre::Quaternion(Ogre::Degree(180.0), Ogre::Vector3::UNIT_Y));
+//          // door->sceneNode->setScale(20, 30, 20);
+//
+//          child->attachObject(doorEntity);
+//          child->setOrientation(
+//  	    Ogre::Quaternion(Ogre::Degree(180.0), Ogre::Vector3::UNIT_Y));
+//          child->setScale(20, 30, 20);
+//  	  // child->translate(0, 0, -5);
+//
+//  	  // FIXME figure this out based on the door mesh
+//  	  double w = 40;
+//  	  double h = 60;
+//  	  door
+//  	    ->addPoint(0, 0)
+//  	    ->addPoint(w, 0)
+//  	    ->addPoint(0, h)
+//  	    ->addPoint(w, h)
+//  	    ->createCollisionShape(CollisionShape2::DEF_LINESTRIP)
+//  	    ->teleport(position.x - w/2., position.y + height);
+//  	}
+//
+//        if (i == 0) {
+//          characterSceneNode = simulation->characterFactory->createActor()
+//              ->addPoint(4.0, 30.0)
+//              ->addPoint(-4.0, -10.0)
+//              ->createCollisionShape(CollisionShape2::DEF_CONVEX)
+//              ->teleport(current.x, current.y + height + 300.0)
+//              ->sceneNode;
+//
+//          CollisionActor *hoverplane = simulation->hoverplaneFactory
+//              ->createActor()
+//              ->addPoint(-20.0, -2.0)
+//              ->addPoint(20.0, 2.0)
+//              ->createCollisionShape(CollisionShape2::DEF_AABB);
+//          static_cast<Hoverplane*>(hoverplane)
+//              ->setSpeed(0.5)
+//              ->setPath(current.x, current.y + height + 100.0,
+//                  current.x, current.y + height + 10.0);
+//
+//
+//          Ogre::SceneNode* sn = sceneManager->getSceneNode("Armature");
+//          sceneManager->getRootSceneNode()->removeChild(sn);
+//          characterSceneNode->addChild(sn);
+//          sn->scale(0.4, 0.4, 0.4);
+//          sn->translate(0, 10, 0);
+//          sn->setOrientation(
+//              Ogre::Quaternion(Ogre::Degree(90.0), Ogre::Vector3::UNIT_Y));
+//        }
+//
+//        i++;
+//      }
+//    }
+//  }
 
 bool DivBoxLevel::fits(QWebElement * element, int min, int max) {
   if (element->geometry().width() > min &&

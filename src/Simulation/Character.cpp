@@ -112,5 +112,5 @@ void Character::manipulate(float d_t) {
 //    velocity = moveConstraintMax * velocity.length();
 //  }
 
-  collisionShape.updateDebugRendering(CollisionShape2::DEF_CONVEX);
+  collisionShape.updateDebugRendering(CollisionShape2::DEF_AABB);
 }

@@ -32,4 +32,13 @@ class DivBoxLevel : public Level {
     Ogre::MaterialPtr makeMaterial(Ogre::String name, Ogre::String textureName,
         float intensity);
     void placeDoor(Door *door, QRect geom);
+
+    struct Box {
+      Ogre::SceneNode* sceneNode;
+      float width;
+      float height;
+    };
+
+    std::vector<Box> smallBoxes;
+    std::vector<Box> bigBoxes;
 };
