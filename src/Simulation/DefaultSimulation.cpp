@@ -15,6 +15,9 @@ DefaultSimulation::DefaultSimulation(Ogre::SceneManager* sceneManager)
   doorFactory = new ActorFactory<Door>(sceneManager, "door");
   actorFactories.push_back(doorFactory);
 
+  hoverplaneFactory = new ActorFactory<Hoverplane>(sceneManager, "hoverplane");
+  actorFactories.push_back(hoverplaneFactory);
+
   InteractionHandler<Character, Terrain>* ihCharacterTerrain =
     new InteractionHandler<Character, Terrain>(characterFactory,
                                                terrainFactory);
@@ -30,6 +33,12 @@ DefaultSimulation::DefaultSimulation(Ogre::SceneManager* sceneManager)
     new InteractionHandler<Character, Door>(characterFactory, doorFactory);
   interactionHandlers.push_back(
     static_cast<AbstractInteractionHandler*>(ihCharacterDoor));
+
+  InteractionHandler<Character, Hoverplane>* ihCharacterHoverplane =
+    new InteractionHandler<Character, Hoverplane>(
+        characterFactory, hoverplaneFactory);
+  interactionHandlers.push_back(
+    static_cast<AbstractInteractionHandler*>(ihCharacterHoverplane));
 }
 
 DefaultSimulation::~DefaultSimulation() {

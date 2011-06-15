@@ -8,6 +8,7 @@
 #include "Door.h"
 #include "Character.h"
 #include "Terrain.h"
+#include "Hoverplane.h"
 
 class DefaultSimulation : public Simulation {
   public:
@@ -17,6 +18,7 @@ class DefaultSimulation : public Simulation {
     ActorFactory<Terrain> *terrainFactory;
     ActorFactory<Character> *characterFactory;
     ActorFactory<Door> *doorFactory;
+    ActorFactory<Hoverplane> *hoverplaneFactory;
 };
 
 #endif /* DEFAULTSIMULATION_H_ */
