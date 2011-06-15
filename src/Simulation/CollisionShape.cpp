@@ -5,6 +5,10 @@
 #include "CollisionShape.h"
 
 CollisionShape2::CollisionShape2() {
+  aabb.maxY = new float();
+  aabb.minY = new float();
+  aabb.maxX = new float();
+  aabb.minX = new float();
 }
 
 CollisionShape2::~CollisionShape2() {

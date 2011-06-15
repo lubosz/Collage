@@ -31,9 +31,10 @@ void Interaction<Character, Door>::onLeave() {}
 void Interaction<Character, Door>::whileInside(float d_t) {
   if (Input::Instance().m_pKeyboard->isKeyDown(OIS::KC_SPACE)) {
 	qDebug() << "Standing in front of door!";
-	LevelState *levelState = static_cast<LevelState*>(
-	    AppStateManager::Instance().findByName("LevelState"));
-	levelState->url = "wikidump4/index2.html";
+	LevelState *levelState =
+	    static_cast<LevelState*>(
+	        AppStateManager::Instance().findByName("LevelState"));
+	levelState->url = "http://en.wikipedia.org/wiki/Special:Random";
     AppStateManager::Instance().popAllAndPushAppState(levelState);
   }
 }

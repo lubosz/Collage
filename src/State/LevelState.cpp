@@ -23,7 +23,7 @@ LevelState::LevelState() {
   quit = false;
 
   this->level = NULL;
-  this->url = "wikidump4/index.html";
+  this->url = "http://en.wikipedia.org/wiki/Special:Random";
 }
 
 void LevelState::enter() {
