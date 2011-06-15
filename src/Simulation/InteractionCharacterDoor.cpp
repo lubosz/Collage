@@ -34,7 +34,7 @@ void Interaction<Character, Door>::whileInside(float d_t) {
 	LevelState *levelState =
 	    static_cast<LevelState*>(
 	        AppStateManager::Instance().findByName("LevelState"));
-	levelState->url = "http://en.wikipedia.org/wiki/Special:Random";
+	levelState->url = QString("wikidump4/") + second->url;
     AppStateManager::Instance().popAllAndPushAppState(levelState);
   }
 }
