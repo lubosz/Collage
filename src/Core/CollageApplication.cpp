@@ -14,6 +14,7 @@
 #include "System.h"
 #include "MenuState.h"
 #include "PauseState.h"
+#include "LostState.h"
 #include "LoadingState.h"
 #include "SimulationTestState.h"
 #include "LevelState.h"
@@ -53,6 +54,7 @@ int CollageApplication::exec() {
   m_pAppStateManager = new AppStateManager();
 
   MenuState::create(m_pAppStateManager, "MenuState");
+  LostState::create(m_pAppStateManager, "LostState");
   PauseState::create(m_pAppStateManager, "PauseState");
   LoadingState::create(m_pAppStateManager, "LoadingState");
   WallPaperLoadingState::create(m_pAppStateManager, "WallPaperLoadingState");

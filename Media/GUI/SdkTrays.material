@@ -318,6 +318,20 @@ material SdkTrays/Wallpaper : SdkTrays/Base
     }
 }
 
+material SdkTrays/Lostthegame : SdkTrays/Base
+{
+    technique
+    {
+        pass
+        {
+            texture_unit
+            {
+                texture lostthegame.jpg
+            }
+        }
+    }
+}
+
 material SdkTrays/LoadingScreen : SdkTrays/Base
 {
     technique
