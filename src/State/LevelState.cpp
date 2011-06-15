@@ -23,7 +23,7 @@ LevelState::LevelState() {
   quit = false;
 
   this->level = NULL;
-  this->url = "wikidump4/index.html";
+  this->url = "http://en.wikipedia.org/wiki/Special:Random";
 }
 
 void LevelState::enter() {
@@ -71,7 +71,7 @@ void LevelState::enter() {
 		this->url.c_str(),
         m_pSceneMgr);
 
-  //buildGUI();
+  // buildGUI();
 }
 
 bool LevelState::pause() {
@@ -84,7 +84,7 @@ void LevelState::resume() {
   System::Instance().logMessage(
       "Resuming LevelState...");
 
-  //buildGUI();
+  // buildGUI();
 
   RenderEngine::Instance().m_pViewport->setCamera(m_pCamera);
   quit = false;

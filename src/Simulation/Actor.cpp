@@ -36,7 +36,7 @@ void CollisionActor::setValues(float d_t) {
 }
 
 void CollisionActor::update(float d_t) {
-  //qDebug() << "Actor.update()" << this->id.c_str();
+  // qDebug() << "Actor.update()" << this->id.c_str();
   assert(sceneNode != NULL);
   moveVector *= possibleMoveRatio;
   sceneNode->translate(to3D(moveVector, sceneNode->getPosition().z));
