@@ -14,6 +14,7 @@
 DivBoxLevel::DivBoxLevel(Ogre::SceneManager *sceneManager)
   : Level(sceneManager) {
   this->name = "DivBoxLevel";
+  qDebug() << "Creating " << this->name;
 }
 
 float DivBoxLevel::getScore(QWebPage *webpage) {

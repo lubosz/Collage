@@ -11,8 +11,10 @@
 #include <OGRE/Ogre.h>
 
 #include "AppStateListener.h"
+#include "Singleton.h"
 
-class AppStateManager : public AppStateListener {
+class AppStateManager : public AppStateListener,
+						public Singleton<AppStateManager> {
  public:
 	typedef struct {
 		Ogre::String name;
@@ -26,7 +28,7 @@ class AppStateManager : public AppStateListener {
 
 	AppState* findByName(Ogre::String stateName);
 
-	void start(AppState* state);
+	void start(std::string _state);
 	void changeAppState(AppState* state);
 	bool pushAppState(AppState* state);
 	void popAppState(void);

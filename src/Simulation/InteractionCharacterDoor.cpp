@@ -5,6 +5,9 @@
 #include "Input.h"
 #include "CollisionHandler.h"
 #include "InteractionCharacterDoor.h"
+#include "AppState.h"
+#include "LevelState.h"
+#include "AppStateManager.h"
 
 bool Interaction<Character, Door>::collisionTest() {
   Ogre::Vector2 collisionNormal = Ogre::Vector2::ZERO;
@@ -28,6 +31,9 @@ void Interaction<Character, Door>::onLeave() {}
 void Interaction<Character, Door>::whileInside(float d_t) {
   if (Input::Instance().m_pKeyboard->isKeyDown(OIS::KC_SPACE)) {
 	qDebug() << "Standing in front of door!";
+	LevelState *levelState = static_cast<LevelState*>(AppStateManager::Instance().findByName("LevelState"));
+	levelState->url = "wikidump4/index2.html";
+    AppStateManager::Instance().popAllAndPushAppState(levelState);
   }
 }
 

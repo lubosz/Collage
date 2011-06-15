@@ -21,8 +21,5 @@ class CollageApplication : public QApplication {
 	virtual ~CollageApplication();
 
 	int exec();
-
- private:
-	AppStateManager* m_pAppStateManager;
 };
 

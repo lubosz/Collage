@@ -13,6 +13,7 @@ Level::Level(QObject *parent)
     }
 
 Level::Level(Ogre::SceneManager *sceneManager) {
+  assert(sceneManager != NULL);
   this->sceneManager = sceneManager;
   this->simulation = new DefaultSimulation(sceneManager);
 }
