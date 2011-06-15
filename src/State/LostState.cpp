@@ -7,6 +7,7 @@
  */
 
 #include "LostState.h"
+#include "LevelState.h"
 
 
 LostState::LostState() {
@@ -89,13 +90,16 @@ void LostState::update(double timeSinceLastFrame) {
 }
 
 void LostState::buttonHit(OgreBites::Button *button) {
-	if (button->getName() == "ExitBtn")
+	if (button->getName() == "ExitBtn") {
 		UserInterface::Instance().m_pTrayMgr->showYesNoDialog("Sure?",
 				"Really leave?");
-	else if (button->getName() == "RestartGameBtn")
+	}	else if (button->getName() == "RestartGameBtn") {
+	  LevelState* foo = reinterpret_cast<LevelState*>(findByName("LevelState"));
+	  foo->url = "wikidump4/index.html";
 	  popAllAndPushAppState(findByName("LevelState"));
-	else if (button->getName() == "BackToMenuBtn")
+	}	else if (button->getName() == "BackToMenuBtn") {
 		popAllAndPushAppState(findByName("MenuState"));
+	}
 }
 
 void LostState::yesNoDialogClosed(const Ogre::DisplayString& question,
