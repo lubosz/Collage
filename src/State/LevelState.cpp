@@ -220,11 +220,11 @@ void LevelState::update(double timeSinceLastFrame) {
   getInput();
   moveCamera();
 
-  OIS::MouseState &mutableMouseState =
-      const_cast<OIS::MouseState &>(
-          Input::Instance().m_pMouse->getMouseState());
-  m_pCamera->yaw(Degree(mutableMouseState.X.rel * rotateSpeed));
-  m_pCamera->pitch(Degree(mutableMouseState.Y.rel * rotateSpeed));
+//  OIS::MouseState &mutableMouseState =
+//      const_cast<OIS::MouseState &>(
+//          Input::Instance().m_pMouse->getMouseState());
+//  m_pCamera->yaw(Degree(mutableMouseState.X.rel * rotateSpeed));
+//  m_pCamera->pitch(Degree(mutableMouseState.Y.rel * rotateSpeed));
 }
 
 void LevelState::buildGUI() {
