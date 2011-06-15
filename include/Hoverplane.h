@@ -19,6 +19,7 @@ class Hoverplane: public CollisionActor {
   void manipulate(float d_t);
 
   Hoverplane* setPath(float x1, float y1, float x2, float y2);
+  Hoverplane* setSpeed(float speed);
   Ogre::Vector2 p1, p2;
   float speed;
   float u;
