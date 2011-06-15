@@ -50,6 +50,7 @@ class LevelState : public AppState {
 
   bool quit;
   Level *level;
+  float rotatedome;
 
   Ogre::Vector3 translateVector;
   Ogre::Real moveSpeed;

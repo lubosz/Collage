@@ -15,6 +15,7 @@
 using std::string;
 
 LevelState::LevelState() {
+  rotatedome = 0;
   moveSpeed = 0.5f;
   rotateSpeed = -0.5f;
 
@@ -199,6 +200,12 @@ void LevelState::update(double timeSinceLastFrame) {
   rotScale = rotateSpeed * timeSinceLastFrame;
 
   translateVector = Vector3::ZERO;
+
+  rotatedome += timeSinceLastFrame* 0.0000001;
+  Ogre::Quaternion rotation = Ogre::Quaternion(
+      Ogre::Radian(rotatedome), Ogre::Vector3::UNIT_Y);
+
+  m_pSceneMgr->getSkyDomeNode()->setOrientation(rotation);
 
   getInput();
   moveCamera();
