@@ -21,7 +21,7 @@ Character::~Character() {
 }
 
 void Character::init() {
-  collisionShape.intitDebugRendering(sceneManager, id);
+  // collisionShape.intitDebugRendering(sceneManager, id);
 }
 
 void Character::manipulate(float d_t) {
@@ -113,5 +113,5 @@ void Character::manipulate(float d_t) {
 //    velocity = moveConstraintMax * velocity.length();
 //  }
 
-  collisionShape.updateDebugRendering(CollisionShape2::DEF_CONVEX);
+  // collisionShape.updateDebugRendering(CollisionShape2::DEF_CONVEX);
 }
