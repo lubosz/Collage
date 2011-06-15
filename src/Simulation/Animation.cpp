@@ -11,14 +11,14 @@
 
 Animation::Animation() {
   isactive = false;
-  move = true;
+  isrunning = false;
   moveSpeed = 2.0;
 }
 
 Animation::~Animation() {
 }
 
-void Animation::activate(Ogre::SceneManager *sceneManager, string entityName) {
+void Animation::init(Ogre::SceneManager *sceneManager, string entityName) {
   Ogre::Entity * entity = sceneManager->getEntity(entityName);
   Ogre::SkeletonInstance *skeletonInstance = entity->getSkeleton();
 
@@ -52,8 +52,8 @@ void Animation::deactivate() {
 }
 
 void Animation::update(double timeSinceLastFrame) {
-  if (move)
+  if (isrunning)
     foreach(Ogre::AnimationState* animationState, animationStates) {
-      animationState->addTime(timeSinceLastFrame*0.5*moveSpeed);
+        animationState->addTime(timeSinceLastFrame*0.5*moveSpeed);
     }
 }

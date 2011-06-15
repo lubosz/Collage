@@ -109,12 +109,13 @@ void DivBoxLevel::makeElementBoxes(
       "General", sceneManager, sceneManager->getRootSceneNode());
   delete pDotSceneLoader;
 
-  Animation::Instance().activate(sceneManager, "arm_left");
-  Animation::Instance().activate(sceneManager, "arm_right");
-  Animation::Instance().activate(sceneManager, "chest");
-  Animation::Instance().activate(sceneManager, "leg_left");
-  Animation::Instance().activate(sceneManager, "leg_right");
-  Animation::Instance().activate(sceneManager, "pants");
+  Animation::Instance().animationStates.clear();
+  Animation::Instance().init(sceneManager, "arm_left");
+  Animation::Instance().init(sceneManager, "arm_right");
+  Animation::Instance().init(sceneManager, "chest");
+  Animation::Instance().init(sceneManager, "leg_left");
+  Animation::Instance().init(sceneManager, "leg_right");
+  Animation::Instance().init(sceneManager, "pants");
 
   QWebElementCollection elements;
   foreach(QString tag, tags)
@@ -156,7 +157,7 @@ void DivBoxLevel::makeElementBoxes(
            ->teleport(position.x, position.y)
            ->sceneNode->_getDerivedPosition();
 
-		if (i <= this->doors.size()) {
+		if ((i < this->doors.size()) && ((i % 3) == 0)) {
 		  Door* door = this->doors[i];
 
           Ogre::SceneNode* child = door->sceneNode->createChildSceneNode();
@@ -173,17 +174,19 @@ void DivBoxLevel::makeElementBoxes(
           child->setScale(20, 30, 20);
 		  // child->translate(0, 0, -5);
 
-		  QRect geom = this->doors[i]->geometry;
+		  // FIXME figure this out based on the door mesh
+		  double w = 40;
+		  double h = 60;
 		  door
 		    ->addPoint(0, 0)
-		    ->addPoint(geom.width(), 0)
-		    ->addPoint(0, geom.height())
-		    ->addPoint(geom.width(), geom.height())
+		    ->addPoint(w, 0)
+		    ->addPoint(0, h)
+		    ->addPoint(w, h)
 		    ->createCollisionShape(CollisionShape2::DEF_AABB)
-		    ->teleport(position.x - geom.width()/2., position.y + height);
+		    ->teleport(position.x - w/2., position.y + height);
 		}
 
-        if (i == 3) {
+        if (i == 0) {
           characterSceneNode = simulation->characterFactory->createActor()
               ->addPoint(2.0, 0.0)
               ->addPoint(-2.0, 0.0)
