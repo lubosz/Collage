@@ -45,22 +45,22 @@ class AppState
     AppState() {}
 
 	AppState* findByName(Ogre::String stateName) {
-		return m_pParent->findByName(stateName);
+		return AppStateManager::Instance().findByName(stateName);
 	}
 	void changeAppState(AppState* state) {
-		m_pParent->changeAppState(state);
+		AppStateManager::Instance().changeAppState(state);
 	}
 	bool pushAppState(AppState* state) {
-		return m_pParent->pushAppState(state);
+		return AppStateManager::Instance().pushAppState(state);
 	}
 	void popAppState() {
-		m_pParent->popAppState();
+		AppStateManager::Instance().popAppState();
 	}
 	void shutdown() {
-		m_pParent->shutdown();
+		AppStateManager::Instance().shutdown();
 	}
 	void popAllAndPushAppState(AppState* state) {
-		m_pParent->popAllAndPushAppState(state);
+		AppStateManager::Instance().popAllAndPushAppState(state);
 	}
 
 	AppStateListener* m_pParent;
