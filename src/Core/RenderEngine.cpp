@@ -19,9 +19,6 @@ RenderEngine::~RenderEngine() {
     System::Instance().logMessage("Shutdown Render Engine...");
 }
 
-void RenderEngine::updateOgre(double timeSinceLastFrame) {
-}
-
 bool RenderEngine::initOgre(Ogre::String wndTitle) {
     m_pRoot = new Ogre::Root();
     System::Instance().init();

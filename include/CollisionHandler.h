@@ -173,7 +173,7 @@ class CollisionHandler {
     float dotProduct = axis->dotProduct(*convex->points[0]);
     *retMin = dotProduct;
     *retMax = dotProduct;
-    for (int i = 0; i < convex->points.size(); i++) {
+    for (unsigned i = 0; i < convex->points.size(); i++) {
       dotProduct = convex->points[i]->dotProduct(*axis);
       if (dotProduct < *retMin) {
         *retMin = dotProduct;
@@ -194,7 +194,8 @@ class CollisionHandler {
     float minDist = 100.0;
     // Loop through all the edges of both polygons
     Ogre::Vector2* currentEdge;
-    for (int i = 0; i < a->convex.edges.size() + b->convex.edges.size(); i++) {
+    for (unsigned i = 0;
+        i < a->convex.edges.size() + b->convex.edges.size(); i++) {
       if (i < a->convex.edges.size()) {
        currentEdge = &a->convex.edges[i];
       } else {
@@ -261,12 +262,12 @@ class CollisionHandler {
     aabbConvex.points.push_back(&bottomLeft);
     aabbConvex.points.push_back(&bottomRight);
     aabbConvex.points.push_back(&topRight);
-    for (int i = 0; i <  aabbConvex.points.size()-1; i++) {
+    for (unsigned i = 0; i <  aabbConvex.points.size()-1; i++) {
       aabbConvex.edges.push_back(
           *aabbConvex.points[i+1] - *aabbConvex.points[i]);
     }
 
-    for (int i = 0; i < linestrip->edges.size(); i++) {
+    for (unsigned i = 0; i < linestrip->edges.size(); i++) {
       CollisionShape2::AABB *currentAABB = &linestrip->edgeAABBs[i];
       if (CollisionTestAABB(
           aabb, currentAABB, relativeTranslation)) {
@@ -535,13 +536,13 @@ class CollisionHandler {
     float minB = std::numeric_limits<float>::infinity();
     float maxB = -std::numeric_limits<float>::infinity();
 
-    for (int i = 0; i < pointsA->size(); i++) {
+    for (unsigned i = 0; i < pointsA->size(); i++) {
 //      std::cout << *(*pointsA)[i] << currentLine->dotProduct(*(*pointsA)[i])
 //          << "  |  ";
       replaceMinMax(currentLine->dotProduct(*(*pointsA)[i]), &minA, &maxA);
     }
 //    std::cout << std::endl;
-    for (int i = 0; i < pointsB->size(); i++) {
+    for (unsigned i = 0; i < pointsB->size(); i++) {
 //      std::cout << *(*pointsB)[i] << currentLine->dotProduct(*(*pointsB)[i])
 //          << "  |  ";
       replaceMinMax(currentLine->dotProduct(*(*pointsB)[i]), &minB, &maxB);
@@ -632,7 +633,7 @@ class CollisionHandler {
     }
 //    std::cout << *collisionNormal << std::endl;
 
-    for (int i = 0; i < convex->edges.size(); i++) {
+    for (unsigned i = 0; i < convex->edges.size(); i++) {
       currentLine = -convex->edges[i].perpendicular();
 //        printf("CONVEX %i ", i);
 //        std::cout << convex->edges[i] << std::endl;

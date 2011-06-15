@@ -24,7 +24,6 @@ class DivBoxLevel : public Level {
     void makeElementBoxes(
         const QWebElement& document,
         Ogre::Real scale,
-        Ogre::Real step,
         std::vector<QString> tags,
         Ogre::String meshName,
         Ogre::SceneManager * sceneManager);

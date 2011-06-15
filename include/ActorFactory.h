@@ -67,7 +67,7 @@ template <class T> class ActorFactory : public AbstractActorFactory {
     out << name << "_" << id;
     a->id = out.str();
     actors.push_back(a);
-    for (int i = 0; i < interactionHandlers.size(); i++) {
+    for (unsigned i = 0; i < interactionHandlers.size(); i++) {
       bool place = interactionHandlers[i].second;
       interactionHandlers[i].first->addInteraction(a, place);
     }
@@ -79,13 +79,13 @@ template <class T> class ActorFactory : public AbstractActorFactory {
   }
 
   void setValues(float d_t) {
-    for (int i = 0; i < actors.size(); i++) {
+    for (unsigned i = 0; i < actors.size(); i++) {
       actors[i]->setValues(d_t);
     }
   }
 
   void update(float d_t) {
-    for (int i = 0; i < actors.size(); i++) {
+    for (unsigned i = 0; i < actors.size(); i++) {
       actors[i]->update(d_t);
     }
   }

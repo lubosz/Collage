@@ -110,14 +110,14 @@ bool LevelState::keyPressed(const OIS::KeyEvent &keyEventRef) {
     pushAppState(findByName("PauseState"));
     return true;
   }
+  Input::Instance().keyPressed();
   return true;
 }
 
 bool LevelState::keyReleased(const OIS::KeyEvent &keyEventRef) {
-  Input::Instance().keyPressed(keyEventRef);
-
   if (keyEventRef.key == OIS::KC_LEFT || keyEventRef.key == OIS::KC_RIGHT)
     Animation::Instance().deactivate();
+  Input::Instance().keyReleased();
   return true;
 }
 

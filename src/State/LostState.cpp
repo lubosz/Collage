@@ -46,15 +46,12 @@ bool LostState::keyPressed(const OIS::KeyEvent &keyEventRef) {
 		m_bQuit = true;
 		return true;
 	}
-
-	Input::Instance().keyPressed(keyEventRef);
-
+	Input::Instance().keyPressed();
 	return true;
 }
 
 bool LostState::keyReleased(const OIS::KeyEvent &keyEventRef) {
-	Input::Instance().keyReleased(keyEventRef);
-
+	Input::Instance().keyReleased();
 	return true;
 }
 

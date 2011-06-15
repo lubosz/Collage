@@ -177,6 +177,7 @@ QString FrameCapture::getFirstAttribute(const QString & tag,
     printf("\nNo <%s> tags found in %s\n", qPrintable(tag),
         qPrintable(m_page.mainFrame()->baseUrl().toString()));
   }
+  return "";
 }
 
 void FrameCapture::saveFrame(const QSize & siteResolution) {
