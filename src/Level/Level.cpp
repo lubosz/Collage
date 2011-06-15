@@ -43,7 +43,7 @@ void Level::generateDoors() {
 
   foreach(QWebElement element, elements) {
       QString url = element.attribute("href");
-      if (url.contains("#") || url.contains("http") || url.contains("%"))
+      if (url.contains("#") || url.contains(":") || url.contains("%"))
         continue;
       foreach(QString entry, blacklist) {
         if (url.contains(entry, Qt::CaseInsensitive))

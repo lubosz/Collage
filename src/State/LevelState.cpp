@@ -25,6 +25,7 @@ LevelState::LevelState() {
 
   this->level = NULL;
   this->url = "wikidump4/index.html";
+//  this->url = "wikidump4/de.wikipedia.org/wiki/Land_(Deutschland).html";
 }
 
 void LevelState::enter() {
@@ -33,12 +34,14 @@ void LevelState::enter() {
   // Set up Camera
   System::Instance().logMessage("Entering LevelState...");
 
-  if (!RenderEngine::Instance().m_pRoot->hasSceneManager("LevelSceneManager")) {
+  if (!RenderEngine::Instance().m_pRoot->
+      hasSceneManager(this->url.toStdString())) {
     m_pSceneMgr = RenderEngine::Instance().m_pRoot->createSceneManager(
-            Ogre::ST_GENERIC, "LevelSceneManager");
+            Ogre::ST_GENERIC, this->url.toStdString());
   } else {
     m_pSceneMgr =
-        RenderEngine::Instance().m_pRoot->getSceneManager("LevelSceneManager");
+        RenderEngine::Instance().m_pRoot->
+        getSceneManager(this->url.toStdString());
     m_pSceneMgr->clearScene();
   }
 

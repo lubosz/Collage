@@ -35,6 +35,8 @@ void Interaction<Character, Door>::whileInside(float d_t) {
 	    static_cast<LevelState*>(
 	        AppStateManager::Instance().findByName("LevelState"));
 	levelState->url = second->url;
+	levelState->level = NULL;
+	qDebug() << "trying to load" << levelState->url;
     AppStateManager::Instance().popAllAndPushAppState(levelState);
   }
 }

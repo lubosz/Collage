@@ -20,6 +20,7 @@
 class LevelState : public AppState {
     Q_OBJECT
  public:
+  Level *level;
   LevelState();
 
   DECLARE_APPSTATE_CLASS(LevelState)
@@ -49,7 +50,6 @@ class LevelState : public AppState {
  private:
 
   bool quit;
-  Level *level;
   float rotatedome;
 
   Ogre::Vector3 translateVector;

@@ -89,8 +89,8 @@ Ogre::Vector3 DivBoxLevel::attachNode(
 
   Ogre::Vector3 move(x, y, z);
 
-  qDebug() << "Position:" << x << y << z
-      << "Size:" << width << height << "Scale:" << scale;
+//  qDebug() << "Position:" << x << y << z
+//      << "Size:" << width << height << "Scale:" << scale;
   node->attachObject(cube);
   node->setPosition(move + position);
   node->setScale(width, height, width);
@@ -121,7 +121,7 @@ void DivBoxLevel::makeElementBoxes(
   QWebElementCollection elements;
   foreach(QString tag, tags)
     elements.append(document.findAll(tag));
-  Ogre::Vector3 position = Ogre::Vector3::ZERO;
+  Ogre::Vector3 position = Ogre::Vector3(0, 100, 0);
   unsigned i = 0;
 
   foreach(QWebElement element, elements) {
@@ -138,6 +138,10 @@ void DivBoxLevel::makeElementBoxes(
 
         Ogre::Real width = element.geometry().width()*scale;
         Ogre::Real height = element.geometry().height()*scale;
+
+        if (width == 0) width = 10;
+        if (height == 0) height = 10;
+
 
         Ogre::SceneNode * boxNode = (Ogre::SceneNode*) sceneManager->
             getRootSceneNode()->createChild(textureName);
