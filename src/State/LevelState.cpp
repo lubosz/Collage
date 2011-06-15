@@ -189,7 +189,8 @@ void LevelState::update(double timeSinceLastFrame) {
     return;
   }
 
-  if (m_pCamera->getPosition().y < -100)
+  // you can lose the game
+  if (m_pCamera->getPosition().y < -1000)
     pushAppState(findByName("LostState"));
 
   moveScale = moveSpeed * timeSinceLastFrame;
