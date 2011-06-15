@@ -15,6 +15,9 @@ DefaultSimulation::DefaultSimulation(Ogre::SceneManager* sceneManager)
   doorFactory = new ActorFactory<Door>(sceneManager, "door");
   actorFactories.push_back(doorFactory);
 
+  hoverplaneFactory = new ActorFactory<Hoverplane>(sceneManager, "hoverplane");
+  actorFactories.push_back(hoverplaneFactory);
+
   InteractionHandler<Character, Terrain>* ihCharacterTerrain =
     new InteractionHandler<Character, Terrain>(characterFactory,
                                                terrainFactory);

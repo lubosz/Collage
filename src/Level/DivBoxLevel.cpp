@@ -194,6 +194,15 @@ void DivBoxLevel::makeElementBoxes(
               ->teleport(current.x, current.y + height + 50.0)
               ->sceneNode;
 
+          CollisionActor *hoverplane = simulation->hoverplaneFactory
+              ->createActor()
+              ->addPoint(-10.0, -1.0)
+              ->addPoint(10.0, 1.0)
+              ->createCollisionShape(CollisionShape2::DEF_AABB);
+          static_cast<Hoverplane*>(hoverplane)
+              ->setPath(current.x, current.y + height + 100.0,
+                  current.x, current.y + height + 50.0);
+
           Ogre::SceneNode* sn = sceneManager->getSceneNode("Armature");
           sceneManager->getRootSceneNode()->removeChild(sn);
           characterSceneNode->addChild(sn);
