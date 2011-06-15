@@ -171,29 +171,6 @@ void LevelState::moveCamera() {
 }
 
 void LevelState::getInput() {
-//  if (Input::Instance().m_pKeyboard->isKeyDown(OIS::KC_A))
-//    translateVector.x = -moveSpeed;
-//
-//  if (Input::Instance().m_pKeyboard->isKeyDown(OIS::KC_D))
-//    translateVector.x = moveSpeed;
-//
-//  if (Input::Instance().m_pKeyboard->isKeyDown(OIS::KC_W))
-//    translateVector.z = -moveSpeed;
-//
-//  if (Input::Instance().m_pKeyboard->isKeyDown(OIS::KC_S))
-//    translateVector.z = moveSpeed;
-
-//  if (Input::Instance().m_pKeyboard->isKeyDown(OIS::KC_RIGHT))
-//    m_pCamera->move(Ogre::Vector3(moveSpeed * 20.0, 0.0, 0.0));
-//
-//  if (Input::Instance().m_pKeyboard->isKeyDown(OIS::KC_LEFT))
-//    m_pCamera->move(Ogre::Vector3(-moveSpeed * 20.0, 0.0, 0.0));
-//
-//  if (Input::Instance().m_pKeyboard->isKeyDown(OIS::KC_UP))
-//    m_pCamera->move(Ogre::Vector3(0.0, moveSpeed * 5.0, 0.0));
-//
-//  if (Input::Instance().m_pKeyboard->isKeyDown(OIS::KC_DOWN))
-//    m_pCamera->move(Ogre::Vector3(0.0, -moveSpeed * 5.0, 0.0));
 }
 
 void LevelState::update(double timeSinceLastFrame) {
@@ -211,6 +188,9 @@ void LevelState::update(double timeSinceLastFrame) {
     popAppState();
     return;
   }
+
+  if (m_pCamera->getPosition().y < -100)
+    pushAppState(findByName("LostState"));
 
   moveScale = moveSpeed * timeSinceLastFrame;
   rotScale = rotateSpeed * timeSinceLastFrame;

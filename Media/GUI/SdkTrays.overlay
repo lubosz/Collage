@@ -553,6 +553,15 @@ template container Panel(SdkTrays/Wallpaper)
 	height 1200
 }
 
+template container Panel(SdkTrays/Lostthegame)
+{
+	metrics_mode pixels
+	material SdkTrays/Lostthegame
+	horz_align center
+	width 500
+	height 364
+}
+
 template container Panel(SdkTrays/Picture)
 {
 	metrics_mode pixels
