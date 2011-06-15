@@ -187,7 +187,7 @@ void DivBoxLevel::makeElementBoxes(
 		    ->teleport(position.x - w/2., position.y + height);
 		}
 
-        if (i == 0) {
+        if (i == 3) {
           characterSceneNode = simulation->characterFactory->createActor()
               ->addPoint(2.0, 0.0)
               ->addPoint(-2.0, 0.0)

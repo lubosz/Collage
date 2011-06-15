@@ -67,6 +67,7 @@ void Character::manipulate(float d_t) {
     jumpTime = 0.0;
   } else {
     jumpTime += d_t;
+    Animation::Instance().isrunning = false;
   }
   if (Input::Instance().m_pKeyboard->isKeyDown(OIS::KC_UP)) {
     if ((jumpAbility == 1) || (jumpAbility == 2 && jumpTime > 0.2)) {
