@@ -33,7 +33,7 @@ void LostState::enter() {
 }
 
 void LostState::exit() {
-	System::Instance().logMessage("Leaving PauseState...");
+	System::Instance().logMessage("Leaving LostState...");
 
 	UserInterface::Instance().m_pTrayMgr->hideBackdrop();
 	UserInterface::Instance().m_pTrayMgr->clearAllTrays();

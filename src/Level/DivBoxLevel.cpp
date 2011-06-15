@@ -109,12 +109,13 @@ void DivBoxLevel::makeElementBoxes(
       "General", sceneManager, sceneManager->getRootSceneNode());
   delete pDotSceneLoader;
 
-  Animation::Instance().activate(sceneManager, "arm_left");
-  Animation::Instance().activate(sceneManager, "arm_right");
-  Animation::Instance().activate(sceneManager, "chest");
-  Animation::Instance().activate(sceneManager, "leg_left");
-  Animation::Instance().activate(sceneManager, "leg_right");
-  Animation::Instance().activate(sceneManager, "pants");
+  Animation::Instance().animationStates.clear();
+  Animation::Instance().init(sceneManager, "arm_left");
+  Animation::Instance().init(sceneManager, "arm_right");
+  Animation::Instance().init(sceneManager, "chest");
+  Animation::Instance().init(sceneManager, "leg_left");
+  Animation::Instance().init(sceneManager, "leg_right");
+  Animation::Instance().init(sceneManager, "pants");
 
   QWebElementCollection elements;
   foreach(QString tag, tags)

@@ -21,11 +21,11 @@ class Animation : public Singleton<Animation> {
  public:
   vector<Ogre::AnimationState*> animationStates;
   bool isactive;
-  bool move;
+  bool isrunning;
   float moveSpeed;
   Animation();
   virtual ~Animation();
-  void activate(Ogre::SceneManager *sceneManager, string entityName);
+  void init(Ogre::SceneManager *sceneManager, string entityName);
   void update(double timeSinceLastFrame);
   void activate();
   void deactivate();
