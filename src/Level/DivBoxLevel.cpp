@@ -52,6 +52,7 @@ void DivBoxLevel::makeOgreImage(QWebElement * element,
 
 Ogre::MaterialPtr DivBoxLevel::makeMaterial(
     Ogre::String name, Ogre::String textureName, float intensity) {
+  Ogre::MaterialManager::getSingleton().unload(name);
   Ogre::MaterialPtr material = Ogre::MaterialManager::getSingleton().create(
       name, Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
   material.get()->getTechnique(0)-> getPass(0)->createTextureUnitState(
