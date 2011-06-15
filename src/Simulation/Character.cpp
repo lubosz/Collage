@@ -69,9 +69,9 @@ void Character::manipulate(float d_t) {
     jumpTime += d_t;
     Animation::Instance().isrunning = false;
   }
-  if (Input::Instance().m_pKeyboard->isKeyDown(OIS::KC_UP)) {
+  if (Input::Instance().m_pKeyboard->isKeyDown(OIS::KC_SPACE)) {
     if ((jumpAbility == 1) || (jumpAbility == 2 && jumpTime > 0.2)) {
-      velocity.y = 100.0;
+      velocity.y = 60.0* sqrt(Animation::Instance().moveSpeed);
       jumpAbility++;
       Animation::Instance().isrunning = false;
     }
