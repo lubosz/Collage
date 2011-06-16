@@ -16,6 +16,7 @@ MenuState::MenuState() {
 }
 
 void MenuState::enter() {
+  UserInterface::Instance().m_pTrayMgr->showCursor();
 	System::Instance().logMessage("Entering MenuState...");
 
 	m_pSceneMgr
@@ -83,6 +84,7 @@ void MenuState::createScene() {
 }
 
 void MenuState::exit() {
+  UserInterface::Instance().m_pTrayMgr->hideCursor();
 	System::Instance().logMessage("Leaving MenuState...");
 
 	m_pSceneMgr->destroyCamera(m_pCamera);

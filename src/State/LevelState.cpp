@@ -29,6 +29,7 @@ LevelState::LevelState() {
 }
 
 void LevelState::enter() {
+  UserInterface::Instance().m_pTrayMgr->hideCursor();
   Input::Instance().m_pMouse->setBuffered(false);
 
   // Set up Camera

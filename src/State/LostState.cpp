@@ -34,6 +34,7 @@ void LostState::enter() {
 }
 
 void LostState::exit() {
+  UserInterface::Instance().m_pTrayMgr->hideCursor();
 	System::Instance().logMessage("Leaving LostState...");
 
 	UserInterface::Instance().m_pTrayMgr->hideBackdrop();

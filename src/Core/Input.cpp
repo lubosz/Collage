@@ -37,10 +37,12 @@ void Input::initOis(
 
   // TODO(lubosz): Only on debug
 #ifdef WIN32
+    /*
 	paramList.insert(
     OIS::ParamList::value_type("w32_mouse", "DISCL_FOREGROUND"));
 	paramList.insert(
     OIS::ParamList::value_type("w32_mouse", "DISCL_NONEXCLUSIVE"));
+*/
 #else
   paramList.insert(
     OIS::ParamList::value_type("x11_mouse_grab", "false"));

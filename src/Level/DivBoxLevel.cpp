@@ -87,7 +87,7 @@ void DivBoxLevel::makeElementBoxes(
   foreach(QString tag, tags)
     elements.append(document.findAll(tag));
 
-  Ogre::Vector3 position = Ogre::Vector3(0.0, 100.0, 0.0);
+  Ogre::Vector3 position = Ogre::Vector3(0.0, 1000.0, 0.0);
 
   int elementCount = 0;
   foreach(QWebElement element, elements) {
@@ -116,7 +116,7 @@ void DivBoxLevel::makeElementBoxes(
 
         if (box.width > 50)
           bigBoxes.push_back(box);
-        else
+        else if (box.width > 5)
           smallBoxes.push_back(box);
 
         elementCount++;

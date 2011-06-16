@@ -36,6 +36,7 @@ void PauseState::enter() {
 }
 
 void PauseState::exit() {
+  UserInterface::Instance().m_pTrayMgr->hideCursor();
 	System::Instance().logMessage("Leaving PauseState...");
 
 	UserInterface::Instance().m_pTrayMgr->hideBackdrop();

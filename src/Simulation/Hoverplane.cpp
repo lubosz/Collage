@@ -18,7 +18,7 @@ Hoverplane::~Hoverplane() {
 }
 
 void Hoverplane::init() {
-  collisionShape.intitDebugRendering(sceneManager, id);
+//  collisionShape.intitDebugRendering(sceneManager, id);
 }
 
 void Hoverplane::manipulate(float d_t) {
@@ -40,7 +40,7 @@ void Hoverplane::manipulate(float d_t) {
   Ogre::Vector2 currentPos = p1 + u * (p2 - p1);
   move(currentPos - lastPos);
 
-  collisionShape.updateDebugRendering(CollisionShape2::DEF_AABB);
+//  collisionShape.updateDebugRendering(CollisionShape2::DEF_AABB);
 }
 
 Hoverplane* Hoverplane::setPath(float x1, float y1, float x2, float y2) {
