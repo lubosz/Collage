@@ -8,6 +8,8 @@
 
 #pragma once
 
+#define BASE_URL "http://en.wikipedia.org/wiki/University_of_Koblenz_and_Landau"
+
 #include <OGRE/OgreSubEntity.h>
 #include <OGRE/OgreMaterialManager.h>
 
@@ -19,6 +21,7 @@
 
 class LevelState : public AppState {
     Q_OBJECT
+
  public:
   Level *level;
   LevelState();

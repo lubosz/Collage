@@ -24,8 +24,9 @@ LevelState::LevelState() {
   quit = false;
 
   this->level = NULL;
-  this->url = "wikidump4/index.html";
+//  this->url = "wikidump4/index.html";
 //  this->url = "wikidump4/de.wikipedia.org/wiki/Land_(Deutschland).html";
+  this->url = BASE_URL;
 }
 
 void LevelState::enter() {

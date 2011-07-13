@@ -99,8 +99,8 @@ void PauseState::buttonHit(OgreBites::Button *button) {
 	}	else if (button->getName() == "BackToGameBtn") {
 		m_bQuit = true;
 	} else if (button->getName() == "RestartGameBtn") {
-    LevelState* foo = reinterpret_cast<LevelState*>(findByName("LevelState"));
-    foo->url = "wikidump4/index.html";
+    LevelState* ls = reinterpret_cast<LevelState*>(findByName("LevelState"));
+    ls->url = BASE_URL;
     popAllAndPushAppState(findByName("LevelState"));
   }	else if (button->getName() == "BackToMenuBtn") {
 		popAllAndPushAppState(findByName("MenuState"));
